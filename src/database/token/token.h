@@ -2,6 +2,10 @@
 
 void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expiration);
 
+DtwResource *get_finite_token(DtwResource *user, char *token);
+
+DtwResource *get_ifinite_token(DtwResource *user, char *token);
+
 void set_infinite_token(DtwResource *user, char *token);
 
 

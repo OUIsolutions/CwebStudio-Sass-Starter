@@ -3,7 +3,6 @@
 Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *database){
 
     Autentication auth = {0};
-
     char *token = obj.getString(entries,TOKEN);
 
     CHash_catch(entries){
@@ -17,7 +16,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         validator.raise_error_by_key(entries,
                  TOKEN,
                  INVALID_TOKEN,
-                 NOT_VALID_TOKEN_MESSAGE,
+                 NOT_VALID_TOKEN_MESSAGE_FOR_ENTRIES,
                  NULL
         );
     }
@@ -27,8 +26,20 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         auth.response_error = send_entrie_error(request, entries);
         return auth;
     }
+
     DtwResource *user = find_user_by_id(database, token_obj->user_id);
 
-    
+    if(!user){
+        auth.error = true;
+        auth.response_error =send_error(
+                request,
+                INVALID_TOKEN,
+                INVALID_TOKEN,
+                NOT_VALID_TOKEN_MESSAGE,
+                token
+        );
+    }
+
+
     return auth;
 }
