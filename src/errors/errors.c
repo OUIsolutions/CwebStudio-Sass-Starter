@@ -1,9 +1,16 @@
 
 
-CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalcode,  const char *menssage){
+CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalcode,  const char *format,...){
+
+    char buffer[1000]= {0};
+    va_list args;
+    va_start(args, format);
+    vsprintf(buffer, format, args);
+    va_end(args);
+
 
     CHashObject * response = newCHashObject(
-            "mensage",hash.newString(menssage),
+            "mensage",hash.newString(buffer),
             "code",hash.newNumber(internalcode)
             );
 
