@@ -22,8 +22,16 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
 
 CwebHttpResponse *send_entrie_error_cleaning_memory(CwebHttpRequest  *request, CHashObject *entries){
 
-
+    validator.generate_custom_error_cleaning_args(entries, newCHashArray(
+            newCHashObject(
+                    "code",hash.newNumber(CHASH_NOT_EXIST),
+                    "message",hash.newString("element of key #key# not found in headders/paramns")
+                    )
+            )
+   );
+            
     char *menssage = hash.get_error_menssage(entries);
+
     CwebHttpResponse  *response = send_error(
             request,
             BAD_REQUEST,
