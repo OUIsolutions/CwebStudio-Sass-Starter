@@ -12,7 +12,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
 
     DtwResource *database = resource.newResource(DATABASE_PATH);
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
-    char * id = find_element_by_index(users,EMAIL_PATH,username_or_email);
+    char * id = find_element_by_index(users, EMAIL_PATH, username_or_email);
 
     return cweb.response.send_text("ok",200);
 
