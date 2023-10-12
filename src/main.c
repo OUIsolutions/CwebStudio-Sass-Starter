@@ -20,14 +20,25 @@ CHashValidatorModule validator;
 #include "errors/errors.c"
 #include "api_routes/definition.h"
 
+//never use these flag in production
+#define DEBUG
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
+    #ifdef DEBUG
+        if(!strcmp(request->route,END_ROUTE)){
+            cweb_end_server = true;
+        }
+    #endif
     if(dtw_starts_with(request->route,CREATE_TOKEN)){
         return create_token(request);
     }
 
-
-    return cweb.response.send_text("Hello World", 200);
+    return send_error(
+            request,
+            NOT_FOUND,
+            ROUTE_NOT_FOUND,
+            ROUTE_NOT_FOUND_MENSSAGE
+            );
 
 }
 
@@ -40,6 +51,10 @@ int main(int argc, char *argv[]){
     validator = hash.validator;
 
     struct CwebServer server = newCwebSever(5000, main_sever);
+    #ifdef DEBUG
+        server.single_process = true;
+    #endif
+
     cweb.server.start(&server);
     return 0;
 }
