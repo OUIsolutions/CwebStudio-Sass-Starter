@@ -1,5 +1,5 @@
 
-DtwResource *find_user_by_username_or_email(const char *username_or_email){
+DtwResource *find_user_by_username_or_email(const char *username_or_email,bool lock){
     DtwResource *database = resource.newResource(DATABASE_PATH);
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
 
@@ -7,7 +7,7 @@ DtwResource *find_user_by_username_or_email(const char *username_or_email){
             users,
             EMAIL_PATH,
             username_or_email,
-            true
+            lock
             );
     if(possible_user){
         return  possible_user;
@@ -16,7 +16,7 @@ DtwResource *find_user_by_username_or_email(const char *username_or_email){
             users,
             USERNAME_PATH,
             username_or_email,
-            true
+            lock
     );
     return possible_user;
 }
