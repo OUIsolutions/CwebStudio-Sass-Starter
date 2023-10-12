@@ -23,14 +23,17 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
 CwebHttpResponse *send_entrie_error_cleaning_memory(CwebHttpRequest  *request, CHashObject *entries){
 
     validator.generate_custom_error_cleaning_args(entries, newCHashArray(
+
             newCHashObject(
                     "code",hash.newNumber(CHASH_ELEMENT_NOT_EXIST),
                     "message",hash.newString("entrie #key# not found in headders/paramns")
             ),
+
             newCHashObject(
                     "code",hash.newNumber(CHASH_HIGHER_THAN_MIN),
                     "message",hash.newString("entire #key# its higher than  #max#")
             ),
+
             newCHashObject(
                     "code",hash.newNumber(CHASH_LOWER_NUMBER),
                     "message",hash.newString("entire #key# its lower than  #min#")
