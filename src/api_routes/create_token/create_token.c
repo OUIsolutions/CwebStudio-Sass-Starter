@@ -16,7 +16,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
                 request,
                 NOT_FOUND,
                 ROUTE_NOT_FOUND,
-                USER_NOT_EXIST_MENSSAGE
+                USER_NOT_EXIST_MENSSAGE,
+                username_or_email
         );
     }
 

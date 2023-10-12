@@ -4,5 +4,5 @@
 
 #define  UNDEFINED_ERROR 500
 
-#define ROUTE_NOT_FOUND_MENSSAGE "invalid route"
-#define USER_NOT_EXIST_MENSSAGE "user not found"
+#define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
+#define USER_NOT_EXIST_MENSSAGE "user %s not found"

@@ -42,7 +42,8 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
             request,
             NOT_FOUND,
             ROUTE_NOT_FOUND,
-            ROUTE_NOT_FOUND_MENSSAGE
+            ROUTE_NOT_FOUND_MENSSAGE,
+            request->route
     );
 
 }
