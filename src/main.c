@@ -29,6 +29,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
             cweb_end_server = true;
         }
     #endif
+    
     if(dtw_starts_with(request->route,CREATE_TOKEN)){
         return create_token(request);
     }
@@ -38,7 +39,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
             NOT_FOUND,
             ROUTE_NOT_FOUND,
             ROUTE_NOT_FOUND_MENSSAGE
-            );
+    );
 
 }
 
@@ -50,11 +51,16 @@ int main(int argc, char *argv[]){
     array = hash.array;
     validator = hash.validator;
 
-    struct CwebServer server = newCwebSever(5000, main_sever);
     #ifdef DEBUG
-        server.single_process = true;
+        for(int i = 3000; i < 4000; i++){
+            CwebServer server = newCwebSever(i, main_sever);
+            server.single_process = true;
+            cweb.server.start(&server);
+        }
+    #else
+        CwebServer server = newCwebSever(80, main_sever);
+        cweb.server.start(&server);
     #endif
 
-    cweb.server.start(&server);
     return 0;
 }
