@@ -16,3 +16,21 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
     }
     return send_chash_cleaning_memory(response,status);
 }
+
+
+
+
+CwebHttpResponse *send_entrie_error_cleaning_memory(CwebHttpRequest  *request, CHashObject *entries){
+
+
+    char *menssage = hash.get_error_menssage(entries);
+    CwebHttpResponse  *response = send_error(
+            request,
+            BAD_REQUEST,
+            ENTRY_ERROR,
+            menssage
+            );
+    hash.free(entries);
+    return  response;
+}
+

@@ -21,16 +21,19 @@ CHashValidatorModule validator;
 #include "api_routes/definition.h"
 
 //never use these flag in production
+
 #define DEBUG
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     #ifdef DEBUG
+
         if(!strcmp(request->route,END_ROUTE)){
-            cweb_end_server = true;
+             cweb_end_server = true;
         }
+
     #endif
-    
-    if(dtw_starts_with(request->route,CREATE_TOKEN)){
+
+    if(!strcmp(request->route,CREATE_TOKEN)){
         return create_token(request);
     }
 
