@@ -6,7 +6,10 @@ CwebNamespace cweb;
 
 #include "constants/all.h"
 #include "database/declaration.h"
+#include "api_routes/declaration.h"
+
 #include "database/definition.h"
+#include "api_routes/definition.h"
 
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
