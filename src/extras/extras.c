@@ -1,4 +1,9 @@
 
+CwebHttpResponse  *send_chash_cleaning_memory(CHash *element,int status_code){
+    cJSON *element_converted = hash.dump_to_cJSON(element);
+    hash.free(element);
+    return cweb.response.send_cJSON_cleaning_memory(element_converted,status_code);
+}
 
 CHashObject *join_headders_and_paramns(CwebHttpRequest *request){
     CHashObject * all = obj.newObjectEmpty();
