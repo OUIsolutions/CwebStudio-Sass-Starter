@@ -23,7 +23,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
         );
     }
 
-    if(!strcmp(password, get_user_password(user))){
+    if(!password_are_equal(user, password)){
         resource.free(database);
         return send_error(
                 request,
@@ -32,7 +32,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
                 WRONG_PASSWORD_MENSSAGE
         );
     }
-    
+
     resource.commit(database);
     resource.free(database);
 
