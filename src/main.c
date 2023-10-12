@@ -12,10 +12,12 @@ CHashValidatorModule validator;
 #include "constants/all.h"
 #include "database/declaration.h"
 #include "extras/extras.h"
+#include "errors/errors.h"
 #include "api_routes/declaration.h"
 
 #include "database/definition.h"
 #include "extras/extras.c"
+#include "errors/errors.c"
 #include "api_routes/definition.h"
 
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
