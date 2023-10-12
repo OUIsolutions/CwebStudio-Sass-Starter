@@ -1,6 +1,5 @@
 
-DtwResource *find_user_by_username_or_email(const char *username_or_email,bool lock){
-    DtwResource *database = resource.newResource(DATABASE_PATH);
+DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *username_or_email,bool lock){
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
 
     DtwResource *possible_user = find_element_by_index(
@@ -19,4 +18,9 @@ DtwResource *find_user_by_username_or_email(const char *username_or_email,bool l
             lock
     );
     return possible_user;
+}
+
+char * get_user_password(DtwResource *user){
+    DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
+    return resource.get_string(password);
 }
