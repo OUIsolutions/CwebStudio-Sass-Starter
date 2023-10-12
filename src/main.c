@@ -1,9 +1,12 @@
 #include "dependencies/CHashManipulator.h"
 #include "dependencies/CWebStudio.h"
 #include "dependencies/doTheWorld.h"
-#include "constants/all.h"
 
 CwebNamespace cweb;
+
+#include "constants/all.h"
+#include "database/declaration.h"
+#include "database/definition.h"
 
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
