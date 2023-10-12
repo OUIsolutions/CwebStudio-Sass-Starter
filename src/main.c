@@ -60,8 +60,6 @@ int main(int argc, char *argv[]){
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
     DtwResource *element = find_element_by_index(users,"email","root",true);
     resource.represent(element);
-    DtwResource_destroy()
-    resource.destroy(element);
     resource.free(database);
     return  0;
 

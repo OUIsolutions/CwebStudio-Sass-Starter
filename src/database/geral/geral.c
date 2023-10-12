@@ -1,6 +1,6 @@
 
 
-DtwResource * find_element_by_index(DtwResource *folder, const char *index_name, char *index,bool lock){
+DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,const  char *index,bool lock){
     //folder/index
     DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
     //folder/index/email
