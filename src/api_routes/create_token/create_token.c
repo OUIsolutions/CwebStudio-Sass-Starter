@@ -10,9 +10,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
         return send_entrie_error_cleaning_memory(request,entries);
     }
 
-    DtwResource *database = resource.newResource(DATABASE_PATH);
-    DtwResource *users = resource.sub_resource(database, USERS_PATH);
-    char * id = find_element_by_index(users, EMAIL_PATH, username_or_email);
+
 
     return cweb.response.send_text("ok",200);
 

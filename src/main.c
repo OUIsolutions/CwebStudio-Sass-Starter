@@ -56,7 +56,14 @@ int main(int argc, char *argv[]){
     array = hash.array;
     validator = hash.validator;
 
-
+    DtwResource *database = resource.newResource(DATABASE_PATH);
+    DtwResource *users = resource.sub_resource(database, USERS_PATH);
+    DtwResource *element = find_element_by_index(users,"email","root",true);
+    resource.represent(element);
+    DtwResource_destroy()
+    resource.destroy(element);
+    resource.free(database);
+    return  0;
 
     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
