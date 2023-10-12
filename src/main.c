@@ -4,6 +4,7 @@
 
 CwebNamespace cweb;
 DtwNamespace dtw;
+DtwResourceModule resource;
 CHashNamespace hash;
 CHashObjectModule obj;
 CHashArrayModule array;
@@ -49,10 +50,13 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 int main(int argc, char *argv[]){
     cweb = newCwebNamespace();
     dtw = newDtwNamespace();
+    resource = dtw.resource;
     hash = newCHashNamespace();
     obj = hash.object;
     array = hash.array;
     validator = hash.validator;
+
+
 
     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
