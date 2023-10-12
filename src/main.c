@@ -22,6 +22,10 @@ CHashValidatorModule validator;
 
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
+    if(dtw_starts_with(request->route,CREATE_TOKEN)){
+        return create_token(request);
+    }
+    
     return cweb.response.send_text("Hello World", 200);
 
 }
