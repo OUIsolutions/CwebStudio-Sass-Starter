@@ -1,6 +1,7 @@
 #include "dependencies/CHashManipulator.h"
 #include "dependencies/CWebStudio.h"
 #include "dependencies/doTheWorld.h"
+#include "constants/all.h"
 
 CwebNamespace cweb;
 
@@ -11,7 +12,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 }
 int main(){
-    
+
 }
 /*
 int main(int argc, char *argv[]){
