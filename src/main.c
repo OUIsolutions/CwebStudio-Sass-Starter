@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
     char *creation = create_token_string("root","rootsss");
     printf("encoded: %s\n",creation);
 
-
+    Token  *t = extract_token("44444444444444444444444444444444444444444444444444");
     free(creation);
     return 0;
     #ifdef DEBUG

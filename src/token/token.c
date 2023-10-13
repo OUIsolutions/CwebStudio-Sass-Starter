@@ -30,7 +30,14 @@ char * create_token_string(char *user_id, char *password){
 
 Token * extract_token(char *token){
 
-    
+    CTextStack * element = newCTextStack_string(token);
+    long first_num = stack.parse_to_integer(element);
+    if(first_num == -1){
+        stack.free(element);
+        return NULL;
+    }
+    printf("%ld",first_num);
+    stack.free(element);
 
     return NULL;
 
