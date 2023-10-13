@@ -2,6 +2,9 @@
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
+
+
+
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
     obj.set_default(entries,EXPIRATION,hash.newNumber(30));
