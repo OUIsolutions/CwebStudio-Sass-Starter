@@ -19,10 +19,10 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
     );
     return possible_user;
 }
-void set_token(DtwResource *user,char *token,bool allow_renew,int expiration){
+void set_finity_token(DtwResource *user, char *token, bool allow_renew, int expiration){
 
     //user/token/
-    DtwResource  *all_tokens = resource.sub_resource(user,TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITY_TOKEN_PATH);
     //user/token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
     //user/token/akspdih3u2ju223j2j3j2/allow_renew
@@ -31,15 +31,20 @@ void set_token(DtwResource *user,char *token,bool allow_renew,int expiration){
 
     DtwResource *expiration_resource = resource.sub_resource(token_resource, EXPIRATION_PATH);
     long now = time(NULL);
-    if(expiration ==-1){
-        resource.set_long(expiration_resource,-1);
-    }
+    resource.set_long(expiration_resource,now + (expiration * 60));
 
-    if(expiration != -1){
-        resource.set_long(expiration_resource,now + (expiration * 60));
+    DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
+    resource.set_long(creation_resource,now);
 
-    }
+}
 
+void set_infinity_token(DtwResource *user, char *token){
+
+    //user/token/
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    //user/token/akspdih3u2ju223j2j3j2
+    DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
+    long now = time(NULL);
     DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
     resource.set_long(creation_resource,now);
 

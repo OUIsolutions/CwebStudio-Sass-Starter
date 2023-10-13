@@ -3,7 +3,7 @@
 #define ENTRY_ERROR 2
 #define USER_NOT_EXIST 3
 #define  WRONG_PASSWORD 4
-
+#define INVALID_EXPIRATION 5
 #define  UNDEFINED_ERROR 500
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"

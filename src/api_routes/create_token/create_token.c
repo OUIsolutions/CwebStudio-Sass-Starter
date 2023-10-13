@@ -8,9 +8,20 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     aply_path_protection(entries,USERNAME_OR_EMAIL);
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
-    obj.set_default(entries, EXPIRATION_PATH, hash.newNumber(DEFAULT_EXPIRATION));
-    long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_PATH);
 
+    obj.set_default(entries, EXPIRATION, hash.newNumber(DEFAULT_EXPIRATION));
+    long expiration = (long)obj.getNumber_converting(entries, EXPIRATION);
+
+
+    if(expiration != -1 && expiration <=0){
+        validator.raise_error_by_key(entries,
+                                     EXPIRATION,
+                                     INVALID_EXPIRATION,
+                                     "param #reference# at headders/paramns is not a valid expiration time "
+                                     "use -1 for infinity tokens or 1 or more for finite tokens",
+                                     NULL
+        );
+    }
     obj.set_default(entries, ALLOW_RENEW_PATH, hash.newBool(DEFAULT_ALLOW_RENEW));
     bool allow_renew = obj.getBool_converting(entries, ALLOW_RENEW_PATH);
 
@@ -45,7 +56,16 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     char *user_id = user->name;
 
     char *token = create_token_string(user_id,password);
-    set_token(user,token,allow_renew,expiration);
+
+    if(expiration == -1){
+        set_infinity_token(user, token);
+    }
+
+    if(expiration > 0){
+        set_finity_token(user, token, allow_renew, expiration);
+    }
+
+
 
 
     resource.commit(database);
