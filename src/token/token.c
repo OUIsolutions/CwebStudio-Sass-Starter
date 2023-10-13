@@ -11,15 +11,15 @@ char * create_token_string(char *user_id, char *password){
     dtw.hash.digest_string(token_assignature,password);
     dtw.hash.digest_long(token_assignature, time(NULL));
 
-    CHash *token_obj = newCHashArray(
-        hash.newString(user_id),
-        hash.newString(token_assignature->hash)
-    );
-
-    char *token_json = hash.dump_to_json_string(token_obj);
-    hash.free(token_obj);
+    int extra_size = ID_SIZE - strlen(user_id);
+    CTextStack * token = newCTextStack_string_empty();
+    for(int i =0; i < extra_size; i++){
+        stack.format(token,"%c",'0');
+    }
+    stack.format(token,"%s",user_id);
+    stack.format(token,"%s",token_assignature->hash);
     dtw.hash.free(token_assignature);
-    return dtw_base64_encode((unsigned char *)user_id, (long)strlen(token_json));
+    return stack.self_transform_in_string_and_self_clear(token);
 }
 
 
