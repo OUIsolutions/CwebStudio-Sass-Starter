@@ -15,11 +15,11 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     if(expiration != -1 && expiration <=0){
         validator.raise_error_by_key(entries,
-                                     EXPIRATION,
-                                     INVALID_EXPIRATION,
-                                     "param #reference# at headders/paramns is not a valid expiration time "
-                                     "use -1 for infinity tokens or 1 or more for finite tokens",
-                                     NULL
+                     EXPIRATION,
+                     INVALID_EXPIRATION,
+                     "param #reference# at headders/paramns is not a valid expiration time "
+                     "use -1 for infinity tokens or 1 or more for finite tokens",
+                     NULL
         );
     }
     obj.set_default(entries, ALLOW_RENEW_PATH, hash.newBool(DEFAULT_ALLOW_RENEW));

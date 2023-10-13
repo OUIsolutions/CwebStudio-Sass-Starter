@@ -22,7 +22,7 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
 void set_finity_token(DtwResource *user, char *token, bool allow_renew, int expiration){
 
     //user/token/
-    DtwResource  *all_tokens = resource.sub_resource(user, FINITY_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
     //user/token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
     //user/token/akspdih3u2ju223j2j3j2/allow_renew
