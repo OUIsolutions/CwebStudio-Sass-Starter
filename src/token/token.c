@@ -1,7 +1,7 @@
 
 void Token_free(Token *self){
     free(self->hash);
-    free(self->hash);
+    free(self->user_id);
     free(self);
 }
 
@@ -12,17 +12,10 @@ char * create_token_string(char *user_id, char *password){
     dtw.hash.digest_long(token_assignature, time(NULL));
 
     CTextStack * token = newCTextStack_string_empty();
-    int user_size = (int)strlen(user_id);
 
-    if(user_size >= 10){
-        stack.format(token,"%d", user_size);
-    }
-    else{
-        stack.format(token,"0%d", user_size);
-    }
-
-    stack.format(token,"%s",user_id);
     stack.format(token,"%s",token_assignature->hash);
+    stack.format(token,"%s",user_id);
+
     dtw.hash.free(token_assignature);
     return stack.self_transform_in_string_and_self_clear(token);
 }
@@ -30,16 +23,35 @@ char * create_token_string(char *user_id, char *password){
 
 Token * extract_token(char *token){
 
+    const int SHA_SIZE = 64;
+    const int MAX_USER_SIZE = 30;
+    const int MIN_USER_SIZE =1;
+
     CTextStack * element = newCTextStack_string(token);
-    long first_num = stack.parse_to_integer(element);
-    if(first_num == -1){
+
+    if(element->size <  SHA_SIZE + MIN_USER_SIZE){
         stack.free(element);
         return NULL;
     }
-    printf("%ld",first_num);
+    if(element->size >  SHA_SIZE + MAX_USER_SIZE){
+        stack.free(element);
+        return NULL;
+    }
+
+    Token  *t = (Token*) malloc(sizeof (Token));
+    t->hash = stack.self_transform_in_string_and_self_clear(
+            stack.substr(element,0,SHA_SIZE)
+    );
+
+    t->user_id = stack.self_transform_in_string_and_self_clear(
+            stack.substr(element,SHA_SIZE,-1)
+    );
     stack.free(element);
 
-    return NULL;
+    return t;
+
+
+
 
 
 }

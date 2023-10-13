@@ -5,7 +5,7 @@
 
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
-
+    aply_path_protection(entries,USERNAME_OR_EMAIL);
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
     obj.set_default(entries,EXPIRATION,hash.newNumber(DEFAULT_EXPIRATION));

@@ -30,6 +30,7 @@ CTextStackModule stack;
 #define DEBUG
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
+
     #ifdef DEBUG
 
         if(!strcmp(request->route,END_ROUTE)){
@@ -77,10 +78,22 @@ int main(int argc, char *argv[]){
     char *creation = create_token_string("root","rootsss");
     printf("encoded: %s\n",creation);
 
-    Token  *t = extract_token("44444444444444444444444444444444444444444444444444");
+    Token  *t = extract_token(creation);
+    if(t){
+        printf("user_id:%s\n",t->user_id);
+        printf("hash:%s\n",t->hash);
+        Token_free(t);
+
+    }
+    else{
+        printf("invalid token\n");
+    }
+
     free(creation);
     return 0;
-    #ifdef DEBUG
+
+
+     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
             CwebServer server = newCwebSever(i, main_sever);
             server.single_process = true;
