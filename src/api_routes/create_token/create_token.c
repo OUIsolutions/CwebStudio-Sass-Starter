@@ -4,10 +4,17 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
+    obj.set_default(entries,EXPIRATION,hash.newNumber(30));
+    long expiration = (long)obj.getNumber_converting(entries,EXPIRATION);
 
-    if(hash.errors(entries)){
+    obj.set_default(entries,ALLOW_RENEW,hash.newBool(true));
+    bool allow_renew = obj.getBool_converting(entries,ALLOW_RENEW);
+
+
+    CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
+
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email,true);
 

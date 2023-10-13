@@ -44,6 +44,11 @@ CwebHttpResponse *send_entrie_error(CwebHttpRequest  *request, CHashObject *entr
             newCHashObject(
                     "code",hash.newNumber(CHASH_LOWER_NUMBER),
                     "message",hash.newString("entire #key# its lower than  #min#")
+            ),
+
+            newCHashObject(
+                    "code",hash.newNumber(CHASH_WRONG_TYPE),
+                    "message",hash.newString("entire #key# its #type# instead of #expected_type# at headders/paramns")
             )
     ));
 

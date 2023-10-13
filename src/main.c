@@ -30,7 +30,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
         if(!strcmp(request->route,END_ROUTE)){
              cweb_end_server = true;
-             return cweb.response.send_text("Application Terminated",200);
+             return cweb.response.send_text(APLICATION_TERMINATED,200);
         }
     #endif
 
