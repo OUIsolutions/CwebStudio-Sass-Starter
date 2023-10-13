@@ -30,12 +30,24 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
         if(!strcmp(request->route,END_ROUTE)){
              cweb_end_server = true;
+             return cweb.response.send_text("Application Terminated",200);
         }
-
     #endif
 
+
+    CHashObject * entries = join_headders_and_paramns(request);
+    DtwResource *database = resource.newResource(DATABASE_PATH);
+    CwebHttpResponse *response = NULL;
+
     if(!strcmp(request->route,CREATE_TOKEN)){
-        return create_token(request);
+        response = create_token(request,entries,database);
+    }
+
+    hash.free(entries);
+    resource.free(database);
+
+    if(response){
+        return  response;
     }
 
     return send_error(

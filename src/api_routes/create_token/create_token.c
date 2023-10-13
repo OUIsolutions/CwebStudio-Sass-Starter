@@ -1,19 +1,17 @@
 
 
-CwebHttpResponse *create_token(CwebHttpRequest *request ){
+CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    CHashObject * entries = join_headders_and_paramns(request);
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
 
     if(hash.errors(entries)){
-        return send_entrie_error_cleaning_memory(request,entries);
+        return send_entrie_error(request, entries);
     }
-    DtwResource *database = resource.newResource(DATABASE_PATH);
+
     DtwResource *user = find_user_by_username_or_email(database,username_or_email,true);
 
     if(!user){
-        resource.free(database);
         return send_error(
                 request,
                 NOT_FOUND,
@@ -24,7 +22,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
     }
 
     if(!password_are_equal(user, password)){
-        resource.free(database);
         return send_error(
                 request,
                 FOREBIDEN,
@@ -34,7 +31,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request ){
     }
 
     resource.commit(database);
-    resource.free(database);
 
     return cweb.response.send_text("ok",200);
 

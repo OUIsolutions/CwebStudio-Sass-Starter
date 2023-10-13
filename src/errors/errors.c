@@ -27,7 +27,7 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
 
 
 
-CwebHttpResponse *send_entrie_error_cleaning_memory(CwebHttpRequest  *request, CHashObject *entries){
+CwebHttpResponse *send_entrie_error(CwebHttpRequest  *request, CHashObject *entries){
 
     validator.generate_custom_error_cleaning_args(entries, newCHashArray(
 
@@ -55,7 +55,6 @@ CwebHttpResponse *send_entrie_error_cleaning_memory(CwebHttpRequest  *request, C
             ENTRY_ERROR,
             menssage
             );
-    hash.free(entries);
     return  response;
 }
 
