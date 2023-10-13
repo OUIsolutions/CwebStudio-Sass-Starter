@@ -66,8 +66,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
 
-
-
     resource.commit(database);
     CHash *response_hash = newCHashObject(
             "code",hash.newNumber(INTERNAL_OK),
