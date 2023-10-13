@@ -1060,6 +1060,8 @@ CHash * CHash_load_from_json_file(const char *filename);
 #define  CHASH_HIGHER_THAN_MIN 407
 #define  CHASH_NOT_IN_VALID_CHARS 408
 #define  CHASH_NOT_LONG 409
+#define CHASH_NOT_SIZE 410
+
 
 
 
@@ -5770,7 +5772,11 @@ int CHash_convert_toNumber(CHash *self){
         CHash_raise_error(self,
                           CHASH_WRONG_TYPE,
                           "element at #path# is not convertible to number ",
-                          NULL
+                         newCHashObject(
+                                  "expected_type", newCHashString(
+                                  private_Chash_convert_type(CHASH_NUMBER)
+                                )
+                          )
         );
         return 1;
     }
@@ -5779,7 +5785,11 @@ int CHash_convert_toNumber(CHash *self){
         CHash_raise_error(self,
                           CHASH_WRONG_TYPE,
                           "element at #path# is not convertible to number ",
-                          NULL
+                         newCHashObject(
+                                  "expected_type", newCHashString(
+                                  private_Chash_convert_type(CHASH_NUMBER)
+                                )
+                          )
         );
         return 1;
     }
@@ -5848,7 +5858,11 @@ int CHash_convert_toBool(CHash *self){
         CHash_raise_error(self,
                           CHASH_WRONG_TYPE,
                           "element at #path# is not convertable to number ",
-                          NULL
+                         newCHashObject(
+                                  "expected_type", newCHashString(
+                                  private_Chash_convert_type(CHASH_BOOL)
+                                )
+                          )
         );
         return 1;
     }
@@ -5859,7 +5873,11 @@ int CHash_convert_toBool(CHash *self){
         CHash_raise_error(self,
                           CHASH_WRONG_TYPE,
                           "element at #path# is not convertible to bool ",
-                          NULL
+                        newCHashObject(
+                                  "expected_type", newCHashString(
+                                  private_Chash_convert_type(CHASH_BOOL)
+                                )
+                          )
         );
         return 1;
     }
@@ -6898,9 +6916,6 @@ void CHash_raise_error(CHash *self,int error_code,const char *error_menssage, CH
     }
 
     CHashObject_set_default(formated_args,  "path",path);
-
-
-
     CHashObject_set_default(formated_args,"value", CHash_copy(self));
     CHashObject_set_default(formated_args,"type",newCHashString(private_Chash_convert_type(self->private_type)));
 
@@ -7281,7 +7296,7 @@ int CHash_ensure_size(CHash *iterable,long size){
     if(iterable_size != size){
         CHash_raise_error(
                 iterable,
-                CHASH_HIGHER_THAN_MIN,
+                CHASH_NOT_SIZE,
                 "the element at #path# has diferent size than #size# ",
                 newCHashObject(
                         "size", newCHashNumber(size)
