@@ -8,12 +8,11 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     aply_path_protection(entries,USERNAME_OR_EMAIL);
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
-    obj.set_default(entries,EXPIRATION,hash.newNumber(DEFAULT_EXPIRATION));
-    long expiration = (long)obj.getNumber_converting(entries,EXPIRATION);
+    obj.set_default(entries, EXPIRATION_PATH, hash.newNumber(DEFAULT_EXPIRATION));
+    long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_PATH);
 
-    obj.set_default(entries,ALLOW_RENEW,hash.newBool(DEFAULT_ALLOW_RENEW));
-    bool allow_renew = obj.getBool_converting(entries,ALLOW_RENEW);
-
+    obj.set_default(entries, ALLOW_RENEW_PATH, hash.newBool(DEFAULT_ALLOW_RENEW));
+    bool allow_renew = obj.getBool_converting(entries, ALLOW_RENEW_PATH);
 
 
     CHash_catch(entries){
@@ -45,11 +44,16 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     //the token assignature will be formed by the user password + time + id
     char *user_id = user->name;
 
+    char *token = create_token_string(user_id,password);
+    set_token(user,token,allow_renew,expiration);
+
 
     resource.commit(database);
-
-    return cweb.response.send_text("ok",200);
-
-
+    CHash *response_hash = newCHashObject(
+            "code",hash.newNumber(INTERNAL_OK),
+            "hash",hash.newString(token)
+            );
+    free(token);
+    return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 
 }

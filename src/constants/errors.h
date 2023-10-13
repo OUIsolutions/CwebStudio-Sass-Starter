@@ -1,3 +1,4 @@
+#define INTERNAL_OK 0
 #define  ROUTE_NOT_FOUND 1
 #define ENTRY_ERROR 2
 #define USER_NOT_EXIST 3

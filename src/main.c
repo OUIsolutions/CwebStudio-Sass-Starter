@@ -75,23 +75,6 @@ int main(int argc, char *argv[]){
     validator = hash.validator;
     stack = newCTextStackModule();
 
-    char *creation = create_token_string("root","rootsss");
-    printf("encoded: %s\n",creation);
-
-    Token  *t = extract_token(creation);
-    if(t){
-        printf("user_id:%s\n",t->user_id);
-        printf("hash:%s\n",t->hash);
-        Token_free(t);
-
-    }
-    else{
-        printf("invalid token\n");
-    }
-
-    free(creation);
-    return 0;
-
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
