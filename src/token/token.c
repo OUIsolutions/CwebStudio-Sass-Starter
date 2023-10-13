@@ -5,7 +5,7 @@ void Token_free(Token *self){
     free(self);
 }
 
-char * create_token(char *user_id, char *password){
+char * create_token_string(char *user_id, char *password){
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
     dtw.hash.digest_string(token_assignature,password);
