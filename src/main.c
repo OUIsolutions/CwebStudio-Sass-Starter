@@ -9,14 +9,18 @@ CHashNamespace hash;
 CHashObjectModule obj;
 CHashArrayModule array;
 CHashValidatorModule validator;
+CTextStackModule stack;
 
 #include "constants/all.h"
+#include "token/token.h"
 #include "database/declaration.h"
 #include "extras/extras.h"
+
 #include "errors/errors.h"
 #include "api_routes/declaration.h"
 
 #include "database/definition.h"
+#include "token/token.c"
 #include "extras/extras.c"
 #include "errors/errors.c"
 #include "api_routes/definition.h"
@@ -68,7 +72,7 @@ int main(int argc, char *argv[]){
     obj = hash.object;
     array = hash.array;
     validator = hash.validator;
-
+    stack = newCTextStackModule();
 
 
     #ifdef DEBUG
