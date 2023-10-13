@@ -33,22 +33,22 @@ CwebHttpResponse *send_entrie_error(CwebHttpRequest  *request, CHashObject *entr
 
             newCHashObject(
                     "code",hash.newNumber(CHASH_ELEMENT_NOT_EXIST),
-                    "message",hash.newString("param #key# not found in headders/paramns")
+                    "message",hash.newString("param #reference# not found in headders/paramns")
             ),
 
             newCHashObject(
                     "code",hash.newNumber(CHASH_HIGHER_THAN_MIN),
-                    "message",hash.newString("param #path# its higher than  #max#")
+                    "message",hash.newString("param #reference# its higher than  #max#")
             ),
 
             newCHashObject(
                     "code",hash.newNumber(CHASH_LOWER_NUMBER),
-                    "message",hash.newString("param #path# its lower than  #min#")
+                    "message",hash.newString("param #reference# its lower than  #min#")
             ),
 
             newCHashObject(
                     "code",hash.newNumber(CHASH_WRONG_TYPE),
-                    "message",hash.newString("param #path# its #type# instead of #expected_type# at headders/paramns")
+                    "message",hash.newString("param #reference# its #type# instead of #expected_type# at headders/paramns")
             )
 
 
