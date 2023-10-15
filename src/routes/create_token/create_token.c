@@ -70,6 +70,14 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     if(infinite == false){
         remove_expired_tokens(user);
 
+        #ifdef MAX_FINITE_TOKENS
+            long total_tokens = count_finite_token(user);
+            if(total_tokens > MAX_FINITE_TOKENS){
+                int total_to_remove = (total_tokens - MAX_FINITE_TOKENS) +1;
+                remove_last_updated_finite_token(user,total_to_remove);
+            }
+        #endif
+
         set_finity_token(user, token, allow_renew, expiration);
     }
 

@@ -69,6 +69,7 @@ void remove_last_updated_infinite_token(DtwResource *user, int totals){
     dtw.string_array.free(elements);
 
 }
+
 void remove_last_updated_finite_token(DtwResource *user, int totals){
     //data/elements/user/finite_token/
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
