@@ -1,5 +1,6 @@
 
-#define  APLICATION_TERMINATED "Application Terminated"
+#define MAX_INFINITE_TOKENS  30
+#define MAX_FINITE_TOKENS 30
 #define DEFAULT_EXPIRATION 30
-#define DEFAULT_ALLOW_RENEW true
-const int SHA_SIZE = 15;
+#define DEFAULT_ALLOW_RENEW false
+#define SHA_SIZE 15

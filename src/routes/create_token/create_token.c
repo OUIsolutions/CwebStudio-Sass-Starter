@@ -22,8 +22,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                      NULL
         );
     }
-    obj.set_default(entries, ALLOW_RENEW, hash.newBool(DEFAULT_ALLOW_RENEW));
-    bool allow_renew = obj.getBool_converting(entries, ALLOW_RENEW);
+    obj.set_default(entries, RENEW_TIME, hash.newBool(DEFAULT_ALLOW_RENEW));
+    bool allow_renew = obj.getBool_converting(entries, RENEW_TIME);
 
 
     CHash_catch(entries){
@@ -58,13 +58,18 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     Token  *token = newToken(user_id, password,infinite);
 
     if(infinite){
+        #ifdef MAX_INFINITE_TOKENS
+                long total_tokens = count_infinite_token(user);
+                if(total_tokens > MAX_INFINITE_TOKENS){
+                    remove_last_infinite_token(user);
+                }
+        #endif
         set_infinity_token(user, token->token);
     }
 
-    if(infinite){
+    if(!infinite){
         set_finity_token(user, token->token, allow_renew, expiration);
     }
-
 
     resource.commit(database);
     CHash *response_hash = newCHashObject(

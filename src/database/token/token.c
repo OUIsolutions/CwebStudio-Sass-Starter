@@ -7,9 +7,12 @@ void set_finity_token(DtwResource *user, char *token, bool allow_renew, int expi
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
     //user/token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
-    //user/token/akspdih3u2ju223j2j3j2/allow_renew
-    DtwResource *allow_reenew_resource = resource.sub_resource(token_resource, ALLOW_RENEW);
-    resource.set_bool(allow_reenew_resource,allow_renew);
+    //user/token/akspdih3u2ju223j2j3j2/renew_time
+
+    if(allow_renew){
+        DtwResource *renew_time = resource.sub_resource(token_resource, RENEW_TIME);
+        resource.set_long(renew_time,expiration);
+    }
 
     DtwResource *expiration_resource = resource.sub_resource(token_resource, EXPIRATION_PATH);
     long now = time(NULL);

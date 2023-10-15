@@ -2,4 +2,4 @@
 #define PASSWORD "password"
 #define EXPIRATION "expiration"
 #define DEFAULT_EXPIRATION 30
-#define ALLOW_RENEW "allow_renew"
+#define RENEW_TIME "renew_time"
