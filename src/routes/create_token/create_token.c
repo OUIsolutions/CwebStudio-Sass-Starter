@@ -76,9 +76,10 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     resource.commit(database);
     CHash *response_hash = newCHashObject(
-            "code",hash.newNumber(INTERNAL_OK),
-            "token",hash.newString(token)
+            CODE_KEY,hash.newNumber(INTERNAL_OK),
+            TOKEN_KEY,hash.newString(token)
             );
+    
     free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 }
