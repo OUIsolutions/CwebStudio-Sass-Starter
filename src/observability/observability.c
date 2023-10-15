@@ -1,7 +1,9 @@
 
 
 CHash * save_start_request(CwebHttpRequest *request){
-    long now = time(NULL);
+
+    char *now = dtw_convert_unix_time_to_string(time(NULL));
+
     CHashObject *request_obj =  newCHashObject(
             "route",hash.newString(request->route),
             "method",hash.newString(request->method),
@@ -33,23 +35,31 @@ CHash * save_start_request(CwebHttpRequest *request){
     #endif
 
     CHashObject * element = newCHashObject(
-             "request", request_obj,
-            "start",hash.newNumber(now),
+            "start",hash.newString(now),
             "end",hash.newNULL(),
             "duration",hash.newNULL(),
+            "client",hash.newString(request->client_ip),
+            "request", request_obj,
             "response",hash.newNULL()
+
      );
 
     char *text  = hash.dump_to_json_string(element);
+
     char *sha = dtw_generate_sha_from_string(text);
+    CTextStack * cutted_sha = newCTextStack_string_empty();
+    stack.format(cutted_sha,"%sc",sha);
+    stack.self_substr(cutted_sha,0,15);
+
     CTextStack *path = newCTextStack_string_empty();
     stack.format(
         path,
-        "%s/%d%-sc.jsom",
+        "%s/%sc-%tc.jsom",
         REQUESTS_OBSERVER_PATH,
         now,
-        sha
+        cutted_sha
     );
+
     dtw.write_string_file_content(path->rendered_text,text);
     free(text);
     stack.free(path);

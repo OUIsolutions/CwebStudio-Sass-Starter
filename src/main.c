@@ -40,7 +40,6 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         CHash * created = save_start_request(request);
         hash.free(created);
     #endif
-        
     #ifdef DEBUG
 
         if(!strcmp(request->route,END_ROUTE)){
@@ -48,6 +47,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
              return cweb.response.send_text("Application Terminated",200);
         }
     #endif
+    return cweb.response.send_text("aa",200);
 
 
     CHashObject * entries = join_headders_and_paramns(request);

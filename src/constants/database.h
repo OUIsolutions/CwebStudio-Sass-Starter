@@ -9,7 +9,6 @@
 #define PASSWORD_PATH "password"
 #define INFINITE_TOKENS_PATH "infinite_tokens"
 #define FINITE_TOKENS_PATH "finite_tokens"
-#define RENEW_TIME "allow_renew"
 
 #define EXPIRATION_PATH "expiration"
 #define CREATION_PATH "creation"
