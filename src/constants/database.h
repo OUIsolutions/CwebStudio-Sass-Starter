@@ -13,3 +13,4 @@
 
 #define EXPIRATION_PATH "expiration"
 #define CREATION_PATH "creation"
+#define LAST_UPDATE_PATH "last_update"

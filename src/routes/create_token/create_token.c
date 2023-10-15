@@ -60,11 +60,11 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 long total_tokens = count_infinite_token(user);
                 if(total_tokens >= MAX_INFINITE_TOKENS){
                     int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS) + 1;
-                    remove_oldest_created_infinite_token(user,total_to_remove);
+                    remove_last_updated_infinite_token(user, total_to_remove);
                 }
 
         #endif
-        set_infinity_token(user, token);
+        set_infinite_token(user, token);
     }
 
     if(infinite == false){
@@ -79,7 +79,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             TOKEN_KEY,hash.newString(token)
             );
-    
+
     free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 }
