@@ -17,8 +17,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         validator.raise_error_by_key(entries,
                      EXPIRATION,
                      INVALID_EXPIRATION,
-                     "param #reference# at headders/paramns is not a valid expiration time "
-                     "use -1 for infinity tokens or 1 or more for finite tokens",
+                     NOT_VALID_EXPIRATION_MENSSAGE,
                      NULL
         );
     }
@@ -30,8 +29,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         return send_entrie_error(request, entries);
     }
 
-
-    DtwResource *user = find_user_by_username_or_email(database,username_or_email,true);
+    DtwResource *user = find_user_by_username_or_email(database,username_or_email,ALLOW_LOCKER);
 
     if(!user){
         return send_error(
@@ -60,23 +58,22 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     if(infinite){
         #ifdef MAX_INFINITE_TOKENS
                 long total_tokens = count_infinite_token(user);
-                if(total_tokens > MAX_INFINITE_TOKENS){
+                printf("totaks:%ld\n",total_tokens);
+                if(total_tokens >= MAX_INFINITE_TOKENS){
                     remove_last_infinite_token(user);
                 }
         #endif
-        set_infinity_token(user, token->token);
+        set_infinity_token(user, token->hash);
     }
 
     if(!infinite){
-        set_finity_token(user, token->token, allow_renew, expiration);
+        set_finity_token(user, token->hash, allow_renew, expiration);
     }
-
     resource.commit(database);
     CHash *response_hash = newCHashObject(
             "code",hash.newNumber(INTERNAL_OK),
             "hash",hash.newString(token->token)
             );
-
     Token_free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 

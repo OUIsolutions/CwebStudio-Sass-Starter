@@ -5,7 +5,7 @@
 #define  WRONG_PASSWORD 4
 #define INVALID_EXPIRATION 5
 #define  UNDEFINED_ERROR 500
-
+#define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headders/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
 #define USER_NOT_EXIST_MENSSAGE "user %s not found"
 #define WRONG_PASSWORD_MENSSAGE "wrong password"
