@@ -22,8 +22,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                      NULL
         );
     }
-    obj.set_default(entries, ALLOW_RENEW_PATH, hash.newBool(DEFAULT_ALLOW_RENEW));
-    bool allow_renew = obj.getBool_converting(entries, ALLOW_RENEW_PATH);
+    obj.set_default(entries, ALLOW_RENEW, hash.newBool(DEFAULT_ALLOW_RENEW));
+    bool allow_renew = obj.getBool_converting(entries, ALLOW_RENEW);
 
 
     CHash_catch(entries){
@@ -54,24 +54,25 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     //the token assignature will be formed by the user password + time + id
     char *user_id = user->name;
+    bool infinite = expiration == -1;
+    Token  *token = newToken(user_id, password,infinite);
 
-    char *token = create_token_string(user_id,password);
-
-    if(expiration == -1){
-        set_infinity_token(user, token);
+    if(infinite){
+        set_infinity_token(user, token->token);
     }
 
-    if(expiration > 0){
-        set_finity_token(user, token, allow_renew, expiration);
+    if(infinite){
+        set_finity_token(user, token->token, allow_renew, expiration);
     }
 
 
     resource.commit(database);
     CHash *response_hash = newCHashObject(
             "code",hash.newNumber(INTERNAL_OK),
-            "hash",hash.newString(token)
+            "hash",hash.newString(token->token)
             );
-    free(token);
+
+    Token_free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 
 }
