@@ -59,8 +59,10 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         #ifdef MAX_INFINITE_TOKENS
                 long total_tokens = count_infinite_token(user);
                 if(total_tokens >= MAX_INFINITE_TOKENS){
-                    remove_oldest_created_infinite_token(user);
+                    int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS) + 1;
+                    remove_oldest_created_infinite_token(user,total_to_remove);
                 }
+
         #endif
         set_infinity_token(user, token->hash);
     }

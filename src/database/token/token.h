@@ -7,7 +7,7 @@ void set_infinity_token(DtwResource *user, char *token);
 
 long count_infinite_token(DtwResource *user);
 
-void remove_oldest_created_infinite_token(DtwResource *user);
+void remove_oldest_created_infinite_token(DtwResource *user,int totals);
 
 void remove_expired_tokens(DtwResource *user);
 
