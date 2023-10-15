@@ -17,13 +17,13 @@ CTextStackModule stack;
 #include "extras/extras.h"
 
 #include "errors/errors.h"
-#include "api_routes/declaration.h"
+#include "routes/declaration.h"
 
 #include "database/definition.h"
 #include "token/token.c"
 #include "extras/extras.c"
 #include "errors/errors.c"
-#include "api_routes/definition.h"
+#include "routes/definition.h"
 
 //never use these flag in production
 

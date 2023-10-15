@@ -31,3 +31,16 @@ void set_infinity_token(DtwResource *user, char *token){
     resource.set_long(creation_resource,now);
 
 }
+
+long count_infinite_token(DtwResource *user){
+    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
+    return resource.size(all_tokens);
+}
+void remove_last_infinite_token(DtwResource *user){
+
+}
+long count_finite_token(DtwResource *user){
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    return resource.size(all_tokens);
+}
+
