@@ -36,9 +36,25 @@ long count_infinite_token(DtwResource *user){
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
     return resource.size(all_tokens);
 }
-void remove_last_infinite_token(DtwResource *user){
 
+void remove_last_infinite_token(DtwResource *user){
+    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
+    DtwStringArray * elements = resource.list_names(all_tokens);
+
+    DtwResource *last;
+    long last_time;
+    for(int i = 0; i < elements->size; i++){
+        DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
+        DtwResource *creation  =  resource.sub_resource(current,CREATION_PATH);
+        long  value = resource.get_long(creation);
+        if(value < last_time){
+            last_time = value;
+            last = current;
+        }
+    }
+    resource.destroy(last);
 }
+
 long count_finite_token(DtwResource *user){
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
     return resource.size(all_tokens);
