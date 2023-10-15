@@ -59,15 +59,19 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         #ifdef MAX_INFINITE_TOKENS
                 long total_tokens = count_infinite_token(user);
                 if(total_tokens >= MAX_INFINITE_TOKENS){
-                    remove_last_infinite_token(user);
+                    remove_oldest_created_infinite_token(user);
                 }
         #endif
         set_infinity_token(user, token->hash);
     }
 
-    if(!infinite){
+    if(infinite == false){
+        remove_expired_tokens(user);
+
         set_finity_token(user, token->hash, allow_renew, expiration);
     }
+
+
     resource.commit(database);
     CHash *response_hash = newCHashObject(
             "code",hash.newNumber(INTERNAL_OK),
