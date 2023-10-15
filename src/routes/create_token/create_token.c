@@ -53,7 +53,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     //the token assignature will be formed by the user password + time + id
     char *user_id = user->name;
     bool infinite = expiration == -1;
-    Token  *token = newToken(user_id, password,infinite);
+    char *token = create_token_string(user_id, password,infinite);
 
     if(infinite){
         #ifdef MAX_INFINITE_TOKENS
@@ -64,22 +64,21 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 }
 
         #endif
-        set_infinity_token(user, token->hash);
+        set_infinity_token(user, token);
     }
 
     if(infinite == false){
         remove_expired_tokens(user);
 
-        set_finity_token(user, token->hash, allow_renew, expiration);
+        set_finity_token(user, token, allow_renew, expiration);
     }
 
 
     resource.commit(database);
     CHash *response_hash = newCHashObject(
             "code",hash.newNumber(INTERNAL_OK),
-            "hash",hash.newString(token->token)
+            "token",hash.newString(token)
             );
-    Token_free(token);
+    free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
-
 }

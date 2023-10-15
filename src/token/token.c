@@ -13,10 +13,7 @@ void Token_free(Token *self){
     free(self);
 }
 
-Token * newToken(char *user_id, char *password, bool infinite){
-    Token  *self = (Token*)malloc(sizeof (Token));
-    *self = (Token){0};
-
+char * create_token_string(char *user_id, char *password, bool infinite){
 
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
@@ -31,14 +28,13 @@ Token * newToken(char *user_id, char *password, bool infinite){
     }
     CTextStack * token_assignature_string = newCTextStack_string(token_assignature->hash);
     stack.self_substr(token_assignature_string,0,SHA_SIZE);
-    self->hash = strdup(token_assignature_string->rendered_text);
-
     stack.format(token,"%tc",token_assignature_string);
     stack.format(token,"%s",user_id);
-    self->token = stack.self_transform_in_string_and_self_clear(token);
+
     dtw.hash.free(token_assignature);
 
-    return self;
+    return stack.self_transform_in_string_and_self_clear(token);
+
 }
 
 
