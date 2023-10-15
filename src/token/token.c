@@ -14,7 +14,7 @@ void Token_free(Token *self){
 }
 
 Token * newToken(char *user_id, char *password, bool infinite){
-    Token  *self;
+    Token  *self = (Token*)malloc(sizeof (Token));
     *self = (Token){0};
 
 
@@ -23,7 +23,6 @@ Token * newToken(char *user_id, char *password, bool infinite){
     dtw.hash.digest_string(token_assignature,password);
     dtw.hash.digest_long(token_assignature, time(NULL));
     self->hash = strdup(token_assignature->hash);
-
     CTextStack *token = newCTextStack_string_empty();
     if(infinite){
         stack.format(token,"i");
@@ -33,11 +32,12 @@ Token * newToken(char *user_id, char *password, bool infinite){
     }
     CTextStack * token_assignature_string = newCTextStack_string(token_assignature->hash);
 
-    stack.substr(token_assignature_string,0,SHA_SIZE);
+    stack.self_substr(token_assignature_string,0,SHA_SIZE);
     stack.format(token,"%tc",token_assignature_string);
     stack.format(token,"%s",user_id);
     self->token = stack.self_transform_in_string_and_self_clear(token);
     dtw.hash.free(token_assignature);
+
     return self;
 }
 
