@@ -20,9 +20,11 @@ char * create_token_string(char *user_id, char *password, bool infinite){
     dtw.hash.digest_string(token_assignature,password);
     dtw.hash.digest_long(token_assignature, time(NULL));
     CTextStack *token = newCTextStack_string_empty();
+
     if(infinite){
         stack.format(token,"i");
     }
+
     if(!infinite){
         stack.format(token,"f");
     }

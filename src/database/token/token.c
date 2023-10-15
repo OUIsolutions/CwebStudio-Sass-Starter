@@ -1,10 +1,10 @@
 
 
 
-void set_finity_token(DtwResource *user, char *token, bool allow_renew, int expiration){
+void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expiration){
 
     //data/elements/user/finite_token/
-    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     //data/elements/user/token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
     //data/elements/user/token/akspdih3u2ju223j2j3j2/renew_time
@@ -26,7 +26,7 @@ void set_finity_token(DtwResource *user, char *token, bool allow_renew, int expi
 void set_infinite_token(DtwResource *user, char *token){
 
     //data/elements/user/infinite_token/
-    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
     //data/elements/user/token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
     long now = time(NULL);
@@ -41,13 +41,13 @@ void set_infinite_token(DtwResource *user, char *token){
 
 long count_infinite_token(DtwResource *user){
     //data/elements/user/infinite_token/
-    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
     return resource.size(all_tokens);
 }
 
 void remove_last_updated_infinite_token(DtwResource *user, int totals){
     //data/elements/user/finite_token/
-    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
     DtwStringArray * elements = resource.list_names(all_tokens);
 
     for(int v = 0; v < totals; v++){
@@ -72,7 +72,7 @@ void remove_last_updated_infinite_token(DtwResource *user, int totals){
 
 void remove_last_updated_finite_token(DtwResource *user, int totals){
     //data/elements/user/finite_token/
-    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     DtwStringArray * elements = resource.list_names(all_tokens);
 
     for(int v = 0; v < totals; v++){
@@ -95,12 +95,12 @@ void remove_last_updated_finite_token(DtwResource *user, int totals){
 }
 
 void remove_expired_tokens(DtwResource *user){
-    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     DtwStringArray * elements = resource.list_names(all_tokens);
     long now = time(NULL);
     for(int i = 0; i < elements->size; i++){
         DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
-        DtwResource *expiration = resource.sub_resource(current,CREATION_PATH);
+        DtwResource *expiration = resource.sub_resource(current,EXPIRATION_PATH);
         long expiration_time = resource.get_long(expiration);
         if(now > expiration_time){
             resource.destroy(current);
@@ -110,7 +110,7 @@ void remove_expired_tokens(DtwResource *user){
 
 
 long count_finite_token(DtwResource *user){
-    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKEN_PATH);
+    DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     return resource.size(all_tokens);
 }
 
