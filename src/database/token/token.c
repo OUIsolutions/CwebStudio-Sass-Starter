@@ -59,8 +59,7 @@ void remove_last_infinite_token(DtwResource *user){
             last = current;
         }
     }
-    printf("last: %s\n",last->name);
-
+z
     resource.destroy(last);
     dtw.string_array.free(elements);
 

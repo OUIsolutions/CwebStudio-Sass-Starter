@@ -58,7 +58,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     if(infinite){
         #ifdef MAX_INFINITE_TOKENS
                 long total_tokens = count_infinite_token(user);
-                printf("totaks:%ld\n",total_tokens);
                 if(total_tokens >= MAX_INFINITE_TOKENS){
                     remove_last_infinite_token(user);
                 }
