@@ -14,12 +14,14 @@ CTextStackModule stack;
 #include "constants/all.h"
 #include "token/token.h"
 #include "database/declaration.h"
+#include "observability/observability.h"
 #include "extras/extras.h"
 
 #include "errors/errors.h"
 #include "routes/declaration.h"
 
 #include "database/definition.h"
+#include "observability/observability.c"
 #include "token/token.c"
 #include "extras/extras.c"
 #include "errors/errors.c"
@@ -28,9 +30,17 @@ CTextStackModule stack;
 //never use these flag in production
 
 #define DEBUG
+
+
+
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 
+    #ifdef USE_OBSERVALITY
+        CHash * created = save_start_request(request);
+        hash.free(created);
+    #endif
+        
     #ifdef DEBUG
 
         if(!strcmp(request->route,END_ROUTE)){
