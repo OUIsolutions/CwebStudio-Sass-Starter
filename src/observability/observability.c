@@ -2,7 +2,13 @@
 
 CHash * save_start_request(CwebHttpRequest *request){
 
-    char *now = dtw_convert_unix_time_to_string(time(NULL));
+    long total = dtw_get_total_itens_of_dir(REQUESTS_OBSERVER_PATH);
+    if(total > MAX_REQUESTS_SAVE){
+        return NULL;
+    }
+
+    long now_in_unix =time(NULL);
+    char *now = dtw_convert_unix_time_to_string(now_in_unix);
 
     CHashObject *request_obj =  newCHashObject(
             "route",hash.newString(request->route),
@@ -21,7 +27,7 @@ CHash * save_start_request(CwebHttpRequest *request){
                 CwebKeyVal *key_val = query_paramns->keys_vals[i];
                 obj.set_once(paramns,key_val->key,hash.newString(key_val->value) );
             }
-            obj.set_once(request_obj,"parramns",paramns);
+            obj.set_once(request_obj,"paramns",paramns);
     #endif
 
     #ifdef INCLUDE_HEADDERS_OBSERVER
@@ -36,12 +42,12 @@ CHash * save_start_request(CwebHttpRequest *request){
 
     CHashObject * element = newCHashObject(
             "start",hash.newString(now),
+            "start_unix",hash.newNumber(now_in_unix),
             "end",hash.newNULL(),
             "duration",hash.newNULL(),
             "client",hash.newString(request->client_ip),
             "request", request_obj,
             "response",hash.newNULL()
-
      );
 
     char *text  = hash.dump_to_json_string(element);
