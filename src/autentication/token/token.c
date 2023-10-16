@@ -1,8 +1,6 @@
 
 void Token_free(Token *self){
-    if(self->hash){
-        free(self->hash);
-    }
+
     if(self->user_id){
         free(self->user_id);
     }
@@ -52,13 +50,15 @@ Token * extract_token(char *token_string){
         stack.free(element);
         return NULL;
     }
-    if(element->size >  SHA_SIZE + MAX_USER_SIZE){
+    if(element->size >  SHA_SIZE + MAX_USER_SIZE +1){
         stack.free(element);
         return NULL;
     }
 
 
     Token  *token = (Token*) malloc(sizeof (Token));
+    token->token = strdup(token_string);
+
     if(element->rendered_text[0] == 'i'){
         token->infinite = true;
     }
@@ -66,17 +66,27 @@ Token * extract_token(char *token_string){
         token->infinite = false;
     }
 
-    token->hash = stack.self_transform_in_string_and_self_clear(
-            stack.substr(element,1,SHA_SIZE+1)
-    );
 
     token->user_id = stack.self_transform_in_string_and_self_clear(
             stack.substr(element,SHA_SIZE+1,-1)
     );
+
     stack.free(element);
 
     return token;
 
 
 
+}
+
+void Token_represent(Token *self){
+    if(self->user_id){
+        printf("user id: %s\n",self->user_id);
+    }
+    if(self->token){
+        printf("token:%s\n",self->token);
+    }
+    if(self->infinite){
+        printf("infinite:%s\n",self->infinite ? "true":"false");
+    }
 }

@@ -12,7 +12,7 @@ CHashValidatorModule validator;
 CTextStackModule stack;
 
 #include "constants/all.h"
-#include "token/token.h"
+#include "autentication/declaration.h"
 #include "database/declaration.h"
 #include "observability/observability.h"
 #include "extras/extras.h"
@@ -22,7 +22,7 @@ CTextStackModule stack;
 
 #include "database/definition.h"
 #include "observability/observability.c"
-#include "token/token.c"
+#include "autentication/definition.h"
 #include "extras/extras.c"
 #include "errors/errors.c"
 #include "routes/definition.h"
@@ -79,7 +79,12 @@ int main(int argc, char *argv[]){
     validator = hash.validator;
     stack = newCTextStackModule();
 
-
+    char *t = create_token_string("aa","aaa",false);
+    
+    printf("created %s\n",t);
+    Token  *t2 = extract_token(t);
+    Token_represent(t2);
+    return 0;
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){

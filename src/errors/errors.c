@@ -28,12 +28,11 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
 
 
 CwebHttpResponse *send_entrie_error(CwebHttpRequest  *request, CHashObject *entries){
-
     validator.generate_custom_error_cleaning_args(entries, newCHashArray(
 
             newCHashObject(
                     "code",hash.newNumber(CHASH_ELEMENT_NOT_EXIST),
-                    "message",hash.newString("param #reference# not found in headders/paramns")
+                    "message",hash.newString("param #key# not found in headders/paramns")
             ),
 
             newCHashObject(
@@ -54,7 +53,6 @@ CwebHttpResponse *send_entrie_error(CwebHttpRequest  *request, CHashObject *entr
 
 
     ));
-
     char *menssage = hash.get_error_menssage(entries);
 
     CwebHttpResponse  *response = send_error(

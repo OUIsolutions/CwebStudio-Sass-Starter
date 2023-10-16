@@ -5,6 +5,7 @@
 
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
+
     aply_path_protection(entries,USERNAME_OR_EMAIL);
     char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
     char *password = obj.getString(entries,PASSWORD);
@@ -21,6 +22,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                      NULL
         );
     }
+
     obj.set_default(entries, RENEW_TIME, hash.newBool(DEFAULT_ALLOW_RENEW));
     bool allow_renew = obj.getBool_converting(entries, RENEW_TIME);
 
