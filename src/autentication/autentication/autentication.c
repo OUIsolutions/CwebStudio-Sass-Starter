@@ -13,20 +13,18 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
 
     Token *token_obj = extract_token(token);
     if(!token_obj){
-        validator.raise_error_by_key(entries,
-                 TOKEN,
-                 INVALID_TOKEN,
-                 NOT_VALID_TOKEN_MESSAGE_FOR_ENTRIES,
-                 NULL
-        );
-
-    }
-
-    CHash_catch(entries){
         auth.error = true;
-        auth.response_error = send_entrie_error(request, entries);
+        auth.response_error =send_error(
+                request,
+                INVALID_TOKEN,
+                INVALID_TOKEN,
+                NOT_VALID_TOKEN_MESSAGE,
+                token
+        );
         return auth;
     }
+
+
 
     DtwResource *user = find_user_by_id(database, token_obj->user_id);
 

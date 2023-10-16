@@ -55,15 +55,19 @@ Token * extract_token(char *token_string){
 
 
     Token  *token = (Token*) malloc(sizeof (Token));
+    *token = (Token){0};
     token->token = strdup(token_string);
 
     if(element->rendered_text[0] == 'i'){
         token->infinite = true;
     }
-    if(element->rendered_text[0] == 'f'){
+    else if(element->rendered_text[0] == 'f'){
         token->infinite = false;
     }
-
+    else{
+        Token_free(token);
+        return NULL;
+    }
 
     token->user_id = stack.self_transform_in_string_and_self_clear(
             stack.substr(element,SHA_SIZE+1,-1)

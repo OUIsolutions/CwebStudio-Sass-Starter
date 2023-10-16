@@ -48,10 +48,12 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     DtwResource *database = resource.newResource(DATABASE_PATH);
     CwebHttpResponse *response = NULL;
 
-    if(!strcmp(request->route,CREATE_TOKEN)){
+    if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
-
+    if(!strcmp(request->route,GET_SELF_PROPS_ROUTE)){
+        response = get_self_props(request,entries,database);
+    }
     hash.free(entries);
     resource.free(database);
 

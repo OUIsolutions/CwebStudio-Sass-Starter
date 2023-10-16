@@ -1,2 +1,3 @@
 #define END_ROUTE "/end"
-#define CREATE_TOKEN "/create_token"
+#define CREATE_TOKEN_ROUTE "/create_token"
+#define GET_SELF_PROPS_ROUTE  "/get_self_props"
