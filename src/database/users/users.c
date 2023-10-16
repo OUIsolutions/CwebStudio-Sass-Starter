@@ -69,6 +69,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
         );
         char * converted_expiration = dtw_convert_unix_time_to_string(expiration);
 
+
         array.append_once(finite_tokens, newCHashObject(
                 TOKEN_KEY,hash.newString(current_token_resource->name),
                 CREATION_KEY, hash.newString(converted_creation),
@@ -83,7 +84,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
     obj.set_once(user_obj,FINITE_TOKENS_KEY,finite_tokens);
 
-    
+
 
     return user_obj;
 }

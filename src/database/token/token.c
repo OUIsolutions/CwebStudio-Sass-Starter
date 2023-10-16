@@ -9,14 +9,16 @@ void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expi
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
     //data/elements/user/token/akspdih3u2ju223j2j3j2/renew_time
 
-    if(allow_renew){
-        DtwResource *renew_time = resource.sub_resource(token_resource, RENEW_TIME);
-        resource.set_long(renew_time,expiration);
-    }
+    DtwResource *allow_renew_resource = resource.sub_resource(token_resource, ALLOW_RENEW_PATH);
+    resource.set_bool(allow_renew_resource,allow_renew);
 
-    DtwResource *expiration_resource = resource.sub_resource(token_resource, EXPIRATION_PATH);
+
+    DtwResource *renew_time = resource.sub_resource(token_resource, EXPIRATION_PATH);
+    resource.set_long(renew_time,expiration);
+
+    DtwResource *expiration_resource = resource.sub_resource(token_resource, LAST_UPDATE_PATH);
     long now = time(NULL);
-    resource.set_long(expiration_resource,now + (expiration * 60));
+    resource.set_long(expiration_resource,now);
 
     DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
     resource.set_long(creation_resource,now);

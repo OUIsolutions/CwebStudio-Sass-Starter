@@ -6,25 +6,26 @@
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    aply_path_protection(entries,USERNAME_OR_EMAIL);
-    char *username_or_email = obj.getString(entries,USERNAME_OR_EMAIL);
-    char *password = obj.getString(entries,PASSWORD);
+    aply_path_protection(entries, USERNAME_OR_EMAIL_ENTRIE);
+    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRIE);
+    char *password = obj.getString(entries, PASSWORD_ENTRIE);
 
-    obj.set_default(entries, EXPIRATION, hash.newNumber(DEFAULT_EXPIRATION));
-    long expiration = (long)obj.getNumber_converting(entries, EXPIRATION);
+    obj.set_default(entries, EXPIRATION_ENTRIE, hash.newNumber(DEFAULT_EXPIRATION_ENTRIE));
+    long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_ENTRIE);
 
 
     if(expiration != -1 && expiration <=0){
         validator.raise_error_by_key(entries,
-                     EXPIRATION,
-                     INVALID_EXPIRATION,
-                     NOT_VALID_EXPIRATION_MENSSAGE,
-                     NULL
+                                     EXPIRATION_ENTRIE,
+                                     INVALID_EXPIRATION,
+                                     NOT_VALID_EXPIRATION_MENSSAGE,
+                                     NULL
         );
     }
 
-    obj.set_default(entries, RENEW_TIME, hash.newBool(DEFAULT_ALLOW_RENEW));
-    bool allow_renew = obj.getBool_converting(entries, RENEW_TIME);
+    obj.set_default(entries, RENEW_ENTRIE, hash.newBool(DEFAULT_ALLOW_RENEW));
+
+    bool allow_renew = obj.getBool_converting(entries, RENEW_ENTRIE);
 
 
     CHash_catch(entries){

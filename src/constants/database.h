@@ -10,6 +10,7 @@
 #define INFINITE_TOKENS_PATH "infinite_tokens"
 #define FINITE_TOKENS_PATH "finite_tokens"
 
+#define ALLOW_RENEW_PATH "allow_renew"
 #define EXPIRATION_PATH "expiration"
 #define CREATION_PATH "creation"
 #define LAST_UPDATE_PATH "last_update"
