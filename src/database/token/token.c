@@ -13,8 +13,8 @@ void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expi
     resource.set_bool(allow_renew_resource,allow_renew);
 
 
-    DtwResource *renew_time = resource.sub_resource(token_resource, EXPIRATION_PATH);
-    resource.set_long(renew_time,expiration);
+    DtwResource *expiration_time = resource.sub_resource(token_resource, EXPIRATION_PATH);
+    resource.set_long(expiration_time,expiration  *60);
 
     DtwResource *expiration_resource = resource.sub_resource(token_resource, LAST_UPDATE_PATH);
     long now = time(NULL);

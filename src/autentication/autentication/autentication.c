@@ -71,9 +71,12 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
 
     if(token_obj->infinite == false){
         DtwResource *expiration = resource.sub_resource(token_resource,EXPIRATION_PATH);
-        long value = resource.get_long(expiration);
+        long expiration_Value = resource.get_long(expiration);
+        DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
+        long last_update_value = resource.get_long(last_update);
+
         long now = time(NULL);
-        if(now > value){
+        if(now > (expiration_Value + last_update_value)){
             auth.error = true;
             auth.response_error =send_error(
                     request,
@@ -83,9 +86,16 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                     token
             );
             Token_free(token_obj);
-
             return auth;
         }
+        bool allow_renew = resource.get_bool(
+                resource.sub_resource(token_resource,ALLOW_RENEW_PATH)
+        );
+        if(allow_renew){
+            resource.set_long(last_update, time(NULL));
+        }
+
+
     }
 
     Token_free(token_obj);
