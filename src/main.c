@@ -80,11 +80,8 @@ int main(int argc, char *argv[]){
     stack = newCTextStackModule();
 
     char *t = create_token_string("aa","aaa",false);
+    Token *t2 = extract_token(t);
     
-    printf("created %s\n",t);
-    Token  *t2 = extract_token(t);
-    Token_represent(t2);
-    return 0;
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){

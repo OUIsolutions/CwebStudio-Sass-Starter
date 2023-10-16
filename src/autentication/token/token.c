@@ -12,13 +12,11 @@ void Token_free(Token *self){
 }
 
 char * create_token_string(char *user_id, char *password, bool infinite){
-
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
     dtw.hash.digest_string(token_assignature,password);
     dtw.hash.digest_long(token_assignature, time(NULL));
     CTextStack *token = newCTextStack_string_empty();
-
     if(infinite){
         stack.format(token,"i");
     }
@@ -80,6 +78,9 @@ Token * extract_token(char *token_string){
 }
 
 void Token_represent(Token *self){
+    if(!self){
+        return;
+    }
     if(self->user_id){
         printf("user id: %s\n",self->user_id);
     }
