@@ -65,6 +65,7 @@ Token * extract_token(char *token_string){
         token->infinite = false;
     }
     else{
+        stack.free(element);
         Token_free(token);
         return NULL;
     }
