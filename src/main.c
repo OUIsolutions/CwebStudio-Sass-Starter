@@ -79,10 +79,7 @@ int main(int argc, char *argv[]){
     validator = hash.validator;
     stack = newCTextStackModule();
 
-    char *t = create_token_string("aa","aaa",false);
-    Token *t2 = extract_token(t);
     
-
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
             CwebServer server = newCwebSever(i, main_sever);
