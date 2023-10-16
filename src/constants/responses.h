@@ -3,3 +3,6 @@
 #define EXPIRATION_KEY "expiration"
 #define CREATION_KEY "creation"
 #define FINITE_TOKENS_KEY "finite_tokens"
+#define INFINITE_TOKENS_KEY "infinite_tokens"
+#define ALLOW_RENEW_KEY "allow_renew"
+#define LAST_UPDATE_KEY "last_update"

@@ -7,7 +7,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
         return  auth.response_error;
     }
     DtwResource *user = auth.user;
+    CHashObject  *description = describe_user(user,true);
+    return send_chash_cleaning_memory(description, HTTP_OK);
 
-
-    return cweb.response.send_text("self props",200);
 }
