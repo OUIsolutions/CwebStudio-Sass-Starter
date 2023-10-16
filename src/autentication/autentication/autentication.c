@@ -16,7 +16,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         auth.error = true;
         auth.response_error =send_error(
                 request,
-                INVALID_TOKEN,
+                BAD_REQUEST,
                 INVALID_TOKEN,
                 NOT_VALID_TOKEN_MESSAGE,
                 token
@@ -24,15 +24,17 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
     DtwResource *user = find_user_by_id(database, token_obj->user_id);
-    printf("pegou aqui\n");
+    #ifdef ALLOW_LOCKER
+        resource.lock(user);
+    #endif
 
     if(!user){
         auth.error = true;
         auth.response_error =send_error(
                 request,
+                NOT_FOUND,
                 INVALID_TOKEN,
-                INVALID_TOKEN,
-                NOT_VALID_TOKEN_MESSAGE,
+                NOT_EXIST_TOKEN_MESSAGE,
                 token
         );
         Token_free(token_obj);
@@ -43,6 +45,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     if(token_obj->infinite){
         token_resource = get_ifinite_token(user,token);
     }
+
     if(token_obj->infinite == false){
         token_resource = get_finite_token(user,token);
     }
@@ -51,15 +54,39 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         auth.error = true;
         auth.response_error =send_error(
                 request,
+                NOT_FOUND,
                 INVALID_TOKEN,
-                INVALID_TOKEN,
-                NOT_VALID_TOKEN_MESSAGE,
+                NOT_EXIST_TOKEN_MESSAGE,
                 token
         );
         Token_free(token_obj);
+
         return auth;
     }
 
+    if(token_obj->infinite){
+        DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
+        resource.set_long(last_update, time(NULL));
+    }
+
+    if(token_obj->infinite == false){
+        DtwResource *expiration = resource.sub_resource(token_resource,EXPIRATION_PATH);
+        long value = resource.get_long(expiration);
+        long now = time(NULL);
+        if(now > value){
+            auth.error = true;
+            auth.response_error =send_error(
+                    request,
+                    FOREBIDEN,
+                    INVALID_TOKEN,
+                    EXPIRED_TOKEN_MESSAGE,
+                    token
+            );
+            Token_free(token_obj);
+
+            return auth;
+        }
+    }
 
     Token_free(token_obj);
     auth.user = user;

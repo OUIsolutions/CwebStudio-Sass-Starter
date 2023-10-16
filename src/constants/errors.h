@@ -8,6 +8,8 @@
 #define  UNDEFINED_ERROR 500
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headders/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
+#define NOT_EXIST_TOKEN_MESSAGE  "token: %s not exist"
+#define EXPIRED_TOKEN_MESSAGE  "token: %s its expired"
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
 #define USER_NOT_EXIST_MENSSAGE "user %s not found"
