@@ -8,5 +8,4 @@ typedef struct Autentication{
     };
 }Autentication;
 
-Autentication autenticate(CHash *entries,DtwResource *database);
-
+Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *database);

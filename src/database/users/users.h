@@ -1,8 +1,9 @@
 
 
-DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *username_or_email,bool lock);
+DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *username_or_email);
 
 
+DtwResource *find_user_by_id(DtwResource  *database,const char *id);
 
 
 

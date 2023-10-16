@@ -31,7 +31,11 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         return send_entrie_error(request, entries);
     }
 
-    DtwResource *user = find_user_by_username_or_email(database,username_or_email,ALLOW_LOCKER);
+    DtwResource *user = find_user_by_username_or_email(database,username_or_email);
+
+    #ifdef ALLOW_LOCKER
+        resource.lock(user);
+    #endif
 
     if(!user){
         return send_error(
