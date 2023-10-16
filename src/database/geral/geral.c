@@ -1,4 +1,13 @@
 
+DtwResource *find_element_by_id(DtwResource *folder,const char *id){
+
+    DtwResource *elements = resource.sub_resource(folder, ELEMENTS_PATH);
+    DtwResource *element = resource.sub_resource(elements,id);
+    if(resource.type(element) == DTW_NOT_FOUND){
+        return  NULL;
+    }
+    return element;
+}
 
 DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,const  char *index){
     //folder/index

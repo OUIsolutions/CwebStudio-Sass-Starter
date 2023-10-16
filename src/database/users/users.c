@@ -20,13 +20,11 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
     return possible_user;
 }
 DtwResource *find_user_by_id(DtwResource  *database,const char *id){
-    DtwResource *elements = resource.sub_resource(database, ELEMENTS_PATH);
-    DtwResource *user = resource.sub_resource(elements,id);
-    if(resource.type(user) == DTW_NOT_FOUND){
-        return  NULL;
-    }
-    return user;
+    //users/
+    DtwResource *users = resource.sub_resource(database, USERS_PATH);
+    return find_element_by_id(users,id);
 }
+
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);

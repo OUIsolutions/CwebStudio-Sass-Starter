@@ -24,6 +24,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
     DtwResource *user = find_user_by_id(database, token_obj->user_id);
+    printf("pegou aqui\n");
 
     if(!user){
         auth.error = true;
@@ -37,6 +38,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         Token_free(token_obj);
         return auth;
     }
+
     DtwResource *token_resource = NULL;
     if(token_obj->infinite){
         token_resource = get_ifinite_token(user,token);
@@ -44,7 +46,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     if(token_obj->infinite == false){
         token_resource = get_finite_token(user,token);
     }
-    printf("pegou aqui\n");
+
     if(!token_resource){
         auth.error = true;
         auth.response_error =send_error(
