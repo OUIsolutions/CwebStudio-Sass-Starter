@@ -28,7 +28,6 @@ CTextStackModule stack;
 #include "routes/definition.h"
 
 //never use these flag in production
-
 #define DEBUG
 
 
@@ -36,10 +35,6 @@ CTextStackModule stack;
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 
-    #ifdef USE_OBSERVALITY
-        CHash * created = save_start_request(request);
-        hash.free(created);
-    #endif
     #ifdef DEBUG
 
         if(!strcmp(request->route,END_ROUTE)){
@@ -47,8 +42,6 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
              return cweb.response.send_text("Application Terminated",200);
         }
     #endif
-
-    return cweb.response.send_text("aa",200);
 
 
     CHashObject * entries = join_headders_and_paramns(request);
@@ -93,6 +86,9 @@ int main(int argc, char *argv[]){
             CwebServer server = newCwebSever(i, main_sever);
             server.single_process = true;
             cweb.server.start(&server);
+            if(cweb_end_server){
+                break;
+            }
         }
     #else
         CwebServer server = newCwebSever(80, main_sever);
