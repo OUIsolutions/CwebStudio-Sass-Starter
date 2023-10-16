@@ -22,11 +22,12 @@ void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expi
     resource.set_long(creation_resource,now);
 
 }
+
 DtwResource *get_finite_token(DtwResource *user, char *token){
 
-    //data/elements/user/finite_token/
+    //data/user/elements/
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
-    //data/elements/user/token/akspdih3u2ju223j2j3j2
+    //data/elements/user/finite_token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
 
     if(resource.type(token_resource) ==DTW_NOT_FOUND){
@@ -34,13 +35,18 @@ DtwResource *get_finite_token(DtwResource *user, char *token){
     }
     return  token_resource;
 }
-DtwResource *get_ifinite_token(DtwResource *user, char *token){
 
+DtwResource *get_ifinite_token(DtwResource *user, char *token){
     //data/elements/user/infinite_token/
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
-    //data/elements/user/token/akspdih3u2ju223j2j3j2
+    //data/elements/user/infinite_token/akspdih3u2ju223j2j3j2
     DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
+    if(resource.type(token_resource) ==DTW_NOT_FOUND){
+        return NULL;
+    }
+    return  token_resource;
 }
+
 void set_infinite_token(DtwResource *user, char *token){
 
     //data/elements/user/infinite_token/

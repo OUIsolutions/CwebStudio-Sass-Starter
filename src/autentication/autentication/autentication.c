@@ -19,6 +19,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                  NOT_VALID_TOKEN_MESSAGE_FOR_ENTRIES,
                  NULL
         );
+
     }
 
     CHash_catch(entries){
@@ -38,8 +39,32 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_VALID_TOKEN_MESSAGE,
                 token
         );
+        Token_free(token_obj);
+        return auth;
+    }
+    DtwResource *token_resource = NULL;
+    if(token_obj->infinite){
+        token_resource = get_ifinite_token(user,token);
+    }
+    if(token_obj->infinite == false){
+        token_resource = get_finite_token(user,token);
+    }
+
+    if(!token_resource){
+        auth.error = true;
+        auth.response_error =send_error(
+                request,
+                INVALID_TOKEN,
+                INVALID_TOKEN,
+                NOT_VALID_TOKEN_MESSAGE,
+                token
+        );
+        Token_free(token_obj);
+        return auth;
     }
 
 
+    Token_free(token_obj);
+    auth.user = user;
     return auth;
 }
