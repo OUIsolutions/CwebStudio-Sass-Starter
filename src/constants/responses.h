@@ -1,2 +1,5 @@
 #define TOKEN_KEY "token"
 #define CODE_KEY "code"
+#define EXPIRATION_KEY "expiration"
+#define CREATION_KEY "creation"
+#define FINITE_TOKENS_KEY "finite_tokens"
