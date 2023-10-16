@@ -10,16 +10,15 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRIE);
     char *password = obj.getString(entries, PASSWORD_ENTRIE);
 
-    obj.set_default(entries, EXPIRATION_ENTRIE, hash.newNumber(DEFAULT_EXPIRATION_ENTRIE));
+    obj.set_default(entries, EXPIRATION_ENTRIE, hash.newNumber(DEFAULT_EXPIRATION));
     long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_ENTRIE);
-
 
     if(expiration != -1 && expiration <=0){
         validator.raise_error_by_key(entries,
-                                     EXPIRATION_ENTRIE,
-                                     INVALID_EXPIRATION,
-                                     NOT_VALID_EXPIRATION_MENSSAGE,
-                                     NULL
+                 EXPIRATION_ENTRIE,
+                 INVALID_EXPIRATION,
+                 NOT_VALID_EXPIRATION_MENSSAGE,
+                 NULL
         );
     }
 
@@ -33,10 +32,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
-
-    #ifdef ALLOW_LOCKER
-        resource.lock(user);
-    #endif
 
     if(!user){
         return send_error(
@@ -94,6 +89,19 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             TOKEN_KEY,hash.newString(token)
             );
+
+    if(infinite){
+        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString("never"));
+    }
+
+    if(infinite == false){
+        long now  = time(NULL);
+        long final_expiration = now + (expiration * 60);
+        char *expiration_in_str = dtw_convert_unix_time_to_string(final_expiration);
+        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(expiration_in_str));
+        free(expiration_in_str);
+    }
+
 
     free(token);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
