@@ -4,3 +4,4 @@
 #define EXPIRATION_ENTRIE "expiration"
 #define RENEW_ENTRIE "renew"
 #define TOKEN_ENTRIE "token"
+#define INCLUDE_TOKEN_ENTRIE "include_token"
