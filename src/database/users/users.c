@@ -37,7 +37,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
     obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
 
-    bool is_root = resource.get_bool_from_sub_resource(user,"email");
+    bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
 
 
     obj.set_once(user_obj,IS_ROOT_KEY,hash.newBool(is_root));

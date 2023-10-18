@@ -9,7 +9,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     DtwResource *user = auth.user;
 
     obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
-    bool include_tokens = obj.getBool(entries,INCLUDE_TOKEN_ENTRIE);
+    bool include_tokens = obj.getBool_converting(entries,INCLUDE_TOKEN_ENTRIE);
     char *password = NULL;
     if(include_tokens){
             password = obj.getString(entries,PASSWORD_ENTRIE);
@@ -29,7 +29,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
         }
     }
 
-    CHashObject  *description = describe_user(user,true);
+    CHashObject  *description = describe_user(user,include_tokens);
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }
