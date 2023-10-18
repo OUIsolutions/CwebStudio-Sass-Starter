@@ -102,3 +102,21 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     auth.user = user;
     return auth;
 }
+
+
+Autentication autenticate_root(CwebHttpRequest *request, CHash *entries,DtwResource *database){
+    Autentication auth = autenticate(request,entries,database);
+    if(auth.error){
+        return auth;
+    }
+    if(!is_root(auth.user)){
+        auth.error = true;
+        auth.response_error =send_error(
+                request,
+                FOREBIDEN,
+                USER_NOT_ROOT,
+                USER_NOT_ROOT_MESSAGE
+        );
+    }
+    return  auth;;
+}

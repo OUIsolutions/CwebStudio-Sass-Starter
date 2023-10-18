@@ -9,3 +9,6 @@ typedef struct Autentication{
 }Autentication;
 
 Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *database);
+
+
+Autentication autenticate_root(CwebHttpRequest *request, CHash *entries,DtwResource *database);
