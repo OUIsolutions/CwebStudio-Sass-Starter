@@ -8881,9 +8881,11 @@ void DtwResource_free(DtwResource *self){
 
 DtwResource * DtwResource_sub_resource_next(DtwResource *self, const char *end_path){
     long  size = dtw_get_total_itens_of_dir(self->path);
+
     if(size < 0){
         size = 0;
     }
+
     while(true){
 
         char path[300] ={0};

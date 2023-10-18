@@ -46,6 +46,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     CHashObject * entries = join_headders_and_paramns(request);
     DtwResource *database = resource.newResource(DATABASE_PATH);
+
     CwebHttpResponse *response = NULL;
 
     if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){

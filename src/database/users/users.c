@@ -129,7 +129,12 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
     return user_obj;
 }
+void create_user( DtwResource  *database,const char *username,const char *email,const char *password){
 
+    DtwResource * all_users = resource.sub_resource(database,USERS_PATH);
+    DtwResource *created_user = resource.sub_resource_random(database,NULL);
+
+}
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
     char *password_sha = resource.get_string(password);
