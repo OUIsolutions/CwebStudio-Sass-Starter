@@ -25,6 +25,11 @@ DtwResource *find_user_by_id(DtwResource  *database,const char *id){
     return find_element_by_id(users,id);
 }
 
+bool is_root(DtwResource *user){
+    return resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
+}
+
+
 CHash * describe_user(DtwResource *user, bool include_tokens){
     CHashObject * user_obj = newCHashObjectEmpty();
 
