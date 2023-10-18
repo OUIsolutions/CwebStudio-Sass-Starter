@@ -3,3 +3,4 @@
 #define  NOT_FOUND 404
 #define  BAD_REQUEST 400
 #define  FOREBIDEN 403
+#define CONFLICT 409
