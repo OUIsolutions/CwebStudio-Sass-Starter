@@ -39,7 +39,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
         if(!strcmp(request->route,END_ROUTE)){
              cweb_end_server = true;
-             return cweb.response.send_text("Application Terminated",200);
+             return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);
         }
     #endif
 
@@ -51,9 +51,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
+
     if(!strcmp(request->route,GET_SELF_PROPS_ROUTE)){
         response = get_self_props(request,entries,database);
     }
+
     hash.free(entries);
     resource.free(database);
 

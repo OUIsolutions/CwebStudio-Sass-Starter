@@ -28,19 +28,19 @@ DtwResource *find_user_by_id(DtwResource  *database,const char *id){
 CHash * describe_user(DtwResource *user, bool include_tokens){
     CHashObject * user_obj = newCHashObjectEmpty();
 
-    char *username = resource.get_string(user,USERNAME_PATH);
-    obj.set_once(user_obj,"username",hash.newString(username));
+    char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
+    obj.set_once(user_obj,USERNAME_KEY,hash.newString(username));
 
-    char *email = resource.get_string(
-            resource.sub_resource(user,EMAIL_PATH)
-    );
 
-    obj.set_once(user_obj,"email",hash.newString(email));
+    char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
 
-    bool is_root = resource.get_bool(
-            resource.sub_resource(user,"email")
-    );
-    obj.set_once(user_obj,"email",hash.newBool(is_root));
+
+    obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
+
+    bool is_root = resource.get_bool_from_sub_resource(user,"email");
+
+
+    obj.set_once(user_obj,IS_ROOT_KEY,hash.newBool(is_root));
 
     if(!include_tokens){
         return user_obj;
@@ -61,26 +61,19 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
                 finite_tokens_list->strings[i]
         );
 
-        long creation = resource.get_long(
-                resource.sub_resource(current_token_resource,CREATION_PATH)
-        );
+        long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
         char *converted_creation = dtw_convert_unix_time_to_string(creation);
         obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
         free(converted_creation);
 
+        bool allow_renew = resource.get_bool_from_sub_resource(current_token_resource,ALLOW_RENEW_PATH);
 
-        bool allow_renew = resource.get_bool(
-                resource.sub_resource(current_token_resource,ALLOW_RENEW_PATH)
-        );
         obj.set_once(current_token_obj,ALLOW_RENEW_KEY,hash.newBool(allow_renew));
 
+        long expiration = resource.get_long_from_sub_resource(current_token_resource,EXPIRATION_PATH);
 
-        long expiration = resource.get_long(
-                resource.sub_resource(current_token_resource,EXPIRATION_PATH)
-        );
-        long last_update = resource.get_long(
-                resource.sub_resource(current_token_resource,LAST_UPDATE_PATH)
-        );
+        long last_update = resource.get_long_from_sub_resource(current_token_resource,LAST_UPDATE_PATH);
+
         char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
         obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
         free(last_update_in_str);
@@ -88,7 +81,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
         long expiration_time = last_update + expiration;
         bool is_expired = time(NULL) >=  expiration_time;
         if(is_expired){
-            obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString("expired"));
+            obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString(EXPIRED_RESPONSE));
         }
         else{
             char *expiration_string = dtw_convert_unix_time_to_string(expiration_time);
@@ -100,6 +93,33 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
     }
 
     dtw.string_array.free(finite_tokens_list);
+
+    CHashArray *infinite_tokens = newCHashArrayEmpty();
+    obj.set_once(user_obj,INFINITE_TOKENS_KEY,infinite_tokens);
+    DtwResource * infinite_tokens_resource = resource.sub_resource(user,INFINITE_TOKENS_PATH);
+    DtwStringArray * infinite_tokens_list = resource.list_names(infinite_tokens_resource);
+    for(int i = 0; i < infinite_tokens_list->size; i ++){
+        CHashObject *current_token_obj = newCHashObjectEmpty();
+        array.append_once(infinite_tokens,current_token_obj);
+
+        DtwResource *current_token_resource = resource.sub_resource(
+                infinite_tokens_resource,
+                infinite_tokens_list->strings[i]
+        );
+
+        long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
+        char *converted_creation = dtw_convert_unix_time_to_string(creation);
+        obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
+        free(converted_creation);
+
+        long last_update = resource.get_long_from_sub_resource(current_token_resource,LAST_UPDATE_PATH);
+        char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
+        obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
+        free(last_update_in_str);
+
+    }
+
+    dtw.string_array.free(infinite_tokens_list);
 
 
     return user_obj;

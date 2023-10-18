@@ -6,3 +6,8 @@
 #define INFINITE_TOKENS_KEY "infinite_tokens"
 #define ALLOW_RENEW_KEY "allow_renew"
 #define LAST_UPDATE_KEY "last_update"
+#define USERNAME_KEY "username"
+#define EMAIL_KEY "email"
+#define EXPIRED_RESPONSE "expired"
+#define IS_ROOT_KEY "root"
+#define TERMINATED_APLICATION "Application Terminated"
