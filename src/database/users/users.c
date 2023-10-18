@@ -28,9 +28,7 @@ DtwResource *find_user_by_id(DtwResource  *database,const char *id){
 CHash * describe_user(DtwResource *user, bool include_tokens){
     CHashObject * user_obj = newCHashObjectEmpty();
 
-    char *username = resource.get_string(
-                    resource.sub_resource(user,USERNAME_PATH)
-    );
+    char *username = resource.get_string(user,USERNAME_PATH);
     obj.set_once(user_obj,"username",hash.newString(username));
 
     char *email = resource.get_string(
