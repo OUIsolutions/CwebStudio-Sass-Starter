@@ -9,6 +9,6 @@ bool is_root(DtwResource *user);
 
 CHash * describe_user(DtwResource *user, bool include_tokens);
 
-void create_user( DtwResource  *database,const char *username,const char *email,const char *password);
+void database_create_user( DtwResource  *database,const char *username,const char *email,const char *password);
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld);

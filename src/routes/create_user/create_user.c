@@ -48,7 +48,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
                 username
         );
     }
-
+    
 
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 }
