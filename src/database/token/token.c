@@ -135,6 +135,22 @@ void remove_expired_tokens(DtwResource *user){
     dtw.string_array.free(elements);
 }
 
+void database_remove_token(DtwResource *user,const char *token){
+    Token  *t = extract_token(token);
+    DtwResource  *all_tokens;
+
+    if(t->infinite){
+        all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
+
+    }
+    if(t->infinite){
+        all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
+    }
+
+    DtwResource *current = resource.sub_resource(all_tokens,"%s",token);
+    resource.destroy(current);
+    Token_free(t);
+}
 
 long count_finite_token(DtwResource *user){
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);

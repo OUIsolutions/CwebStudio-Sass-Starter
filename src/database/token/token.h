@@ -17,6 +17,7 @@ void remove_last_updated_finite_token(DtwResource *user, int totals);
 
 void remove_expired_tokens(DtwResource *user);
 
+void database_remove_token(DtwResource *user,const char *token);
 
 long count_finite_token(DtwResource *user);
 

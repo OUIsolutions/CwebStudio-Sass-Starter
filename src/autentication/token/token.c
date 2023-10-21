@@ -11,7 +11,7 @@ void Token_free(Token *self){
     free(self);
 }
 
-char * create_token_string(char *user_id, char *password, bool infinite){
+char * create_token_string(const char *user_id,const  char *password, bool infinite){
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
     dtw.hash.digest_string(token_assignature,password);
@@ -36,7 +36,7 @@ char * create_token_string(char *user_id, char *password, bool infinite){
 }
 
 
-Token * extract_token(char *token_string){
+Token * extract_token(const char *token_string){
 
     const int MAX_USER_SIZE = 30;
     const int MIN_USER_SIZE =1;

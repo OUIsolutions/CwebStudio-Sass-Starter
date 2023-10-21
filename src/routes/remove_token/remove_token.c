@@ -8,28 +8,15 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
     DtwResource *user = auth.user;
 
-    obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
-    bool include_tokens = obj.getBool_converting(entries,INCLUDE_TOKEN_ENTRIE);
-    char *password = NULL;
-    if(include_tokens){
-            password = obj.getString(entries,PASSWORD_ENTRIE);
-    }
-    CHash_catch(entries){
-        return send_entrie_error(request, entries);
-    }
+    char *token = obj.getString(entries,TOKEN_ENTRIE);
+    database_remove_token(user,token);
 
-    if(include_tokens){
-        if(!password_are_equal(user, password)){
-            return send_error(
-                    request,
-                    FOREBIDEN,
-                    WRONG_PASSWORD,
-                    WRONG_PASSWORD_MENSSAGE
-            );
-        }
-    }
+    CHashObject *response = newCHashObject(
+            CODE_KEY,hash.newNumber(INTERNAL_OK),
+            MESSAGE_KEY,hash.newString(TOKEN_CREATED)
+    );
+    resource.commit(database);
 
-    CHashObject  *description = describe_user(user,include_tokens);
-    return send_chash_cleaning_memory(description, HTTP_OK);
+    return send_chash_cleaning_memory(response,HTTP_CREATED);
 
 }

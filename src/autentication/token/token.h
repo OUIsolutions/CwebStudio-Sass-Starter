@@ -9,9 +9,9 @@ typedef struct  Token{
 void Token_free(Token *self);
 
 
-char *create_token_string(char *user_id, char *password, bool infinite);
+char *create_token_string(const char *user_id,const  char *password, bool infinite);
 
 
-Token * extract_token(char *token);
+Token * extract_token(const char *token);
 
 void Token_represent(Token *self);
