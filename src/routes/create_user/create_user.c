@@ -19,25 +19,30 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     validator.ensure_max_size_by_key(entries,USERNAME_ENTRIE,20);
     validator.ensure_min_size_by_key(entries,USERNAME_ENTRIE,3);
 
-
     char *email = obj.getString(entries,EMAIL_ENTRIE);
     validator.ensure_max_size_by_key(entries,EMAIL_ENTRIE,50);
     validator.ensure_min_size_by_key(entries,EMAIL_ENTRIE,10);
+    printf("pegou aqui\n");
 
 
     char *password = obj.getString(entries, PASSWORD_ENTRIE);
+    validator.ensure_min_size_by_key(entries,PASSWORD_ENTRIE,10);
+
 
     obj.set_default(entries,IS_ROOT_ENTRIE,hash.newBool(false));
     bool is_root = obj.getBool_converting(entries,IS_ROOT_ENTRIE);
 
-    if(strcmp(username,email) ==0){
-        validator.raise_error(
-                entries,
-                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
-                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
-                NULL
-        );
+    CHash_protected(entries){
+        if(strcmp(username,email) ==0){
+            validator.raise_error(
+                    entries,
+                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
+                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
+                    NULL
+            );
+        }
     }
+
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
