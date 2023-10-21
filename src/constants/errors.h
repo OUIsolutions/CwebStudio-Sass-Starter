@@ -7,6 +7,7 @@
 #define INVALID_TOKEN 6
 #define USER_NOT_ROOT 7
 #define USER_ALREADY_EXIST 8
+#define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME 9
 
 #define  UNDEFINED_ERROR 500
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headders/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
@@ -20,3 +21,4 @@
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
 #define USER_NOT_EXIST_MENSSAGE "user %s not found"
 #define WRONG_PASSWORD_MENSSAGE "wrong password"
+#define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE "email cannot be equal to email"

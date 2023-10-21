@@ -21,6 +21,14 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     obj.set_default(entries,IS_ROOT_KEY,hash.newBool(false));
     bool is_root = obj.getBool_converting(entries,IS_ROOT_KEY);
 
+    if(strcmp(username,email) ==0){
+        validator.raise_error(
+                entries,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
+                NULL
+        );
+    }
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
@@ -32,7 +40,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return send_error(
                 request,
                 CONFLICT,
-                USER_NOT_EXIST,
+                USER_ALREADY_EXIST,
                 USER_ALREADY_MESSAGE,
                 email
         );
@@ -43,7 +51,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return send_error(
                 request,
                 CONFLICT,
-                USER_NOT_EXIST,
+                USER_ALREADY_EXIST,
                 USER_ALREADY_MESSAGE,
                 username
         );
