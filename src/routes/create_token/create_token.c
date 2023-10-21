@@ -91,7 +91,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
             );
 
     if(infinite){
-        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString("never"));
+        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(NEVER_EXPIRATION));
     }
 
     if(infinite == false){

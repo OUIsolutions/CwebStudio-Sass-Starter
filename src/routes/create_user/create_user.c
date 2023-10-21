@@ -39,7 +39,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
     DtwResource *already_exist_username = find_user_by_username_or_email(database,username);
 
-    if(already_exist_email){
+    if(already_exist_username){
         return send_error(
                 request,
                 CONFLICT,
@@ -48,7 +48,13 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
                 username
         );
     }
-    
 
-    return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
+    database_create_user(database,username,email,password);
+    CHashObject *response = newCHashObject(
+            CODE_KEY,hash.newNumber(INTERNAL_OK),
+            MESSAGE_KEY,hash.newString(USER_CREATED)
+    );
+    resource.commit(database);
+
+    return send_chash_cleaning_memory(response,HTTP_CREATED);
 }

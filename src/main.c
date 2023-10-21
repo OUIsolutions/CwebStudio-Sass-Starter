@@ -57,6 +57,10 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = get_self_props(request,entries,database);
     }
 
+    if(!strcmp(request->route,CREATE_USERS_ROUTE)){
+        response = create_user(request,entries,database);
+    }
+
     hash.free(entries);
     resource.free(database);
 

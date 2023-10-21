@@ -7,7 +7,11 @@
 #define ALLOW_RENEW_KEY "allow_renew"
 #define LAST_UPDATE_KEY "last_update"
 #define USERNAME_KEY "username"
+#define MESSAGE_KEY "message"
 #define EMAIL_KEY "email"
 #define EXPIRED_RESPONSE "expired"
 #define IS_ROOT_KEY "root"
+
 #define TERMINATED_APLICATION "Application Terminated"
+#define USER_CREATED "User Created"
+#define NEVER_EXPIRATION "never"
