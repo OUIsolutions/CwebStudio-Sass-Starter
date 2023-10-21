@@ -142,19 +142,18 @@ int database_remove_token(DtwResource *user,Token *token){
         all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
 
     }
-    if(token->infinite){
+    if(token->infinite == false){
         all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     }
 
     DtwResource *current = resource.sub_resource(all_tokens,"%s",token->token);
-
     if(resource.type(current) == DTW_NOT_FOUND){
-        return 1;
+        return TOKEN_NOT_EXIST_INTERNAL;
     }
-
     resource.destroy(current);
-    return  0;
+    return  FUNCTION_OK;
 }
+
 
 long count_finite_token(DtwResource *user){
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);

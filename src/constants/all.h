@@ -7,3 +7,4 @@
 #include "aplication.h"
 #include "responses.h"
 #include "observability.h"
+#include "internal.h"
