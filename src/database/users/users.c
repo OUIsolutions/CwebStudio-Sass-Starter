@@ -133,11 +133,15 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 
     DtwResource * all_users = resource.sub_resource(database,USERS_PATH);
 
-    DtwResource *created_user = resource.sub_resource_random(database,NULL);
+    DtwResource *created_user = resource.sub_resource_random(all_users,NULL);
+
     set_index(all_users,created_user->name,EMAIL_PATH,email);
     set_index(all_users,created_user->name,USERNAME_PATH,username);
+
     DtwResource *password_resource = resource.sub_resource(created_user,PASSWORD_PATH);
     resource.set_string(password_resource,password);
+    DtwResource  *is_root_resource = resource.sub_resource(created_user,IS_ROOT_PATH);
+    resource.set_bool(is_root_resource,is_root);
 
 
 }
