@@ -11,15 +11,24 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return  auth.response_error;
     }
 
-    aply_path_protection(entries, USERNAME_KEY);
-    aply_path_protection(entries, EMAIL_KEY);
+    aply_path_protection(entries, USERNAME_ENTRIE);
+    aply_path_protection(entries, EMAIL_ENTRIE);
 
-    char *username = obj.getString(entries, USERNAME_KEY);
-    char *email = obj.getString(entries,EMAIL_KEY);
+    char *username = obj.getString(entries, USERNAME_ENTRIE);
+
+    validator.ensure_max_size_by_key(entries,USERNAME_ENTRIE,20);
+    validator.ensure_min_size_by_key(entries,USERNAME_ENTRIE,3);
+
+
+    char *email = obj.getString(entries,EMAIL_ENTRIE);
+    validator.ensure_max_size_by_key(entries,EMAIL_ENTRIE,50);
+    validator.ensure_min_size_by_key(entries,EMAIL_ENTRIE,10);
+
+
     char *password = obj.getString(entries, PASSWORD_ENTRIE);
 
-    obj.set_default(entries,IS_ROOT_KEY,hash.newBool(false));
-    bool is_root = obj.getBool_converting(entries,IS_ROOT_KEY);
+    obj.set_default(entries,IS_ROOT_ENTRIE,hash.newBool(false));
+    bool is_root = obj.getBool_converting(entries,IS_ROOT_ENTRIE);
 
     if(strcmp(username,email) ==0){
         validator.raise_error(

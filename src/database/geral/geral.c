@@ -33,16 +33,16 @@ DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,
     return current_element;
 }
 
-void set_index(DtwResource *folder,const char *id, const char *index_name, const char *value){
-    //folder/index
+void create_index(DtwResource *folder, const char *id, const char *index_name, const char *value){
+    //users/index
     DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
-    //folder/index/email
+    //users/index/email
     DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
-    //folder/index/email/user@gmail.com
+    //users/index/email/user@gmail.com
     DtwResource  *element_reference = resource.sub_resource(selected_index,value);
     resource.set_string(element_reference,id);
 
-    //folder/elements
+    //users/elements
     DtwResource * elements_folder = resource.sub_resource(folder,ELEMENTS_PATH);
     DtwResource * current_element = resource.sub_resource(elements_folder,id);
 
