@@ -131,13 +131,14 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 }
 void database_remove_user(DtwResource *database, DtwResource *user){
 
-    DtwResource * users = resource.sub_resource(database, USERS_PATH);
+    DtwResource * all_user = resource.sub_resource(database, USERS_PATH);
+
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-    destroy_index(users,EMAIL_PATH,email);
+    destroy_index(all_user,EMAIL_PATH,email);
 
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
-    destroy_index(users,USERNAME_PATH,username);
-    resource.destroy(users);
+    destroy_index(all_user,USERNAME_PATH,username);
+    resource.destroy(user);
 }
 
 
