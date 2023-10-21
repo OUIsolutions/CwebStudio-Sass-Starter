@@ -25,6 +25,7 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
     if(database_remove_token(user,t)){
+        Token_free(t);
         return send_error(
                 request,
                 BAD_REQUEST,
@@ -33,6 +34,8 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 token_to_remove
         );
     }
+
+    Token_free(t);
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
