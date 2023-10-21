@@ -52,6 +52,9 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
+    if(!strcmp(request->route,REMOVE_TOKEN_ROUTE)){
+        response = remove_token(request,entries,database);
+    }
 
     if(!strcmp(request->route,GET_SELF_PROPS_ROUTE)){
         response = get_self_props(request,entries,database);
