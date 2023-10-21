@@ -22,7 +22,6 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     char *email = obj.getString(entries,EMAIL_ENTRIE);
     validator.ensure_max_size_by_key(entries,EMAIL_ENTRIE,50);
     validator.ensure_min_size_by_key(entries,EMAIL_ENTRIE,10);
-    printf("pegou aqui\n");
 
 
     char *password = obj.getString(entries, PASSWORD_ENTRIE);

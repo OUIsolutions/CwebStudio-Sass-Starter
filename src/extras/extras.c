@@ -22,7 +22,7 @@ CHashObject *join_headders_and_paramns(CwebHttpRequest *request){
 void aply_path_protection(CHashObject *element, char *key){
     CTextStack *string = obj.getStack(element,key);
     CHash_protected(element){
-        stack.self_replace(string,"../","");
+        stack.self_replace(string,"/","");
     }
 
 }
