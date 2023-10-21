@@ -32,6 +32,17 @@ DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,
     }
     return current_element;
 }
+void destroy_index(DtwResource *folder,const char *index_name,const  char *index){
+    //folder/index
+    DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
+    //folder/index/email
+    DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
+    //folder/index/email/user@gmail.com
+    DtwResource  *element_reference = resource.sub_resource(selected_index,index);
+    resource.destroy(element_reference);
+
+}
+
 
 void create_index(DtwResource *folder, const char *id, const char *index_name, const char *value){
     //users/index

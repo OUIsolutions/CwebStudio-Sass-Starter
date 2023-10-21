@@ -14,6 +14,8 @@
 
 #define TERMINATED_APLICATION "Application Terminated"
 #define USER_CREATED "User Created"
+#define USER_REMOVED "User Created"
+
 #define NEVER_EXPIRATION "never"
 #define TOKEN_CREATED "Token Created"
 #define TOKEN_REMOVED "Token Removed"

@@ -63,6 +63,10 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route, CREATE_USER_ROUTE)){
         response = create_user(request,entries,database);
     }
+    if(!strcmp(request->route,REMOVE_USER_ROUTE)){
+        response = remove_user(request,entries,database);
+    }
+
     if(!strcmp(request->route, GET_USER_PROPS_ROUTE)){
         response = get_user_props(request,entries,database);
     }

@@ -129,6 +129,19 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
     return user_obj;
 }
+void database_remove_user(DtwResource *database, DtwResource *user){
+
+    DtwResource * users = resource.sub_resource(database, USERS_PATH);
+    char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
+    destroy_index(users,EMAIL_PATH,email);
+
+    char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
+    destroy_index(users,USERNAME_PATH,username);
+    resource.destroy(users);
+}
+
+
+
 void database_create_user( DtwResource  *database,const char *username,const char *email,const char *password,bool is_root){
     //users
     DtwResource * users = resource.sub_resource(database, USERS_PATH);
