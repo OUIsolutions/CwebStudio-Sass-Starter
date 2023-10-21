@@ -14,11 +14,11 @@
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
 #define NOT_EXIST_TOKEN_MESSAGE  "token: %s not exist"
 #define EXPIRED_TOKEN_MESSAGE  "token: %s its expired"
-#define USER_NOT_ROOT_MESSAGE "user is not root"
+#define USER_NOT_ROOT_MESSAGE "you must be root to acess these route"
 #define USER_ALREADY_MESSAGE "user %s already exist"
 
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
 #define USER_NOT_EXIST_MENSSAGE "user %s not found"
 #define WRONG_PASSWORD_MENSSAGE "wrong password"
-#define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE "email cannot be equal to email"
+#define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE "email cannot be equal to username"

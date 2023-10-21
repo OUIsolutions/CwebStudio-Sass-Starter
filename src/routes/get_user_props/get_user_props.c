@@ -6,7 +6,6 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
     if(auth.error){
         return  auth.response_error;
     }
-    DtwResource *user = auth.user;
 
     char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRIE);
     obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
