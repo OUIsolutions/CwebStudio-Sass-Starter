@@ -8,12 +8,35 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
     DtwResource *user = auth.user;
 
-    char *token = obj.getString(entries,TOKEN_ENTRIE);
-    database_remove_token(user,token);
+    char *token_to_remove = obj.getString(entries,TOKEN_TO_REMOVE_ENTRIE);
+    CHash_catch(entries){
+        return send_entrie_error(request, entries);
+    }
+
+    Token *t = extract_token(token_to_remove);
+    if(!t){
+        return send_error(
+                request,
+                BAD_REQUEST,
+                INVALID_TOKEN,
+                NOT_VALID_TOKEN_MESSAGE,
+                token_to_remove
+        );
+    }
+
+    if(database_remove_token(user,t)){
+        return send_error(
+                request,
+                BAD_REQUEST,
+                INVALID_TOKEN,
+                NOT_EXIST_TOKEN_MESSAGE,
+                token_to_remove
+        );
+    }
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
-            MESSAGE_KEY,hash.newString(TOKEN_CREATED)
+            MESSAGE_KEY,hash.newString(TOKEN_REMOVED)
     );
     resource.commit(database);
 

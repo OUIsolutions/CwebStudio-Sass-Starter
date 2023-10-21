@@ -16,3 +16,4 @@
 #define USER_CREATED "User Created"
 #define NEVER_EXPIRATION "never"
 #define TOKEN_CREATED "Token Created"
+#define TOKEN_REMOVED "Token Removed"

@@ -5,5 +5,6 @@
 #define EXPIRATION_ENTRIE "expiration"
 #define RENEW_ENTRIE "renew"
 #define TOKEN_ENTRIE "token"
+#define TOKEN_TO_REMOVE_ENTRIE "token_to_remove"
 #define INCLUDE_TOKEN_ENTRIE "include_tokens"
 #define IS_ROOT_ENTRIE "root"
