@@ -130,13 +130,15 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
     return user_obj;
 }
 void database_create_user( DtwResource  *database,const char *username,const char *email,const char *password,bool is_root){
+    //users
+    DtwResource * users = resource.sub_resource(database, USERS_PATH);
+    //users/elements
+    DtwResource *elements = resource.sub_resource(users,ELEMENTS_PATH);
+    //users/elements/2o3023dsds
+    DtwResource *created_user = resource.sub_resource_random(elements, NULL);
 
-    DtwResource * all_users = resource.sub_resource(database,USERS_PATH);
-
-    DtwResource *created_user = resource.sub_resource_random(all_users,NULL);
-
-    set_index(all_users,created_user->name,EMAIL_PATH,email);
-    set_index(all_users,created_user->name,USERNAME_PATH,username);
+    set_index(users, created_user->name, EMAIL_PATH, email);
+    set_index(users, created_user->name, USERNAME_PATH, username);
 
     DtwResource *password_resource = resource.sub_resource(created_user,PASSWORD_PATH);
     resource.set_string(password_resource,password);
