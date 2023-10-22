@@ -22,7 +22,6 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     #endif
 
-
     CHashObject * entries = join_headders_and_paramns(request);
     DtwResource *database = resource.newResource(DATABASE_PATH);
 
@@ -31,6 +30,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
+
     if(!strcmp(request->route,REMOVE_TOKEN_ROUTE)){
         response = remove_token(request,entries,database);
     }
