@@ -1,38 +1,16 @@
-#include "dependencies/CHashManipulator.h"
-#include "dependencies/CWebStudio.h"
-#include "dependencies/doTheWorld.h"
+#include "imports.h"
+#include "namespaces.h"
+#include "declaration.h"
+#include "definition.h"
 
-CwebNamespace cweb;
-DtwNamespace dtw;
-DtwResourceModule resource;
-CHashNamespace hash;
-CHashObjectModule obj;
-CHashArrayModule array;
-CHashValidatorModule validator;
-CTextStackModule stack;
 
-#include "constants/all.h"
-#include "autentication/declaration.h"
-#include "database/declaration.h"
-#include "observability/observability.h"
-#include "extras/extras.h"
-
-#include "errors/errors.h"
-#include "routes/declaration.h"
-
-#include "database/definition.h"
-#include "observability/observability.c"
-#include "autentication/definition.h"
-#include "extras/extras.c"
-#include "errors/errors.c"
-#include "routes/definition.h"
 
 //never use these flag in production
 #define DEBUG
 
 
-
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
+
 
 
     #ifdef DEBUG
@@ -103,7 +81,8 @@ int main(int argc, char *argv[]){
     array = hash.array;
     validator = hash.validator;
     stack = newCTextStackModule();
-
+    create_root_user_if_not_exist();
+    
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){

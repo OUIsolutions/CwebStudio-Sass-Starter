@@ -149,6 +149,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
     return all_users_hash;
 
 }
+
 CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens){
 
     DtwResource * all_users;

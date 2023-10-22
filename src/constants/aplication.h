@@ -3,4 +3,7 @@
 #define MAX_FINITE_TOKENS 30
 #define DEFAULT_EXPIRATION 30
 #define DEFAULT_ALLOW_RENEW false
+#define START_ROOT_NAME "root"
+#define START_ROOT_PASSWORD "root"
+
 #define SHA_SIZE 15
