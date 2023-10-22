@@ -55,6 +55,10 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = modify_self_props(request,entries,database);
     }
 
+    if(!strcmp(request->route,MODIFY_USER_PROPS_ROUTE)){
+        response = modify_user_props(request,entries,database);
+    }
+
     if(!strcmp(request->route, GET_USER_PROPS_ROUTE)){
         response = get_user_props(request,entries,database);
     }

@@ -2,6 +2,7 @@
 #include "remove_token/remove_token.c"
 #include "get_self_props/get_self_props.c"
 #include "modify_self_props/modify_self_props.c"
+#include "modify_user_props/modify_user_props.c"
 #include "get_user_props/get_user_props.c"
 #include "create_user/create_user.c"
 #include "remove_user/remove_user.c"
