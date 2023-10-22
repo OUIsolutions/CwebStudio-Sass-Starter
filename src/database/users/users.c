@@ -19,6 +19,7 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
     );
     return possible_user;
 }
+
 DtwResource *find_user_by_id(DtwResource  *database,const char *id){
     //users/
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
@@ -129,6 +130,22 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
     return user_obj;
 }
+
+
+CHash * describe_all_users(DtwResource *database, bool include_tokens){
+    DtwResource * all_users = resource.sub_resource(database, USERS_PATH);
+    DtwStringArray * elements = resource.list_names(all_users);
+    CHashArray  *all_uers_hash = array.newArrayEmpty();
+    for(long i = 0; i < elements->size; i++){
+        char *current = elements->strings[i];
+        DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
+        array.append_once(all_uers_hash, describe_user(current_user,include_tokens));
+    }
+    dtw.string_array.free(elements);
+    return all_uers_hash;
+}
+
+
 void database_remove_user(DtwResource *database, DtwResource *user){
 
     DtwResource * all_user = resource.sub_resource(database, USERS_PATH);
