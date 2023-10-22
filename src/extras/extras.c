@@ -15,7 +15,15 @@ CHashObject *join_headders_and_paramns(CwebHttpRequest *request){
     CwebDict *heeaders = request->headers;
     for(int i = 0; i < heeaders->size; i++){
         CwebKeyVal *key_val = heeaders->keys_vals[i];
+#ifdef  ALL_ENTRIES_LOWER
+        CTextStack *converted = stack.newStack_string(key_val->key);
+        stack.self_lower(converted);
+        obj.set_once(all,converted->rendered_text,hash.newString(key_val->value) );
+        stack.free(converted);
+#else
         obj.set_once(all,key_val->key,hash.newString(key_val->value) );
+#endif
+
     }
     return  all;
 }
