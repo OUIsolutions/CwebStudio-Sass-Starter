@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
     validator = hash.validator;
     stack = newCTextStackModule();
     create_root_user_if_not_exist();
-    
+
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
