@@ -31,7 +31,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
     if(obj.exist(entries,NEW_PASSWORD_ENTRIE)){
         validator.ensure_min_size_by_key(entries,NEW_PASSWORD_ENTRIE,10);
         validator.ensure_max_size_by_key(entries,NEW_PASSWORD_ENTRIE,50);
-        new_password = obj.getString(entries,new_password);
+        new_password = obj.getString(entries,NEW_PASSWORD_ENTRIE);
     }
 
     if(new_username && new_email){

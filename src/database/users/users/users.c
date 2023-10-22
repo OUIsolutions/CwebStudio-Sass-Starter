@@ -85,7 +85,7 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
     }
 
     if(new_password){
-        char *sha = dtw_generate_sha_from_string(new_username);
+        char *sha = dtw_generate_sha_from_string(new_password);
         resource.set_string_in_sub_resource(user,sha,PASSWORD_PATH);
         free(sha);
     }

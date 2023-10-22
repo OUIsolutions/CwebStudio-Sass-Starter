@@ -38,7 +38,7 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
     if(obj.exist(entries,NEW_PASSWORD_ENTRIE)){
         validator.ensure_min_size_by_key(entries,NEW_PASSWORD_ENTRIE,10);
         validator.ensure_max_size_by_key(entries,NEW_PASSWORD_ENTRIE,50);
-        new_password = obj.getString(entries,new_password);
+        new_password = obj.getString(entries,NEW_PASSWORD_ENTRIE);
     }
 
     if(obj.exist(entries,IS_ROOT_ENTRIE)){
@@ -109,7 +109,6 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
             );
         }
     }
-
     database_modify_user(database,user,new_username,new_email,new_password,set_is_root,is_root);
 
     CHashObject *response = newCHashObject(
