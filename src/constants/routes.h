@@ -5,4 +5,5 @@
 #define CREATE_USER_ROUTE "/create_user"
 #define LIST_USERS "/list_users"
 #define REMOVE_USER_ROUTE "/remove_user"
+#define MODIFY_SELF_PROPS_ROUTE "/modify_self_props"
 #define GET_USER_PROPS_ROUTE "/get_user_props"

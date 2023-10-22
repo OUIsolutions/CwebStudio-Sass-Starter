@@ -51,6 +51,10 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = remove_user(request,entries,database);
     }
 
+    if(!strcmp(request->route, MODIFY_SELF_PROPS_ROUTE)){
+        response = modify_self_props(request,entries,database);
+    }
+
     if(!strcmp(request->route, GET_USER_PROPS_ROUTE)){
         response = get_user_props(request,entries,database);
     }
