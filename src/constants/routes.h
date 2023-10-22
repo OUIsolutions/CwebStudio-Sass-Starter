@@ -3,5 +3,6 @@
 #define REMOVE_TOKEN_ROUTE "/remove_token"
 #define GET_SELF_PROPS_ROUTE  "/get_self_props"
 #define CREATE_USER_ROUTE "/create_user"
+#define LIST_USERS "/list_users"
 #define REMOVE_USER_ROUTE "/remove_user"
 #define GET_USER_PROPS_ROUTE "/get_user_props"

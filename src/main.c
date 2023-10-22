@@ -37,10 +37,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     #ifdef DEBUG
 
-        if(!strcmp(request->route,END_ROUTE)){
-             cweb_end_server = true;
-             return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);
-        }
+    if(!strcmp(request->route,END_ROUTE)){
+         cweb_end_server = true;
+         return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);
+    }
+
     #endif
 
 
@@ -63,6 +64,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route, CREATE_USER_ROUTE)){
         response = create_user(request,entries,database);
     }
+
+    if(!strcmp(request->route,LIST_USERS)){
+        response = list_users(request,entries,database);
+    }
+
     if(!strcmp(request->route,REMOVE_USER_ROUTE)){
         response = remove_user(request,entries,database);
     }
