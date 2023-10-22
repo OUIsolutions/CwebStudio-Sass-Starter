@@ -17,6 +17,9 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
         start_path = obj.getString(entries,START_PATH_ENTRIE);
     }
 
+    obj.set_default(entries,CASE_SENSITIVE_ENTRIE,hash.newBool(false));
+    bool case_sensitive = obj.getBool_converting(entries,CASE_SENSITIVE_ENTRIE);
+
 
     obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
     bool include_tokens = obj.getBool_converting(entries,INCLUDE_TOKEN_ENTRIE);
@@ -24,8 +27,8 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
-    
-    CHash *description = describe_all_users(database,start_path,include_tokens);
+
+    CHash *description = describe_all_users(database,start_path,case_sensitive,include_tokens);
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }

@@ -7,12 +7,6 @@ DtwResource *find_user_by_id(DtwResource  *database,const char *id);
 
 bool is_root(DtwResource *user);
 
-CHash * describe_user(DtwResource *user, bool include_tokens);
-
-
-CHash * describe_all_users(DtwResource *database,const char *start_path, bool include_tokens);
-
-
 void database_remove_user(DtwResource *database, DtwResource *user);
 
 
