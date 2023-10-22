@@ -104,7 +104,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
 
 
-CHash * describe_all_users_with_start_path_not_case_sensitive(DtwResource *database, const char *start_path, bool include_tokens){
+CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, const char *contains, bool include_tokens){
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
@@ -120,13 +120,13 @@ CHash * describe_all_users_with_start_path_not_case_sensitive(DtwResource *datab
         CTextStack *email_stack = stack.newStack_string(email);
         stack.self_lower(email_stack);
 
-        CTextStack *formated_start_path = stack.newStack_string(start_path);
-        stack.self_lower(formated_start_path);
+        CTextStack *formated_contains= stack.newStack_string(contains);
+        stack.self_lower(formated_contains);
 
-        if(dtw_starts_with(email_stack->rendered_text,start_path)){
+        if(stack.index_of(email_stack,formated_contains->rendered_text) != -1){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens));
             stack.free(email_stack);
-            stack.free(formated_start_path);
+            stack.free(formated_contains);
             continue;
         }
 
@@ -137,20 +137,19 @@ CHash * describe_all_users_with_start_path_not_case_sensitive(DtwResource *datab
         CTextStack *username_stack = stack.newStack_string(username);
         stack.self_lower(username_stack);
 
-        if(dtw_starts_with(username_stack->rendered_text,start_path)){
+        if(stack.index_of(username_stack,formated_contains->rendered_text) != -1){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens));
         }
 
         stack.free(username_stack);
-        stack.free(formated_start_path);
-
+        stack.free(formated_contains);
     }
 
     dtw.string_array.free(all_users_ids);
     return all_users_hash;
 
 }
-CHash * describe_all_users_with_start_path_case_sensitive(DtwResource *database, const char *start_path, bool include_tokens){
+CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens){
 
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
@@ -159,25 +158,32 @@ CHash * describe_all_users_with_start_path_case_sensitive(DtwResource *database,
     DtwStringArray * all_users_ids = resource.list_names(all_users);
     CHashArray  *all_users_hash = array.newArrayEmpty();
 
-
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
-
 
         char *email =  resource.get_string_from_sub_resource(current_user,EMAIL_PATH);
+        CTextStack *email_stack = stack.newStack_string(email);
 
-        if(dtw_starts_with(email,start_path)){
+
+        if(stack.index_of(email_stack,contains) != -1){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens));
+            stack.free(email_stack);
             continue;
         }
+
+        stack.free(email_stack);
+
 
         char *username = resource.get_string_from_sub_resource(current_user,USERNAME_PATH);
+        CTextStack *username_stack = stack.newStack_string(username);
 
-        if(dtw_starts_with(username,start_path)){
+        if(stack.index_of(username_stack,contains) != -1){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens));
-            continue;
         }
+
+        stack.free(username_stack);
+
     }
 
     dtw.string_array.free(all_users_ids);
@@ -185,7 +191,7 @@ CHash * describe_all_users_with_start_path_case_sensitive(DtwResource *database,
 }
 
 
-CHash * describe_all_without_start_path(DtwResource *database,bool include_tokens){
+CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens){
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
@@ -196,7 +202,6 @@ CHash * describe_all_without_start_path(DtwResource *database,bool include_token
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
-
         array.append_once(all_users_hash, describe_user(current_user,include_tokens));
 
     }
@@ -206,16 +211,16 @@ CHash * describe_all_without_start_path(DtwResource *database,bool include_token
 }
 
 
-CHash * describe_all_users(DtwResource *database,const char *start_path,bool case_sensitive, bool include_tokens){
+CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens){
 
-    if(!start_path){
-        return describe_all_without_start_path(database,include_tokens);
+    if(!contains){
+        return describe_all_without_contains_start(database, include_tokens);
     }
 
     if(case_sensitive){
-        return describe_all_users_with_start_path_case_sensitive(database,start_path,include_tokens);
+        return describe_all_users_with_contains_case_sensitive(database, contains, include_tokens);
     }
 
-    return describe_all_users_with_start_path_not_case_sensitive(database,start_path,include_tokens);
+    return describe_all_users_contains_not_case_sensitive(database, contains, include_tokens);
 
 }

@@ -1,7 +1,7 @@
 #define USERNAME_OR_EMAIL_ENTRIE "username_or_email"
 #define PASSWORD_ENTRIE "password"
 #define USERNAME_ENTRIE "username"
-#define START_PATH_ENTRIE "start_path"
+#define CONTAINS_ENTRIE "contains"
 #define EMAIL_ENTRIE "email"
 #define EXPIRATION_ENTRIE "expiration"
 #define RENEW_ENTRIE "renew"
