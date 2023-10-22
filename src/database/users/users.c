@@ -134,35 +134,39 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
 
 CHash * describe_all_users(DtwResource *database,const char *start_path, bool include_tokens){
 
-    DtwResource * all_users = resource.sub_resource(database, USERS_PATH);
+    DtwResource * all_users;
+    all_users = resource.sub_resource(database, USERS_PATH);
+    all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
+
     DtwStringArray * all_users_ids = resource.list_names(all_users);
-    CHashArray  *all_uers_hash = array.newArrayEmpty();
+    CHashArray  *all_users_hash = array.newArrayEmpty();
 
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
 
+
         //without start path filtrage, all its included
         if(!start_path){
-            array.append_once(all_uers_hash, describe_user(current_user,include_tokens));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens));
             continue;
         }
-        
+
         char *email =  resource.get_string_from_sub_resource(current_user,EMAIL_PATH);
         char *username = resource.get_string_from_sub_resource(current_user,USERNAME_PATH);
 
         if(dtw_starts_with(email,start_path)){
-            array.append_once(all_uers_hash, describe_user(current_user,include_tokens));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens));
         }
 
         else if(dtw_starts_with(username,start_path)){
-            array.append_once(all_uers_hash, describe_user(current_user,include_tokens));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens));
         }
 
     }
 
     dtw.string_array.free(all_users_ids);
-    return all_uers_hash;
+    return all_users_hash;
 
 }
 

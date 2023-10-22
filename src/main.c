@@ -103,7 +103,7 @@ int main(int argc, char *argv[]){
     array = hash.array;
     validator = hash.validator;
     stack = newCTextStackModule();
-
+ 
 
      #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
