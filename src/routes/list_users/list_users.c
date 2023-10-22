@@ -21,7 +21,7 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
         return send_entrie_error(request, entries);
     }
 
-
-
+    CHash *description = describe_all_users(database,include_tokens);
+    return send_chash_cleaning_memory(description, HTTP_OK);
 
 }
