@@ -45,7 +45,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
         }
     }
 
-    if(!new_username && !new_email && new_password){
+    if(!new_username && !new_email && !new_password){
         validator.raise_error(
                 entries,
                 NOTHING_TO_MODIFY,
