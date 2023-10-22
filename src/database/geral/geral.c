@@ -12,9 +12,9 @@ DtwResource *find_element_by_id(DtwResource *folder,const char *id){
 DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,const  char *index){
     //folder/index
     DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
-    //folder/index/email
+    //folder/index/{index_name}
     DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
-    //folder/index/email/user@gmail.com
+    //folder/index/{index_name}/{index_value}
     DtwResource  *element_reference = resource.sub_resource(selected_index,index);
 
     char *id =  resource.get_string(element_reference);
@@ -23,10 +23,8 @@ DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,
     }
     //folder/elements
     DtwResource * elements_folder = resource.sub_resource(folder,ELEMENTS_PATH);
+    //folder/elements/{{user_id}}
     DtwResource * current_element = resource.sub_resource(elements_folder,id);
-
-
-
     if(resource.type(current_element) != DTW_FOLDER_TYPE){
         return  NULL;
     }

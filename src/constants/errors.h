@@ -8,14 +8,16 @@
 #define USER_NOT_ROOT 7
 #define USER_ALREADY_EXIST 8
 #define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME 9
+#define NOTHING_TO_MODIFY 10
 
 #define  UNDEFINED_ERROR 500
-#define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headders/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
+#define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headers/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
 #define NOT_EXIST_TOKEN_MESSAGE  "token: %s not exist"
 #define EXPIRED_TOKEN_MESSAGE  "token: %s its expired"
 #define USER_NOT_ROOT_MESSAGE "you must be root to acess these route"
 #define USER_ALREADY_MESSAGE "user %s already exist"
+#define NOTHING_TO_MODIFY_MESSAGE "There is nothing to modify at headers/params"
 
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"

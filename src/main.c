@@ -14,7 +14,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 
     #ifdef DEBUG
-
+    //WARNING: THESE WILL KILL THE ENTIRE APPLICATION IF YOU ACCESS /end
     if(!strcmp(request->route,END_ROUTE)){
          cweb_end_server = true;
          return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);

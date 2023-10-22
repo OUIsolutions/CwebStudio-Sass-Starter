@@ -26,7 +26,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
 
     char *password = obj.getString(entries, PASSWORD_ENTRIE);
     validator.ensure_min_size_by_key(entries,PASSWORD_ENTRIE,10);
-
+    validator.ensure_max_size_by_key(entries,PASSWORD_ENTRIE,50);
 
     obj.set_default(entries,IS_ROOT_ENTRIE,hash.newBool(false));
     bool is_root = obj.getBool_converting(entries,IS_ROOT_ENTRIE);
