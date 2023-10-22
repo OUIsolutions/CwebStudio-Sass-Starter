@@ -6,6 +6,6 @@
 #define LIST_USERS "/list_users"
 #define REMOVE_USER_ROUTE "/remove_user"
 #define MODIFY_SELF_PROPS_ROUTE "/modify_self_props"
-#define MODIFY_USER_PROPS_ROUTE "/modify_self_props"
+#define MODIFY_USER_PROPS_ROUTE "/modify_user_props"
 
 #define GET_USER_PROPS_ROUTE "/get_user_props"
