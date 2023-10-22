@@ -86,7 +86,15 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
         }
     }
 
+    database_modify_user(database,user,new_username,new_email,new_password,false,false);
 
+    CHashObject *response = newCHashObject(
+            CODE_KEY,hash.newNumber(INTERNAL_OK),
+            MESSAGE_KEY,hash.newString(USER_MODIFIED)
+    );
+    resource.commit(database);
+
+    return send_chash_cleaning_memory(response,HTTP_CREATED);
 
 
 
