@@ -61,7 +61,6 @@ void database_create_user( DtwResource  *database,const char *username,const cha
     create_index(users, created_user->name, USERNAME_PATH, username);
 
 
-
     DtwResource *password_resource = resource.sub_resource(created_user,PASSWORD_PATH);
     char *password_sha = dtw_generate_sha_from_string(password);
     resource.set_string(password_resource,password_sha);
