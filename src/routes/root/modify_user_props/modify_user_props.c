@@ -46,15 +46,13 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
         is_root = obj.getBool_converting(entries, IS_ROOT_ENTRE);
     }
 
-    if(new_username && new_email){
-        if(strcmp(new_username,new_email) ==0){
-            validator.raise_error(
-                    entries,
-                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
-                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
-                    NULL
-            );
-        }
+    if(strings_equal(new_username,new_email) ==0){
+        validator.raise_error(
+                entries,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
+                NULL
+        );
     }
 
 
@@ -65,38 +63,44 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
                 NOTHING_TO_MODIFY_MESSAGE,
                 NULL
         );
-    }
-
-
-
-    CHash_catch(entries){
         return send_entrie_error(request, entries);
+
     }
+
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
 
-    if(!user){
+
+    int status_username = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_username);
+    if(status_username == USER_ALREADY_EXIST_INTERNAl){
         return send_error(
                 request,
-                NOT_FOUND,
-                USER_NOT_EXIST,
-                USER_NOT_EXIST_MENSSAGE,
-                username_or_email
+                CONFLICT,
+                USER_ALREADY_EXIST,
+                USER_ALREADY_MESSAGE,
+                new_username
         );
     }
 
-    if(new_username){
-        DtwResource *already_exist_username = find_user_by_username_or_email(database,new_username);
-        if(already_exist_username){
-            return send_error(
-                    request,
-                    CONFLICT,
-                    USER_ALREADY_EXIST,
-                    USER_ALREADY_MESSAGE,
-                    new_username
-            );
-        }
+    if(status_username == USER_HAVE_THE_SAME_NAME_INTERNAL){
+        new_username = NULL;
     }
+
+
+    int status_email = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_email);
+    if(status_email ==USER_ALREADY_EXIST_INTERNAl ){
+        return send_error(
+                request,
+                CONFLICT,
+                USER_ALREADY_EXIST,
+                USER_ALREADY_MESSAGE,
+                new_email
+        );
+    }
+    if(status_email == USER_HAVE_THE_SAME_NAME_INTERNAL){
+        new_email = NULL;
+    }
+
     if(new_email){
         DtwResource *already_exist_email = find_user_by_username_or_email(database,new_email);
         if(already_exist_email){
