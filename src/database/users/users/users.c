@@ -23,10 +23,12 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
 DtwResource *find_user_by_id(DtwResource  *database,const char *id){
     //users/
     DtwResource *users = resource.sub_resource(database, USERS_PATH);
+    //users/elements/{id}
     return find_element_by_id(users,id);
 }
 
 bool is_root(DtwResource *user){
+    //users/elements/{user}/is_root
     return resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
 }
 

@@ -13,8 +13,8 @@ void Token_free(Token *self){
         stack.free(self->token_id);
     }
 
-    if(self->token){
-        stack.free(self->token);
+    if(self->token_string){
+        stack.free(self->token_string);
     }
 
     free(self);
@@ -25,33 +25,39 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
     Token  *token = (Token*) malloc(sizeof (Token));
     *token = (Token){0};
 
-    token->token = newCTextStack_string_empty();
+
+
+    //creating the assignature
+    DtwHash * token_assignature = newDtwHash();
+    dtw.hash.digest_string(token_assignature,user_id);
+    dtw.hash.digest_string(token_assignature,password);
+    dtw.hash.digest_long(token_assignature, time(NULL));
+
+    token->sha = newCTextStack_string(token_assignature->hash);
+    stack.self_substr( token->sha ,0,SHA_SIZE);
+    dtw.hash.free(token_assignature);
+
+
+
+    //creating the token string
+    token->token_string = newCTextStack_string_empty();
 
     const char INFINITE = 'i';
     const char FINITE = 'f';
 
     if(infinite){
         token->infinite = true;
-        stack.format(token->token,"%c",INFINITE);
+        stack.format(token->token_string, "%c", INFINITE);
     }
 
     if(!infinite){
         token->infinite = false;
-        stack.format(token->token,"%c",FINITE);
+        stack.format(token->token_string, "%c", FINITE);
     }
 
-
-    DtwHash * token_assignature = newDtwHash();
-    dtw.hash.digest_string(token_assignature,user_id);
-    dtw.hash.digest_string(token_assignature,password);
-    dtw.hash.digest_long(token_assignature, time(NULL));
-    CTextStack * token_assignature_string = newCTextStack_string(token_assignature->hash);
-    stack.self_substr(token_assignature_string,0,SHA_SIZE);
-    stack.format(token->token,"%tc",token_assignature_string);
-    stack.format(token->token,"%s",token_id);
-    stack.format(token->token,"%s",user_id);
-
-    dtw.hash.free(token_assignature);
+    stack.format(token->token_string, "%s", token->sha);
+    stack.format(token->token_string, "%s", user_id);
+    stack.format(token->token_string, "%s", token_id);
 
     return token;
 
@@ -89,19 +95,13 @@ Token * extract_token(const char *token_string){
     }
     int point = 1;
 
-    token->sha =  stack.self_transform_in_string_and_self_clear(
-            stack.substr(element,point, SHA_SIZE)
-    );
+    token->sha = stack.substr(element,point, SHA_SIZE);
     point+=SHA_SIZE;
 
-    token->token_id = stack.self_transform_in_string_and_self_clear(
-            stack.substr(element,point, ID_SIZE)
-    );
+    token->user_id =stack.substr(element,point,-1);
     point+=ID_SIZE;
 
-    token->user_id = stack.self_transform_in_string_and_self_clear(
-            stack.substr(element,point,-1)
-    );
+    token->token_id =stack.substr(element,point, -1);
 
     stack.free(element);
 
@@ -115,11 +115,17 @@ void Token_represent(Token *self){
     if(!self){
         return;
     }
-    if(self->user_id){
-        printf("user id: %s\n",self->user_id);
+
+    if(self->token_string){
+        printf("token_string: %s\n",self->token_string->rendered_text);
     }
+
+    if(self->user_id){
+        printf("user id: %s\n",self->user_id->rendered_text);
+    }
+
     if(self->sha){
-        printf("sha:%s\n",self->sha);
+        printf("sha:%s\n",self->sha->rendered_text);
     }
     if(self->infinite){
         printf("infinite:%s\n",self->infinite ? "true":"false");

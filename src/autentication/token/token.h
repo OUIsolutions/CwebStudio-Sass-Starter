@@ -2,7 +2,7 @@
 
 typedef struct  Token{
     bool infinite;
-    CTextStack * token;
+    CTextStack * token_string;
     CTextStack * user_id;
     CTextStack  *token_id;
     CTextStack  *sha;
