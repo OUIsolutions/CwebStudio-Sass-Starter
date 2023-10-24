@@ -24,7 +24,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
     DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
-
+    resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
 
     if(!user){
         auth.error = true;
