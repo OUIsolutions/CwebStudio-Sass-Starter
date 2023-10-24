@@ -25,8 +25,6 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
     Token  *token = (Token*) malloc(sizeof (Token));
     *token = (Token){0};
 
-
-
     //creating the assignature
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
@@ -34,9 +32,9 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
     dtw.hash.digest_long(token_assignature, time(NULL));
 
     token->sha = newCTextStack_string(token_assignature->hash);
-    stack.self_substr( token->sha ,0,SHA_SIZE);
     dtw.hash.free(token_assignature);
 
+    stack.self_substr( token->sha ,0,SHA_SIZE);
 
 
     //creating the token string
@@ -95,10 +93,11 @@ Token * extract_token(const char *token_string){
     }
     int point = 1;
 
-    token->sha = stack.substr(element,point, SHA_SIZE);
+    token->sha = stack.substr(element,point, point+SHA_SIZE);
     point+=SHA_SIZE;
 
-    token->user_id =stack.substr(element,point,-1);
+    
+    token->user_id =stack.substr(element,point,point+ID_SIZE);
     point+=ID_SIZE;
 
     token->token_id =stack.substr(element,point, -1);
