@@ -24,6 +24,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     CHashObject * entries = join_headders_and_paramns(request);
     DtwResource *database = resource.newResource(DATABASE_PATH);
+    database->use_locker_on_unique_values = false;
 
     CwebHttpResponse *response = NULL;
 

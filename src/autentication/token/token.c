@@ -58,7 +58,7 @@ Token * extract_token(const char *token_string){
 
     Token  *token = (Token*) malloc(sizeof (Token));
     *token = (Token){0};
-    
+
     const char INFINITE = 'i';
     const char FINITE = 'f';
 

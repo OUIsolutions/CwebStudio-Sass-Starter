@@ -55,7 +55,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     //the token assignature will be formed by the user password + time + id
     char *user_id = user->name;
     bool infinite = expiration == -1;
-    char *token = create_token_string(user_id, password,infinite);
+
+    char *token = NULL;
 
     if(infinite){
         #ifdef MAX_INFINITE_TOKENS
@@ -66,7 +67,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 }
 
         #endif
-        set_infinite_token(user, token);
+        token = create_infinite_token(user);
     }
 
     if(infinite == false){

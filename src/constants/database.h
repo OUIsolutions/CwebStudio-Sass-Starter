@@ -14,4 +14,5 @@
 #define ALLOW_RENEW_PATH "allow_renew"
 #define EXPIRATION_PATH "expiration"
 #define CREATION_PATH "creation"
+#define SHA_PATH "sha"
 #define LAST_UPDATE_PATH "last_update"

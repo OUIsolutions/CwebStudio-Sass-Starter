@@ -49,17 +49,24 @@ DtwResource *get_ifinite_token(DtwResource *user, char *token){
     return  token_resource;
 }
 
-void set_infinite_token(DtwResource *user, char *token){
+void create_infinite_token(DtwResource *user,const char *sha){
 
-    //data/elements/user/infinite_token/
+    //data/elements/user/infinite_tokens/
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
-    //data/elements/user/token/akspdih3u2ju223j2j3j2
-    DtwResource  *token_resource = resource.sub_resource(all_tokens,token);
+
+    //data/elements/user/infinite_tokens/{id}
+    DtwResource  *token_resource = resource.sub_resource_random(all_tokens,NULL);
+
     long now = time(NULL);
-    //data/elements/user/token/akspdih3u2ju223j2j3j2/creation
+    //data/elements/user/infinite_tokens/{id}/creation
     DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
     resource.set_long(creation_resource,now);
 
+    //data/elements/user/infinite_tokens/{id}/creation
+    DtwResource *sha_resource = resource.sub_resource(token_resource,SHA_PATH);
+    resource.set_string(sha_resource,sha);
+
+    //data/elements/user/infinite_tokens/{id}/last_update
     DtwResource  *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
     resource.set_long(last_update,now);
 

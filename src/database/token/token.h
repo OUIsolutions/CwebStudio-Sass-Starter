@@ -6,8 +6,7 @@ DtwResource *get_finite_token(DtwResource *user, char *token);
 
 DtwResource *get_ifinite_token(DtwResource *user, char *token);
 
-void set_infinite_token(DtwResource *user, char *token);
-
+void create_infinite_token(DtwResource *user,const char *sha);
 
 long count_infinite_token(DtwResource *user);
 
