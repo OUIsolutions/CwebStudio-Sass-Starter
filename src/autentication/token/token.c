@@ -33,7 +33,7 @@ CTextStack *create_token_string(bool infinite,const char *user_id,const char *to
         stack.format(token_string, "%c", FINITE);
     }
 
-    stack.format(token_string, "%t", sha);
+    stack.format(token_string, "%s", sha);
     stack.format(token_string, "%s", user_id);
     stack.format(token_string, "%s", token_id);
     return token_string;

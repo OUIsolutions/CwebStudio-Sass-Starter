@@ -69,6 +69,19 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
 
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
+
+    if(!user){
+        return send_error(
+                request,
+                NOT_FOUND,
+                USER_NOT_EXIST,
+                USER_NOT_EXIST_MENSSAGE,
+                username_or_email
+        );
+    }
+
+
+
     int status_username = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_username);
     if(status_username == USER_ALREADY_EXIST_INTERNAl){
         return send_error(
@@ -85,7 +98,7 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
     }
 
 
-    int status_email = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_email);
+    int status_email = get_user_index_status_if_new_value_provided(database, user, EMAIL_PATH, new_email);
     if(status_email ==USER_ALREADY_EXIST_INTERNAl ){
         return send_error(
                 request,
@@ -98,6 +111,18 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
     if(status_email == USER_HAVE_THE_SAME_NAME_INTERNAL){
         new_email = NULL;
     }
+
+    if(!new_username && !new_email && !new_password && !set_is_root){
+        validator.raise_error(
+                entries,
+                NOTHING_TO_MODIFY,
+                NOTHING_TO_MODIFY_MESSAGE,
+                NULL
+        );
+        return send_entrie_error(request, entries);
+
+    }
+
 
     database_modify_user(database,user,new_username,new_email,new_password,set_is_root,is_root);
 

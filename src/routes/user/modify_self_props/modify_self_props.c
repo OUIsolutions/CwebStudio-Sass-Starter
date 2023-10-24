@@ -89,7 +89,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
     }
 
 
-    int status_email = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_email);
+    int status_email = get_user_index_status_if_new_value_provided(database, user, EMAIL_PATH, new_email);
     if(status_email ==USER_ALREADY_EXIST_INTERNAl ){
         return send_error(
                 request,
