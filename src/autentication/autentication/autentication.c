@@ -23,10 +23,8 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         );
         return auth;
     }
-    DtwResource *user = find_user_by_id(database, token_obj->user_id);
-    #ifdef ALLOW_LOCKER
-        resource.lock(user);
-    #endif
+    DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
+
 
     if(!user){
         auth.error = true;
@@ -41,14 +39,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
 
-    DtwResource *token_resource = NULL;
-    if(token_obj->infinite){
-        token_resource = get_ifinite_token(user,token);
-    }
-
-    if(token_obj->infinite == false){
-        token_resource = get_finite_token(user,token);
-    }
+    DtwResource *token_resource = get_token_resource(user,token_obj);
 
     if(!token_resource){
         auth.error = true;
@@ -63,6 +54,20 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
 
         return auth;
     }
+    char *sha = resource.get_string_from_sub_resource(token_resource,SHA_PATH);
+    if(strcmp(sha,token_obj->sha->rendered_text) != 0){
+        auth.error = true;
+        auth.response_error =send_error(
+                request,
+                NOT_FOUND,
+                INVALID_TOKEN,
+                NOT_VALID_TOKEN_MESSAGE,
+                token
+        );
+        Token_free(token_obj);
+        return auth;
+    }
+
 
     if(token_obj->infinite){
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);

@@ -96,7 +96,7 @@ Token * extract_token(const char *token_string){
     token->sha = stack.substr(element,point, point+SHA_SIZE);
     point+=SHA_SIZE;
 
-    
+
     token->user_id =stack.substr(element,point,point+ID_SIZE);
     point+=ID_SIZE;
 

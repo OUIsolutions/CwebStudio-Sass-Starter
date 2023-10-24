@@ -1,13 +1,13 @@
 
 
 
-void create_finite_token(DtwResource *user, char *sha, bool allow_renew, int expiration);
+Token * database_create_finite_token(DtwResource *user, const char *password, bool allow_renew, int expiration);
 
 DtwResource *get_all_tokens_rource(DtwResource *user,Token *token);
 
 DtwResource *get_token_resource(DtwResource *user,Token *token);
 
-void create_infinite_token(DtwResource *user,const char *sha);
+Token * database_create_infinite_token(DtwResource *user, const char *password);
 
 long count_infinite_token(DtwResource *user);
 

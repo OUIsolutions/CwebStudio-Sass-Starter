@@ -23,7 +23,7 @@ DtwResource *get_token_resource(DtwResource *user,Token *token){
     return  current;
 
 }
-void create_finite_token(DtwResource *user, char *sha, bool allow_renew, int expiration){
+Token * database_create_finite_token(DtwResource *user, const char *password, bool allow_renew, int expiration){
 
     //data/elements/{user}/finite_tokens/
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
@@ -33,7 +33,9 @@ void create_finite_token(DtwResource *user, char *sha, bool allow_renew, int exp
 
     //data/elements/{user}/finite_tokens/{id}/sha
     DtwResource *sha_resurce = resource.sub_resource(token_resource, ALLOW_RENEW_PATH);
-    resource.set_string(sha_resurce,sha);
+    Token *token = newToken(user->name,token_resource->name,password,false);
+
+    resource.set_string(sha_resurce,token->sha->rendered_text);
 
 
     //data/elements/{user}/finite_tokens/{id}/allow_renew
@@ -52,9 +54,11 @@ void create_finite_token(DtwResource *user, char *sha, bool allow_renew, int exp
     //data/elements/{user}/finite_tokens/{id}/creation
     DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
     resource.set_long(creation_resource,now);
+    return token;
+
 
 }
-void create_infinite_token(DtwResource *user,const char *sha){
+Token * database_create_infinite_token(DtwResource *user, const char *password){
 
     //data/elements/{user}/infinite_tokens/
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
@@ -69,11 +73,13 @@ void create_infinite_token(DtwResource *user,const char *sha){
 
     //data/elements/{user}/infinite_tokens/{id}/creation
     DtwResource *sha_resource = resource.sub_resource(token_resource,SHA_PATH);
-    resource.set_string(sha_resource,sha);
+    Token *token = newToken(user->name,token_resource->name,password,true);
 
+    resource.set_string(sha_resource,token->sha->rendered_text);
     //data/elements/{user}/infinite_tokens/{id}/last_update
     DtwResource  *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
     resource.set_long(last_update,now);
+    return token;
 
 }
 
