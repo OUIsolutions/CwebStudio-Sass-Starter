@@ -54,7 +54,6 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
 
     }
     bool require_password = new_password || new_email;
-
     if(require_password){
         password = obj.getString(entries,PASSWORD_ENTRE);
 
@@ -64,19 +63,15 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
         return send_entrie_error(request, entries);
     }
 
-    if(require_password){
-        if(!password_are_equal(user, password)){
-            return send_error(
-                    request,
-                    FOREBIDEN,
-                    WRONG_PASSWORD,
-                    WRONG_PASSWORD_MENSSAGE
-            );
-        }
+    if(!password_are_equal_if_password_provided(user, password)){
+        return send_error(
+                request,
+                FOREBIDEN,
+                WRONG_PASSWORD,
+                WRONG_PASSWORD_MENSSAGE
+        );
     }
-
-
-
+    
     if(new_username){
 
         int status = get_user_index_status(database,user,USERNAME_PATH,new_username);

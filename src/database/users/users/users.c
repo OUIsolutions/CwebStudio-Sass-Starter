@@ -130,6 +130,13 @@ bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     free(entrie_sha);
     return  result;
 }
+bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld){
+    const bool ENTRIE_NOT_PROVIDED = true;
+    if(!entrie_passworld){
+        return ENTRIE_NOT_PROVIDED;
+    }
+    return password_are_equal(user,entrie_passworld);
+}
 
 
 short get_user_index_status( DtwResource *database, DtwResource *user,const char *value_path, char *new_value){

@@ -22,6 +22,9 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld);
 
+bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld);
+
+
 #define USER_NOT_EXIST_INTERNAL 0
 #define USER_HAVE_THE_SAME_NAME_INTERNAL 1
 #define USER_ALREADY_EXIST_INTERNAl 2
