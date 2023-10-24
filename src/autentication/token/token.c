@@ -19,6 +19,25 @@ void Token_free(Token *self){
 
     free(self);
 }
+CTextStack *create_token_string(bool infinite,const char *user_id,const char *token_id,const char *sha){
+    CTextStack  *token_string = newCTextStack_string_empty();
+
+    const char INFINITE = 'i';
+    const char FINITE = 'f';
+
+    if(infinite){
+        stack.format(token_string, "%c", INFINITE);
+    }
+
+    if(!infinite){
+        stack.format(token_string, "%c", FINITE);
+    }
+
+    stack.format(token_string, "%t", sha);
+    stack.format(token_string, "%s", user_id);
+    stack.format(token_string, "%s", token_id);
+    return token_string;
+}
 
 Token * newToken(const char *user_id,const char * token_id,  const  char *password, bool infinite){
 
@@ -36,26 +55,10 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
 
     stack.self_substr( token->sha ,0,SHA_SIZE);
 
-
     //creating the token string
-    token->token_string = newCTextStack_string_empty();
+    token->token_string = create_token_string(infinite,user_id,token_id,token->sha->rendered_text);
+    token->infinite = infinite;
 
-    const char INFINITE = 'i';
-    const char FINITE = 'f';
-
-    if(infinite){
-        token->infinite = true;
-        stack.format(token->token_string, "%c", INFINITE);
-    }
-
-    if(!infinite){
-        token->infinite = false;
-        stack.format(token->token_string, "%c", FINITE);
-    }
-
-    stack.format(token->token_string, "%t", token->sha);
-    stack.format(token->token_string, "%s", user_id);
-    stack.format(token->token_string, "%s", token_id);
 
     return token;
 

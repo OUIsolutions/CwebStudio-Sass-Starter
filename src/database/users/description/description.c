@@ -21,6 +21,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
     free(converted_last_update);
 
 
+
     obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
 
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
@@ -95,7 +96,9 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
             obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString(expiration_string));
             free(expiration_string);
         }
-
+        char *sha = resource.get_string_from_sub_resource(current_token_resource,SHA_PATH);
+        CTextStack *token_string = create_token_string(false,user->name,current_token_resource->name,sha);
+        obj.set_once(current_token_obj,TOKEN_KEY,hash.newStackString(token_string));
 
     }
 
@@ -119,10 +122,15 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
         obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
         free(converted_creation);
 
+
         long last_update = resource.get_long_from_sub_resource(current_token_resource,LAST_UPDATE_PATH);
         char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
         obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
         free(last_update_in_str);
+
+        char *sha = resource.get_string_from_sub_resource(current_token_resource,SHA_PATH);
+        CTextStack *token_string = create_token_string(true,user->name,current_token_resource->name,sha);
+        obj.set_once(current_token_obj,TOKEN_KEY,hash.newStackString(token_string));
 
     }
 

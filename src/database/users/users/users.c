@@ -94,19 +94,21 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 }
 
 void database_modify_user( DtwResource  *database,DtwResource *user,const char *new_username,const char *new_email,const char *new_password,bool set_is_root, bool is_root){
+
     //users
-    DtwResource * users = resource.sub_resource(database, USERS_PATH);
+    DtwResource * all_users = resource.sub_resource(database, USERS_PATH);
 
     if(new_email){
         char *old_email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-        destroy_index(users,EMAIL_PATH,old_email);
-        create_index(users, user->name, EMAIL_PATH, new_email);
+        destroy_index(all_users, EMAIL_PATH, old_email);
+        create_index(all_users, user->name, EMAIL_PATH, new_email);
+        resource.set_bool_in_sub_resource(user,false,VERIFIED_PATH);
     }
 
     if(new_username){
         char *old_username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
-        destroy_index(users,USERNAME_PATH,old_username);
-        create_index(users,user->name,USERNAME_PATH,new_username);
+        destroy_index(all_users, USERNAME_PATH, old_username);
+        create_index(all_users, user->name, USERNAME_PATH, new_username);
     }
 
     if(new_password){
@@ -119,15 +121,14 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
         resource.set_bool_in_sub_resource(user,is_root,IS_ROOT_PATH);
     }
 
-
 }
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
     char *password_sha = resource.get_string(password);
-    char *entrie_sha = dtw.generate_sha_from_string(entrie_passworld);
-    bool result = strcmp(password_sha,entrie_sha) == 0;
-    free(entrie_sha);
+    char *entre_sha = dtw.generate_sha_from_string(entrie_passworld);
+    bool result = strcmp(password_sha,entre_sha) == 0;
+    free(entre_sha);
     return  result;
 }
 bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld){
