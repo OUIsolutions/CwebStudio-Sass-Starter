@@ -53,7 +53,7 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
         stack.format(token->token_string, "%c", FINITE);
     }
 
-    stack.format(token->token_string, "%s", token->sha);
+    stack.format(token->token_string, "%t", token->sha);
     stack.format(token->token_string, "%s", user_id);
     stack.format(token->token_string, "%s", token_id);
 

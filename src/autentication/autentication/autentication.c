@@ -68,7 +68,6 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
 
-
     if(token_obj->infinite){
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
         resource.set_long(last_update, time(NULL));
