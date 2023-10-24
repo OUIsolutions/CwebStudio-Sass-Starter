@@ -15,8 +15,11 @@ DtwResource *get_all_tokens_rource(DtwResource *user,Token *token){
 DtwResource *get_token_resource(DtwResource *user,Token *token){
 
     DtwResource  *all_tokens = get_all_tokens_rource(user,token);
-    DtwResource *current = resource.sub_resource(all_tokens,"%s",token->token_id);
+    if(resource.type(all_tokens) == DTW_NOT_FOUND){
+        return NULL;
+    }
 
+    DtwResource *current = resource.sub_resource(all_tokens,"%s",token->token_id->rendered_text);
     if(resource.type(current) == DTW_NOT_FOUND){
         return NULL;
     }

@@ -118,7 +118,9 @@ void Token_represent(Token *self){
     if(self->token_string){
         printf("token_string: %s\n",self->token_string->rendered_text);
     }
-
+    if(self->token_id){
+        printf("token_id: %s\n",self->token_id->rendered_text);
+    }
     if(self->user_id){
         printf("user id: %s\n",self->user_id->rendered_text);
     }
