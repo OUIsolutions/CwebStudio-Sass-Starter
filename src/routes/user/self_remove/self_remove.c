@@ -12,6 +12,21 @@ CwebHttpResponse *self_remove(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
     DtwResource *user = auth.user;
 
+
+    char *password = obj.getString(entries, PASSWORD_ENTRIE);
+    CHash_catch(entries){
+        return send_entrie_error(request, entries);
+    }
+    
+    if(!password_are_equal(user, password)){
+        return send_error(
+                request,
+                FOREBIDEN,
+                WRONG_PASSWORD,
+                WRONG_PASSWORD_MENSSAGE
+        );
+    }
+
     database_remove_user(database,user);
 
     CHashObject *response = newCHashObject(

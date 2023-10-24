@@ -58,6 +58,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(!strcmp(request->route,SELF_REMOVE_ROUTE)){
         response = self_remove(request,entries,database);
     }
+
     if(!strcmp(request->route,MODIFY_USER_PROPS_ROUTE)){
         response = modify_user_props(request,entries,database);
     }
