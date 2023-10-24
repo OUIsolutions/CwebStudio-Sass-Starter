@@ -1,30 +1,43 @@
 
 void Token_free(Token *self){
+
     if(self->user_id){
-        free(self->user_id);
+        stack.free(self->user_id);
     }
 
     if(self->sha){
-        free(self->sha);
+        stack.free(self->sha);
     }
 
     if(self->token_id){
-        free(self->token_id);
+        stack.free(self->token_id);
+    }
+
+    if(self->token){
+        stack.free(self->token);
     }
 
     free(self);
 }
 
-char *create_token_string(const char *user_id,const char * token_id,  const  char *password, bool infinite){
+Token * newToken(const char *user_id,const char * token_id,  const  char *password, bool infinite){
 
-    CTextStack *token = newCTextStack_string_empty();
+    Token  *token = (Token*) malloc(sizeof (Token));
+    *token = (Token){0};
+
+    token->token = newCTextStack_string_empty();
+
+    const char INFINITE = 'i';
+    const char FINITE = 'f';
 
     if(infinite){
-        stack.format(token,"i");
+        token->infinite = true;
+        stack.format(token->token,"%c",INFINITE);
     }
 
     if(!infinite){
-        stack.format(token,"f");
+        token->infinite = false;
+        stack.format(token->token,"%c",FINITE);
     }
 
 
@@ -34,13 +47,13 @@ char *create_token_string(const char *user_id,const char * token_id,  const  cha
     dtw.hash.digest_long(token_assignature, time(NULL));
     CTextStack * token_assignature_string = newCTextStack_string(token_assignature->hash);
     stack.self_substr(token_assignature_string,0,SHA_SIZE);
-    stack.format(token,"%tc",token_assignature_string);
-    stack.format(token,"%s",token_id);
-    stack.format(token,"%s",user_id);
+    stack.format(token->token,"%tc",token_assignature_string);
+    stack.format(token->token,"%s",token_id);
+    stack.format(token->token,"%s",user_id);
 
     dtw.hash.free(token_assignature);
 
-    return stack.self_transform_in_string_and_self_clear(token);
+    return token;
 
 }
 
