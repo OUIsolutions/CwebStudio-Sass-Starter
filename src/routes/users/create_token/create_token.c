@@ -81,7 +81,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
             }
         #endif
 
-        set_finite_token(user, token, allow_renew, expiration);
+        create_finite_token(user, token, allow_renew, expiration);
     }
 
 

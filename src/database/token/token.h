@@ -1,14 +1,17 @@
 
 
-void set_finite_token(DtwResource *user, char *token, bool allow_renew, int expiration);
 
-DtwResource *get_finite_token(DtwResource *user, char *token);
+void create_finite_token(DtwResource *user, char *sha, bool allow_renew, int expiration);
 
-DtwResource *get_ifinite_token(DtwResource *user, char *token);
+DtwResource *get_all_tokens_rource(DtwResource *user,Token *token);
+
+DtwResource *get_token_resource(DtwResource *user,Token *token);
 
 void create_infinite_token(DtwResource *user,const char *sha);
 
 long count_infinite_token(DtwResource *user);
+
+void remove_last_updated_token(DtwResource *user,const char *token_tipe, int totals);
 
 void remove_last_updated_infinite_token(DtwResource *user, int totals);
 
