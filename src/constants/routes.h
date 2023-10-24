@@ -7,6 +7,7 @@
 #define REMOVE_TOKEN_ROUTE "/user/remove_token"
 #define GET_SELF_PROPS_ROUTE  "/user/get_self_props"
 #define MODIFY_SELF_PROPS_ROUTE "/user/modify_self_props"
+#define SELF_REMOVE_ROUTE "/user/self_remove"
 
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
