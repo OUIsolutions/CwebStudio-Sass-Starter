@@ -34,3 +34,15 @@ void aply_path_protection(CHashObject *element,const  char *key){
     }
 
 }
+
+bool strings_equal(const char *string_a ,const char *string_b){
+    if(!string_a){
+        return false;
+    }
+    if(!string_b){
+        return false;
+    }
+    if(strcmp(string_a,string_b) ==0){
+        return true;
+    }
+}

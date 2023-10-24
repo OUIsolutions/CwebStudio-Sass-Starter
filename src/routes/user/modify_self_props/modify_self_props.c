@@ -12,7 +12,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
     char *new_username = NULL;
     char *new_email = NULL;
     char *new_password = NULL;
-
+    char *password = NULL;
 
     if(obj.exist(entries, NEW_USERNAME_ENTRE)){
         aply_path_protection(entries, NEW_USERNAME_ENTRE);
@@ -34,16 +34,15 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
         new_password = obj.getString(entries, NEW_PASSWORD_ENTRE);
     }
 
-    if(new_username && new_email){
-        if(strcmp(new_username,new_email) ==0){
-            validator.raise_error(
-                    entries,
-                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
-                    EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
-                    NULL
-            );
-        }
+    if(strings_equal(new_username,new_email)){
+        validator.raise_error(
+                entries,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME,
+                EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE,
+                NULL
+        );
     }
+
 
     if(!new_username && !new_email && !new_password){
         validator.raise_error(
@@ -52,12 +51,31 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                 NOTHING_TO_MODIFY_MESSAGE,
                 NULL
         );
-    }
 
+    }
+    bool require_password = new_password || new_email;
+
+    if(require_password){
+        password = obj.getString(entries,PASSWORD_ENTRE);
+
+    }
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
+
+    if(require_password){
+        if(!password_are_equal(user, password)){
+            return send_error(
+                    request,
+                    FOREBIDEN,
+                    WRONG_PASSWORD,
+                    WRONG_PASSWORD_MENSSAGE
+            );
+        }
+    }
+
+
 
     if(new_username){
 
@@ -75,7 +93,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
             new_username = NULL;
         }
     }
-    
+
     if(new_email){
         int status = get_user_index_status(database,user,USERNAME_PATH,new_email);
         if(status ==USER_ALREADY_EXIST_INTERNAl ){
@@ -100,10 +118,8 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                 NOTHING_TO_MODIFY_MESSAGE,
                 NULL
         );
-    }
-
-    CHash_catch(entries){
         return send_entrie_error(request, entries);
+
     }
 
     database_modify_user(database,user,new_username,new_email,new_password,false,false);
