@@ -7,5 +7,5 @@
 #define ALL_ENTRIES_LOWER
 #define START_ROOT_NAME "root"
 #define START_ROOT_PASSWORD "root"
-
+#define ID_SIZE 15
 #define SHA_SIZE 15
