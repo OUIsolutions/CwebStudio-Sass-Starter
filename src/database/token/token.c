@@ -10,6 +10,7 @@ DtwResource *get_all_tokens_rource(DtwResource *user,Token *token){
         //data/elements/{user}/infinite_token/
         return resource.sub_resource(user, FINITE_TOKENS_PATH);
     }
+    return NULL;
 }
 
 DtwResource *get_token_resource(DtwResource *user,Token *token){

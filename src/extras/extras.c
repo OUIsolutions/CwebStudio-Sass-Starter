@@ -45,4 +45,5 @@ bool strings_equal(const char *string_a ,const char *string_b){
     if(strcmp(string_a,string_b) ==0){
         return true;
     }
+    return  false;
 }
