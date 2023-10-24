@@ -130,3 +130,20 @@ bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     free(entrie_sha);
     return  result;
 }
+
+
+short get_user_index_status( DtwResource *database, DtwResource *user,const char *value_path, char *new_value){
+
+    DtwResource *already_exist = find_user_by_username_or_email(database,new_value);
+    if(!already_exist){
+        return USER_NOT_EXIST_INTERNAL;
+    }
+
+    char *old_value = resource.get_string_from_sub_resource(user,"%s",value_path);
+
+    if(!strcmp(old_value,new_value)){
+        return USER_HAVE_THE_SAME_NAME_INTERNAL;
+    }
+    return USER_ALREADY_EXIST_INTERNAl;
+
+}

@@ -55,15 +55,14 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
     }
 
 
-
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
 
-
     if(new_username){
-        DtwResource *already_exist_username = find_user_by_username_or_email(database,new_username);
-        if(already_exist_username){
+
+        int status = get_user_index_status(database,user,USERNAME_PATH,new_username);
+        if(status == USER_ALREADY_EXIST_INTERNAl){
             return send_error(
                     request,
                     CONFLICT,
@@ -72,10 +71,14 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                     new_username
             );
         }
+        if(status == USER_HAVE_THE_SAME_NAME_INTERNAL){
+            new_username = NULL;
+        }
     }
+    
     if(new_email){
-        DtwResource *already_exist_email = find_user_by_username_or_email(database,new_email);
-        if(already_exist_email){
+        int status = get_user_index_status(database,user,USERNAME_PATH,new_email);
+        if(status ==USER_ALREADY_EXIST_INTERNAl ){
             return send_error(
                     request,
                     CONFLICT,
@@ -84,6 +87,23 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                     new_email
             );
         }
+        if(status == USER_HAVE_THE_SAME_NAME_INTERNAL){
+            new_email = NULL;
+        }
+    }
+
+
+    if(!new_username && !new_email && !new_password){
+        validator.raise_error(
+                entries,
+                NOTHING_TO_MODIFY,
+                NOTHING_TO_MODIFY_MESSAGE,
+                NULL
+        );
+    }
+
+    CHash_catch(entries){
+        return send_entrie_error(request, entries);
     }
 
     database_modify_user(database,user,new_username,new_email,new_password,false,false);
