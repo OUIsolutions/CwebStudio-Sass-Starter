@@ -28,42 +28,42 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     CwebHttpResponse *response = NULL;
 
-    if(!strcmp(request->route, CREATE_TOKEN_ROUTE)){
+    if(strings_equal(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
 
-    if(!strcmp(request->route,REMOVE_TOKEN_ROUTE)){
+    if(strings_equal(request->route,REMOVE_TOKEN_ROUTE)){
         response = remove_token(request,entries,database);
     }
 
-    if(!strcmp(request->route,GET_SELF_PROPS_ROUTE)){
+    if(strings_equal(request->route,GET_SELF_PROPS_ROUTE)){
         response = get_self_props(request,entries,database);
     }
 
-    if(!strcmp(request->route, CREATE_USER_ROUTE)){
+    if(strings_equal(request->route, CREATE_USER_ROUTE)){
         response = create_user(request,entries,database);
     }
 
-    if(!strcmp(request->route,LIST_USERS)){
+    if(strings_equal(request->route,LIST_USERS)){
         response = list_users(request,entries,database);
     }
 
-    if(!strcmp(request->route,REMOVE_USER_ROUTE)){
+    if(strings_equal(request->route,REMOVE_USER_ROUTE)){
         response = remove_user(request,entries,database);
     }
 
-    if(!strcmp(request->route, MODIFY_SELF_PROPS_ROUTE)){
+    if(strings_equal(request->route, MODIFY_SELF_PROPS_ROUTE)){
         response = modify_self_props(request,entries,database);
     }
-    if(!strcmp(request->route,SELF_REMOVE_ROUTE)){
+    if(strings_equal(request->route,SELF_REMOVE_ROUTE)){
         response = self_remove(request,entries,database);
     }
 
-    if(!strcmp(request->route,MODIFY_USER_PROPS_ROUTE)){
+    if(strings_equal(request->route,MODIFY_USER_PROPS_ROUTE)){
         response = modify_user_props(request,entries,database);
     }
 
-    if(!strcmp(request->route, GET_USER_PROPS_ROUTE)){
+    if(strings_equal(request->route, GET_USER_PROPS_ROUTE)){
         response = get_user_props(request,entries,database);
     }
 

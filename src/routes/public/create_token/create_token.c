@@ -1,8 +1,25 @@
 
 
+void remove_max_ifinite_tokens(DtwResource *user){
+#ifdef MAX_INFINITE_TOKENS
+    long total_tokens = count_infinite_token(user);
+    if(total_tokens >= MAX_INFINITE_TOKENS){
+        int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS) + 1;
+        remove_last_updated_infinite_token(user, total_to_remove);
+    }
 
+#endif
+}
 
-
+void remove_max_finite_tokens(DtwResource *user){
+#ifdef MAX_FINITE_TOKENS
+    long total_tokens = count_finite_token(user);
+    if(total_tokens > MAX_FINITE_TOKENS){
+        int total_to_remove = (total_tokens - MAX_FINITE_TOKENS) +1;
+        remove_last_updated_finite_token(user,total_to_remove);
+    }
+#endif
+}
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
@@ -57,27 +74,13 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     Token  *token;
 
     if(infinite){
-        #ifdef MAX_INFINITE_TOKENS
-                long total_tokens = count_infinite_token(user);
-                if(total_tokens >= MAX_INFINITE_TOKENS){
-                    int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS) + 1;
-                    remove_last_updated_infinite_token(user, total_to_remove);
-                }
-
-        #endif
+        remove_max_ifinite_tokens(user);
         token = database_create_infinite_token(user,password);
     }
 
     if(infinite == false){
         remove_expired_tokens(user);
-
-        #ifdef MAX_FINITE_TOKENS
-            long total_tokens = count_finite_token(user);
-            if(total_tokens > MAX_FINITE_TOKENS){
-                int total_to_remove = (total_tokens - MAX_FINITE_TOKENS) +1;
-                remove_last_updated_finite_token(user,total_to_remove);
-            }
-        #endif
+        remove_max_finite_tokens(user);
         token = database_create_finite_token(user, password, allow_renew, expiration);
     }
 
