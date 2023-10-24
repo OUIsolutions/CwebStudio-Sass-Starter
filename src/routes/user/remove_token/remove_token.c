@@ -8,7 +8,7 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
     DtwResource *user = auth.user;
 
-    char *token_to_remove = obj.getString(entries,TOKEN_TO_REMOVE_ENTRIE);
+    char *token_to_remove = obj.getString(entries, TOKEN_TO_REMOVE_ENTRE);
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }

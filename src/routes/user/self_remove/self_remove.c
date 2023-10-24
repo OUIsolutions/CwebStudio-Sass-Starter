@@ -13,7 +13,7 @@ CwebHttpResponse *self_remove(CwebHttpRequest *request, CHashObject*entries, Dtw
     DtwResource *user = auth.user;
 
 
-    char *password = obj.getString(entries, PASSWORD_ENTRIE);
+    char *password = obj.getString(entries, PASSWORD_ENTRE);
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }

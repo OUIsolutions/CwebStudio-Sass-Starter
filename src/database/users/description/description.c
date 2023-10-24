@@ -2,7 +2,7 @@
 
 
 
-CHash * describe_user(DtwResource *user, bool include_tokens){
+CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verification_link){
     CHashObject * user_obj = newCHashObjectEmpty();
 
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
@@ -12,7 +12,31 @@ CHash * describe_user(DtwResource *user, bool include_tokens){
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
 
 
+
     obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
+
+    bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
+    obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
+
+    if(include_verification_link){
+
+        if(verified){
+            obj.set_once(user_obj,VERIFICATION_LINK_KEY,hash.newNULL());
+        }
+        if(!verified){
+            char * verification_passowrd = resource.get_string_from_sub_resource(user,VERIFICATION_PASSWORD_PATH);
+            CTextStack *url = stack.newStack_string_empty();
+            stack.format(url,"%s/%s?%s=%s&%s=%s",
+                         DOMAIN
+                         VERIFY_EMAIL_ROUTE,
+                         USER_ID_ENTRE,user->name,
+                         VERIFICATION_KEY_ENTRE,verification_passowrd
+            );
+            
+            obj.set_once(user_obj, VERIFICATION_LINK_KEY,hash.newStackString(url));
+
+        }
+    }
 
     bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
 

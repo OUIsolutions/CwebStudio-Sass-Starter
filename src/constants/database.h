@@ -8,6 +8,9 @@
 #define USERNAME_PATH "username"
 #define ELEMENTS_PATH "elements"
 #define PASSWORD_PATH "password"
+#define VERIFIED_PATH "verified"
+#define VERIFICATION_PASSWORD_PATH "verified"
+
 #define INFINITE_TOKENS_PATH "infinite_tokens"
 #define FINITE_TOKENS_PATH "finite_tokens"
 

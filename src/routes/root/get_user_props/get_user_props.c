@@ -7,9 +7,9 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
         return  auth.response_error;
     }
 
-    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRIE);
-    obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
-    bool include_tokens = obj.getBool_converting(entries,INCLUDE_TOKEN_ENTRIE);
+    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
+    obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
+    bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);

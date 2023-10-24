@@ -11,8 +11,8 @@ CwebHttpResponse *remove_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return  auth.response_error;
     }
 
-    aply_path_protection(entries, USERNAME_OR_EMAIL_ENTRIE);
-    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRIE);
+    aply_path_protection(entries, USERNAME_OR_EMAIL_ENTRE);
+    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);

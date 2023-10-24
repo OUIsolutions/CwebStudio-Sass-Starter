@@ -8,11 +8,11 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     }
     DtwResource *user = auth.user;
 
-    obj.set_default(entries,INCLUDE_TOKEN_ENTRIE,hash.newBool(false));
-    bool include_tokens = obj.getBool_converting(entries,INCLUDE_TOKEN_ENTRIE);
+    obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
+    bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
     char *password = NULL;
     if(include_tokens){
-            password = obj.getString(entries,PASSWORD_ENTRIE);
+            password = obj.getString(entries, PASSWORD_ENTRE);
     }
     CHash_catch(entries){
         return send_entrie_error(request, entries);

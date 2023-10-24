@@ -3,7 +3,7 @@
 Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *database){
 
     Autentication auth = {0};
-    char *token = obj.getString(entries, TOKEN_ENTRIE);
+    char *token = obj.getString(entries, TOKEN_ENTRE);
 
     CHash_catch(entries){
         auth.error = true;

@@ -8,7 +8,7 @@
 #define GET_SELF_PROPS_ROUTE  "/user/get_self_props"
 #define MODIFY_SELF_PROPS_ROUTE "/user/modify_self_props"
 #define SELF_REMOVE_ROUTE "/user/self_remove"
-
+#define VERIFY_EMAIL_ROUTE "/user/verify_email"
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
 #define LIST_USERS "/root/list_users"

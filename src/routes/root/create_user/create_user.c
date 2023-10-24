@@ -11,26 +11,36 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return  auth.response_error;
     }
 
-    aply_path_protection(entries, USERNAME_ENTRIE);
-    aply_path_protection(entries, EMAIL_ENTRIE);
+    aply_path_protection(entries, USERNAME_ENTRE);
+    aply_path_protection(entries, EMAIL_ENTRE);
 
-    char *username = obj.getString(entries, USERNAME_ENTRIE);
+    char *username = obj.getString(entries, USERNAME_ENTRE);
 
-    validator.ensure_max_size_by_key(entries,USERNAME_ENTRIE,20);
-    validator.ensure_min_size_by_key(entries,USERNAME_ENTRIE,3);
+    validator.ensure_max_size_by_key(entries, USERNAME_ENTRE, 20);
+    validator.ensure_min_size_by_key(entries, USERNAME_ENTRE, 3);
 
-    char *email = obj.getString(entries,EMAIL_ENTRIE);
-    validator.ensure_max_size_by_key(entries,EMAIL_ENTRIE,50);
-    validator.ensure_min_size_by_key(entries,EMAIL_ENTRIE,10);
+    char *email = obj.getString(entries, EMAIL_ENTRE);
+    validator.ensure_max_size_by_key(entries, EMAIL_ENTRE, 50);
+    validator.ensure_min_size_by_key(entries, EMAIL_ENTRE, 10);
 
 
-    char *password = obj.getString(entries, PASSWORD_ENTRIE);
-    validator.ensure_min_size_by_key(entries,PASSWORD_ENTRIE,10);
-    validator.ensure_max_size_by_key(entries,PASSWORD_ENTRIE,50);
+    char *password = obj.getString(entries, PASSWORD_ENTRE);
+    validator.ensure_min_size_by_key(entries, PASSWORD_ENTRE, 10);
+    validator.ensure_max_size_by_key(entries, PASSWORD_ENTRE, 50);
 
-    obj.set_default(entries,IS_ROOT_ENTRIE,hash.newBool(false));
-    bool is_root = obj.getBool_converting(entries,IS_ROOT_ENTRIE);
+    obj.set_default(entries, IS_ROOT_ENTRE, hash.newBool(false));
+    bool is_root = obj.getBool_converting(entries, IS_ROOT_ENTRE);
 
+    if(is_root){
+        obj.set_default(entries, VERIFIED_ENTRE, hash.newBool(true));
+    }
+
+    if(!is_root){
+        obj.set_default(entries, VERIFIED_ENTRE, hash.newBool(false));
+
+    }
+
+    bool verified = obj.getBool_converting(entries,VERIFIED_ENTRE);
     CHash_protected(entries){
         if(strcmp(username,email) ==0){
             validator.raise_error(
@@ -70,7 +80,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         );
     }
 
-    database_create_user(database,username,email,password,is_root);
+    database_create_user(database,username,email, password,is_root,verified);
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(USER_CREATED)

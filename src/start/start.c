@@ -24,7 +24,7 @@ void create_root_user_if_not_exist(){
         return;
     }
     DtwResource *database = resource.newResource(DATABASE_PATH);
-    database_create_user(database,START_ROOT_NAME,START_ROOT_NAME,START_ROOT_PASSWORD,true);
+    database_create_user(database,START_ROOT_NAME,START_ROOT_NAME,START_ROOT_PASSWORD,true,true);
     resource.commit(database);
     resource.free(database);
 }
