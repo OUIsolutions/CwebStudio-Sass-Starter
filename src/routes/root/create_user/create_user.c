@@ -31,14 +31,10 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     obj.set_default(entries, IS_ROOT_ENTRE, hash.newBool(false));
     bool is_root = obj.getBool_converting(entries, IS_ROOT_ENTRE);
 
-    if(is_root){
-        obj.set_default(entries, VERIFIED_ENTRE, hash.newBool(true));
-    }
 
-    if(!is_root){
-        obj.set_default(entries, VERIFIED_ENTRE, hash.newBool(false));
+    obj.set_default(entries, VERIFIED_ENTRE, hash.newBool(false));
 
-    }
+
 
     bool verified = obj.getBool_converting(entries,VERIFIED_ENTRE);
     CHash_protected(entries){

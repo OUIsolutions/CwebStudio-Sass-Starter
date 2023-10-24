@@ -65,6 +65,7 @@ void database_create_user( DtwResource  *database,const char *username,const cha
     DtwResource *password_resource = resource.sub_resource(created_user,PASSWORD_PATH);
     char *password_sha = dtw_generate_sha_from_string(password);
     resource.set_string(password_resource,password_sha);
+    free(password_sha);
 
     DtwResource *verified_resource = resource.sub_resource(created_user,VERIFIED_PATH);
     resource.set_bool(verified_resource,verified);
