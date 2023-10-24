@@ -12,7 +12,7 @@
 #define EXPIRED_RESPONSE "expired"
 #define IS_ROOT_KEY "root"
 #define VERIFIED_KEY  "verified"
-#define VERIFICATION_LINK_KEY "verification_link"
+#define VERIFICATION_PASSWORD "verification_key"
 #define TERMINATED_APLICATION "Application Terminated"
 #define USER_CREATED "User Created"
 #define USER_MODIFIED "User Modified"

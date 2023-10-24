@@ -5,7 +5,6 @@
 #define DEFAULT_ALLOW_RENEW false
 #define DEFAULT_PRODUCTION_PORT 80
 #define ALL_ENTRIES_LOWER
-#define DOMAIN "localhost:3000"
 #define START_ROOT_NAME "root"
 #define START_ROOT_PASSWORD "root"
 #define ID_SIZE 15

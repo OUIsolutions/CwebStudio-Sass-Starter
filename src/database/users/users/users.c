@@ -68,16 +68,19 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 
     DtwResource *verified_resource = resource.sub_resource(created_user,VERIFIED_PATH);
     resource.set_bool(verified_resource,verified);
-
+    /*
     if(!verified){
         DtwResource *verification_password_resource = resource.sub_resource(created_user,VERIFICATION_PASSWORD_PATH);
         DtwHash *dt = dtw.hash.newHash();
         dtw.hash.digest_string(dt,password);
         dtw.hash.digest_string(dt,username);
-        resource.set_string(verification_password_resource,dt->hash);
+        CTextStack * generated_string = newCTextStack_string(dt->hash);
+        stack.self_substr(generated_string,0,SHA_SIZE);
+        resource.set_string(verification_password_resource,generated_string->rendered_text);
+        stack.free(generated_string);
         dtw.hash.free(dt);
     }
-
+    */
 
     DtwResource  *is_root_resource = resource.sub_resource(created_user,IS_ROOT_PATH);
     resource.set_bool(is_root_resource,is_root);

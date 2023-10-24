@@ -29,7 +29,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
         }
     }
 
-    CHashObject  *description = describe_user(user,include_tokens);
+    CHashObject  *description = describe_user(user,include_tokens,false);
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }

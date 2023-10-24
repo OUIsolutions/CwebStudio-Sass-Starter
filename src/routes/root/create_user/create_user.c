@@ -81,6 +81,7 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
 
     database_create_user(database,username,email, password,is_root,verified);
+
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(USER_CREATED)
