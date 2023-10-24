@@ -17,7 +17,7 @@ CwebHttpResponse *self_remove(CwebHttpRequest *request, CHashObject*entries, Dtw
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
-    
+
     if(!password_are_equal(user, password)){
         return send_error(
                 request,
