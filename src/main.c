@@ -84,7 +84,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 }
 
-int main(int argc, char *argv[]){
+int main(){
     cweb = newCwebNamespace();
     dtw = newDtwNamespace();
     resource = dtw.resource;

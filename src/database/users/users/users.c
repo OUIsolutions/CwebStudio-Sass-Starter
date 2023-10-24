@@ -82,6 +82,11 @@ void database_create_user( DtwResource  *database,const char *username,const cha
     }
     */
 
+
+    resource.set_long_in_sub_resource(created_user, time(NULL),CREATION_PATH);
+    resource.set_long_in_sub_resource(created_user, time(NULL),LAST_UPDATE_PATH);
+
+
     DtwResource  *is_root_resource = resource.sub_resource(created_user,IS_ROOT_PATH);
     resource.set_bool(is_root_resource,is_root);
 
