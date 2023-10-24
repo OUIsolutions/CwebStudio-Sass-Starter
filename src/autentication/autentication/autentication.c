@@ -78,7 +78,6 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         long expiration_Value = resource.get_long(expiration);
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
         long last_update_value = resource.get_long(last_update);
-
         long now = time(NULL);
         if(now > (expiration_Value + last_update_value)){
             auth.error = true;
