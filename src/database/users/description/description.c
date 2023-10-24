@@ -17,7 +17,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
 
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
-
+    
     if(include_verification_link){
 
         if(verified){
@@ -126,7 +126,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
 
 
 
-CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,bool include_verification_link){
+CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, const char *contains, bool include_tokens){
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
@@ -146,7 +146,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
         stack.self_lower(formated_contains);
 
         if(stack.index_of(email_stack,formated_contains->rendered_text) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_verification_link));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true));
             stack.free(email_stack);
             stack.free(formated_contains);
             continue;
@@ -160,7 +160,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
         stack.self_lower(username_stack);
 
         if(stack.index_of(username_stack,formated_contains->rendered_text) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_verification_link));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true));
         }
 
         stack.free(username_stack);
@@ -172,7 +172,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
 
 }
 
-CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,bool include_verification_link){
+CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens){
 
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
@@ -190,7 +190,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 
 
         if(stack.index_of(email_stack,contains) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_verification_link));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true));
             stack.free(email_stack);
             continue;
         }
@@ -202,7 +202,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
         CTextStack *username_stack = stack.newStack_string(username);
 
         if(stack.index_of(username_stack,contains) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_verification_link));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true));
         }
 
         stack.free(username_stack);
@@ -214,7 +214,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 }
 
 
-CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens,bool include_verification_link){
+CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens){
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
@@ -225,7 +225,7 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
-        array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_verification_link));
+        array.append_once(all_users_hash, describe_user(current_user,include_tokens,true));
 
     }
 
@@ -234,16 +234,16 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
 }
 
 
-CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens,bool include_verification_link){
+CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens){
 
     if(!contains){
-        return describe_all_without_contains_start(database, include_tokens,include_verification_link);
+        return describe_all_without_contains_start(database, include_tokens);
     }
 
     if(case_sensitive){
-        return describe_all_users_with_contains_case_sensitive(database, contains, include_tokens,include_verification_link);
+        return describe_all_users_with_contains_case_sensitive(database, contains, include_tokens);
     }
 
-    return describe_all_users_contains_not_case_sensitive(database, contains, include_tokens,include_verification_link);
+    return describe_all_users_contains_not_case_sensitive(database, contains, include_tokens);
 
 }
