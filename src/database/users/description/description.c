@@ -3,14 +3,22 @@
 
 
 CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verification_link){
-    CHashObject * user_obj = newCHashObjectEmpty();
 
+    CHashObject * user_obj = newCHashObjectEmpty();
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
     obj.set_once(user_obj,USERNAME_KEY,hash.newString(username));
 
-
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
 
+    long creation_data = resource.get_long_from_sub_resource(user,CREATION_PATH);
+    char *converted_creation_data = dtw_convert_unix_time_to_string(creation_data);
+    obj.set_once(user_obj,CREATION_KEY,hash.newString(converted_creation_data));
+    free(converted_creation_data);
+
+    long last_update_data = resource.get_long_from_sub_resource(user,LAST_UPDATE_PATH);
+    char *converted_last_update = dtw_convert_unix_time_to_string(last_update_data);
+    obj.set_once(user_obj,LAST_UPDATE_PATH,hash.newString(converted_last_update));
+    free(converted_last_update);
 
 
     obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
