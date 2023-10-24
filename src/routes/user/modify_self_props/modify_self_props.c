@@ -71,38 +71,36 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                 WRONG_PASSWORD_MENSSAGE
         );
     }
-    
-    if(new_username){
 
-        int status = get_user_index_status(database,user,USERNAME_PATH,new_username);
-        if(status == USER_ALREADY_EXIST_INTERNAl){
-            return send_error(
-                    request,
-                    CONFLICT,
-                    USER_ALREADY_EXIST,
-                    USER_ALREADY_MESSAGE,
-                    new_username
-            );
-        }
-        if(status == USER_HAVE_THE_SAME_NAME_INTERNAL){
-            new_username = NULL;
-        }
+
+
+   int status_username = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_username);
+    if(status_username == USER_ALREADY_EXIST_INTERNAl){
+        return send_error(
+                request,
+                CONFLICT,
+                USER_ALREADY_EXIST,
+                USER_ALREADY_MESSAGE,
+                new_username
+        );
+    }
+    if(status_username == USER_HAVE_THE_SAME_NAME_INTERNAL){
+        new_username = NULL;
     }
 
-    if(new_email){
-        int status = get_user_index_status(database,user,USERNAME_PATH,new_email);
-        if(status ==USER_ALREADY_EXIST_INTERNAl ){
-            return send_error(
-                    request,
-                    CONFLICT,
-                    USER_ALREADY_EXIST,
-                    USER_ALREADY_MESSAGE,
-                    new_email
-            );
-        }
-        if(status == USER_HAVE_THE_SAME_NAME_INTERNAL){
-            new_email = NULL;
-        }
+
+    int status_email = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_email);
+    if(status_email ==USER_ALREADY_EXIST_INTERNAl ){
+        return send_error(
+                request,
+                CONFLICT,
+                USER_ALREADY_EXIST,
+                USER_ALREADY_MESSAGE,
+                new_email
+        );
+    }
+    if(status_email == USER_HAVE_THE_SAME_NAME_INTERNAL){
+        new_email = NULL;
     }
 
 

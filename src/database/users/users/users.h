@@ -24,9 +24,9 @@ bool  password_are_equal(DtwResource *user, char *entrie_passworld);
 
 bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld);
 
-
+#define NEW_VALUE_NOT_PROVIDED -1
 #define USER_NOT_EXIST_INTERNAL 0
 #define USER_HAVE_THE_SAME_NAME_INTERNAL 1
 #define USER_ALREADY_EXIST_INTERNAl 2
 
-short get_user_index_status(DtwResource *database, DtwResource *user,const char *value_path, char *new_value);
+short get_user_index_status_if_new_value_provided(DtwResource *database, DtwResource *user, const char *value_path, char *new_value);

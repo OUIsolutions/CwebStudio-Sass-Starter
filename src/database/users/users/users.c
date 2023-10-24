@@ -139,7 +139,11 @@ bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_pa
 }
 
 
-short get_user_index_status( DtwResource *database, DtwResource *user,const char *value_path, char *new_value){
+short get_user_index_status_if_new_value_provided(DtwResource *database, DtwResource *user, const char *value_path, char *new_value){
+
+    if(!new_value){
+        return NEW_VALUE_NOT_PROVIDED;
+    }
 
     DtwResource *already_exist = find_user_by_username_or_email(database,new_value);
     if(!already_exist){
