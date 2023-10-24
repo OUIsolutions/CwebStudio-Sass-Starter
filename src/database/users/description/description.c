@@ -17,7 +17,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens,bool include_verifi
 
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
-    
+
     if(include_verification_link){
 
         if(verified){
