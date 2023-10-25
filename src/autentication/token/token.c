@@ -63,8 +63,34 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
     return token;
 
 }
+CTextStack  * create_sub_token_string(Token *original, const char *seed){
+
+    DtwHash *dt_hash = newDtwHash();
+    dtw.hash.digest_string(dt_hash,original->sha->rendered_text);
+    dtw.hash.digest_string(dt_hash,seed);
+    CTextStack * sha= stack.newStack_string(dt_hash->hash);
+    stack.self_substr(sha,0,SHA_SIZE);
+
+    CTextStack *result = create_token_string(original->infinite,original->user_id->rendered_text,original->token_id->rendered_text,sha->rendered_text);
+    stack.free(sha);
+    dtw.hash.free(dt_hash);
+    return result;
 
 
+
+}
+
+CTextStack  * create_sub_token_string_from_token_string(const char *token_string, const char *seed){
+    Token  *token = extract_token(token_string);
+
+    if(!token){
+        return NULL;
+    }
+
+    CTextStack *result = create_sub_token_string(token,seed);
+    Token_free(token);
+    return result;
+}
 Token * extract_token(const char *token_string){
 
 
@@ -112,6 +138,7 @@ Token * extract_token(const char *token_string){
 
 
 }
+
 
 void Token_represent(Token *self){
     if(!self){

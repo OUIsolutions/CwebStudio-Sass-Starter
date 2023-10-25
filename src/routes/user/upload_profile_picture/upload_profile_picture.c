@@ -12,7 +12,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     bool public = obj.getBool_converting(entries, PUBLIC_ENTRE);
     char *content_type = obj.getString(entries,CONTENT_TYPE_ENTRE);
     char *token = obj.getString(entries,TOKEN_ENTRE);
-    char *host = obj.getString(entries,TOKEN_ENTRE);
+    char *host = obj.getString(entries,HOST_ENTRIE);
 
     CHashObject *valid_extensions = newCHashObject(
             "image/png",hash.newString("png"),
@@ -73,6 +73,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     database_upload_profile_picture(user,extension,public,body,request->content_length);
     resource.commit(database);
     hash.free(valid_extensions);
+
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 
 }

@@ -59,22 +59,12 @@ CTextStack  *construct_profile_picture_url(const char *user_id,bool public,const
         );
         return url;
     }
-    Token *t = extract_token(token);
-    DtwHash *dt_hash = newDtwHash();
-    dtw.hash.digest_string(dt_hash,t->sha->rendered_text);
+
     const char *SECRETE_NAME = "profile";
-    dtw.hash.digest_string(dt_hash,SECRETE_NAME);
-    CTextStack *sha = newCTextStack_string(dt_hash->hash);
-    dtw.hash.free(dt_hash);
-    stack.self_substr(sha,0,SHA_SIZE);
-
-    stack.format(url, "%s?%s=%s&%s=%t&%s=%tc", GET_PRIVATE_PROFILE_PICTURE_ROUTE
-           USER_ID_ENTRE, user_id,
-           TOKEN_ID_ENTRE,t->token_id,
-           SHA_ENTRE,sha
+    CTextStack *token_generated = create_sub_token_string_from_token_string(token,SECRETE_NAME);
+    stack.format(url, "%s?%s=%tc",GET_PRIVATE_PROFILE_PICTURE_ROUTE,
+                 SUB_TOKEN_ENTRE,token_generated
     );
-
-    Token_free(t);
 
     return url;
 

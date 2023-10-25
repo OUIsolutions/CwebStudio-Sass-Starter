@@ -24,7 +24,6 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
     DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
-    resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
 
     if(!user){
         auth.error = true;
@@ -38,6 +37,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         Token_free(token_obj);
         return auth;
     }
+    resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
 
     DtwResource *token_resource = get_token_resource(user,token_obj);
 
