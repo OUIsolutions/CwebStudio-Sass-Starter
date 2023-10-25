@@ -111,6 +111,7 @@ Token * extract_token(const char *token_string){
     if(element->rendered_text[0] == INFINITE){
         token->infinite = true;
     }
+
     else if(element->rendered_text[0] == FINITE){
         token->infinite = false;
     }

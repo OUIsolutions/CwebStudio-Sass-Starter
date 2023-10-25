@@ -60,8 +60,7 @@ CTextStack  *construct_profile_picture_url(const char *user_id,bool public,const
         return url;
     }
 
-    const char *SECRETE_NAME = "profile";
-    CTextStack *token_generated = create_sub_token_string_from_token_string(token,SECRETE_NAME);
+    CTextStack *token_generated = create_sub_token_string_from_token_string(token,PROFILE_PICTURE_PATH);
     stack.format(url, "%s?%s=%tc",GET_PRIVATE_PROFILE_PICTURE_ROUTE,
                  SUB_TOKEN_ENTRE,token_generated
     );

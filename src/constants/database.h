@@ -8,8 +8,14 @@
 #define USERNAME_PATH "username"
 #define ELEMENTS_PATH "elements"
 #define PASSWORD_PATH "password"
-#define PUBLIC_PATH "public_profile_picture"
+#define PUBLIC_PATH "public"
 #define VERIFIED_PATH "verified"
+
+#define PROFILE_PICTURE_PATH "profile_picture"
+#define PROFILE_PICTURE_BLOB_PATH "file"
+#define EXTENSION_PATH "extension"
+
+
 #define VERIFICATION_PASSWORD_PATH "verification_password"
 
 #define INFINITE_TOKENS_PATH "infinite_tokens"
