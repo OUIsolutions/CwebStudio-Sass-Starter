@@ -113,6 +113,11 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 
 }
 
+void database_upload_profile_picture(DtwResource *user,const char *extension,bool public, unsigned char *value,long size){
+    resource.set_bool_in_sub_resource(user,public,PUBLIC_PATH);
+    resource.set_binary_in_sub_resource(user,value,size,"file.%s",extension);
+}
+
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
     char *password_sha = resource.get_string(password);

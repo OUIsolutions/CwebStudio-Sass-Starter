@@ -12,24 +12,33 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     bool public = obj.getBool_converting(entries, PUBLIC_ENTRE);
     char *content_type = obj.getString(entries,CONTENT_TYPE_ENTRE);
 
+    CHashObject *valid_extensions = newCHashObject(
+            "image/png",hash.newString("png"),
+            "image/jpg",hash.newString("jpg"),
+            "image/jpeg",hash.newString("jpeg")
+    );
 
-    bool valid_type = false;
-    if(strings_equal(content_type,"image/png")){
-        valid_type = true;
+
+    char *extension =NULL;
+
+    CHash_protected(entries){
+        extension =  obj.getString(valid_extensions,content_type);
     }
-    if(strings_equal(content_type,"image/jpg")){
-        valid_type = true;
-    }
-    if(!valid_type){
+
+    CHash_catch(valid_extensions){
         validator.raise_error_by_key( entries,
               CONTENT_TYPE_ENTRE,
               NOT_VALID_IMAGE_TYPE,
-             NOT_VALID_IMAGE_TYPE_MESSAGE,
-             NULL
-       );
+              NOT_VALID_IMAGE_TYPE_MESSAGE,
+              newCHashObject(
+                      "image",hash.newString(content_type),
+                      "valids", newCHashStringArray("image/png","image/jpg","image/jpeg")
+              )
+        );
     }
 
     CHash_catch(entries){
+        hash.free(valid_extensions);
         return send_entrie_error(request, entries);
     }
 
@@ -37,6 +46,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
 
     if(!body){
+        hash.free(valid_extensions);
         return send_error(
                 request,
                 NOT_FOUND,
@@ -50,6 +60,9 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
             MESSAGE_KEY,hash.newString(PICTURE_UPLOADED)
     );
 
+    database_upload_profile_picture(user,extension,public,body,request->content_length);
+    resource.commit(database);
+    hash.free(valid_extensions);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 
 }

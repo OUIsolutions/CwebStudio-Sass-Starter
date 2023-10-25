@@ -8,6 +8,7 @@
 #define USERNAME_PATH "username"
 #define ELEMENTS_PATH "elements"
 #define PASSWORD_PATH "password"
+#define PUBLIC_PATH "public_profile_picture"
 #define VERIFIED_PATH "verified"
 #define VERIFICATION_PASSWORD_PATH "verification_password"
 

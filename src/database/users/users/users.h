@@ -19,6 +19,7 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 
 void database_modify_user( DtwResource  *database,DtwResource *user,const char *new_username,const char *new_email,const char *new_password,bool set_is_root, bool is_root);
 
+void database_upload_profile_picture(DtwResource *user,const char *extension,bool public, unsigned char *value,long size);
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld);
 

@@ -19,7 +19,7 @@
 #define USER_NOT_ROOT_MESSAGE "you must be root to acess these route"
 #define USER_ALREADY_MESSAGE "user %s already exist"
 #define NOTHING_TO_MODIFY_MESSAGE "There is nothing to modify at headers/params"
-#define NOT_VALID_IMAGE_TYPE_MESSAGE "param #value# its not an valid content type"
+#define NOT_VALID_IMAGE_TYPE_MESSAGE "param #image# its not an valid content type\n valids: #valids#"
 
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
