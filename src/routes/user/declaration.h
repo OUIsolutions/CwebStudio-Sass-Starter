@@ -3,3 +3,4 @@
 #include "modify_self_props/modify_self_props.h"
 #include "self_remove/self_remove.h"
 #include "upload_profile_picture/upload_profile_picture.h"
+#include "get_private_profile_picture/get_private_profile_picture.h"
