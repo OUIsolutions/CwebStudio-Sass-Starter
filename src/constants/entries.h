@@ -14,6 +14,7 @@
 #define CASE_SENSITIVE_ENTRE "case_sensitive"
 #define IS_ROOT_ENTRE "root"
 #define PUBLIC_ENTRE "public"
+#define CONTENT_TYPE_ENTRE "content-type"
 #define USER_ID_ENTRE "user_id"
 #define VERIFICATION_KEY_ENTRE "verification_key"
 #define VERIFIED_ENTRE "verified"
