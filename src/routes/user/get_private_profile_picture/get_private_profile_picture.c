@@ -29,5 +29,5 @@ CwebHttpResponse *get_private_profile_picture(CwebHttpRequest *request, CHashObj
                 PROFILE_PICTURE_NOT_EXIST_MESSAGE
         );
     }
-    return cweb.response.send_file(file->path,HTTP_OK);
+    return cweb.response.send_file(file->path,CWEB_AUTO_SET_CONTENT,HTTP_OK);
 }

@@ -71,6 +71,10 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = upload_profile_picture(request,entries,database);
     }
 
+    if(strings_equal(request->route,GET_PRIVATE_PROFILE_PICTURE_ROUTE)){
+        response = get_private_profile_picture(request,entries,database);
+    }
+
     hash.free(entries);
     resource.free(database);
 
