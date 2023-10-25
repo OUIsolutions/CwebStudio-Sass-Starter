@@ -15,6 +15,8 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
         return send_entrie_error(request, entries);
     }
 
+    cweb.request.represent(request);
+
     unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
 
     if(!body){
@@ -25,6 +27,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
                 PROFILE_PICTURE_NOT_PROVIDED_MESSAGE
         );
     }
+
     CHash *response_hash = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,PICTURE_UPLOADED
