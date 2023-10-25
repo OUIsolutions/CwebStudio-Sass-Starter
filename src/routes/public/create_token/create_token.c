@@ -29,7 +29,13 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     obj.set_default(entries, EXPIRATION_ENTRE, hash.newNumber(DEFAULT_EXPIRATION));
     long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_ENTRE);
+    if(expiration == 666){
+        char *test  = NULL;
+        sprintf(test,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+        
+    }
     bool invalid_token =expiration != -1 && expiration <=0;
+    
 
     if(invalid_token){
         validator.raise_error_by_key(entries,
