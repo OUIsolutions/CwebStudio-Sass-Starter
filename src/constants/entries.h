@@ -16,5 +16,7 @@
 #define PUBLIC_ENTRE "public"
 #define CONTENT_TYPE_ENTRE "content-type"
 #define USER_ID_ENTRE "user_id"
+#define TOKEN_ID_ENTRE "token_id"
+#define SHA_ENTRE "sha"
 #define VERIFICATION_KEY_ENTRE "verification_key"
 #define VERIFIED_ENTRE "verified"

@@ -11,6 +11,8 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     obj.set_default(entries, PUBLIC_ENTRE, hash.newBool(false));
     bool public = obj.getBool_converting(entries, PUBLIC_ENTRE);
     char *content_type = obj.getString(entries,CONTENT_TYPE_ENTRE);
+    char *token = obj.getString(entries,TOKEN_ENTRE);
+    char *host = obj.getString(entries,TOKEN_ENTRE);
 
     CHashObject *valid_extensions = newCHashObject(
             "image/png",hash.newString("png"),
@@ -55,9 +57,17 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
         );
     }
 
+
+
     CHash *response_hash = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
-            MESSAGE_KEY,hash.newString(PICTURE_UPLOADED)
+            MESSAGE_KEY,hash.newString(PICTURE_UPLOADED),
+            URL_KEY,hash.newStackString(construct_profile_picture_url(
+                user->name,
+                public,
+                token,
+                host
+            ))
     );
 
     database_upload_profile_picture(user,extension,public,body,request->content_length);

@@ -67,7 +67,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = get_user_props(request,entries,database);
     }
 
-    if(strings_equal(request->route,UPLOAD_PROFILE_PICTURE)){
+    if(strings_equal(request->route, UPLOAD_PROFILE_PICTURE_ROUTE)){
         response = upload_profile_picture(request,entries,database);
     }
 

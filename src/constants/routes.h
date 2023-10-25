@@ -9,7 +9,10 @@
 #define GET_SELF_PROPS_ROUTE  "/user/get_self_props"
 #define MODIFY_SELF_PROPS_ROUTE "/user/modify_self_props"
 #define SELF_REMOVE_ROUTE "/user/self_remove"
-#define UPLOAD_PROFILE_PICTURE "/user/upload_profile_picture"
+#define UPLOAD_PROFILE_PICTURE_ROUTE "/user/upload_profile_picture"
+#define GET_PUBLIC_PROFILE_PICTURE_ROUTE "/user/get_public_profile_picture"
+#define GET_PRIVATE_PROFILE_PICTURE_ROUTE "/user/get_private_profile_picture"
+
 
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
