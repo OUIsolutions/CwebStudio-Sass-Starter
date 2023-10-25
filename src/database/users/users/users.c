@@ -50,12 +50,16 @@ void database_remove_user(DtwResource *database, DtwResource *user){
 
 
 void database_create_user( DtwResource  *database,const char *username,const char *email,const char *password,bool is_root,bool verified){
+
     //users
     DtwResource * users = resource.sub_resource(database, USERS_PATH);
+
     //users/elements
     DtwResource *elements = resource.sub_resource(users,ELEMENTS_PATH);
+
     //users/elements/2o3023dsds
     DtwResource *created_user = resource.sub_resource_random(elements, NULL);
+
 
     create_index(users, created_user->name, EMAIL_PATH, email);
     create_index(users, created_user->name, USERNAME_PATH, username);
@@ -68,20 +72,6 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 
     DtwResource *verified_resource = resource.sub_resource(created_user,VERIFIED_PATH);
     resource.set_bool(verified_resource,verified);
-    /*
-    if(!verified){
-        DtwResource *verification_password_resource = resource.sub_resource(created_user,VERIFICATION_PASSWORD_PATH);
-        DtwHash *dt = dtw.hash.newHash();
-        dtw.hash.digest_string(dt,password);
-        dtw.hash.digest_string(dt,username);
-        CTextStack * generated_string = newCTextStack_string(dt->hash);
-        stack.self_substr(generated_string,0,SHA_SIZE);
-        resource.set_string(verification_password_resource,generated_string->rendered_text);
-        stack.free(generated_string);
-        dtw.hash.free(dt);
-    }
-    */
-
 
     resource.set_long_in_sub_resource(created_user, time(NULL),CREATION_PATH);
     resource.set_long_in_sub_resource(created_user, time(NULL),LAST_UPDATE_PATH);
@@ -131,6 +121,7 @@ bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     free(entre_sha);
     return  result;
 }
+
 bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld){
     const bool ENTRIE_NOT_PROVIDED = true;
     if(!entrie_passworld){

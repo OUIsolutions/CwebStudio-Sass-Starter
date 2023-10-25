@@ -18,6 +18,7 @@
 #define USER_MODIFIED "User Modified"
 #define USER_REMOVED "User Removed"
 
+#define PICTURE_UPLOADED "picture uploaded"
 #define NEVER_EXPIRATION "never"
 #define TOKEN_CREATED "Token Created"
 #define TOKEN_REMOVED "Token Removed"

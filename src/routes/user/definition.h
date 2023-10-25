@@ -2,3 +2,4 @@
 #include "get_self_props/get_self_props.c"
 #include "modify_self_props/modify_self_props.c"
 #include "self_remove/self_remove.c"
+#include "upload_profile_picture/upload_profile_picture.c"
