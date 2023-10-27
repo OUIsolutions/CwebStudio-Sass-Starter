@@ -8,6 +8,9 @@ CwebHttpResponse *remove_token_by_id(CwebHttpRequest *request, CHashObject*entri
     }
     DtwResource *user = auth.user;
     char *token_id = obj.getString(entries,TOKEN_TO_REMOVE_ENTRE);
+    CHash_catch(entries){
+        return send_entrie_error(request, entries);
+    }
 
     DtwResource *finite_tokens = resource.sub_resource(user,FINITE_TOKENS_PATH);
     DtwResource *possible_finite_token = resource.sub_resource(finite_tokens,token_id);
@@ -18,6 +21,7 @@ CwebHttpResponse *remove_token_by_id(CwebHttpRequest *request, CHashObject*entri
                 CODE_KEY,hash.newNumber(INTERNAL_OK),
                 MESSAGE_KEY,hash.newString(TOKEN_REMOVED)
         );
+        resource.commit(database);
         return send_chash_cleaning_memory(response,HTTP_CREATED);
     }
 
@@ -30,6 +34,8 @@ CwebHttpResponse *remove_token_by_id(CwebHttpRequest *request, CHashObject*entri
                 CODE_KEY,hash.newNumber(INTERNAL_OK),
                 MESSAGE_KEY,hash.newString(TOKEN_REMOVED)
         );
+        resource.commit(database);
+
         return send_chash_cleaning_memory(response,HTTP_CREATED);
     }
 
