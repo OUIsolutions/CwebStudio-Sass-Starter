@@ -20,14 +20,8 @@ CwebHttpResponse *get_private_profile_picture(CwebHttpRequest *request, CHashObj
             );
 
     }
+
     DtwResource  *file = resource.sub_resource(profile,"%s.%s",PROFILE_PICTURE_BLOB_PATH,extension);
-    if(resource.type(file) == DTW_NOT_FOUND){
-        return send_error(
-                request,
-                NOT_FOUND,
-                PROFILE_PICTURE_NOT_EXIST,
-                PROFILE_PICTURE_NOT_EXIST_MESSAGE
-        );
-    }
+    resource.commit(database);
     return cweb.response.send_file(file->path,CWEB_AUTO_SET_CONTENT,HTTP_OK);
 }
