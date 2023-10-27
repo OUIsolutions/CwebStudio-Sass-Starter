@@ -69,12 +69,13 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
     for(int i = 0; i < finite_tokens_list->size; i ++){
         CHashObject *current_token_obj = newCHashObjectEmpty();
         array.append_once(finite_tokens,current_token_obj);
-
+        char *token_id = finite_tokens_list->strings[i];
         DtwResource *current_token_resource = resource.sub_resource(
                 finite_tokens_resource,
-                finite_tokens_list->strings[i]
+                token_id
         );
 
+        obj.set_once(current_token_obj,TOKEN_ID,hash.newString(token_id));
         long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
         char *converted_creation = dtw_convert_unix_time_to_string(creation);
         obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
@@ -102,9 +103,6 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
             obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString(expiration_string));
             free(expiration_string);
         }
-        char *sha = resource.get_string_from_sub_resource(current_token_resource,SHA_PATH);
-        CTextStack *token_string = create_token_string(false,user->name,current_token_resource->name,sha);
-        obj.set_once(current_token_obj,TOKEN_KEY,hash.newStackString(token_string));
 
     }
 
@@ -118,10 +116,13 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
         CHashObject *current_token_obj = newCHashObjectEmpty();
         array.append_once(infinite_tokens,current_token_obj);
 
+        char *token_id = infinite_tokens_list->strings[i];
+
         DtwResource *current_token_resource = resource.sub_resource(
                 infinite_tokens_resource,
-                infinite_tokens_list->strings[i]
+                token_id
         );
+        obj.set_once(current_token_obj,TOKEN_ID,hash.newString(token_id));
 
         long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
         char *converted_creation = dtw_convert_unix_time_to_string(creation);

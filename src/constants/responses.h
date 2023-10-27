@@ -1,4 +1,5 @@
 #define TOKEN_KEY "token"
+#define TOKEN_ID "token_id"
 #define CODE_KEY "code"
 #define EXPIRATION_KEY "expiration"
 #define CREATION_KEY "creation"
