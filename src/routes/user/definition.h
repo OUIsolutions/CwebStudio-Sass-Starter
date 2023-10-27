@@ -4,3 +4,4 @@
 #include "self_remove/self_remove.c"
 #include "upload_profile_picture/upload_profile_picture.c"
 #include "get_private_profile_picture/get_private_profile_picture.c"
+#include "remove_all_finite_tokens/remove_all_finite_tokens.c"
