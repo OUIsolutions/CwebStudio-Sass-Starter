@@ -96,7 +96,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(strings_equal(request->route,GET_PUBLIC_PROFILE_PICTURE_ROUTE)){
         response = get_public_profile_picture(request,entries,database);
     }
-
+    if(strings_equal(request->route,SEND_VERIFICATION_EMAIL_ROUTE))
     hash.free(entries);
     resource.free(database);
 

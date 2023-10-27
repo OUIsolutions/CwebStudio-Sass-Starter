@@ -17,7 +17,7 @@
 #define SELF_REMOVE_ROUTE "/user/self_remove"
 #define UPLOAD_PROFILE_PICTURE_ROUTE "/user/upload_profile_picture"
 #define GET_PRIVATE_PROFILE_PICTURE_ROUTE "/user/get_private_profile_picture"
-
+#define SEND_VERIFICATION_EMAIL_ROUTE "/user/send_verification_email"
 
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
