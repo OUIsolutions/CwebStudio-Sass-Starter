@@ -9,7 +9,7 @@
 #define LAST_UPDATE_KEY "last_update"
 #define USERNAME_KEY "username"
 #define MESSAGE_KEY "message"
-#define URL_KEY "url"
+#define PROFILE_PICTURE_URL_KEY "profile_picture_url"
 #define EMAIL_KEY "email"
 #define EXPIRED_RESPONSE "expired"
 #define IS_ROOT_KEY "root"

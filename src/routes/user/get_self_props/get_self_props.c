@@ -10,10 +10,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
 
     obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
     bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
-    char *password = NULL;
-    if(include_tokens){
-            password = obj.getString(entries, PASSWORD_ENTRE);
-    }
+
 
     char *token = obj.getString(entries,TOKEN_ENTRE);
     char *host = obj.getString(entries,HOST_ENTRIE);
@@ -21,18 +18,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
-
-    if(include_tokens){
-        if(!password_are_equal(user, password)){
-            return send_error(
-                    request,
-                    FOREBIDEN,
-                    WRONG_PASSWORD,
-                    WRONG_PASSWORD_MENSSAGE
-            );
-        }
-    }
-
+    
     CHashObject  *description = describe_user(user,include_tokens,false,token,host);
     return send_chash_cleaning_memory(description, HTTP_OK);
 

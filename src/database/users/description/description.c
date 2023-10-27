@@ -1,8 +1,6 @@
 
 
-
-
-CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verification_link, const char *token, const char *host){
+CHash * describe_user_without_tokens(DtwResource *user,bool include_verification_link,const char *token,const char *host){
 
     CHashObject * user_obj = newCHashObjectEmpty();
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
@@ -48,18 +46,17 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
     if(exist_profile_picture){
         bool public = resource.get_bool_from_sub_resource(profile_picture,PUBLIC_PATH);
         CTextStack *profile_url = construct_profile_picture_url(user->name, public, token, host);
-        obj.set_once(user_obj,URL_KEY,hash.newStackString(profile_url));
+        obj.set_once(user_obj, PROFILE_PICTURE_URL_KEY, hash.newStackString(profile_url));
     }
 
     bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
 
 
     obj.set_once(user_obj,IS_ROOT_KEY,hash.newBool(is_root));
+    return user_obj;
+}
 
-    if(!include_tokens){
-        return user_obj;
-    }
-
+void describe_finite_tokens(CHash *user_obj,DtwResource *user){
     CHashArray * finite_tokens = newCHashArrayEmpty();
     obj.set_once(user_obj,FINITE_TOKENS_KEY,finite_tokens);
 
@@ -107,6 +104,9 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
     }
 
     dtw.string_array.free(finite_tokens_list);
+}
+
+void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
 
     CHashArray *infinite_tokens = newCHashArrayEmpty();
     obj.set_once(user_obj,INFINITE_TOKENS_KEY,infinite_tokens);
@@ -135,14 +135,21 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verif
         obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
         free(last_update_in_str);
 
-        char *sha = resource.get_string_from_sub_resource(current_token_resource,SHA_PATH);
-        CTextStack *token_string = create_token_string(true,user->name,current_token_resource->name,sha);
-        obj.set_once(current_token_obj,TOKEN_KEY,hash.newStackString(token_string));
 
     }
 
     dtw.string_array.free(infinite_tokens_list);
 
+}
+CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verification_link, const char *token, const char *host){
+
+    CHash *user_obj = describe_user_without_tokens(user,include_verification_link,token,host);
+
+    if(!include_tokens){
+        return user_obj;
+    }
+    describe_finite_tokens(user_obj,user);
+    describe_infinite_tokens(user_obj,user);
 
     return user_obj;
 }

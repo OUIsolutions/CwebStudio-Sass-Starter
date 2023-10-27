@@ -60,9 +60,9 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
 
 
     CHash *response_hash = newCHashObject(
-            CODE_KEY,hash.newNumber(INTERNAL_OK),
-            MESSAGE_KEY,hash.newString(PICTURE_UPLOADED),
-            URL_KEY,hash.newStackString(construct_profile_picture_url(
+            CODE_KEY, hash.newNumber(INTERNAL_OK),
+            MESSAGE_KEY, hash.newString(PICTURE_UPLOADED),
+            PROFILE_PICTURE_URL_KEY, hash.newStackString(construct_profile_picture_url(
                 user->name,
                 public,
                 token,
