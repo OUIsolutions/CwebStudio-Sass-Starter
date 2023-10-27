@@ -37,7 +37,7 @@ CwebHttpResponse *get_public_profile_picture(CwebHttpRequest *request, CHashObje
         return send_error(
                 request,
                 FOREBIDEN,
-                PROFILE_PICTURE_NOT_EXIST,
+                PROFILE_PICTURE_ITS_NOT_PUBLIC,
                 PROFILE_PICTURE_ITS_NOT_PUBLIC_MESSAGE
         );
     }

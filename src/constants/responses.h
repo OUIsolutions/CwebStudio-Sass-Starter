@@ -19,7 +19,7 @@
 #define USER_CREATED "User Created"
 #define USER_MODIFIED "User Modified"
 #define USER_REMOVED "User Removed"
-
+#define EMAIL_SENDED  "Email sended"
 #define PICTURE_UPLOADED "picture uploaded"
 #define NEVER_EXPIRATION "never"
 #define TOKEN_REMOVED "Token Removed"

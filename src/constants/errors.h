@@ -13,6 +13,8 @@
 #define NOT_VALID_IMAGE_TYPE 12
 #define PROFILE_PICTURE_NOT_EXIST 13
 #define PROFILE_PICTURE_ITS_NOT_PUBLIC 14
+#define USER_IS_ALREDY_VERIFIED 15
+#define COULD_NOT_SEND_EMAIL 16
 
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headers/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
@@ -31,3 +33,4 @@
 #define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE "email cannot be equal to username"
 #define PROFILE_PICTURE_NOT_PROVIDED_MESSAGE "profile picture not provided"
 #define PROFILE_PICTURE_NOT_EXIST_MESSAGE "profile picture not exist"
+#define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code"

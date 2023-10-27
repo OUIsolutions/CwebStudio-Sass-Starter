@@ -8,3 +8,4 @@
 #include "remove_all_infinite_tokens/remove_all_infinite_tokens.h"
 #include "remove_all_tokens/remove_all_tokens.h"
 #include "remove_token_by_id/remove_token_by_id.h"
+#include "send_email_verification/send_email_verification.h"

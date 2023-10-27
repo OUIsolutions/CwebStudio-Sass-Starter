@@ -10,6 +10,7 @@
 #define PASSWORD_PATH "password"
 #define PUBLIC_PATH "public"
 #define VERIFIED_PATH "verified"
+#define VERIFICATION_PATH "verification_sha"
 
 #define PROFILE_PICTURE_PATH "profile_picture"
 #define PROFILE_PICTURE_BLOB_PATH "file"

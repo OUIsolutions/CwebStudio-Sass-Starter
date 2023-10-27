@@ -6,6 +6,7 @@ CwebHttpResponse *remove_token_by_id(CwebHttpRequest *request, CHashObject*entri
     if(auth.error){
         return  auth.response_error;
     }
+
     DtwResource *user = auth.user;
     char *token_id = obj.getString(entries,TOKEN_TO_REMOVE_ENTRE);
     CHash_catch(entries){
