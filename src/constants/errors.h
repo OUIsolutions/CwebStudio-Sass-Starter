@@ -12,6 +12,7 @@
 #define PROFILE_PICTURE_NOT_PROVIDED 11
 #define NOT_VALID_IMAGE_TYPE 12
 #define PROFILE_PICTURE_NOT_EXIST 13
+#define PROFILE_PICTURE_ITS_NOT_PUBLIC 14
 
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headers/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
@@ -21,6 +22,7 @@
 #define USER_ALREADY_MESSAGE "user %s already exist"
 #define NOTHING_TO_MODIFY_MESSAGE "There is nothing to modify at headers/params"
 #define NOT_VALID_IMAGE_TYPE_MESSAGE "param #image# its not an valid content type\n valids: #valids#"
+#define PROFILE_PICTURE_ITS_NOT_PUBLIC_MESSAGE "profile picture its not public"
 
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"
