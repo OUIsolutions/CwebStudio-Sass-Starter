@@ -7,3 +7,4 @@
 #include "remove_all_finite_tokens/remove_all_finite_tokens.c"
 #include "remove_all_infinite_tokens/remove_all_infinite_tokens.c"
 #include "remove_all_tokens/remove_all_tokens.c"
+#include "remove_token_by_id/remove_token_by_id.c"
