@@ -49,6 +49,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = remove_all_tokens(request,entries,database);
     }
 
+    if(strings_equal(request->route,REMOVE_TOKEN_BY_ID)){
+        response = remove_token_by_id(request,entries,database);
+    }
+
+
     if(strings_equal(request->route,GET_SELF_PROPS_ROUTE)){
         response = get_self_props(request,entries,database);
     }

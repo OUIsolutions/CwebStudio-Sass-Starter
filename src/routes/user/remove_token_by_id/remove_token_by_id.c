@@ -32,7 +32,7 @@ CwebHttpResponse *remove_token_by_id(CwebHttpRequest *request, CHashObject*entri
         );
         return send_chash_cleaning_memory(response,HTTP_CREATED);
     }
-    
+
     return send_error(
             request,
             NOT_FOUND,

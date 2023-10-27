@@ -11,6 +11,7 @@
 #define REMOVE_ALL_FINITE_TOKENS_ROUTE "/user/remove_all_finite_tokens"
 #define REMOVE_ALL_INFINITE_TOKENS_ROUTE "/user/remove_all_infinite_tokens"
 #define REMOVE_ALL_TOKENS_ROUTE "/user/remove_all_tokens"
+#define REMOVE_TOKEN_BY_ID "/user/remove_token_by_id"
 #define GET_SELF_PROPS_ROUTE  "/user/get_self_props"
 #define MODIFY_SELF_PROPS_ROUTE "/user/modify_self_props"
 #define SELF_REMOVE_ROUTE "/user/self_remove"
