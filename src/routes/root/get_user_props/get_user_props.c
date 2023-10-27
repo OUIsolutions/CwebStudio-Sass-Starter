@@ -10,7 +10,8 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
     char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
     obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
     bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
-
+    char *token = obj.getString(entries,TOKEN_ENTRE);
+    char *host = obj.getString(entries,HOST_ENTRIE);
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
@@ -28,8 +29,7 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
         );
     }
 
-
-    CHashObject  *description = describe_user(user_found,include_tokens,true);
+    CHashObject  *description = describe_user(user_found,include_tokens,true,token,host);
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }

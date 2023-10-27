@@ -14,6 +14,10 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     if(include_tokens){
             password = obj.getString(entries, PASSWORD_ENTRE);
     }
+
+    char *token = obj.getString(entries,TOKEN_ENTRE);
+    char *host = obj.getString(entries,HOST_ENTRIE);
+
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
@@ -29,7 +33,7 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
         }
     }
 
-    CHashObject  *description = describe_user(user,include_tokens,false);
+    CHashObject  *description = describe_user(user,include_tokens,false,token,host);
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }
