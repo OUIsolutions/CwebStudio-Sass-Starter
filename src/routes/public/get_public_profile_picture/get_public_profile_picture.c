@@ -32,8 +32,8 @@ CwebHttpResponse *get_public_profile_picture(CwebHttpRequest *request, CHashObje
 
     }
 
-    bool public = resource.get_bool_from_sub_resource(profile_picture,PUBLIC_PATH);
-    if(!public){
+    bool is_public = resource.get_bool_from_sub_resource(profile_picture,PUBLIC_PATH);
+    if(!is_public){
         return send_error(
                 request,
                 FOREBIDEN,

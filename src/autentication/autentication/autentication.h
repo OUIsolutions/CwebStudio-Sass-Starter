@@ -8,7 +8,7 @@ typedef struct Autentication{
     };
 }Autentication;
 
-Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *entries, DtwResource *database, char *seed);
+Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *entries, DtwResource *database, const char *seed);
 
 
 Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *database);

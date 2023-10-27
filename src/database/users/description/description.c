@@ -44,8 +44,8 @@ CHash * describe_user_without_tokens(DtwResource *user,bool include_verification
     DtwResource *profile_picture = resource.sub_resource(user,PROFILE_PICTURE_PATH);
     bool exist_profile_picture = resource.type(profile_picture) == DTW_FOLDER_TYPE;
     if(exist_profile_picture){
-        bool public = resource.get_bool_from_sub_resource(profile_picture,PUBLIC_PATH);
-        CTextStack *profile_url = construct_profile_picture_url(user->name, public, token, host);
+        bool is_public = resource.get_bool_from_sub_resource(profile_picture, PUBLIC_PATH);
+        CTextStack *profile_url = construct_profile_picture_url(user->name, is_public, token, host);
         obj.set_once(user_obj, PROFILE_PICTURE_URL_KEY, hash.newStackString(profile_url));
     }
 

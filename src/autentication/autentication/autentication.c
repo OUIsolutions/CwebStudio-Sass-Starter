@@ -107,7 +107,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     return auth;
 }
 
-Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *entries, DtwResource *database, char *seed){
+Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *entries, DtwResource *database, const char *seed){
 
     //we try to autenticate with the first token before
     if(obj.exist(entries,TOKEN_ENTRE)){

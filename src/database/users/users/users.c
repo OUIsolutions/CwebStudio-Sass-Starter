@@ -113,10 +113,10 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 
 }
 
-void database_upload_profile_picture(DtwResource *user,const char *extension,bool public, unsigned char *value,long size){
+void database_upload_profile_picture(DtwResource *user, const char *extension, bool is_public, unsigned char *value, long size){
     DtwResource *profile_resource = resource.sub_resource(user,PROFILE_PICTURE_PATH);
     resource.destroy(profile_resource);
-    resource.set_bool_in_sub_resource(profile_resource,public,PUBLIC_PATH);
+    resource.set_bool_in_sub_resource(profile_resource, is_public, PUBLIC_PATH);
     resource.set_binary_in_sub_resource(profile_resource,value,size,"%s.%s",PROFILE_PICTURE_BLOB_PATH, extension);
     resource.set_string_in_sub_resource(profile_resource,extension,EXTENSION_PATH);
 

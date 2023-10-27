@@ -9,7 +9,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     DtwResource *user = auth.user;
 
     obj.set_default(entries, PUBLIC_ENTRE, hash.newBool(false));
-    bool public = obj.getBool_converting(entries, PUBLIC_ENTRE);
+    bool is_public = obj.getBool_converting(entries, PUBLIC_ENTRE);
     char *content_type = obj.getString(entries,CONTENT_TYPE_ENTRE);
     char *token = obj.getString(entries,TOKEN_ENTRE);
     char *host = obj.getString(entries,HOST_ENTRIE);
@@ -63,14 +63,14 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
             CODE_KEY, hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY, hash.newString(PICTURE_UPLOADED),
             PROFILE_PICTURE_URL_KEY, hash.newStackString(construct_profile_picture_url(
-                user->name,
-                public,
-                token,
-                host
+            user->name,
+            is_public,
+            token,
+            host
             ))
     );
 
-    database_upload_profile_picture(user,extension,public,body,request->content_length);
+    database_upload_profile_picture(user, extension, is_public, body, request->content_length);
     resource.commit(database);
     hash.free(valid_extensions);
 

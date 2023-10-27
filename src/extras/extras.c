@@ -49,11 +49,11 @@ bool strings_equal(const char *string_a ,const char *string_b){
 }
 
 
-CTextStack  *construct_profile_picture_url(const char *user_id,bool public,const char *token, const char *host){
+CTextStack  *construct_profile_picture_url(const char *user_id, bool is_public, const char *token, const char *host){
 
     CTextStack *url = newCTextStack_string(host);
 
-    if(public){
+    if(is_public){
         stack.format(url, "%s?%s=%s", GET_PUBLIC_PROFILE_PICTURE_ROUTE,
                      USER_ID_ENTRE, user_id
         );
