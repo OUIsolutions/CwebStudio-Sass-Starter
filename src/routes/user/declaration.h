@@ -5,3 +5,4 @@
 #include "upload_profile_picture/upload_profile_picture.h"
 #include "get_private_profile_picture/get_private_profile_picture.h"
 #include "remove_all_finite_tokens/remove_all_finite_tokens.h"
+#include "remove_all_infinite_tokens/remove_all_infinite_tokens.h"
