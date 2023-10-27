@@ -1,6 +1,6 @@
 
 
-CwebHttpResponse *remove_all_infinite_tokens(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
+CwebHttpResponse *remove_all_tokens(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
     Autentication  auth = autenticate(request,entries,database);
     if(auth.error){
@@ -8,6 +8,8 @@ CwebHttpResponse *remove_all_infinite_tokens(CwebHttpRequest *request, CHashObje
     }
     DtwResource *user = auth.user;
 
+    DtwResource *finite_tokens = resource.sub_resource(user,INFINITE_TOKENS_PATH);
+    resource.destroy(finite_tokens);
     DtwResource *infinite_tokens = resource.sub_resource(user,INFINITE_TOKENS_PATH);
     resource.destroy(infinite_tokens);
 
