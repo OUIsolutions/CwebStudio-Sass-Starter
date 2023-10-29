@@ -4,7 +4,10 @@ PUBLIC = 'public'
 POSSIBLE_ROUTES = [USER,ROOT,PUBLIC]
 
 
+
 ROUTE_CONSTANTES_PATH = 'src/constants/routes.h'
+ROUTES_PATH = "src/routes"
+MAIN_PATH = 'src/main.c'
 
 def read_file(filename:str)->str:
     with open(filename,'r') as arq:
@@ -20,10 +23,15 @@ def replace_point_with_code(text:str, point:str,code:str)->str:
     formated_text = code + '\n' + point
     return text.replace(point,formated_text)
 
-def format_route_constant(routename:str):
+def format_route_constant(routename:str)->str:
     formated = routename.replace('  ',' ')
     formated = formated.replace(' ','_')
     return formated.upper() + '_ROUTE'
+
+def format_route_dir_or_file_name(routename:str)->str:
+    formated = routename.replace('  ',' ')
+    formated = formated.replace(' ','_')
+    return formated.lower()
 
 
 def add_route_constant(type_element:str,route_name:str)->str:
@@ -33,7 +41,21 @@ def add_route_constant(type_element:str,route_name:str)->str:
     code = f'#define {route_constant} "/{type_element}/{route_name}"'
     return replace_point_with_code(route_string,point,code)    
 
+def add_route_declaration_import(type_element:str,route_name:str)->str:
+    route_declaration_path = f'{ROUTES_PATH}/{type_element}/declaration.h'
+    content = read_file(route_declaration_path)
+    dir = format_route_dir_or_file_name(route_name)
+    filename = format_route_dir_or_file_name(route_name)
+    content+=f'\n#include "{dir}/{filename}.h"'
+    return content
 
+def add_route_definition_import(type_element:str,route_name:str)->str:
+    route_declaration_path = f'{ROUTES_PATH}/{type_element}/definition.h'
+    content = read_file(route_declaration_path)
+    dir = format_route_dir_or_file_name(route_name)
+    filename = format_route_dir_or_file_name(route_name)
+    content+=f'\n#include "{dir}/{filename}.c"'
+    return content
 
 def main():
     
@@ -45,8 +67,11 @@ def main():
         return
     try:
         insertions = {
-            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name)
+            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
+            f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
+            f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
         }
+        
         for path in insertions:
             write_file(path, insertions[path])
 
