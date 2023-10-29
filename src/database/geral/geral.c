@@ -65,7 +65,7 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
     resource.set_string(current_element_value,value);
 
 }
-bool remove_tokens_from_transaction(DtwActionTransaction *action){
+bool remove_currenct_action_if_is_a_token(DtwActionTransaction *action){
 
     CTextStack *possible_token = stack.newStack_string(action->source);
     const bool REMOVE = false;
@@ -102,7 +102,7 @@ void commit_transaction(DtwResource *database){
 
 #ifndef SAVE_TOKEN_TRANSACTIONS
 
-    dtw.transaction.filter(transaction,remove_tokens_from_transaction);
+    dtw.transaction.filter(transaction, remove_currenct_action_if_is_a_token);
     if(transaction->size == 0){
         return;
     }

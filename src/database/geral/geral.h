@@ -8,6 +8,6 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
 
 void destroy_index(DtwResource *folder,const char *index_name,const  char *value);
 
-bool remove_tokens_from_transaction(DtwActionTransaction *action);
+bool remove_currenct_action_if_is_a_token(DtwActionTransaction *action);
 
 void commit_transaction(DtwResource *database);
