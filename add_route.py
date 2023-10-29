@@ -1,3 +1,6 @@
+from os.path import isdir
+from os import mkdir
+
 USER = 'user'
 ROOT = 'root'
 PUBLIC = 'public'
@@ -81,6 +84,10 @@ def main():
         print(f"{type_route} not in {POSSIBLE_ROUTES}")
         return
     try:
+        route_function_dir = f'{ROUTES_PATH}/{type_route}/'
+        if isdir(route_function_dir):
+            raise Exception('function already exist')
+        mkdir(route_function_dir)
         insertions = {
             ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
             f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
@@ -88,6 +95,7 @@ def main():
             MAIN_PATH:create_main_if(route_name)
         }
 
+        
         for path in insertions:
             write_file(path, insertions[path])
 
