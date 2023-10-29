@@ -65,6 +65,27 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
     resource.set_string(current_element_value,value);
 
 }
+bool remove_tokens_from_transaction(DtwActionTransaction *action){
+
+    CTextStack *possible_token = stack.newStack_string(action->source);
+    const bool REMOVE = false;
+    const bool KEEP = true;
+
+    bool is_a_finite_token_modification = stack.index_of(possible_token,FINITE_TOKENS_PATH) != -1;
+    if(is_a_finite_token_modification){
+        stack.free(possible_token);
+        return REMOVE;
+    }
+
+    bool is_a_infinite_token_modification = stack.index_of(possible_token,INFINITE_TOKENS_PATH) != -1;
+    if(is_a_infinite_token_modification){
+        stack.free(possible_token);
+        return REMOVE;
+    }
+
+
+    return KEEP;
+}
 
 void commit_transaction(DtwResource *database){
     resource.commit(database);
@@ -78,37 +99,16 @@ void commit_transaction(DtwResource *database){
         return;
     }
 
-    cJSON * transaction_json = dtw.transaction.dumps_transaction_to_json(transaction);
 
 #ifndef SAVE_TOKEN_TRANSACTIONS
-    int size = cJSON_GetArraySize(transaction_json);
-    for(int i =0 ; i < size; i++){
-        cJSON * current = cJSON_GetArrayItem(transaction_json,i);
-        cJSON *source = cJSON_GetObjectItem(current,"source");
-        CTextStack *source_stack = newCTextStack_string(source->valuestring);
-        bool is_finite_token_transaction = stack.index_of(source_stack,FINITE_TOKENS_PATH) != -1;
-        if(is_finite_token_transaction){
-            size-=1;
-            cJSON_DeleteItemFromArray(transaction_json,i);
-            stack.free(source_stack);
-            continue;
-        }
-        bool is_infinite_token_transaction = stack.index_of(source_stack,INFINITE_TOKENS_PATH) != -1;
-        if(is_infinite_token_transaction){
-            size-=1;
 
-            cJSON_DeleteItemFromArray(transaction_json,i);
-        }
-        stack.free(source_stack);
-    }
-
-    if(size == 0){
-        cJSON_Delete(transaction_json);
+    dtw.transaction.filter(transaction,remove_tokens_from_transaction);
+    if(transaction->size == 0){
         return;
     }
-
 #endif
 
+    cJSON * transaction_json = dtw.transaction.dumps_transaction_to_json(transaction);
 
     char *transaction_content = cJSON_Print(transaction_json);
     char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
