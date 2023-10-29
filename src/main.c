@@ -4,7 +4,6 @@
 #include "definition.h"
 
 
-#define RECONSTRUCT_DATABASE_FROM_START
 
 //never use these flag in production
 #define DEBUG
