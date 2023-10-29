@@ -9,6 +9,10 @@ ROUTE_CONSTANTES_PATH = 'src/constants/routes.h'
 def read_file(filename:str)->str:
     with open(filename,'r') as arq:
         return arq.read()
+    
+def write_file(filename:str,value:str):
+    with open(filename,'w') as arq:
+        arq.write(value)
 
 def replace_point_with_code(text:str, point:str,code:str)->str:
     if point not in text:
@@ -27,7 +31,8 @@ def add_route_constant(type:str,route_name:str)->str:
     point = f'//{type}_point'
     code = format_route_constant(route_name)
     return replace_point_with_code(route_string,point,code)    
-    
+
+
 
 def main():
     
@@ -38,11 +43,13 @@ def main():
         print(f"{type_route} not in {POSSIBLE_ROUTES}")
         return
     try:
-        inertions = {
+        insertions = {
             ROUTE_CONSTANTES_PATH: add_route_constant(type,route_name)
         }
-        for i in inertions:
-            
+        for path in insertions:
+            write_file(path, insertions[path])
+
+
     except Exception as e :
         print(e)
     
