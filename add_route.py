@@ -18,7 +18,7 @@ def replace_point_with_code(text:str, point:str,code:str)->str:
     if point not in text:
         raise Exception(f'point {point} not found')
     formated_text = code + '\n' + point
-    return text.replace(text,formated_text)
+    return text.replace(point,formated_text)
 
 def format_route_constant(routename:str):
     formated = routename.replace('  ',' ')
