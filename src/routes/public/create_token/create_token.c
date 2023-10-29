@@ -23,17 +23,12 @@ void remove_max_finite_tokens(DtwResource *user){
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    aply_path_protection(entries, USERNAME_OR_EMAIL_ENTRE);
     char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
     char *password = obj.getString(entries, PASSWORD_ENTRE);
 
     obj.set_default(entries, EXPIRATION_ENTRE, hash.newNumber(DEFAULT_EXPIRATION));
     long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_ENTRE);
-    if(expiration == 666){
-        char *test  = NULL;
-        sprintf(test,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
-        
-    }
+
     bool invalid_token =expiration != -1 && expiration <=0;
     
 

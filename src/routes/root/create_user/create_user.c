@@ -11,8 +11,6 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         return  auth.response_error;
     }
 
-    aply_path_protection(entries, USERNAME_ENTRE);
-    aply_path_protection(entries, EMAIL_ENTRE);
 
     char *username = obj.getString(entries, USERNAME_ENTRE);
 

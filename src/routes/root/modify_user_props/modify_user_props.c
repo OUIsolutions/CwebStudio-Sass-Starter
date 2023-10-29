@@ -22,14 +22,12 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
 
 
     if(obj.exist(entries, NEW_USERNAME_ENTRE)){
-        aply_path_protection(entries, NEW_USERNAME_ENTRE);
         validator.ensure_max_size_by_key(entries, NEW_USERNAME_ENTRE, 20);
         validator.ensure_min_size_by_key(entries, NEW_USERNAME_ENTRE, 3);
         new_username = obj.getString(entries, NEW_USERNAME_ENTRE);
     }
 
     if(obj.exist(entries, NEW_EMAIL_ENTRE)){
-        aply_path_protection(entries, NEW_EMAIL_ENTRE);
         validator.ensure_max_size_by_key(entries, NEW_EMAIL_ENTRE, 50);
         validator.ensure_min_size_by_key(entries, NEW_EMAIL_ENTRE, 10);
         new_email = obj.getString(entries, NEW_EMAIL_ENTRE);

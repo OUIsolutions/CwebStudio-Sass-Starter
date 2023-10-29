@@ -13,7 +13,6 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
     char *contains  = NULL;
 
     if(obj.exist(entries, CONTAINS_ENTRE)){
-        aply_path_protection(entries, CONTAINS_ENTRE);
         contains = obj.getString(entries, CONTAINS_ENTRE);
     }
 
