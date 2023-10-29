@@ -23,7 +23,7 @@ def replace_point_with_code(text:str, point:str,code:str)->str:
 def format_route_constant(routename:str):
     formated = routename.replace('  ',' ')
     formated = formated.replace(' ','_')
-    return formated.upper()
+    return formated.upper() + '_ROUTE'
 
 
 def add_route_constant(type_element:str,route_name:str)->str:
