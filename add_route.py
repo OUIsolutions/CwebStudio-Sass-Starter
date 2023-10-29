@@ -93,7 +93,7 @@ def create_insertions(type_route:str,route_name:str):
         f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
         f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
         f'{route_function_dir}/{route_function_name}.h':create_function_declaration(route_name),
-        f'{route_function_dir}/{route_function_name}.c':create_function_definition(route_name),
+        f'{route_function_dir}/{route_function_name}.c':create_function_definition(type_route,route_name),
         MAIN_PATH:create_main_if(route_name)
 
     }
@@ -110,8 +110,8 @@ def main():
         route_function_dir = f'{ROUTES_PATH}/{type_route}/{format_route_dir_or_file_name(route_name)}'
         if isdir(route_function_dir):
             raise Exception('function already exist')
-        mkdir(route_function_dir)
         insertions = create_insertions(type_route,route_name)
+        mkdir(route_function_dir)
         
         for path in insertions:
             write_file(path, insertions[path])
