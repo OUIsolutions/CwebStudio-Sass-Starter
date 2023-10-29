@@ -44,7 +44,7 @@ def main():
         return
     try:
         insertions = {
-            ROUTE_CONSTANTES_PATH: add_route_constant(type,route_name)
+            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name)
         }
         for path in insertions:
             write_file(path, insertions[path])
