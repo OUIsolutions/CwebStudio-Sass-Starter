@@ -37,10 +37,10 @@ def format_route_dir_or_file_name(routename:str)->str:
     formated = formated.replace(' ','_')
     return formated.lower()
 
-def create_function_name(routename:str)->str:
+def create_function_name(type_route:str,routename:str)->str:
     formated = routename.replace('  ',' ')
     formated = formated.replace(' ','_')
-    return formated.lower() + '_route'
+    return type_route + '_'+formated.lower() + '_route'
 
 def add_route_constant(type_element:str,route_name:str)->str:
     route_string = read_file(ROUTE_CONSTANTES_PATH)
@@ -66,22 +66,22 @@ def add_route_definition_import(type_element:str,route_name:str)->str:
     return content
 
 
-def create_function_declaration(route_name:str)->str:
+def create_function_declaration(type_route:str,route_name:str)->str:
     model = load_model('function_declaration.h')
-    return model.replace('function_name',create_function_name(route_name))
+    return model.replace('function_name',create_function_name(type_route,route_name))
 
 def create_function_definition(type_route:str,route_name:str)->str:
     model = load_model(f'{type_route}_function.c')
-    return  model.replace('function_name',create_function_name(route_name))
+    return  model.replace('function_name',create_function_name(type_route,route_name))
 
 def load_model(model_name:str)->str:
     return read_file(f'{MODELS_PATH}/{model_name}')
 
-def create_main_if(route_name:str)->str:
+def create_main_if(type_route:str,route_name:str)->str:
     content = read_file(MAIN_PATH)
     main_if = load_model(MAIN_IF)
     main_if = main_if.replace('ROUTE',format_route_constant(route_name))
-    main_if = main_if.replace('route_name',create_function_name(route_name))
+    main_if = main_if.replace('route_name',create_function_name(type_route,route_name))
     content = replace_point_with_code(content,'//route_insertion',main_if)
     return content
 
@@ -92,7 +92,7 @@ def create_insertions(type_route:str,route_name:str):
         ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
         f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
         f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
-        f'{route_function_dir}/{route_function_name}.h':create_function_declaration(route_name),
+        f'{route_function_dir}/{route_function_name}.h':create_function_declaration(type_route,route_name),
         f'{route_function_dir}/{route_function_name}.c':create_function_definition(type_route,route_name),
         MAIN_PATH:create_main_if(route_name)
 
