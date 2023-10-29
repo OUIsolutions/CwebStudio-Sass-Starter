@@ -26,9 +26,9 @@ def format_route_constant(routename:str):
     return formated.upper()
 
 
-def add_route_constant(type:str,route_name:str)->str:
+def add_route_constant(type_element:str,route_name:str)->str:
     route_string = read_file(ROUTE_CONSTANTES_PATH)
-    point = f'//{type}_point'
+    point = f'//{type_element}_point'
     code = format_route_constant(route_name)
     return replace_point_with_code(route_string,point,code)    
 
