@@ -102,7 +102,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
        response = send_email_verification_route(request,entries,database);
     }
     
-    //route_insertion
+//route_insertion
 
     hash.free(entries);
     resource.free(database);
