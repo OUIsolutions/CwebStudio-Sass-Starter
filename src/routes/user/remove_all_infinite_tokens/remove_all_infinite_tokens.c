@@ -11,12 +11,12 @@ CwebHttpResponse *remove_all_infinite_tokens(CwebHttpRequest *request, CHashObje
     DtwResource *infinite_tokens = resource.sub_resource(user,INFINITE_TOKENS_PATH);
     resource.destroy(infinite_tokens);
 
-    resource.commit(database);
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(ALL_TOKENS_REMOVED)
     );
+    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
 

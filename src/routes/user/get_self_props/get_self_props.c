@@ -20,6 +20,8 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     }
     
     CHashObject  *description = describe_user(user,include_tokens,false,token,host);
+    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
+
     return send_chash_cleaning_memory(description, HTTP_OK);
 
 }

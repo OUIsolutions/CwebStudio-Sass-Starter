@@ -55,12 +55,12 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
 
     stack.free(verification_stack);
     dtw.hash.free(verification);
-    resource.commit(database);
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(EMAIL_SENDED)
     );
+    commit_transaction(database,SAVE_USER_TRANSACTIONS);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
 

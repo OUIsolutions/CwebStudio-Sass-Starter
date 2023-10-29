@@ -119,7 +119,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(USER_MODIFIED)
     );
-    resource.commit(database);
+    commit_transaction(database,SAVE_USER_TRANSACTIONS);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
 

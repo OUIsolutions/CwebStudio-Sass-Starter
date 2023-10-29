@@ -33,7 +33,7 @@ CwebHttpResponse *self_remove(CwebHttpRequest *request, CHashObject*entries, Dtw
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(USER_REMOVED)
     );
-    resource.commit(database);
+    commit_transaction(database,SAVE_USER_TRANSACTIONS);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
 }
