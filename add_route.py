@@ -65,6 +65,11 @@ def add_route_definition_import(type_element:str,route_name:str)->str:
     content+=f'\n#include "{dir}/{filename}.c"'
     return content
 
+
+def create_function_declaration(route_name:str)->str:
+    model = load_model('function_declaration.h')
+    return model.replace('function_name',create_function_name(route_name))
+
 def load_model(model_name:str)->str:
     return read_file(f'{MODELS_PATH}/{model_name}')
 
@@ -92,6 +97,7 @@ def main():
             ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
             f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
             f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
+          
             MAIN_PATH:create_main_if(route_name)
         }
 
