@@ -9,13 +9,15 @@ DtwResource *find_element_by_id(DtwResource *folder,const char *id){
     return element;
 }
 
-DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,const  char *index){
+DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,const  char *value){
     //folder/index
     DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
-    //folder/index/{index_name}
+    //folder/index/email
     DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
-    //folder/index/{index_name}/{index_value}
-    DtwResource  *element_reference = resource.sub_resource(selected_index,index);
+    char *converted_value = dtw.generate_sha_from_string(value);
+    //folder/index/email/user@gmail.com
+    DtwResource  *element_reference = resource.sub_resource(selected_index, converted_value);
+    free(converted_value);
 
     char *id =  resource.get_string(element_reference);
     if(!id){
@@ -30,13 +32,15 @@ DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,
     }
     return current_element;
 }
-void destroy_index(DtwResource *folder,const char *index_name,const  char *index){
+void destroy_index(DtwResource *folder,const char *index_name,const  char *value){
     //folder/index
     DtwResource *  all_index_folder = resource.sub_resource(folder, INDEX_PATH);
     //folder/index/email
     DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
     //folder/index/email/user@gmail.com
-    DtwResource  *element_reference = resource.sub_resource(selected_index,index);
+    char *converted_value = dtw.generate_sha_from_string(value);
+    DtwResource  *element_reference = resource.sub_resource(selected_index, converted_value);
+    free(converted_value);
     resource.destroy(element_reference);
 
 }
@@ -48,7 +52,9 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
     //users/index/email
     DtwResource *selected_index = resource.sub_resource(all_index_folder, index_name);
     //users/index/email/user@gmail.com
-    DtwResource  *element_reference = resource.sub_resource(selected_index,value);
+    char *converted_value = dtw.generate_sha_from_string(value);
+    DtwResource  *element_reference = resource.sub_resource(selected_index,converted_value);
+    free(converted_value);
     resource.set_string(element_reference,id);
 
     //users/elements
