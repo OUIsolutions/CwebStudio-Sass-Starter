@@ -86,7 +86,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
 
-    resource.commit(database);
     CHash *response_hash = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             TOKEN_KEY,hash.newString(token->token_string->rendered_text)
@@ -103,7 +102,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(expiration_in_str));
         free(expiration_in_str);
     }
-
+    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
     Token_free(token);
 
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
