@@ -36,8 +36,8 @@ def add_route_constant(type:str,route_name:str)->str:
 
 def main():
     
-    route_name = input("type the route name")
-    type_route = input(f"type the type of route {POSSIBLE_ROUTES}")
+    route_name = input("type the route name:")
+    type_route = input(f"type the type of route {POSSIBLE_ROUTES}:")
     
     if  type_route not in POSSIBLE_ROUTES:
         print(f"{type_route} not in {POSSIBLE_ROUTES}")
