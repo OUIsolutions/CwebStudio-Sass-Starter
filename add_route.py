@@ -4,7 +4,13 @@ PUBLIC = 'public'
 POSSIBLE_ROUTES = [USER,ROOT,PUBLIC]
 
 
-def add_route_constant(type):
+def read_file(filename:str)->str:
+    with open(filename,'r') as arq:
+        return arq.read()
+    
+
+
+def add_route_constant(type:str,route_name:str)->str:
     
     pass 
 
