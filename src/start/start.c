@@ -20,11 +20,14 @@ bool verify_if_there_is_an_root_user(){
 }
 
 void create_root_user_if_not_exist(){
-    if(verify_if_there_is_an_root_user()){
+
+    bool root_already_exist = verify_if_there_is_an_root_user();
+    if(root_already_exist){
         return;
     }
+
     DtwResource *database = resource.newResource(DATABASE_PATH);
     database_create_user(database,START_ROOT_NAME,START_ROOT_NAME,START_ROOT_PASSWORD,true,true);
-    resource.commit(database);
+    commit_transaction(database);
     resource.free(database);
 }

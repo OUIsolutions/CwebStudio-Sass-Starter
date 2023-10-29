@@ -8,7 +8,6 @@
 //never use these flag in production
 #define DEBUG
 
-
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 
@@ -131,6 +130,13 @@ int main(){
     validator = hash.validator;
     stack = newCTextStackModule();
     create_root_user_if_not_exist();
+
+    //define these flag to reconstruct database, if integrity brokes
+#define RELOAD_ALL_TRANSACTIONS
+
+#ifdef RELOAD_ALL_TRANSACTIONS
+        reload_all_transactions();
+    #endif
 
 
      #ifdef DEBUG

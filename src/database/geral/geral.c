@@ -121,3 +121,15 @@ void commit_transaction(DtwResource *database){
     stack.free(formated_path);
 
 }
+
+void reload_all_transactions(){
+    dtw_remove_any(DATABASE_PATH);
+    DtwStringArray  *elements = dtw.list_files(TRANSACTION_PATH,true);
+    for(int i = 0; i < elements->size; i++){
+        char *current_transaction_path = elements->strings[i];
+        DtwTransaction *current = dtw.transaction.newTransaction_from_json_file(current_transaction_path);
+        dtw.transaction.commit(current,NULL);
+        dtw.transaction.free(current);
+    }
+    dtw.string_array.free(elements);
+}
