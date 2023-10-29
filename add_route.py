@@ -57,6 +57,11 @@ def add_route_definition_import(type_element:str,route_name:str)->str:
     content+=f'\n#include "{dir}/{filename}.c"'
     return content
 
+
+def create_main_if(route_name:str)->str:
+    content = read_file(MAIN_PATH)
+    
+
 def main():
     
     route_name = input("type the route name:")
@@ -71,7 +76,7 @@ def main():
             f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
             f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
         }
-        
+
         for path in insertions:
             write_file(path, insertions[path])
 
