@@ -80,6 +80,18 @@ def create_main_if(route_name:str)->str:
     main_if = main_if.replace('route_name',create_function_name(route_name))
     content = replace_point_with_code(content,'//route_insertion',main_if)
     return content
+
+def create_insertions(type_route:str,route_name:str):
+    route_function_dir = f'{ROUTES_PATH}/{type_route}/{format_route_dir_or_file_name(route_name)}'
+
+    return {
+            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
+            f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
+            f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
+            f'{route_function_dir}/{format_route_dir_or_file_name(route_name)}.h':create_function_declaration(route_name),
+            MAIN_PATH:create_main_if(route_name)
+    }
+
 def main():
     
     route_name = input("type the route name:")
@@ -93,14 +105,7 @@ def main():
         if isdir(route_function_dir):
             raise Exception('function already exist')
         mkdir(route_function_dir)
-        insertions = {
-            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
-            f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
-            f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
-            f'{route_function_dir}/{format_route_dir_or_file_name(route_name)}.h':create_function_declaration(route_name),
-            MAIN_PATH:create_main_if(route_name)
-        }
-
+        insertions = create_insertions(type_route,route_name)
         
         for path in insertions:
             write_file(path, insertions[path])
