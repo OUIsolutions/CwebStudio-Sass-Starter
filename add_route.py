@@ -70,6 +70,10 @@ def create_function_declaration(route_name:str)->str:
     model = load_model('function_declaration.h')
     return model.replace('function_name',create_function_name(route_name))
 
+def create_function_definition(type_route:str,route_name:str)->str:
+    model = load_model(f'{type_route}_function.c')
+    return  model.replace('function_name',create_function_name(route_name))
+
 def load_model(model_name:str)->str:
     return read_file(f'{MODELS_PATH}/{model_name}')
 
@@ -83,13 +87,15 @@ def create_main_if(route_name:str)->str:
 
 def create_insertions(type_route:str,route_name:str):
     route_function_dir = f'{ROUTES_PATH}/{type_route}/{format_route_dir_or_file_name(route_name)}'
-
+    route_function_name = format_route_dir_or_file_name(route_name)
     return {
-            ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
-            f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
-            f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
-            f'{route_function_dir}/{format_route_dir_or_file_name(route_name)}.h':create_function_declaration(route_name),
-            MAIN_PATH:create_main_if(route_name)
+        ROUTE_CONSTANTES_PATH: add_route_constant(type_route,route_name),
+        f'{ROUTES_PATH}/{type_route}/declaration.h':add_route_declaration_import(type_route,route_name),
+        f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
+        f'{route_function_dir}/{route_function_name}.h':create_function_declaration(route_name),
+        f'{route_function_dir}/{route_function_name}.c':create_function_definition(route_name),
+        MAIN_PATH:create_main_if(route_name)
+
     }
 
 def main():
