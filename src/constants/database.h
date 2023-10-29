@@ -1,5 +1,7 @@
 
 
+
+#define TRANSACTION_PATH "data/transactions"
 #define DATABASE_PATH "data/content"
 #define USERS_PATH "users"
 #define INDEX_PATH "index"
