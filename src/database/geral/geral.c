@@ -65,3 +65,20 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
     resource.set_string(current_element_value,value);
 
 }
+
+void commit_transaction(DtwResource *database,bool save_transaction_history){
+    resource.commit(database);
+    if(save_transaction_history){
+        DtwTransaction * transaction = database->transaction;
+        cJSON * transaction_json = dtw.transaction.dumps_transaction_to_json(transaction);
+        char *transaction_content = cJSON_Print(transaction_json);
+        char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
+        long now = time(NULL);
+        CTextStack * formated_path = newCTextStack_string_empty();
+        stack.format(formated_path,"%s/%d:%s",TRANSACTION_PATH,now,transaction_sha);
+        dtw.write_string_file_content(formated_path->rendered_text,transaction_content);
+        cJSON_Delete(transaction_json);
+        free(transaction_sha);
+        stack.free(formated_path);
+    }
+}
