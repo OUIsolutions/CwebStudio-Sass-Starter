@@ -74,6 +74,10 @@ void commit_transaction(DtwResource *database){
     #endif
 
     DtwTransaction * transaction = database->transaction;
+    if(transaction->size == 0){
+        return;
+    }
+
     cJSON * transaction_json = dtw.transaction.dumps_transaction_to_json(transaction);
 
 #ifndef SAVE_TOKEN_TRANSACTIONS
@@ -84,17 +88,27 @@ void commit_transaction(DtwResource *database){
         CTextStack *source_stack = newCTextStack_string(source->valuestring);
         bool is_finite_token_transaction = stack.index_of(source_stack,FINITE_TOKENS_PATH) != -1;
         if(is_finite_token_transaction){
+            size-=1;
             cJSON_DeleteItemFromArray(transaction_json,i);
             stack.free(source_stack);
             continue;
         }
         bool is_infinite_token_transaction = stack.index_of(source_stack,INFINITE_TOKENS_PATH) != -1;
         if(is_infinite_token_transaction){
+            size-=1;
+
             cJSON_DeleteItemFromArray(transaction_json,i);
         }
         stack.free(source_stack);
     }
+
+    if(size == 0){
+        cJSON_Delete(transaction_json);
+        return;
+    }
+
 #endif
+
 
     char *transaction_content = cJSON_Print(transaction_json);
     char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
