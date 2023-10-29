@@ -94,7 +94,7 @@ def create_insertions(type_route:str,route_name:str):
         f'{ROUTES_PATH}/{type_route}/definition.h':add_route_definition_import(type_route,route_name),
         f'{route_function_dir}/{route_function_name}.h':create_function_declaration(type_route,route_name),
         f'{route_function_dir}/{route_function_name}.c':create_function_definition(type_route,route_name),
-        MAIN_PATH:create_main_if(route_name)
+        MAIN_PATH:create_main_if(type_route,route_name)
 
     }
 
