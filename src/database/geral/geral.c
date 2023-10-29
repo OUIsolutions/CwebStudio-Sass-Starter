@@ -112,9 +112,10 @@ void commit_transaction(DtwResource *database){
 
     char *transaction_content = cJSON_Print(transaction_json);
     char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
-    long now = time(NULL);
+    char * now = dtw_convert_unix_time_to_string(time(NULL));
+
     CTextStack * formated_path = newCTextStack_string_empty();
-    stack.format(formated_path,"%s/%d:%s.json",TRANSACTION_PATH,now,transaction_sha);
+    stack.format(formated_path,"%s/%sc:%s.json",TRANSACTION_PATH,now,transaction_sha);
     dtw.write_string_file_content(formated_path->rendered_text,transaction_content);
     cJSON_Delete(transaction_json);
     free(transaction_sha);
@@ -125,6 +126,7 @@ void commit_transaction(DtwResource *database){
 void reload_all_transactions(){
     dtw_remove_any(DATABASE_PATH);
     DtwStringArray  *elements = dtw.list_files(TRANSACTION_PATH,true);
+    dtw.string_array.sort(elements);
     for(int i = 0; i < elements->size; i++){
         char *current_transaction_path = elements->strings[i];
         DtwTransaction *current = dtw.transaction.newTransaction_from_json_file(current_transaction_path);

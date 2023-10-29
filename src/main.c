@@ -4,6 +4,7 @@
 #include "definition.h"
 
 
+#define RECONSTRUCT_DATABASE_FROM_START
 
 //never use these flag in production
 #define DEBUG
@@ -132,9 +133,7 @@ int main(){
     create_root_user_if_not_exist();
 
     //define these flag to reconstruct database, if integrity brokes
-#define RELOAD_ALL_TRANSACTIONS
-
-#ifdef RELOAD_ALL_TRANSACTIONS
+    #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();
     #endif
 
