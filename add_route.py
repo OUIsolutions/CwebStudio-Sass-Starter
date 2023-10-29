@@ -71,7 +71,7 @@ def create_main_if(route_name:str)->str:
     main_if = main_if.replace('ROUTE',format_route_constant(route_name))
     main_if = main_if.replace('route_name',create_function_name(route_name))
     content = replace_point_with_code(content,'//route_insertion',main_if)
-
+    return content
 def main():
     
     route_name = input("type the route name:")
