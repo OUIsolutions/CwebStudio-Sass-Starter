@@ -79,7 +79,20 @@ void commit_transaction(DtwResource *database){
 #ifndef SAVE_TOKEN_TRANSACTIONS
     int size = cJSON_GetArraySize(transaction_json);
     for(int i =0 ; i < size; i++){
-        
+        cJSON * current = cJSON_GetArrayItem(transaction_json,i);
+        cJSON *source = cJSON_GetObjectItem(current,"source");
+        CTextStack *source_stack = newCTextStack_string(source->valuestring);
+        bool is_finite_token_transaction = stack.index_of(source_stack,FINITE_TOKENS_PATH) != -1;
+        if(is_finite_token_transaction){
+            cJSON_DeleteItemFromArray(transaction_json,i);
+            stack.free(source_stack);
+            continue;
+        }
+        bool is_infinite_token_transaction = stack.index_of(source_stack,INFINITE_TOKENS_PATH) != -1;
+        if(is_infinite_token_transaction){
+            cJSON_DeleteItemFromArray(transaction_json,i);
+        }
+        stack.free(source_stack);
     }
 #endif
 
