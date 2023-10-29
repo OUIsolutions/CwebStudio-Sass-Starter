@@ -102,7 +102,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(expiration_in_str));
         free(expiration_in_str);
     }
-    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
+    commit_transaction(database);
     Token_free(token);
 
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);

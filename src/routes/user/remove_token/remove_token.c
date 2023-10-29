@@ -41,7 +41,7 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString(TOKEN_REMOVED)
     );
-    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
+    commit_transaction(database);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
 

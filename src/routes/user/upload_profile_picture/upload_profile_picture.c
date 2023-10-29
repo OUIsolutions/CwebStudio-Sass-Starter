@@ -71,7 +71,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     );
 
     database_upload_profile_picture(user, extension, is_public, body, request->content_length);
-    commit_transaction(database,SAVE_USER_TRANSACTIONS);
+    commit_transaction(database);
 
     hash.free(valid_extensions);
 

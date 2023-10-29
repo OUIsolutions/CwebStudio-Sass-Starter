@@ -22,7 +22,7 @@ CwebHttpResponse *get_private_profile_picture(CwebHttpRequest *request, CHashObj
     }
 
     DtwResource  *file = resource.sub_resource(profile,"%s.%s",PROFILE_PICTURE_BLOB_PATH,extension);
-    commit_transaction(database,SAVE_TOKEN_TRANSACTIONS);
+    commit_transaction(database);
 
     return cweb.response.send_file(file->path,CWEB_AUTO_SET_CONTENT,HTTP_OK);
 }

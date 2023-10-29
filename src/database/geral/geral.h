@@ -8,4 +8,4 @@ void create_index(DtwResource *folder, const char *id, const char *index_name, c
 
 void destroy_index(DtwResource *folder,const char *index_name,const  char *value);
 
-void commit_transaction(DtwResource *database,bool save_transaction_history);
+void commit_transaction(DtwResource *database);
