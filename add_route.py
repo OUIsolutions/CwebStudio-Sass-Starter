@@ -27,10 +27,10 @@ def replace_point_with_code(text:str, point:str,code:str)->str:
     formated_text = code + '\n' + point
     return text.replace(point,formated_text)
 
-def format_route_constant(routename:str)->str:
+def format_route_constant(typename:str,routename:str)->str:
     formated = routename.replace('  ',' ')
     formated = formated.replace(' ','_')
-    return formated.upper() + '_ROUTE'
+    return typename.upper()  +'_' + formated.upper() + '_ROUTE'
 
 def format_route_dir_or_file_name(routename:str)->str:
     formated = routename.replace('  ',' ')
@@ -45,7 +45,7 @@ def create_function_name(type_route:str,routename:str)->str:
 def add_route_constant(type_element:str,route_name:str)->str:
     route_string = read_file(ROUTE_CONSTANTES_PATH)
     point = f'//{type_element}_point'
-    route_constant = format_route_constant(route_name)
+    route_constant = format_route_constant(type_element,route_name)
     code = f'#define {route_constant} "/{type_element}/{route_name}"'
     return replace_point_with_code(route_string,point,code)    
 
@@ -80,7 +80,7 @@ def load_model(model_name:str)->str:
 def create_main_if(type_route:str,route_name:str)->str:
     content = read_file(MAIN_PATH)
     main_if = load_model(MAIN_IF)
-    main_if = main_if.replace('ROUTE',format_route_constant(route_name))
+    main_if = main_if.replace('ROUTE',format_route_constant(type_route,route_name))
     main_if = main_if.replace('route_name',create_function_name(type_route,route_name))
     content = replace_point_with_code(content,'//route_insertion',main_if)
     return content
