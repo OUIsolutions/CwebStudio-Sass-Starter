@@ -2,7 +2,7 @@
 //public
 #define CREATE_TOKEN_ROUTE "/public/create_token"
 #define GET_PUBLIC_PROFILE_PICTURE_ROUTE "/public/get_public_profile_picture"
-//public_isertion
+//public_point
 
 //debug
 #define END_ROUTE "/end"
@@ -19,7 +19,7 @@
 #define UPLOAD_PROFILE_PICTURE_ROUTE "/user/upload_profile_picture"
 #define GET_PRIVATE_PROFILE_PICTURE_ROUTE "/user/get_private_profile_picture"
 #define SEND_VERIFICATION_EMAIL_ROUTE "/user/send_verification_email"
-//user_insertion
+//user_point
 
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
@@ -27,4 +27,4 @@
 #define REMOVE_USER_ROUTE "/root/remove_user"
 #define MODIFY_USER_PROPS_ROUTE "/root/modify_user_props"
 #define GET_USER_PROPS_ROUTE "/root/get_user_props"
-//root_insertion
+//root_point
