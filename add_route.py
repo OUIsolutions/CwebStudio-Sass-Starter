@@ -30,7 +30,7 @@ def add_route_constant(type_element:str,route_name:str)->str:
     route_string = read_file(ROUTE_CONSTANTES_PATH)
     point = f'//{type_element}_point'
     route_constant = format_route_constant(route_name)
-    code = f'#define {route_constant} "{route_name}"'
+    code = f'#define {route_constant} "/{type_element}/{route_name}"'
     return replace_point_with_code(route_string,point,code)    
 
 
