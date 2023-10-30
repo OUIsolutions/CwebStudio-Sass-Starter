@@ -3,6 +3,7 @@
 
 #define TRANSACTION_PATH "data/transactions"
 #define DATABASE_PATH "data/content"
+#define BACKUP_PATH "data/content_backup"
 #define USERS_PATH "users"
 #define INDEX_PATH "index"
 #define EMAIL_PATH "email"

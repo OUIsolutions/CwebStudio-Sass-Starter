@@ -129,12 +129,12 @@ int main(){
     array = hash.array;
     validator = hash.validator;
     stack = newCTextStackModule();
-    create_root_user_if_not_exist();
 
     //define these flag to reconstruct database, if integrity brokes
     #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();
     #endif
+    create_root_user_if_not_exist();
 
 
      #ifdef DEBUG

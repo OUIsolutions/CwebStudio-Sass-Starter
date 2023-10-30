@@ -82,8 +82,14 @@ bool remove_currenct_action_if_is_a_token(DtwActionTransaction *action){
         stack.free(possible_token);
         return REMOVE;
     }
+    bool is_last_update = stack.index_of(possible_token,LAST_UPDATE_PATH)!=-1;
+    if(is_last_update){
+        stack.free(possible_token);
+        return REMOVE;
+    }
 
 
+    stack.free(possible_token);
     return KEEP;
 }
 
@@ -124,7 +130,13 @@ void commit_transaction(DtwResource *database){
 }
 
 void reload_all_transactions(){
-    dtw_remove_any(DATABASE_PATH);
+
+    CTextStack *back_up_path = newCTextStack_string(BACKUP_PATH);
+    char *now = dtw_convert_unix_time_to_string(time(NULL));
+    stack.format(back_up_path,"/%sc", now);
+    dtw_move_any(DATABASE_PATH,back_up_path->rendered_text,DTW_NOT_MERGE);
+    stack.free(back_up_path);
+
     DtwStringArray  *elements = dtw.list_files(TRANSACTION_PATH,true);
     dtw.string_array.sort(elements);
     for(int i = 0; i < elements->size; i++){
