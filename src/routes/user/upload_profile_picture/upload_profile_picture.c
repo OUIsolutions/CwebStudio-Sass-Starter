@@ -42,7 +42,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
         hash.free(valid_extensions);
         return send_entrie_error(request, entries);
     }
-    
+
     unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
 
     if(!body){
