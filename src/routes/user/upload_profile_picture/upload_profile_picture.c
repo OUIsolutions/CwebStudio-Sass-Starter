@@ -1,7 +1,6 @@
 
 
 CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
-
     Autentication  auth = autenticate(request,entries,database);
     if(auth.error){
         return  auth.response_error;
@@ -43,9 +42,8 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
         hash.free(valid_extensions);
         return send_entrie_error(request, entries);
     }
-
-
-    unsigned char *body =  cweb.request.read_content(request, ONE_MEGA_BYTES);
+    
+    unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
 
     if(!body){
         hash.free(valid_extensions);
