@@ -45,7 +45,7 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     }
 
 
-    unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
+    unsigned char *body =  cweb.request.read_content(request, ONE_MEGA_BYTES);
 
     if(!body){
         hash.free(valid_extensions);
