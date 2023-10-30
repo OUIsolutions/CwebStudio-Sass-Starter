@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Defina a URL da qual você deseja obter o conteúdo
+const url = 'http://localhost:3000/public/create_token?always200=true';
+
+// Faça a solicitação GET usando a API fetch
+fetch(url)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erro na solicitação: ' + response.status);
+    }
+    return response.text(); // Isso converte a resposta em texto
+  })
+  .then(data => {
+    console.log('Conteúdo obtido com sucesso:', data);
+  })
+  .catch(error => {
+    console.error('Ocorreu um erro:', error);
+  });
+
+    </script>
+</body>
+</html>
