@@ -3,7 +3,6 @@
 #define CREATE_TOKEN_ROUTE "/public/create_token"
 #define GET_PUBLIC_PROFILE_PICTURE_ROUTE "/public/get_public_profile_picture"
 #define VERIFY_EMAIL_ROUTE "/public/verify_email"
-#define PUBLIC_VERIFY_EMAIL_ROUTE "/public/verify email"
 //public_point
 
 //debug

@@ -108,7 +108,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     
 
 
-    if(strings_equal(request->route,PUBLIC_VERIFY_EMAIL_ROUTE)){
+    if(strings_equal(request->route,VERIFY_EMAIL_ROUTE)){
         response = public_verify_email_route(request,entries,database);
     }
 //route_insertion

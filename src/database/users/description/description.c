@@ -27,7 +27,7 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
     if(include_root_props){
 
         if(verified){
-            obj.set_once(user_obj, VERIFICATION_KEY_ENTRE, hash.newNULL());
+            obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
         }
         if(!verified){
 
@@ -39,11 +39,11 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
                         verification_passowrd,
                         host
                 );
-                obj.set_once(user_obj, VERIFICATION_URL, hash.newStackString(verification_url));
+                obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newStackString(verification_url));
             }
 
             if(!verification_passowrd){
-                obj.set_once(user_obj, VERIFICATION_URL, hash.newNULL());
+                obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
             }
         }
 
