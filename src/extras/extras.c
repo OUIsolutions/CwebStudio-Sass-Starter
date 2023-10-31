@@ -68,7 +68,7 @@ CTextStack  * construct_verification_url(const char *user_id,const char *verific
 
     stack.format(url, "%s?%s=%s&%s=%s", VERIFY_EMAIL_ROUTE,
                  USER_ID_ENTRE, user_id,
-                 VERIFICATION_PASSWORD,verification_key
+                 VERIFICATION_KEY_ENTRE, verification_key
     );
 
     return url;

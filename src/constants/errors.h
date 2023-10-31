@@ -15,6 +15,7 @@
 #define PROFILE_PICTURE_ITS_NOT_PUBLIC 14
 #define USER_IS_ALREDY_VERIFIED 15
 #define COULD_NOT_SEND_EMAIL 16
+#define VERIFICATION_KEY_ITS_WRONG 17
 
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headers/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
@@ -34,6 +35,7 @@
 #define PROFILE_PICTURE_NOT_PROVIDED_MESSAGE "profile picture not provided"
 #define PROFILE_PICTURE_NOT_EXIST_MESSAGE "profile picture not exist"
 #define USER_IS_ALREDY_VERIFIED_MESSAGE "user is already verifyid"
+#define  VERIFICATION_KEY_ITS_WRONG_MESSAGE  "verification key:%s its wrong"
 #ifdef DEBUG
     #define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code "\
                                           "implement the send_email_verification function located in (email/email.c)"

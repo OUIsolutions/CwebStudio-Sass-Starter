@@ -27,7 +27,7 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
     if(include_root_props){
 
         if(verified){
-            obj.set_once(user_obj, VERIFICATION_PASSWORD, hash.newNULL());
+            obj.set_once(user_obj, VERIFICATION_KEY_ENTRE, hash.newNULL());
         }
         if(!verified){
 
