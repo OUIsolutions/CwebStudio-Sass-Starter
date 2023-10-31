@@ -14,8 +14,8 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
         return send_error(
                 request,
                 CONFLICT,
-                WRONG_PASSWORD,
-                WRONG_PASSWORD_MENSSAGE
+                USER_IS_ALREDY_VERIFIED,
+                USER_IS_ALREDY_VERIFIED_MESSAGE
         );
     }
 
@@ -51,8 +51,6 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
     }
 
     resource.set_string_in_sub_resource(user,verification_stack->rendered_text,VERIFICATION_PATH);
-
-
     stack.free(verification_stack);
     dtw.hash.free(verification);
 
@@ -63,8 +61,6 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
     commit_transaction(database);
 
     return send_chash_cleaning_memory(response,HTTP_CREATED);
-
-
 
 
 }

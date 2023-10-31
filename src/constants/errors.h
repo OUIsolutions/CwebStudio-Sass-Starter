@@ -33,4 +33,5 @@
 #define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME_MESSAGE "email cannot be equal to username"
 #define PROFILE_PICTURE_NOT_PROVIDED_MESSAGE "profile picture not provided"
 #define PROFILE_PICTURE_NOT_EXIST_MESSAGE "profile picture not exist"
+#define USER_IS_ALREDY_VERIFIED_MESSAGE "user is already verifyid"
 #define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code"
