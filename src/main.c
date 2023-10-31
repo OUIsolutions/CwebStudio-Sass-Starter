@@ -1,3 +1,8 @@
+
+
+//never use these flag in production
+#define DEBUG
+
 #include "imports.h"
 #include "namespaces.h"
 #include "declaration.h"
@@ -5,8 +10,7 @@
 
 
 
-//never use these flag in production
-#define DEBUG
+
 
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
@@ -72,6 +76,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(strings_equal(request->route, MODIFY_SELF_PROPS_ROUTE)){
         response = modify_self_props(request,entries,database);
     }
+
     if(strings_equal(request->route,SELF_REMOVE_ROUTE)){
         response = self_remove(request,entries,database);
     }

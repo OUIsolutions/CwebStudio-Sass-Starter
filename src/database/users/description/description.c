@@ -1,6 +1,6 @@
 
 
-CHash * describe_user_without_tokens(DtwResource *user,bool include_verification_link,const char *token,const char *host){
+CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props, const char *token, const char *host){
 
     CHashObject * user_obj = newCHashObjectEmpty();
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
@@ -24,7 +24,7 @@ CHash * describe_user_without_tokens(DtwResource *user,bool include_verification
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
 
-    if(include_verification_link){
+    if(include_root_props){
 
         if(verified){
             obj.set_once(user_obj, VERIFICATION_PASSWORD, hash.newNULL());
@@ -32,14 +32,21 @@ CHash * describe_user_without_tokens(DtwResource *user,bool include_verification
         if(!verified){
 
             char * verification_passowrd = resource.get_string_from_sub_resource(user,VERIFICATION_PASSWORD_PATH);
+
             if(verification_passowrd){
-                obj.set_once(user_obj, VERIFICATION_PASSWORD, hash.newString(verification_passowrd));
-            }
-            if(!verification_passowrd){
-                obj.set_once(user_obj, VERIFICATION_PASSWORD, hash.newNULL());
+                CTextStack  *verification_url = construct_verification_url(
+                        user->name,
+                        verification_passowrd,
+                        host
+                );
+                obj.set_once(user_obj, VERIFICATION_URL, hash.newStackString(verification_url));
             }
 
+            if(!verification_passowrd){
+                obj.set_once(user_obj, VERIFICATION_URL, hash.newNULL());
+            }
         }
+
     }
     DtwResource *profile_picture = resource.sub_resource(user,PROFILE_PICTURE_PATH);
     bool exist_profile_picture = resource.type(profile_picture) == DTW_FOLDER_TYPE;
@@ -141,9 +148,9 @@ void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
     dtw.string_array.free(infinite_tokens_list);
 
 }
-CHash * describe_user(DtwResource *user, bool include_tokens, bool include_verification_link, const char *token, const char *host){
+CHash * describe_user(DtwResource *user, bool include_tokens, bool include_root_props, const char *token, const char *host){
 
-    CHash *user_obj = describe_user_without_tokens(user,include_verification_link,token,host);
+    CHash *user_obj = describe_user_without_tokens(user, include_root_props, token, host);
 
     if(!include_tokens){
         return user_obj;

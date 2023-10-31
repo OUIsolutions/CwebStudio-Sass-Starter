@@ -15,6 +15,7 @@
 #define IS_ROOT_KEY "root"
 #define VERIFIED_KEY  "verified"
 #define VERIFICATION_PASSWORD "verification_key"
+#define VERIFICATION_URL "verification_url"
 #define TERMINATED_APLICATION "Application Terminated"
 #define USER_CREATED "User Created"
 #define USER_MODIFIED "User Modified"

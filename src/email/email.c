@@ -1,6 +1,9 @@
 
 
 
-bool send_email_verification(char *email, char *username,char *verification_key){
-    return true;
+bool send_email_verification(char *email, char *username,char *verification_link){
+
+
+
+    return false;
 }
