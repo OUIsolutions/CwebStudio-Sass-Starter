@@ -7,7 +7,7 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
         return  auth.response_error;
     }
 
-    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
+    char *username_or_email = obj.getString(entries, LOGIN);
     obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
     bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
     char *token = obj.getString(entries,TOKEN_ENTRE);

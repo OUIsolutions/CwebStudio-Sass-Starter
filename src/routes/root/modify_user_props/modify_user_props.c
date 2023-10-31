@@ -7,7 +7,7 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
         return  auth.response_error;
     }
 
-    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
+    char *username_or_email = obj.getString(entries, LOGIN);
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);

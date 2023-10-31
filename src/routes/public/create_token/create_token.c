@@ -23,7 +23,7 @@ void remove_max_finite_tokens(DtwResource *user){
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    char *username_or_email = obj.getString(entries, USERNAME_OR_EMAIL_ENTRE);
+    char *username_or_email = obj.getString(entries, LOGIN);
     char *password = obj.getString(entries, PASSWORD_ENTRE);
 
     obj.set_default(entries, EXPIRATION_ENTRE, hash.newNumber(DEFAULT_EXPIRATION));
