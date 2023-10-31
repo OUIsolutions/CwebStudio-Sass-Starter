@@ -50,7 +50,7 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
         );
     }
 
-    resource.set_string_in_sub_resource(user,verification_stack->rendered_text,VERIFICATION_PATH);
+    resource.set_string_in_sub_resource(user,verification_stack->rendered_text,VERIFICATION_PASSWORD_PATH);
     stack.free(verification_stack);
     dtw.hash.free(verification);
 
