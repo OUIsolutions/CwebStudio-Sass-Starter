@@ -111,6 +111,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(strings_equal(request->route,VERIFY_EMAIL_ROUTE)){
         response = public_verify_email_route(request,entries,database);
     }
+
+
+    if(strings_equal(request->route,DESCRIBE_ROUTE)){
+        response = public_describe_route(request,entries,database);
+    }
 //route_insertion
 
     hash.free(entries);
