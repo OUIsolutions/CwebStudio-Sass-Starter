@@ -28,17 +28,19 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     obj.set_default(entries, EXPIRATION_ENTRE, hash.newNumber(DEFAULT_EXPIRATION));
     long expiration = (long)obj.getNumber_converting(entries, EXPIRATION_ENTRE);
-
-    bool invalid_token =expiration != -1 && expiration <=0;
     
+    CHash_protected(entries){
+        bool invalid_token =expiration != -1 && expiration <=0;
 
-    if(invalid_token){
-        validator.raise_error_by_key(entries,
-                 EXPIRATION_ENTRE,
-                 INVALID_EXPIRATION,
-                 NOT_VALID_EXPIRATION_MENSSAGE,
-                 NULL
-        );
+        if(invalid_token){
+            validator.raise_error_by_key(entries,
+                    EXPIRATION_ENTRE,
+                    INVALID_EXPIRATION,
+                    NOT_VALID_EXPIRATION_MENSSAGE,
+                    NULL
+            );
+        }
+
     }
 
     obj.set_default(entries, RENEW_ENTRE, hash.newBool(DEFAULT_ALLOW_RENEW));
@@ -49,6 +51,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
+
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
 
