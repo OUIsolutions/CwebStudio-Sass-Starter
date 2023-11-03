@@ -11,8 +11,11 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         auth.response_error = send_entrie_error(request, entries);
         return auth;
     }
-
+    UniversalGarbage  *garbage = newUniversalGarbage();
     Token *token_obj = extract_token(token);
+
+    UniversalGarbage_add(garbage,Token_free,token_obj);
+
     if(!token_obj){
         auth.error = true;
         auth.response_error =send_error(
@@ -22,6 +25,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_VALID_TOKEN_MESSAGE,
                 token
         );
+        UniversalGarbage_free(garbage);
         return auth;
     }
     DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
@@ -35,9 +39,10 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_EXIST_TOKEN_MESSAGE,
                 token
         );
-        Token_free(token_obj);
+        UniversalGarbage_free(garbage);
         return auth;
     }
+
     resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
 
     DtwResource *token_resource = get_token_resource(user,token_obj);
@@ -51,12 +56,12 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_EXIST_TOKEN_MESSAGE,
                 token
         );
-        Token_free(token_obj);
-
+        UniversalGarbage_free(garbage);
         return auth;
     }
+
     char *sha = resource.get_string_from_sub_resource(token_resource,SHA_PATH);
-    if(strcmp(sha,token_obj->sha->rendered_text) != 0){
+    if(!strings_equal(sha,token_obj->sha->rendered_text)){
         auth.error = true;
         auth.response_error =send_error(
                 request,
@@ -65,7 +70,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_VALID_TOKEN_MESSAGE,
                 token
         );
-        Token_free(token_obj);
+        UniversalGarbage_free(garbage);
         return auth;
     }
 
@@ -80,6 +85,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
         long last_update_value = resource.get_long(last_update);
         long now = time(NULL);
+
         if(now > (expiration_Value + last_update_value)){
             auth.error = true;
             auth.response_error =send_error(
@@ -89,9 +95,10 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                     EXPIRED_TOKEN_MESSAGE,
                     token
             );
-            Token_free(token_obj);
+            UniversalGarbage_free(garbage);
             return auth;
         }
+
         bool allow_renew = resource.get_bool(
                 resource.sub_resource(token_resource,ALLOW_RENEW_PATH)
         );
@@ -102,7 +109,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
 
     }
 
-    Token_free(token_obj);
+    UniversalGarbage_free(garbage);
     auth.user = user;
     return auth;
 }
