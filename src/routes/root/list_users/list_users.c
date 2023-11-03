@@ -23,13 +23,15 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
     obj.set_default(entries, INCLUDE_TOKEN_ENTRE, hash.newBool(false));
     bool include_tokens = obj.getBool_converting(entries, INCLUDE_TOKEN_ENTRE);
 
+    obj.set_default(entries, INCLUDE_ROOT_PROPS_ENTRE, hash.newBool(false));
+    bool include_root_props = obj.getBool_converting(entries, INCLUDE_ROOT_PROPS_ENTRE);
     char *token = obj.getString(entries,TOKEN_ENTRE);
     char *host = obj.getString(entries,HOST_ENTRIE);
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
 
-    CHash *description = describe_all_users(database,contains,case_sensitive,include_tokens,token,host);
+    CHash *description = describe_all_users(database,contains,case_sensitive,include_tokens,include_root_props,token, host);
     commit_transaction(database);
 
     return send_chash_cleaning_memory(description, HTTP_OK);

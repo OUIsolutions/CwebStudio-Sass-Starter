@@ -12,6 +12,7 @@
 #define HOST_ENTRIE "host"
 #define TOKEN_TO_REMOVE_ENTRE "token-to-remove"
 #define INCLUDE_TOKEN_ENTRE "include-tokens"
+#define INCLUDE_ROOT_PROPS_ENTRE "include-root-props"
 #define CASE_SENSITIVE_ENTRE "case-sensitive"
 #define IS_ROOT_ENTRE "root"
 #define PUBLIC_ENTRE "public"

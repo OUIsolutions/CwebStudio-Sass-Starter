@@ -32,7 +32,7 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
         if(verified){
             obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
         }
-        
+
         DtwResource *recovery_key = resource.sub_resource(user,RECOVERY_PASSWORD_PATH);
         if(resource.type(recovery_key) == DTW_COMPLEX_STRING_TYPE){
             char *reconvery_key_content = resource.get_string(recovery_key);
@@ -194,7 +194,7 @@ CHash * describe_user(DtwResource *user, bool include_tokens, bool include_root_
 
 
 
-CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, const char *contains, bool include_tokens, const char *token, const char *host){
+CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,bool include_root_props, const char *token, const char *host){
     UniversalGarbage *garbage = newUniversalGarbage();
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
@@ -223,7 +223,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
 
         bool email_in_search = stack.index_of(email_stack,formated_contains->rendered_text) != -1;
         if(email_in_search){
-            array.append_once(all_users_hash, describe_user(current_user, include_tokens, true, token, host));
+            array.append_once(all_users_hash, describe_user(current_user, include_tokens, include_root_props, token, host));
             UniversalGarbage_free(internal_garbage);
             continue;
         }
@@ -236,7 +236,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
         bool username_in_search = stack.index_of(username_stack,formated_contains->rendered_text) != -1;
 
         if(username_in_search){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
         }
 
 
@@ -248,7 +248,7 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
 
 }
 
-CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,const char *token, const char *host){
+CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,bool include_root_props,const char *token, const char *host){
     UniversalGarbage *garbage = newUniversalGarbage();
 
     DtwResource * all_users;
@@ -270,7 +270,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 
         bool email_in_search = stack.index_of(email_stack,contains) != -1;
         if(email_in_search){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
             UniversalGarbage_free(internal_garbage);
             continue;
         }
@@ -280,7 +280,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
         UniversalGarbage_add(internal_garbage,stack.free,username_stack);
 
         if(stack.index_of(username_stack,contains) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
+            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
         }
 
         UniversalGarbage_free(internal_garbage);
@@ -291,7 +291,7 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 }
 
 
-CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens,const char *token, const char *host){
+CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens,bool include_root_props,const char *token, const char *host){
     UniversalGarbage *garbage = newUniversalGarbage();
 
     DtwResource * all_users;
@@ -305,7 +305,7 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
-        array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
+        array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
 
     }
 
@@ -314,16 +314,16 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
 }
 
 
-CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens,const char *token, const char *host){
+CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens,bool include_root_props,const char *token, const char *host){
 
     if(!contains){
-        return describe_all_without_contains_start(database, include_tokens,token,host);
+        return describe_all_without_contains_start(database, include_tokens,include_root_props,token,host);
     }
 
     if(case_sensitive){
-        return describe_all_users_with_contains_case_sensitive(database, contains, include_tokens,token,host);
+        return describe_all_users_with_contains_case_sensitive(database, contains, include_tokens,include_root_props,token,host);
     }
 
-    return describe_all_users_contains_not_case_sensitive(database, contains, include_tokens,token,host);
+    return describe_all_users_contains_not_case_sensitive(database, contains, include_tokens,include_root_props,token,host);
 
 }

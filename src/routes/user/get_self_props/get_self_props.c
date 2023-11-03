@@ -18,9 +18,16 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
+    bool include_root_props = false;
     bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
-    bool include_root_props = is_root;
-    
+
+    if(is_root){
+        obj.set_default(entries, INCLUDE_ROOT_PROPS_ENTRE, hash.newBool(false));
+        include_root_props = obj.getBool_converting(entries, INCLUDE_ROOT_PROPS_ENTRE);
+    }
+    CHash_catch(entries){
+        return send_entrie_error(request, entries);
+    }
     CHashObject  *description = describe_user(user,include_tokens,include_root_props,token,host);
     commit_transaction(database);
 
