@@ -26,8 +26,8 @@ CwebHttpResponse *remove_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 token_to_remove
         );
     }
-
-    if(database_remove_token(user,t)){
+    bool error_on_remove =database_remove_token(user,t);
+    if(error_on_remove){
         UniversalGarbage_free(garbage);
 
         return send_error(

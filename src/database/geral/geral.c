@@ -113,19 +113,25 @@ void commit_transaction(DtwResource *database){
         return;
     }
 #endif
-
+    UniversalGarbage *garbage = newUniversalGarbage();
     cJSON * transaction_json = dtw.transaction.dumps_transaction_to_json(transaction);
-
+    UniversalGarbage_add(garbage, cJSON_Delete,transaction_json);
     char *transaction_content = cJSON_Print(transaction_json);
+    UniversalGarbage_add_simple(garbage,transaction_content);
+
     char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
+    UniversalGarbage_add_simple(garbage,transaction_sha);
+
     char * now = dtw_convert_unix_time_to_string(time(NULL));
+    UniversalGarbage_add_simple(garbage,now);
 
     CTextStack * formated_path = newCTextStack_string_empty();
-    stack.format(formated_path,"%s/%sc:%s.json",TRANSACTION_PATH,now,transaction_sha);
+    UniversalGarbage_add(garbage,stack.free,formated_path);
+
+    stack.format(formated_path,"%s/%s:%s.json",TRANSACTION_PATH,now,transaction_sha);
     dtw.write_string_file_content(formated_path->rendered_text,transaction_content);
-    cJSON_Delete(transaction_json);
-    free(transaction_sha);
-    stack.free(formated_path);
+
+    UniversalGarbage_free(garbage);
 
 }
 
