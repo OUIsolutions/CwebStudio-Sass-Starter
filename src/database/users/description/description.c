@@ -2,6 +2,8 @@
 
 CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props, const char *token, const char *host){
 
+    UniversalGarbage *garbage = newUniversalGarbage();
+
     CHashObject * user_obj = newCHashObjectEmpty();
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
     obj.set_once(user_obj,USERNAME_KEY,hash.newString(username));
@@ -10,19 +12,26 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
 
     long creation_data = resource.get_long_from_sub_resource(user,CREATION_PATH);
     char *converted_creation_data = dtw_convert_unix_time_to_string(creation_data);
+    UniversalGarbage_add_simple(garbage,converted_creation_data);
+
     obj.set_once(user_obj,CREATION_KEY,hash.newString(converted_creation_data));
-    free(converted_creation_data);
 
     long last_update_data = resource.get_long_from_sub_resource(user,LAST_UPDATE_PATH);
     char *converted_last_update = dtw_convert_unix_time_to_string(last_update_data);
+    UniversalGarbage_add_simple(garbage,converted_last_update);
     obj.set_once(user_obj,LAST_UPDATE_PATH,hash.newString(converted_last_update));
-    free(converted_last_update);
 
 
     obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
-
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
+
+    DtwResource *recovery_key = resource.sub_resource(user,RECOVERY_PASSWORD_PATH);
+    if(resource.type(recovery_key) == DTW_COMPLEX_STRING_TYPE){
+        char *reconvery_key_content = resource.get_string(recovery_key);
+        obj.set_once(user_obj,RECOVERY_KEY,hash.newString(reconvery_key_content));
+    }
+
 
     if(include_root_props){
 
@@ -60,17 +69,23 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
 
 
     obj.set_once(user_obj,IS_ROOT_KEY,hash.newBool(is_root));
+    UniversalGarbage_free(garbage);
     return user_obj;
 }
 
 void describe_finite_tokens(CHash *user_obj,DtwResource *user){
+    UniversalGarbage *garbage = newUniversalGarbage();
+
     CHashArray * finite_tokens = newCHashArrayEmpty();
     obj.set_once(user_obj,FINITE_TOKENS_KEY,finite_tokens);
 
     DtwResource  *finite_tokens_resource = resource.sub_resource(user,FINITE_TOKENS_PATH);
     DtwStringArray *finite_tokens_list = resource.list_names(finite_tokens_resource);
+    UniversalGarbage_add(garbage, DtwStringArray_free,finite_tokens_list);
 
     for(int i = 0; i < finite_tokens_list->size; i ++){
+        UniversalGarbage *internal_garbage = newUniversalGarbage();
+
         CHashObject *current_token_obj = newCHashObjectEmpty();
         array.append_once(finite_tokens,current_token_obj);
         char *token_id = finite_tokens_list->strings[i];
@@ -82,8 +97,9 @@ void describe_finite_tokens(CHash *user_obj,DtwResource *user){
         obj.set_once(current_token_obj,TOKEN_ID,hash.newString(token_id));
         long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
         char *converted_creation = dtw_convert_unix_time_to_string(creation);
+        UniversalGarbage_add_simple(internal_garbage,converted_creation);
         obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
-        free(converted_creation);
+
 
         bool allow_renew = resource.get_bool_from_sub_resource(current_token_resource,ALLOW_RENEW_PATH);
 
@@ -94,32 +110,42 @@ void describe_finite_tokens(CHash *user_obj,DtwResource *user){
         long last_update = resource.get_long_from_sub_resource(current_token_resource,LAST_UPDATE_PATH);
 
         char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
+        UniversalGarbage_add_simple(internal_garbage,last_update_in_str);
+
         obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
-        free(last_update_in_str);
+
 
         long expiration_time = last_update + expiration;
         bool is_expired = time(NULL) >=  expiration_time;
         if(is_expired){
             obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString(EXPIRED_RESPONSE));
         }
-        else{
+        bool its_valid = !is_expired;
+        if(its_valid){
             char *expiration_string = dtw_convert_unix_time_to_string(expiration_time);
             obj.set_once(current_token_obj,EXPIRATION_KEY,hash.newString(expiration_string));
-            free(expiration_string);
+            UniversalGarbage_add_simple(internal_garbage,expiration_string);
         }
+
+        UniversalGarbage_free(internal_garbage);
 
     }
 
-    dtw.string_array.free(finite_tokens_list);
+    UniversalGarbage_free(garbage);
 }
 
 void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
+    UniversalGarbage *garbage = newUniversalGarbage();
 
     CHashArray *infinite_tokens = newCHashArrayEmpty();
     obj.set_once(user_obj,INFINITE_TOKENS_KEY,infinite_tokens);
     DtwResource * infinite_tokens_resource = resource.sub_resource(user,INFINITE_TOKENS_PATH);
+
     DtwStringArray * infinite_tokens_list = resource.list_names(infinite_tokens_resource);
+    UniversalGarbage_add(garbage, DtwStringArray_free,infinite_tokens_list);
+
     for(int i = 0; i < infinite_tokens_list->size; i ++){
+        UniversalGarbage *internal_garbage = newUniversalGarbage();
         CHashObject *current_token_obj = newCHashObjectEmpty();
         array.append_once(infinite_tokens,current_token_obj);
 
@@ -133,19 +159,22 @@ void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
 
         long creation = resource.get_long_from_sub_resource(current_token_resource,CREATION_PATH);
         char *converted_creation = dtw_convert_unix_time_to_string(creation);
+        UniversalGarbage_add_simple(internal_garbage,converted_creation);
         obj.set_once(current_token_obj,CREATION_KEY,hash.newString(converted_creation));
-        free(converted_creation);
 
 
         long last_update = resource.get_long_from_sub_resource(current_token_resource,LAST_UPDATE_PATH);
+
         char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
+        UniversalGarbage_add_simple(internal_garbage,last_update_in_str);
+
         obj.set_once(current_token_obj,LAST_UPDATE_KEY,hash.newString(last_update_in_str));
-        free(last_update_in_str);
 
 
+        UniversalGarbage_free(internal_garbage);
     }
 
-    dtw.string_array.free(infinite_tokens_list);
+    UniversalGarbage_free(garbage);
 
 }
 CHash * describe_user(DtwResource *user, bool include_tokens, bool include_root_props, const char *token, const char *host){

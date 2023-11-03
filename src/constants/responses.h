@@ -14,6 +14,7 @@
 #define EXPIRED_RESPONSE "expired"
 #define IS_ROOT_KEY "root"
 #define VERIFIED_KEY  "verified"
+#define RECOVERY_KEY "recovery_key"
 #define VERIFICATION_KEY_ENTRE "verification_key"
 #define VERIFICATION_URL_ENTRE "verification_url"
 #define TERMINATED_APLICATION "Application Terminated"
