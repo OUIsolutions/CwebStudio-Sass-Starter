@@ -1,3 +1,3 @@
 
 
-CwebHttpResponse *public_recover_password_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database);
+CwebHttpResponse *send_recovery_password_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database);

@@ -1,20 +1,23 @@
 
 
 CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
-
     Autentication  auth = autenticate(request,entries,database);
     if(auth.error){
         return  auth.response_error;
     }
+
     char *host = obj.getString(entries,HOST_ENTRIE);
 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
     DtwResource *user = auth.user;
+    UniversalGarbage *garbage = newUniversalGarbage();
+
 
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     if(verified){
+        UniversalGarbage_free(garbage);
         return send_error(
                 request,
                 CONFLICT,
@@ -23,8 +26,9 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
         );
     }
 
-
     DtwHash *verification = newDtwHash();
+    UniversalGarbage_add(garbage, DtwHash_free,verification);
+
     dtw.hash.digest_string(
             verification,
             resource.get_string_from_sub_resource(user,PASSWORD_PATH)
@@ -37,7 +41,10 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
     );
 
     dtw.hash.digest_long(verification,time(NULL));
+
     CTextStack *verification_stack = newCTextStack_string(verification->hash);
+    UniversalGarbage_add(garbage,stack.free,verification_stack);
+
     stack.self_substr(verification_stack,0,SHA_SIZE);
 
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
@@ -49,18 +56,19 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
             host
             );
 
+    UniversalGarbage_add(garbage,stack.free,verification_url);
+
     bool sending_result = send_email_verification(
             email,
             username,
             verification_url->rendered_text
             );
 
-    stack.free(verification_url);
-
 
     resource.set_string_in_sub_resource(user,verification_stack->rendered_text,VERIFICATION_PASSWORD_PATH);
-    stack.free(verification_stack);
-    dtw.hash.free(verification);
+
+
+    UniversalGarbage_free(garbage);
     commit_transaction(database);
 
 

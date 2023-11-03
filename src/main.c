@@ -120,8 +120,8 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     }
 
 
-    if(strings_equal(request->route,RECOVER_PASSWORD_ROUTE)){
-        response = public_recover_password_route(request,entries,database);
+    if(strings_equal(request->route, SEND_RECOVERY_PASSWORD_ROUTE)){
+        response = send_recovery_password_route(request, entries, database);
     }
 //route_insertion
 
