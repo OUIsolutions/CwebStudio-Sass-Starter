@@ -81,7 +81,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
     bool infinite = expiration == -1;
-    Token  *token;
+    Token  *token = NULL;
     UniversalGarbage_add(garbage, Token_free,token);
 
     if(infinite){
