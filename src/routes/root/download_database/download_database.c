@@ -13,11 +13,13 @@ CwebHttpResponse *root_download_database_route(CwebHttpRequest *request, CHashOb
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
-    CTextStack *backup = newCTextStack_string_empty();
+    UniversalGarbage *garbage = newUniversalGarbage();
+    CTextStack *backup = stack.newStack_string_empty();
+    UniversalGarbage_add(garbage,stack.free,backup);
     stack.format(backup,"zip %s -r %s ",BACKUP_PATH,DATABASE_PATH);
     long error = system(backup->rendered_text);
-    stack.free(backup);
     if(error){
+        UniversalGarbage_free(garbage);
         return send_error(
                 request,
                 INTERNAL_ERROR,
@@ -25,7 +27,13 @@ CwebHttpResponse *root_download_database_route(CwebHttpRequest *request, CHashOb
                 UNABLE_TO_ZIP_BACKUP_MESSAGE
         );
     }
+    CTextStack * backup_zip =stack.newStack_string_empty();
+    UniversalGarbage_add(garbage,stack.free,backup_zip);
 
-    return cweb.response.send_file(BACKUP_PATH,CWEB_AUTO_SET_CONTENT,200);
-    
+    stack.format(backup_zip,"%s.zip",BACKUP_PATH);
+
+    CwebHttpResponse *response = cweb.response.send_file(backup_zip->rendered_text,CWEB_AUTO_SET_CONTENT,200);
+    UniversalGarbage_free(garbage);
+    return response;
+
 }

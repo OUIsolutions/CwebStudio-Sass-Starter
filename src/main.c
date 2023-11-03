@@ -123,8 +123,6 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = send_recovery_password_route(request, entries, database);
     }
 
-
-
     if(strings_equal(request->route,DOWNLOAD_DATABASE_ROUTE)){
         response = root_download_database_route(request,entries,database);
     }
