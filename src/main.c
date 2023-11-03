@@ -38,7 +38,9 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = create_token(request,entries,database);
     }
 
-
+    if(strings_equal(request->route,REMOVE_TOKEN_ROUTE)){
+        response = remove_token(request,entries,database);
+    }
 
     if(strings_equal(request->route, REMOVE_ALL_FINITE_TOKENS_ROUTE)){
         response = remove_all_finite_tokens(request,entries,database);
