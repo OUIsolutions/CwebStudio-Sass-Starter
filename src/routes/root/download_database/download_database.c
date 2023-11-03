@@ -16,7 +16,7 @@ CwebHttpResponse *root_download_database_route(CwebHttpRequest *request, CHashOb
     UniversalGarbage *garbage = newUniversalGarbage();
     CTextStack *backup = stack.newStack_string_empty();
     UniversalGarbage_add(garbage,stack.free,backup);
-    stack.format(backup,"zip %s -r %s ",BACKUP_PATH,DATABASE_PATH);
+    stack.format(backup,"./zip %s -r %s ",BACKUP_PATH,DATABASE_PATH);
     long error = system(backup->rendered_text);
     if(error){
         UniversalGarbage_free(garbage);
