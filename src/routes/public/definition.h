@@ -1,6 +1,5 @@
 #include "create_token/create_token.c"
 #include "get_public_profile_picture/get_public_profile_picture.c"
-
 #include "verify_email/verify_email.c"
 #include "describe/describe.c"
-#include "recover_password/send_recover_password.c"
+#include "send_recovery_passoword/send_recovery_password.c"

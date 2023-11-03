@@ -2,4 +2,4 @@
 #include "get_public_profile_picture/get_public_profile_picture.h"
 #include "verify_email/verify_email.h"
 #include "describe/describe.h"
-#include "recover_password/send_recover_password.h"
+#include "send_recovery_passoword/send_recovery_password.h"
