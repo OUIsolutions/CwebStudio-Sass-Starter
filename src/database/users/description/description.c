@@ -247,53 +247,57 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
 }
 
 CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,const char *token, const char *host){
+    UniversalGarbage *garbage = newUniversalGarbage();
 
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
 
     DtwStringArray * all_users_ids = resource.list_names(all_users);
+    UniversalGarbage_add(garbage, DtwStringArray_free,all_users_ids);
     CHashArray  *all_users_hash = array.newArrayEmpty();
 
     for(long i = 0; i < all_users_ids->size; i++){
+        UniversalGarbage *internal_garbage = newUniversalGarbage();
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
 
         char *email =  resource.get_string_from_sub_resource(current_user,EMAIL_PATH);
         CTextStack *email_stack = stack.newStack_string(email);
+        UniversalGarbage_add(internal_garbage,stack.free,email_stack);
 
-
-        if(stack.index_of(email_stack,contains) != -1){
+        bool email_in_search = stack.index_of(email_stack,contains) != -1;
+        if(email_in_search){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
-            stack.free(email_stack);
+            UniversalGarbage_free(internal_garbage);
             continue;
         }
 
-        stack.free(email_stack);
-
-
         char *username = resource.get_string_from_sub_resource(current_user,USERNAME_PATH);
         CTextStack *username_stack = stack.newStack_string(username);
+        UniversalGarbage_add(internal_garbage,stack.free,username_stack);
 
         if(stack.index_of(username_stack,contains) != -1){
             array.append_once(all_users_hash, describe_user(current_user,include_tokens,true,token,host));
         }
 
-        stack.free(username_stack);
-
+        UniversalGarbage_free(internal_garbage);
     }
 
-    dtw.string_array.free(all_users_ids);
+    UniversalGarbage_free(garbage);
     return all_users_hash;
 }
 
 
 CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens,const char *token, const char *host){
+    UniversalGarbage *garbage = newUniversalGarbage();
+
     DtwResource * all_users;
     all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
 
     DtwStringArray * all_users_ids = resource.list_names(all_users);
+    UniversalGarbage_add(garbage, DtwStringArray_free,all_users_ids);
     CHashArray  *all_users_hash = array.newArrayEmpty();
 
     for(long i = 0; i < all_users_ids->size; i++){
@@ -303,7 +307,7 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
 
     }
 
-    dtw.string_array.free(all_users_ids);
+    UniversalGarbage_free(garbage);
     return all_users_hash;
 }
 
