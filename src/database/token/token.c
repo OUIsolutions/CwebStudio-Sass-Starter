@@ -155,8 +155,7 @@ void remove_expired_tokens(DtwResource *user){
 int database_remove_token(DtwResource *user,Token *token){
     DtwResource  *all_tokens = get_all_tokens_rource(user,token);
 
-    DtwResource *current = resource.sub_resource(all_tokens,"%s",token->token_id);
-
+    DtwResource *current = resource.sub_resource(all_tokens,"%s",token->token_id->rendered_text);
     if(resource.type(current) == DTW_NOT_FOUND){
         return TOKEN_NOT_EXIST_INTERNAL;
     }
