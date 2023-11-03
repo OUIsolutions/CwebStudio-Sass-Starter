@@ -4,6 +4,7 @@
 #define GET_PUBLIC_PROFILE_PICTURE_ROUTE "/public/get_public_profile_picture"
 #define VERIFY_EMAIL_ROUTE "/public/verify_email"
 #define DESCRIBE_ROUTE "/public/describe"
+#define RECOVER_PASSWORD_ROUTE "/public/recover_password"
 //public_point
 
 //debug

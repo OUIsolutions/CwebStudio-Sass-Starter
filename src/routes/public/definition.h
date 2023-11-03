@@ -3,3 +3,4 @@
 
 #include "verify_email/verify_email.c"
 #include "describe/describe.c"
+#include "recover_password/recover_password.c"
