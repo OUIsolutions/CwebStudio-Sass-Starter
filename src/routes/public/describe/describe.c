@@ -11,7 +11,6 @@ CwebHttpResponse *public_describe_route(CwebHttpRequest *request, CHashObject*en
             CODE_KEY,hash.newNumber(INTERNAL_OK),
             MESSAGE_KEY,hash.newString("route ok")
     );
-    resource.commit(database);
 
     return send_chash_cleaning_memory(response,HTTP_OK);
 
