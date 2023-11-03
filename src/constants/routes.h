@@ -30,4 +30,5 @@
 #define REMOVE_USER_ROUTE "/root/remove_user"
 #define MODIFY_USER_PROPS_ROUTE "/root/modify_user_props"
 #define GET_USER_PROPS_ROUTE "/root/get_user_props"
+#define DOWNLOAD_DATABASE_ROUTE "/root/download_database"
 //root_point

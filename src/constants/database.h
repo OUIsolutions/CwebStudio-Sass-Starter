@@ -1,6 +1,6 @@
 
 
-
+#define BACK_FOLDER "backUpDatabase"
 #define TRANSACTION_PATH "data/transactions"
 #define DATABASE_PATH "data/content"
 #define BACKUP_PATH "data/content_backup"

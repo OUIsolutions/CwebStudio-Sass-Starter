@@ -3,3 +3,4 @@
 #include "create_user/create_user.h"
 #include "remove_user/remove_user.h"
 #include "list_users/list_users.h"
+#include "download_database/download_database.h"
