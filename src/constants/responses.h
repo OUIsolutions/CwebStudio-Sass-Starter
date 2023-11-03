@@ -22,6 +22,7 @@
 #define USER_VERIFIED "User Verified"
 #define USER_REMOVED "User Removed"
 #define EMAIL_SENDED  "Email sended"
+#define RECOVERY_KEY_SENDED "Recovery Key  Sended"
 #define PICTURE_UPLOADED "picture uploaded"
 #define NEVER_EXPIRATION "never"
 #define TOKEN_REMOVED "Token Removed"

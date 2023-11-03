@@ -11,6 +11,7 @@
 #define USERNAME_PATH "username"
 #define ELEMENTS_PATH "elements"
 #define PASSWORD_PATH "password"
+#define RECOVERY_PASSWORD_PATH "recovery_password"
 #define PUBLIC_PATH "public"
 #define VERIFIED_PATH "verified"
 #define VERIFICATION_PATH "verification_sha"

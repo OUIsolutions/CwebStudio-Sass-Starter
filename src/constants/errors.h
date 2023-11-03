@@ -39,6 +39,14 @@
 #ifdef DEBUG
     #define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code "\
                                           "implement the send_email_verification function located in (email/email.c)"
+
+#define  COULD_NOT_SEND_RECOVERY_EMAIL "the system was unable to send the verification code "\
+                                          "implement the send_password_verification function located in (email/email.c)"
+
 #else
- #define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code"
+     #define COULD_NOT_SEND_EMAIL_MESSAGE "the system was unable to send the verification code"
+    #define  COULD_NOT_SEND_RECOVERY_EMAIL "the system was unable to send the verification code "
 #endif
+
+
+
