@@ -25,9 +25,11 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     }
 
     #endif
-
+    UniversalGarbage  *garbage = newUniversalGarbage();
     CHashObject * entries = join_headders_and_paramns(request);
+    UniversalGarbage_add(garbage, hash.free,entries);
     DtwResource *database = resource.newResource(DATABASE_PATH);
+    UniversalGarbage_add(garbage, resource.free,database);
     database->use_locker_on_unique_values = false;
 
     CwebHttpResponse *response = NULL;
@@ -118,8 +120,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     }
 //route_insertion
 
-    hash.free(entries);
-    resource.free(database);
+    UniversalGarbage_free(garbage);
 
     if(response){
         return  response;
