@@ -26,18 +26,20 @@ CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props,
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
     obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
 
-    DtwResource *recovery_key = resource.sub_resource(user,RECOVERY_PASSWORD_PATH);
-    if(resource.type(recovery_key) == DTW_COMPLEX_STRING_TYPE){
-        char *reconvery_key_content = resource.get_string(recovery_key);
-        obj.set_once(user_obj,RECOVERY_KEY,hash.newString(reconvery_key_content));
-    }
-
 
     if(include_root_props){
 
         if(verified){
             obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
         }
+        
+        DtwResource *recovery_key = resource.sub_resource(user,RECOVERY_PASSWORD_PATH);
+        if(resource.type(recovery_key) == DTW_COMPLEX_STRING_TYPE){
+            char *reconvery_key_content = resource.get_string(recovery_key);
+            obj.set_once(user_obj,RECOVERY_KEY,hash.newString(reconvery_key_content));
+        }
+
+
         if(!verified){
 
             char * verification_passowrd = resource.get_string_from_sub_resource(user,VERIFICATION_PASSWORD_PATH);

@@ -18,8 +18,10 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     CHash_catch(entries){
         return send_entrie_error(request, entries);
     }
+    bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
+    bool include_root_props = is_root;
     
-    CHashObject  *description = describe_user(user,include_tokens,false,token,host);
+    CHashObject  *description = describe_user(user,include_tokens,include_root_props,token,host);
     commit_transaction(database);
 
     return send_chash_cleaning_memory(description, HTTP_OK);
