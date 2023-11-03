@@ -23,6 +23,7 @@ void remove_max_finite_tokens(DtwResource *user){
 
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
+    UniversalGarbage *garbage = newUniversalGarbage();
     char *username_or_email = obj.getString(entries, LOGIN);
     char *password = obj.getString(entries, PASSWORD_ENTRE);
 
@@ -49,6 +50,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
 
     CHash_catch(entries){
+        UniversalGarbage_free(garbage);
         return send_entrie_error(request, entries);
     }
 
@@ -56,6 +58,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
 
     if(!user){
+        UniversalGarbage_free(garbage);
+
         return send_error(
                 request,
                 NOT_FOUND,
@@ -66,6 +70,8 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
     if(!password_are_equal(user, password)){
+        UniversalGarbage_free(garbage);
+
         return send_error(
                 request,
                 FOREBIDEN,
@@ -76,16 +82,20 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     bool infinite = expiration == -1;
     Token  *token;
+    UniversalGarbage_add(garbage, Token_free,token);
 
     if(infinite){
         remove_max_ifinite_tokens(user);
         token = database_create_infinite_token(user,password);
+        UniversalGarbage_resset(garbage,token);
     }
 
     if(infinite == false){
         remove_expired_tokens(user);
         remove_max_finite_tokens(user);
         token = database_create_finite_token(user, password, allow_renew, expiration);
+        UniversalGarbage_resset(garbage,token);
+
     }
 
 
@@ -103,10 +113,11 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         long final_expiration = now + (expiration * 60);
         char *expiration_in_str = dtw_convert_unix_time_to_string(final_expiration);
         obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(expiration_in_str));
-        free(expiration_in_str);
+        UniversalGarbage_add_simple(garbage,expiration_in_str);
     }
-    commit_transaction(database);
-    Token_free(token);
 
+    commit_transaction(database);
+
+    UniversalGarbage_free(garbage);
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 }
