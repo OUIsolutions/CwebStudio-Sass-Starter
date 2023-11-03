@@ -7,6 +7,7 @@
 #define INVALID_TOKEN 6
 #define USER_NOT_ROOT 7
 #define USER_ALREADY_EXIST 8
+
 #define EMAIL_CANNOT_BE_EQUAL_TO_USERNAME 9
 #define NOTHING_TO_MODIFY 10
 #define PROFILE_PICTURE_NOT_PROVIDED 11
@@ -16,6 +17,7 @@
 #define USER_IS_ALREDY_VERIFIED 15
 #define COULD_NOT_SEND_EMAIL 16
 #define VERIFICATION_KEY_ITS_WRONG 17
+#define  UNABLE_TO_ZIP_BACKUP 18
 
 #define NOT_VALID_EXPIRATION_MENSSAGE "param #reference# at headers/paramns is not a valid expiration time use -1 for infinity tokens or 1 or more for finite tokens"
 #define NOT_VALID_TOKEN_MESSAGE "token: %s its invalid"
@@ -26,6 +28,7 @@
 #define NOTHING_TO_MODIFY_MESSAGE "There is nothing to modify at headers/params"
 #define NOT_VALID_IMAGE_TYPE_MESSAGE "param #image# its not an valid content type\n valids: #valids#"
 #define PROFILE_PICTURE_ITS_NOT_PUBLIC_MESSAGE "profile picture its not public"
+#define  UNABLE_TO_ZIP_BACKUP_MESSAGE "unable to zip backup"
 
 
 #define ROUTE_NOT_FOUND_MENSSAGE "route: %s its not valid"

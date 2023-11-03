@@ -14,14 +14,18 @@ CwebHttpResponse *root_download_database_route(CwebHttpRequest *request, CHashOb
         return send_entrie_error(request, entries);
     }
     CTextStack *backup = newCTextStack_string_empty();
-    stack.format("zip %s ")
-    system("BACK_FOLDER")
-    CHashObject *response = newCHashObject(
-            CODE_KEY,hash.newNumber(INTERNAL_OK),
-            MESSAGE_KEY,hash.newString("route ok")
-    );
-    resource.commit(database);
+    stack.format(backup,"zip %s -r %s ",BACKUP_PATH,DATABASE_PATH);
+    long error = system(backup->rendered_text);
+    stack.free(backup);
+    if(error){
+        return send_error(
+                request,
+                INTERNAL_ERROR,
+                UNABLE_TO_ZIP_BACKUP,
+                UNABLE_TO_ZIP_BACKUP_MESSAGE
+        );
+    }
 
-    return send_chash_cleaning_memory(response,HTTP_OK);
-
+    return cweb.response.send_file(BACKUP_PATH,CWEB_AUTO_SET_CONTENT,200);
+    
 }

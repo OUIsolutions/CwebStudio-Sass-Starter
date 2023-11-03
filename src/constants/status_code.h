@@ -4,3 +4,4 @@
 #define  BAD_REQUEST 400
 #define  FOREBIDEN 403
 #define CONFLICT 409
+#define INTERNAL_ERROR 500
