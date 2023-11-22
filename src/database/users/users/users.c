@@ -128,6 +128,10 @@ void database_upload_profile_picture(DtwResource *user, const char *extension, b
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
     char *password_sha = resource.get_string(password);
+    DtwResource_catch(user){
+        return false;
+    }
+
     char *entre_sha = dtw.generate_sha_from_string(entrie_passworld);
     bool result = strcmp(password_sha,entre_sha) == 0;
     free(entre_sha);

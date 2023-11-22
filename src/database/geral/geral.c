@@ -31,6 +31,17 @@ DtwResource * find_element_by_index(DtwResource *folder, const char *index_name,
     DtwResource * elements_folder = resource.sub_resource(folder,ELEMENTS_PATH);
     //folder/elements/{{user_id}}
     DtwResource * current_element = resource.sub_resource(elements_folder,id);
+    //folder/elements/{{user_id}}/email
+    DtwResource * current_element_index = resource.sub_resource(current_element,index_name);
+    char *current_element_index_value = resource.get_string(current_element_index);
+    DtwResource_catch(folder){
+        return NULL;
+    }
+
+    if(!strings_equal(current_element_index_value,value)){
+        return NULL;
+    }
+
     return current_element;
 }
 
@@ -104,7 +115,7 @@ void commit_transaction(DtwResource *database){
         return;
     #endif
 
-    DtwTransaction * transaction = database->transaction;
+    DtwTransaction * transaction = database->root_props->transaction;
     if(transaction->size == 0){
         return;
     }

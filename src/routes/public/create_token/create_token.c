@@ -60,7 +60,6 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         return NULL;
     }
 
-
     if(!user){
         UniversalGarbage_free(garbage);
 
@@ -72,8 +71,13 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
                 username_or_email
         );
     }
+    bool password_verification = password_are_equal(user, password);
+    DtwResource_catch(user){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
 
-    if(!password_are_equal(user, password)){
+    if(!password_verification){
         UniversalGarbage_free(garbage);
 
         return send_error(
