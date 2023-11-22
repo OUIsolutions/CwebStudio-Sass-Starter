@@ -1,0 +1,19 @@
+ 
+status-code: 200
+headers:
+Content-Type : application/json
+content: {
+	"username":	"root",
+	"creation":	"1969-12-31 21:00:00",
+	"last_update":	"1969-12-31 21:00:00",
+	"email":	"root",
+	"verified":	true,
+	"verification_url":	null,
+	"root":	true,
+	"finite_tokens":	[],
+	"infinite_tokens":	[{
+			"token_id":	"PKdhtXMmr18n2L9",
+			"creation":	"1969-12-31 21:00:00",
+			"last_update":	"1969-12-31 21:00:00"
+		}]
+}
