@@ -1,8 +1,6 @@
 
-
-#define BACK_FOLDER "backUpDatabase"
-#define TRANSACTION_PATH "data/transactions"
 #define DATABASE_PATH "data/content"
+#define TRANSACTION_PATH "data/transactions"
 #define BACKUP_PATH "data/content_backup"
 #define USERS_PATH "users"
 #define INDEX_PATH "index"
@@ -14,13 +12,10 @@
 #define RECOVERY_PASSWORD_PATH "recovery_password"
 #define PUBLIC_PATH "public"
 #define VERIFIED_PATH "verified"
-#define VERIFICATION_PATH "verification_sha"
 
 #define PROFILE_PICTURE_PATH "profile_picture"
 #define PROFILE_PICTURE_BLOB_PATH "file"
 #define EXTENSION_PATH "extension"
-
-
 #define VERIFICATION_PASSWORD_PATH "verification_password"
 
 #define INFINITE_TOKENS_PATH "infinite_tokens"
