@@ -10,7 +10,7 @@ CHashObject *join_headders_and_paramns(CwebHttpRequest *request){
     CwebDict *query_paramns = request->params;
     for(int i = 0; i < query_paramns->size; i++){
         CwebKeyVal *key_val = query_paramns->keys_vals[i];
-        obj.set_once(all,key_val->key,hash.newString(key_val->value) );
+        obj.set_string(all,key_val->key,key_val->value );
     }
     CwebDict *heeaders = request->headers;
     for(int i = 0; i < heeaders->size; i++){
@@ -18,7 +18,7 @@ CHashObject *join_headders_and_paramns(CwebHttpRequest *request){
 #ifdef  ALL_ENTRIES_LOWER
         CTextStack *converted = stack.newStack_string(key_val->key);
         stack.self_lower(converted);
-        obj.set_once(all,converted->rendered_text,hash.newString(key_val->value) );
+        obj.set_string(all,converted->rendered_text,key_val->value );
         stack.free(converted);
 #else
         obj.set_once(all,key_val->key,hash.newString(key_val->value) );

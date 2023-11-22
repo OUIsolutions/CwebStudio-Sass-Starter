@@ -17,7 +17,7 @@ CHash * save_start_request(CwebHttpRequest *request){
     );
 
     #ifdef INCLUDE_URL_OBSERVER
-        obj.set_once(request_obj,"url",hash.newString(request->url));
+        obj.set_string(request_obj,"url",request->url);
     #endif
 
     #ifdef INCLUDE_QUERY_PARAMS_OBSERVER
@@ -25,9 +25,9 @@ CHash * save_start_request(CwebHttpRequest *request){
             CwebDict *query_paramns = request->params;
             for(int i = 0; i < query_paramns->size; i++){
                 CwebKeyVal *key_val = query_paramns->keys_vals[i];
-                obj.set_once(paramns,key_val->key,hash.newString(key_val->value) );
+                obj.set_string(paramns,key_val->key,key_val->value );
             }
-            obj.set_once(request_obj,"paramns",paramns);
+            obj.set_any(request_obj,"paramns",paramns);
     #endif
 
     #ifdef INCLUDE_HEADDERS_OBSERVER
@@ -35,9 +35,9 @@ CHash * save_start_request(CwebHttpRequest *request){
     CwebDict *heeaders = request->headers;
     for(int i = 0; i < heeaders->size; i++){
         CwebKeyVal *key_val = heeaders->keys_vals[i];
-        obj.set_once(headders_obj,key_val->key,hash.newString(key_val->value) );
+        obj.set_string(headders_obj,key_val->key,key_val->value );
     }
-    obj.set_once(request_obj,"headders",headders_obj);
+    obj.set_any(request_obj,"headders",headders_obj);
     #endif
 
     CHashObject * element = newCHashObject(
