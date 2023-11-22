@@ -9,6 +9,10 @@ CwebHttpResponse *public_verify_email_route(CwebHttpRequest *request, CHashObjec
     }
 
     DtwResource *user = find_user_by_id(database,user_id);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     if(!user){
         return send_error(
                 request,
@@ -20,6 +24,10 @@ CwebHttpResponse *public_verify_email_route(CwebHttpRequest *request, CHashObjec
     }
     DtwResource *real_verification =resource.sub_resource(user,VERIFICATION_PASSWORD_PATH);
     char *real_verification_key = resource.get_string(real_verification);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
 
     if(!strings_equal(verification_key, real_verification_key)){
         return send_error(
