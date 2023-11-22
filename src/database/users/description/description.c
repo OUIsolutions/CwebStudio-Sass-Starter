@@ -180,9 +180,10 @@ void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
 
 }
 CHash * describe_user(DtwResource *user, bool include_tokens, bool include_root_props, const char *token, const char *host){
-
+    DtwResource_catch(user){
+        return NULL;
+    }
     CHash *user_obj = describe_user_without_tokens(user, include_root_props, token, host);
-
     if(!include_tokens){
         return user_obj;
     }
@@ -249,6 +250,10 @@ CHash * describe_all_users_contains_not_case_sensitive(DtwResource *database, co
 }
 
 CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, const char *contains, bool include_tokens,bool include_root_props,const char *token, const char *host){
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     UniversalGarbage *garbage = newUniversalGarbage();
 
     DtwResource * all_users;
@@ -257,7 +262,14 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 
     DtwStringArray * all_users_ids = resource.list_names(all_users);
     UniversalGarbage_add(garbage, DtwStringArray_free,all_users_ids);
+
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
     CHashArray  *all_users_hash = array.newArrayEmpty();
+    UniversalGarbage_add_return(garbage, CHash_free,all_users_hash);
+
 
     for(long i = 0; i < all_users_ids->size; i++){
         UniversalGarbage *internal_garbage = newUniversalGarbage();
@@ -265,22 +277,45 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
 
         char *email =  resource.get_string_from_sub_resource(current_user,EMAIL_PATH);
+        DtwResource_catch(database){
+            UniversalGarbage_free_including_return(garbage);
+            UniversalGarbage_free(internal_garbage);
+            return NULL;
+        }
         CTextStack *email_stack = stack.newStack_string(email);
         UniversalGarbage_add(internal_garbage,stack.free,email_stack);
 
+
         bool email_in_search = stack.index_of(email_stack,contains) != -1;
         if(email_in_search){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
+            CHashObject *description =  describe_user(current_user,include_tokens,include_root_props,token,host);
+            array.append_any(all_users_hash,description);
+            DtwResource_catch(database){
+                UniversalGarbage_free_including_return(garbage);
+                UniversalGarbage_free(internal_garbage);
+                return NULL;
+            }
             UniversalGarbage_free(internal_garbage);
             continue;
         }
 
         char *username = resource.get_string_from_sub_resource(current_user,USERNAME_PATH);
+        DtwResource_catch(database){
+            UniversalGarbage_free_including_return(garbage);
+            UniversalGarbage_free(internal_garbage);
+            return NULL;
+        }
         CTextStack *username_stack = stack.newStack_string(username);
         UniversalGarbage_add(internal_garbage,stack.free,username_stack);
 
         if(stack.index_of(username_stack,contains) != -1){
-            array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
+            CHashObject *description = describe_user(current_user,include_tokens,include_root_props,token,host);
+            DtwResource_catch(database){
+                UniversalGarbage_free_including_return(garbage);
+                UniversalGarbage_free(internal_garbage);
+                return NULL;
+            }
+            array.append_any(all_users_hash,description );
         }
 
         UniversalGarbage_free(internal_garbage);
