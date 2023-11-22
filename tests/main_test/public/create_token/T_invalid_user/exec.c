@@ -1,13 +1,13 @@
 
-#include "../../../../src/imports.h"
-#include "../../../../src/declaration.h"
+#include "../../../../../src/imports.h"
+#include "../../../../../src/declaration.h"
 
 #undef DATABASE_PATH
 #define DATABASE_PATH "tests/target/content"
 #undef TRANSACTION_PATH
 #define TRANSACTION_PATH  "tests/target/transactions"
 
-#include "../../../../src/definition.h"
+#include "../../../../../src/definition.h"
 
 
 int main(){
