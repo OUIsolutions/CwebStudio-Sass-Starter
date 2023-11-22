@@ -29,16 +29,29 @@ void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target){
 }
 
 
-CwebHttpResponse * ApiBridge_call_server(ApiBridge *self,const char *route, CHash *params, CHash *headers){
+CwebHttpResponse * ApiBridge_call_server_full(
+        ApiBridge *self,
+        const char *route,
+        CHash *params,
+        CHash *headers,
+        const char *content_type,
+        unsigned  char *content,
+        long content_size
+){
     CwebHttpRequest * request = newCwebHttpRequest(-1);
     private_parse_chash_to_cweb_dict(params,request->params);
-    private_parse_chash_to_cweb_dict(params,request->headers);
+    private_parse_chash_to_cweb_dict(headers,request->headers);
+    if(content){
+        CwebDict_set(request->headers,"Content-type",content_type);
+        request->content_length = content_size;
+        request->content = content;
+    }
     return  main_sever(request);
 
 }
 
-CwebHttpResponse * ApiBridge_call_server_with_only_headders(ApiBridge*self,const char *route, CHash *headers){
-    return ApiBridge_call_server(self,route, NULL, headers);
+CwebHttpResponse * ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
+    return ApiBridge_call_server_full(self, route, NULL, entries,NULL,NULL,-1);
 }
 
 
