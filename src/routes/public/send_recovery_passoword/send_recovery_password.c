@@ -9,6 +9,9 @@ CwebHttpResponse *send_recovery_password_route(CwebHttpRequest *request, CHashOb
     }
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     if(!user){
         return send_error(
@@ -24,6 +27,14 @@ CwebHttpResponse *send_recovery_password_route(CwebHttpRequest *request, CHashOb
     UniversalGarbage_add(garbage, DtwHash_free,dt_hash);
 
     char *password = resource.get_string_from_sub_resource(user,PASSWORD_PATH);
+    char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
+    char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
+
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
+
     dtw.hash.digest_string(dt_hash,password);
     dtw.hash.digest_long(dt_hash,time(NULL));
 
@@ -31,9 +42,6 @@ CwebHttpResponse *send_recovery_password_route(CwebHttpRequest *request, CHashOb
     UniversalGarbage_add(garbage,stack.free,formated_hash);
 
     stack.self_substr(formated_hash,0,SHA_SIZE);
-
-    char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-    char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
 
     bool sending_result = send_email_verification(
             email,
