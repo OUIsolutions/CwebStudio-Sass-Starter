@@ -7,6 +7,15 @@ void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target);
 typedef struct {
     char *token;
     UniversalGarbage *garbage;
+
+
+    CwebHttpResponse *last_response;
+    long last_content_size;
+    unsigned char *last_content;
+    int last_status_code;
+
+    CHash *last_hash;
+
 }ApiBridge;
 
 ApiBridge *newApiBridge();
@@ -14,7 +23,7 @@ ApiBridge *newApiBridge();
 void ApiBridge_set_token(ApiBridge *self,const char *token);
 
 
-CwebHttpResponse * ApiBridge_call_server_full(
+int ApiBridge_call_server_full(
         ApiBridge *self,
         const char *route,
         CHash *params,
@@ -25,9 +34,8 @@ CwebHttpResponse * ApiBridge_call_server_full(
         );
 
 
-CwebHttpResponse * ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries);
+int  ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries);
 
-CHash * ApiBridge_call_server_json(ApiBridge*self, const char *route, CHash *entries);
 
 
 void ApiBridge_free(ApiBridge *self);

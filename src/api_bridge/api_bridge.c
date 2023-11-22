@@ -43,7 +43,7 @@ void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target){
 }
 
 
-CwebHttpResponse * ApiBridge_call_server_full(
+int  ApiBridge_call_server_full(
         ApiBridge *self,
         const char *route,
         CHash *params,
@@ -67,24 +67,34 @@ CwebHttpResponse * ApiBridge_call_server_full(
     }
 
     CwebHttpResponse*  response = main_sever(request);
+    if(!response){
+        self->last_response = NULL;
+        self->last_content = NULL;
+        self->last_content_size = -1;
+        self->last_status_code = -1;
+        self->last_hash = NULL;
+        return -1;
+    }
+
     UniversalGarbage_add(self->garbage, CwebHttpResponse_free,response);
-    return  response;
+    self->last_response =response;
+    self->last_content = response->content;
+    self->last_content_size = response->content_length;
+    self->last_status_code = response->status_code;
+
+    if(response->content){
+        self->last_hash = CHash_load_from_json_strimg((char*)response->content);
+        UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
+    }
+    return response->status_code;
 }
 
 
-CwebHttpResponse * ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
+int ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
     return ApiBridge_call_server_full(self, route, NULL, entries,NULL,NULL,-1);
 }
 
-CHash * ApiBridge_call_server_json(ApiBridge*self, const char *route, CHash *entries){
-    CwebHttpResponse *response = ApiBridge_call_server(self,route,entries);
-    if(!response){
-        return NULL;
-    }
-    CHash *response_hash = CHash_load_from_json_strimg((char*)response->content);
-    UniversalGarbage_add(self->garbage, CHash_free,response_hash);
-    return response_hash;
-}
+
 
 
 
