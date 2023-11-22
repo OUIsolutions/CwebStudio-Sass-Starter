@@ -36,7 +36,7 @@ int ApiBridge_call_server_full(
 
 int  ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries);
 
-int  ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration);
+char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration);
 
 
 

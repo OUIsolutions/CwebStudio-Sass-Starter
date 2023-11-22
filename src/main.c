@@ -17,6 +17,12 @@ int main(){
         reload_all_transactions();
     #endif
     create_root_user_if_not_exist();
+    ApiBridge *b = newApiBridge();
+    char *token = ApiBridge_create_token(b,"root","root",-1);
+    printf("token:%s\n",token);
+    ApiBridge_free(b);
+    return 0;
+
 
 
      #ifdef DEBUG
