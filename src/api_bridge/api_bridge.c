@@ -3,6 +3,7 @@
 ApiBridge *newApiBridge(){
     ApiBridge *self = UniversalGarbage_create_empty_struct(self,ApiBridge);
     self->garbage = newUniversalGarbage();
+    self->host = "localhost:3000";
     return  self;
 }
 
@@ -67,7 +68,7 @@ int  ApiBridge_call_server_full(
         request->content_length = content_size;
         request->content = content;
     }
-
+    CwebDict_set(request->headers,HOST_ENTRIE,self->host);
     if(self->token){
         CwebDict_set(request->headers,TOKEN_ENTRE,self->token);
     }
@@ -91,8 +92,11 @@ int  ApiBridge_call_server_full(
 
     response->content[response->content_length] ='\0';
 
-    self->last_hash = CHash_load_from_json_strimg((char*)response->content);
-    UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
+    CHash *converted = CHash_load_from_json_strimg((char*)response->content);
+    UniversalGarbage_add(self->garbage, CHash_free,converted);
+    self->last_hash = converted;
+
+
     UniversalGarbage_free(internal_garbage);
 
     if(self->last_status_code == 200 || self->last_status_code == 202){
@@ -130,6 +134,18 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
     return  NULL;
 }
 
+CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props){
+    int response = ApiBridge_call_server(
+            self,
+            GET_SELF_PROPS_ROUTE,
+            newCHashObject(
+                    INCLUDE_TOKEN_ENTRE,hash.newBool(include_tokens),
+                    INCLUDE_ROOT_PROPS_ENTRE,hash.newBool(include_root_props)
+            )
+    );
+    return self->last_hash;
+
+}
 
 void ApiBridge_represent(ApiBridge *self){
     printf("status-code: %d\n",self->last_status_code);

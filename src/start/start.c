@@ -3,10 +3,12 @@ bool verify_if_there_is_an_root_user(){
     UniversalGarbage *garbage = newUniversalGarbage();
     DtwResource *database = resource.newResource(DATABASE_PATH);
     UniversalGarbage_add(garbage, DtwResource_free,database);
+
     DtwResource *all_users = resource.sub_resource(database, USERS_PATH);
     all_users = resource.sub_resource(all_users,ELEMENTS_PATH);
     DtwStringArray * elements = resource.list_names(all_users);
     UniversalGarbage_add(garbage, DtwStringArray_free,elements);
+
     DtwResource_catch(database){
         UniversalGarbage_free(garbage);
         return false;
@@ -22,7 +24,6 @@ bool verify_if_there_is_an_root_user(){
         }
 
         if(is_root){
-            resource.free(database);
             UniversalGarbage_free(garbage);
             return true;
 
