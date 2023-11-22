@@ -2,6 +2,9 @@
 
 CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
     Autentication  auth = autenticate(request,entries,database);
+    DtwResource_catch(database){
+        return NULL;
+    }
     if(auth.error){
         return  auth.response_error;
     }
@@ -14,8 +17,11 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
     DtwResource *user = auth.user;
     UniversalGarbage *garbage = newUniversalGarbage();
 
-
     bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
     if(verified){
         UniversalGarbage_free(garbage);
         return send_error(
@@ -34,7 +40,10 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
             resource.get_string_from_sub_resource(user,PASSWORD_PATH)
     );
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
     dtw.hash.digest_string(
             verification,
            email
@@ -48,7 +57,10 @@ CwebHttpResponse *send_email_verification_route(CwebHttpRequest *request, CHashO
     stack.self_substr(verification_stack,0,SHA_SIZE);
 
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
-
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
 
     CTextStack  *verification_url = construct_verification_url(
             user->name,

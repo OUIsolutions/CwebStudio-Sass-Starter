@@ -2,6 +2,9 @@
 
 CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
     Autentication  auth = autenticate(request,entries,database);
+    DtwResource_catch(database){
+        return NULL;
+    }
     if(auth.error){
         return  auth.response_error;
     }
@@ -13,11 +16,15 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     char *token = obj.getString(entries,TOKEN_ENTRE);
     char *host = obj.getString(entries,HOST_ENTRIE);
 
+
+    UniversalGarbage *garbage = newUniversalGarbage();
+
     CHashObject *valid_extensions = newCHashObject(
             "image/png",hash.newString("png"),
             "image/jpg",hash.newString("jpg"),
             "image/jpeg",hash.newString("jpeg")
     );
+    UniversalGarbage_add(garbage, CHash_free,valid_extensions);
 
 
     char *extension =NULL;
@@ -39,14 +46,14 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
     }
 
     CHash_catch(entries){
-        hash.free(valid_extensions);
+        UniversalGarbage_free(garbage);
         return send_entrie_error(request, entries);
     }
 
     unsigned char *body =  cweb.request.read_content(request, MAX_PROFILE_PICTURE);
 
     if(!body){
-        hash.free(valid_extensions);
+        UniversalGarbage_free(garbage);
         return send_error(
                 request,
                 NOT_FOUND,
@@ -67,11 +74,17 @@ CwebHttpResponse *upload_profile_picture(CwebHttpRequest *request, CHashObject*e
             host
             ))
     );
+    UniversalGarbage_add_return(garbage, CHash_free,response_hash);
 
     database_upload_profile_picture(user, extension, is_public, body, request->content_length);
+    DtwResource_catch(database){
+        UniversalGarbage_free_including_return(garbage);
+        return NULL;
+    }
+
     commit_transaction(database);
 
-    hash.free(valid_extensions);
+    UniversalGarbage_free(garbage);
 
     return send_chash_cleaning_memory(response_hash,HTTP_CREATED);
 

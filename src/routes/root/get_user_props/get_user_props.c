@@ -3,6 +3,9 @@
 CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
     Autentication  auth = autenticate_root(request,entries,database);
+    DtwResource_catch(database){
+        return NULL;
+    }
     if(auth.error){
         return  auth.response_error;
     }

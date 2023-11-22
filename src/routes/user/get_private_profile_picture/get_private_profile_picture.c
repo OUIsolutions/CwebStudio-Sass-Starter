@@ -3,6 +3,9 @@
 CwebHttpResponse *get_private_profile_picture(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
     Autentication  auth = autenticate_sub_token_or_token(request,entries,database,PROFILE_PICTURE_PATH);
+    DtwResource_catch(database){
+        return NULL;
+    }
     if(auth.error){
         return  auth.response_error;
     }
