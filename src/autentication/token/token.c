@@ -48,7 +48,7 @@ Token * newToken(const char *user_id,const char * token_id,  const  char *passwo
     DtwHash * token_assignature = newDtwHash();
     dtw.hash.digest_string(token_assignature,user_id);
     dtw.hash.digest_string(token_assignature,password);
-    dtw.hash.digest_long(token_assignature, time(NULL));
+    dtw.hash.digest_long(token_assignature,get_time());
 
     token->sha = newCTextStack_string(token_assignature->hash);
     dtw.hash.free(token_assignature);

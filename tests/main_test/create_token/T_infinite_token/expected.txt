@@ -1,0 +1,9 @@
+ 
+status-code: 202
+headers:
+Content-Type : application/json
+content: {
+	"code":	0,
+	"token":	"iabc4289e0268c7buYuGAA9xBzhij41uYuGAA9xBzhij41",
+	"expiration":	"never"
+}
