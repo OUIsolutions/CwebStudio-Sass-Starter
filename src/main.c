@@ -11,7 +11,7 @@
 int main(){
 
     start_namespaces();
-    
+
     //define these flag to reconstruct database, if integrity brokes
     #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();
