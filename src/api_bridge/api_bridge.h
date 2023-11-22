@@ -39,6 +39,11 @@ int  ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries);
 
 char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration);
 
+//root routes
+int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email, const char *password,bool is_root,bool verified);
+
+
+//user data
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props);
 
 void ApiBridge_represent(ApiBridge *self);

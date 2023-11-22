@@ -112,7 +112,20 @@ int ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
     return ApiBridge_call_server_full(self, route, NULL, entries,NULL,NULL,-1);
 }
 
+int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email, const char *password,bool is_root,bool verified){
+    return  ApiBridge_call_server(
+            self,
+            CREATE_TOKEN_ROUTE,
+            newCHashObject(
+                    USERNAME_ENTRE,hash.newString(username),
+                    EMAIL_ENTRE,hash.newString(email),
+                    PASSWORD_ENTRE,hash.newString(password),
+                    IS_ROOT_ENTRE,hash.newBool(is_root),
+                    VERIFIED_ENTRE,hash.newBool(verified)
+            )
+    );
 
+}
 char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration){
     int response = ApiBridge_call_server(
             self,
