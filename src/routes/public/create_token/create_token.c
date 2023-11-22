@@ -53,9 +53,13 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
         UniversalGarbage_free(garbage);
         return send_entrie_error(request, entries);
     }
-
-
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
+
+    DtwResource_catch(user){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
+
 
     if(!user){
         UniversalGarbage_free(garbage);
@@ -105,14 +109,14 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
             );
 
     if(infinite){
-        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(NEVER_EXPIRATION));
+        obj.set_string(response_hash,EXPIRATION_KEY,NEVER_EXPIRATION);
     }
 
     if(infinite == false){
         long now  = time(NULL);
         long final_expiration = now + (expiration * 60);
         char *expiration_in_str = dtw_convert_unix_time_to_string(final_expiration);
-        obj.set_once(response_hash,EXPIRATION_KEY,hash.newString(expiration_in_str));
+        obj.set_string(response_hash,EXPIRATION_KEY,expiration_in_str);
         UniversalGarbage_add_simple(garbage,expiration_in_str);
     }
 

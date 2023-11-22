@@ -9,9 +9,12 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
             EMAIL_PATH,
             username_or_email
             );
+
     if(possible_user){
         return  possible_user;
     }
+
+
     possible_user = find_element_by_index(
             users,
             USERNAME_PATH,

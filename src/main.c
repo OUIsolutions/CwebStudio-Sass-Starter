@@ -26,10 +26,13 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     #endif
     UniversalGarbage  *garbage = newUniversalGarbage();
+
     CHashObject * entries = join_headders_and_paramns(request);
     UniversalGarbage_add(garbage, hash.free,entries);
+
     DtwResource *database = resource.newResource(DATABASE_PATH);
     UniversalGarbage_add(garbage, resource.free,database);
+
     database->use_locker_on_unique_values = false;
 
     CwebHttpResponse *response = NULL;
@@ -126,9 +129,37 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
     if(strings_equal(request->route,DOWNLOAD_DATABASE_ROUTE)){
         response = root_download_database_route(request,entries,database);
     }
-//route_insertion
+    //route_insertion
+
+
+    DtwResource_catch(database){
+
+
+        #ifdef DEBUG
+            int error_code = DtwResource_get_error_code(database);
+            char *error_message = DtwResource_get_error_message(database);
+           response = send_error(
+                    request,
+                    CWEB_INTERNAL_SERVER_ERROR,
+                    DATABASE_INTEGRITY_BROKEN,
+                    DATABASE_INTEGRITY_BROKEN_MESSAGE,
+                    error_code,
+                    error_message
+            );
+        #else
+
+        response = send_error(
+                    request,
+                    CWEB_INTERNAL_SERVER_ERROR,
+                    INTERNAL_ERROR,
+                    INTERNAL_ERROR_MESSAGE
+            );
+
+        #endif
+    }
 
     UniversalGarbage_free(garbage);
+
 
     if(response){
         return  response;

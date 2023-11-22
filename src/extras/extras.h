@@ -11,3 +11,4 @@ CTextStack  *construct_profile_picture_url(const char *user_id, bool is_public, 
 
 
 CTextStack  * construct_verification_url(const char *user_id,const char *verification_key,const char *host);
+
