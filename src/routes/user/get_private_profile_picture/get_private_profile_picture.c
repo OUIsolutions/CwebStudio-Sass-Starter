@@ -6,19 +6,25 @@ CwebHttpResponse *get_private_profile_picture(CwebHttpRequest *request, CHashObj
     if(auth.error){
         return  auth.response_error;
     }
+    DtwResource_catch(database){
+        return NULL;
+    }
     DtwResource *user = auth.user;
 
     DtwResource *profile = resource.sub_resource(user,PROFILE_PICTURE_PATH);
-    char *extension = resource.get_string_from_sub_resource(profile,EXTENSION_PATH);
-    if(!extension){
+    DtwResource *extenson_resource = resource.sub_resource(profile,EXTENSION_PATH);
 
-            return send_error(
-                    request,
-                    NOT_FOUND,
-                    PROFILE_PICTURE_NOT_EXIST,
-                    PROFILE_PICTURE_NOT_EXIST_MESSAGE
-            );
-
+    if(resource.type(extenson_resource) == DTW_NOT_FOUND){
+        return send_error(
+                request,
+                NOT_FOUND,
+                PROFILE_PICTURE_NOT_EXIST,
+                PROFILE_PICTURE_NOT_EXIST_MESSAGE
+        );
+    }
+    char *extension = resource.get_string(extenson_resource);
+    DtwResource_catch(database){
+        return NULL;
     }
 
     DtwResource  *file = resource.sub_resource(profile,"%s.%s",PROFILE_PICTURE_BLOB_PATH,extension);

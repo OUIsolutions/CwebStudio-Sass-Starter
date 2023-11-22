@@ -6,6 +6,9 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     if(auth.error){
         return  auth.response_error;
     }
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     DtwResource *user = auth.user;
 
@@ -32,6 +35,10 @@ CwebHttpResponse *get_self_props(CwebHttpRequest *request, CHashObject*entries, 
     }
 
     CHashObject  *description = describe_user(user,include_tokens,include_root_props,token,host);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     commit_transaction(database);
 
     return send_chash_cleaning_memory(description, HTTP_OK);
