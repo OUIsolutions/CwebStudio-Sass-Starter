@@ -1,6 +1,10 @@
 
 
 DtwResource *get_all_tokens_rource(DtwResource *user,Token *token){
+    DtwResource_catch(user){
+        return NULL;
+    }
+
     if(token->infinite){
         //data/elements/{user}/infinite_token/
         return resource.sub_resource(user, INFINITE_TOKENS_PATH);
@@ -14,6 +18,9 @@ DtwResource *get_all_tokens_rource(DtwResource *user,Token *token){
 }
 
 DtwResource *get_token_resource(DtwResource *user,Token *token){
+    DtwResource_catch(user){
+        return NULL;
+    }
 
     DtwResource  *all_tokens = get_all_tokens_rource(user,token);
     if(resource.type(all_tokens) == DTW_NOT_FOUND){
@@ -28,6 +35,9 @@ DtwResource *get_token_resource(DtwResource *user,Token *token){
 
 }
 Token * database_create_finite_token(DtwResource *user, const char *password, bool allow_renew, int expiration){
+    DtwResource_catch(user){
+        return NULL;
+    }
 
     //data/elements/{user}/finite_tokens/
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
@@ -63,6 +73,9 @@ Token * database_create_finite_token(DtwResource *user, const char *password, bo
 
 }
 Token * database_create_infinite_token(DtwResource *user, const char *password){
+    DtwResource_catch(user){
+        return NULL;
+    }
 
     //data/elements/{user}/infinite_tokens/
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
@@ -89,17 +102,29 @@ Token * database_create_infinite_token(DtwResource *user, const char *password){
 
 
 long count_finite_token(DtwResource *user){
+    DtwResource_catch(user){
+        return-1;
+    }
+
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     return resource.size(all_tokens);
 }
 
 long count_infinite_token(DtwResource *user){
+    DtwResource_catch(user){
+        return-1;
+    }
+
     //data/elements/{user}/infinite_token/
     DtwResource  *all_tokens = resource.sub_resource(user, INFINITE_TOKENS_PATH);
     return resource.size(all_tokens);
 }
 
 void remove_last_updated_token(DtwResource *user,const char *token_tipe, int totals){
+    DtwResource_catch(user){
+        return;
+    }
+
     //data/elements/{user}/{token_tipe}/
     DtwResource  *all_tokens = resource.sub_resource(user, token_tipe);
 
@@ -114,6 +139,11 @@ void remove_last_updated_token(DtwResource *user,const char *token_tipe, int tot
             //data/elements/{user}/infinite_token/{i}/last_update
             DtwResource *last_update = resource.sub_resource(current,LAST_UPDATE_PATH);
             long  value = resource.get_long(last_update);
+            DtwResource_catch(user){
+                dtw.string_array.free(elements);
+                return;
+            }
+
             if(value < last_time || i == 0){
                 last_time = value;
 
@@ -128,16 +158,28 @@ void remove_last_updated_token(DtwResource *user,const char *token_tipe, int tot
 }
 
 void remove_last_updated_infinite_token(DtwResource *user, int totals){
+    DtwResource_catch(user){
+        return;
+    }
+
     remove_last_updated_token(user,INFINITE_TOKENS_PATH,totals);
 
 }
 
 void remove_last_updated_finite_token(DtwResource *user, int totals){
+    DtwResource_catch(user){
+        return;
+    }
+
     remove_last_updated_token(user,FINITE_TOKENS_PATH,totals);
 }
 
 
 void remove_expired_tokens(DtwResource *user){
+    DtwResource_catch(user){
+        return;
+    }
+
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     DtwStringArray * elements = resource.list_names(all_tokens);
     long now = time(NULL);
@@ -145,6 +187,10 @@ void remove_expired_tokens(DtwResource *user){
         DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
         DtwResource *expiration = resource.sub_resource(current,EXPIRATION_PATH);
         long expiration_time = resource.get_long(expiration);
+        DtwResource_catch(user){
+            dtw.string_array.free(elements);
+            return;
+        }
         if(now > expiration_time){
             resource.destroy(current);
         }

@@ -94,6 +94,12 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
 
     if(infinite){
         remove_max_ifinite_tokens(user);
+
+        DtwResource_catch(user){
+            UniversalGarbage_free(garbage);
+            return NULL;
+        }
+
         token = database_create_infinite_token(user,password);
         UniversalGarbage_resset(garbage,token);
     }
@@ -101,6 +107,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     if(infinite == false){
         remove_expired_tokens(user);
         remove_max_finite_tokens(user);
+
         token = database_create_finite_token(user, password, allow_renew, expiration);
         UniversalGarbage_resset(garbage,token);
 

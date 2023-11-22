@@ -41,6 +41,9 @@ bool is_root(DtwResource *user){
 
 
 void database_remove_user(DtwResource *database, DtwResource *user){
+    DtwResource_catch(database){
+        return ;
+    }
 
     DtwResource * all_user = resource.sub_resource(database, USERS_PATH);
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
@@ -58,7 +61,9 @@ void database_remove_user(DtwResource *database, DtwResource *user){
 
 
 void database_create_user( DtwResource  *database,const char *username,const char *email,const char *password,bool is_root,bool verified){
-
+    DtwResource_catch(database){
+        return ;
+    }
     //users
     DtwResource * users = resource.sub_resource(database, USERS_PATH);
 
@@ -92,7 +97,9 @@ void database_create_user( DtwResource  *database,const char *username,const cha
 }
 
 void database_modify_user( DtwResource  *database,DtwResource *user,const char *new_username,const char *new_email,const char *new_password,bool set_is_root, bool is_root){
-
+    DtwResource_catch(database){
+        return ;
+    }
     //users
     DtwResource * all_users = resource.sub_resource(database, USERS_PATH);
 
@@ -132,6 +139,10 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 }
 
 void database_upload_profile_picture(DtwResource *user, const char *extension, bool is_public, unsigned char *value, long size){
+    DtwResource_catch(user){
+        return ;
+    }
+
     DtwResource *profile_resource = resource.sub_resource(user,PROFILE_PICTURE_PATH);
     resource.destroy(profile_resource);
     resource.set_bool_in_sub_resource(profile_resource, is_public, PUBLIC_PATH);
@@ -141,6 +152,10 @@ void database_upload_profile_picture(DtwResource *user, const char *extension, b
 }
 
 bool  password_are_equal(DtwResource *user, char *entrie_passworld){
+    DtwResource_catch(user){
+        return false;
+    }
+
     DtwResource  *password = resource.sub_resource(user,PASSWORD_PATH);
     char *password_sha = resource.get_string(password);
     DtwResource_catch(user){
@@ -154,6 +169,9 @@ bool  password_are_equal(DtwResource *user, char *entrie_passworld){
 }
 
 bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_passworld){
+    DtwResource_catch(user){
+        return false;
+    }
     const bool ENTRIE_NOT_PROVIDED = true;
     if(!entrie_passworld){
         return ENTRIE_NOT_PROVIDED;
@@ -163,7 +181,9 @@ bool  password_are_equal_if_password_provided(DtwResource *user, char *entrie_pa
 
 
 short get_user_index_status_if_new_value_provided(DtwResource *database, DtwResource *user, const char *value_path, char *new_value){
-
+    DtwResource_catch(database){
+        return -1;
+    }
     if(!new_value){
         return NEW_VALUE_NOT_PROVIDED;
     }
