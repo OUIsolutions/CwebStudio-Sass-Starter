@@ -4,7 +4,6 @@
 CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
 
-
 #ifdef DEBUG
     create_root_user_if_not_exist();
     //WARNING: THESE WILL KILL THE ENTIRE APPLICATION IF YOU ACCESS /end

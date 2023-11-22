@@ -52,7 +52,13 @@ int  ApiBridge_call_server_full(
         unsigned  char *content,
         long content_size
 ){
+    UniversalGarbage *internal_garbage = newUniversalGarbage();
     CwebHttpRequest * request = newCwebHttpRequest(-1);
+    UniversalGarbage_add(internal_garbage, CwebHttpRequest_free,request);
+    UniversalGarbage_add(internal_garbage, CHash_free,params);
+    UniversalGarbage_add(internal_garbage, CHash_free,headers);
+    UniversalGarbage_add_simple(internal_garbage, content);
+
     request->route = strdup(route);
     private_parse_chash_to_cweb_dict(params,request->params);
     private_parse_chash_to_cweb_dict(headers,request->headers);
@@ -73,6 +79,7 @@ int  ApiBridge_call_server_full(
         self->last_content_size = -1;
         self->last_status_code = -1;
         self->last_hash = NULL;
+        UniversalGarbage_free(internal_garbage);
         return -1;
     }
 
@@ -83,12 +90,15 @@ int  ApiBridge_call_server_full(
     self->last_status_code = response->status_code;
 
     response->content[response->content_length] ='\0';
+
     self->last_hash = CHash_load_from_json_strimg((char*)response->content);
     UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
+    UniversalGarbage_free(internal_garbage);
 
     if(self->last_status_code == 200 || self->last_status_code == 202){
         return 0;
     }
+
     return -1;
 }
 
