@@ -1,76 +1,103 @@
 
 
 CHash * describe_user_without_tokens(DtwResource *user, bool include_root_props, const char *token, const char *host){
+    DtwResource_catch(user){
+        return NULL;
+    }
 
     UniversalGarbage *garbage = newUniversalGarbage();
 
     CHashObject * user_obj = newCHashObjectEmpty();
+    UniversalGarbage_add_return(garbage, CHash_free,user_obj);
+
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
-    obj.set_once(user_obj,USERNAME_KEY,hash.newString(username));
-
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-
     long creation_data = resource.get_long_from_sub_resource(user,CREATION_PATH);
+    long last_update_data = resource.get_long_from_sub_resource(user,LAST_UPDATE_PATH);
+    bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
+    bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
+
+    DtwResource_catch(user){
+        UniversalGarbage_free_including_return(garbage);
+        return NULL;
+    }
+
+    obj.set_string(user_obj,USERNAME_KEY,username);
+
+
     char *converted_creation_data = dtw_convert_unix_time_to_string(creation_data);
     UniversalGarbage_add_simple(garbage,converted_creation_data);
 
-    obj.set_once(user_obj,CREATION_KEY,hash.newString(converted_creation_data));
+    obj.set_string(user_obj,CREATION_KEY,converted_creation_data);
 
-    long last_update_data = resource.get_long_from_sub_resource(user,LAST_UPDATE_PATH);
     char *converted_last_update = dtw_convert_unix_time_to_string(last_update_data);
     UniversalGarbage_add_simple(garbage,converted_last_update);
-    obj.set_once(user_obj,LAST_UPDATE_PATH,hash.newString(converted_last_update));
+    obj.set_string(user_obj,LAST_UPDATE_PATH,converted_last_update);
 
 
-    obj.set_once(user_obj,EMAIL_KEY,hash.newString(email));
-    bool verified = resource.get_bool_from_sub_resource(user,VERIFIED_PATH);
-    obj.set_once(user_obj,VERIFIED_KEY,hash.newBool(verified));
+    obj.set_string(user_obj,EMAIL_KEY,email);
+    obj.set_bool(user_obj,VERIFIED_KEY,verified);
 
 
     if(include_root_props){
 
         if(verified){
-            obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
+            obj.set_any(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
         }
 
         DtwResource *recovery_key = resource.sub_resource(user,RECOVERY_PASSWORD_PATH);
         if(resource.type(recovery_key) == DTW_COMPLEX_STRING_TYPE){
             char *reconvery_key_content = resource.get_string(recovery_key);
-            obj.set_once(user_obj,RECOVERY_KEY,hash.newString(reconvery_key_content));
+            DtwResource_catch(user){
+                UniversalGarbage_free_including_return(garbage);
+                return NULL;
+            }
+            obj.set_string(user_obj,RECOVERY_KEY,reconvery_key_content);
         }
 
 
         if(!verified){
 
-            char * verification_passowrd = resource.get_string_from_sub_resource(user,VERIFICATION_PASSWORD_PATH);
+            DtwResource *verification_resource = resource.sub_resource(user,VERIFICATION_PASSWORD_PATH);
+            bool verification_exist = resource.type(verification_resource) == DTW_COMPLEX_STRING_TYPE;
 
-            if(verification_passowrd){
+            if(verification_exist){
+                char *verification_password = resource.get_string(verification_resource);
+                DtwResource_catch(user){
+                    UniversalGarbage_free_including_return(garbage);
+                    return NULL;
+                }
+
                 CTextStack  *verification_url = construct_verification_url(
                         user->name,
-                        verification_passowrd,
+                        verification_password,
                         host
                 );
-                obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newStackString(verification_url));
+
+                obj.set_Stack(user_obj, VERIFICATION_URL_ENTRE, verification_url);
             }
 
-            if(!verification_passowrd){
-                obj.set_once(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
+            if(!verification_exist){
+                obj.set_any(user_obj, VERIFICATION_URL_ENTRE, hash.newNULL());
             }
         }
 
     }
     DtwResource *profile_picture = resource.sub_resource(user,PROFILE_PICTURE_PATH);
     bool exist_profile_picture = resource.type(profile_picture) == DTW_FOLDER_TYPE;
+
     if(exist_profile_picture){
         bool is_public = resource.get_bool_from_sub_resource(profile_picture, PUBLIC_PATH);
+        DtwResource_catch(user){
+            UniversalGarbage_free_including_return(garbage);
+            return NULL;
+        }
         CTextStack *profile_url = construct_profile_picture_url(user->name, is_public, token, host);
-        obj.set_once(user_obj, PROFILE_PICTURE_URL_KEY, hash.newStackString(profile_url));
+        obj.set_Stack(user_obj, PROFILE_PICTURE_URL_KEY, profile_url);
     }
 
-    bool is_root = resource.get_bool_from_sub_resource(user,IS_ROOT_PATH);
 
-
-    obj.set_once(user_obj,IS_ROOT_KEY,hash.newBool(is_root));
+    obj.set_bool(user_obj,IS_ROOT_KEY,is_root);
     UniversalGarbage_free(garbage);
     return user_obj;
 }
@@ -199,7 +226,7 @@ void describe_infinite_tokens(CHash *user_obj,DtwResource *user){
         UniversalGarbage_add_simple(internal_garbage,converted_creation);
         obj.set_string(current_token_obj,CREATION_KEY,converted_creation);
 
-        
+
         char *last_update_in_str = dtw_convert_unix_time_to_string(last_update);
         UniversalGarbage_add_simple(internal_garbage,last_update_in_str);
         obj.set_string(current_token_obj,LAST_UPDATE_KEY,last_update_in_str);
