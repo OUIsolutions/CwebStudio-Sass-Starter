@@ -11,7 +11,7 @@
 int main(){
 
     start_namespaces();
-
+    create_root_user_if_not_exist();
     //define these flag to reconstruct database, if integrity brokes
     #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();

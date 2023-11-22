@@ -137,7 +137,7 @@ void commit_transaction(DtwResource *database){
     char *transaction_sha = dtw.generate_sha_from_string(transaction_content);
     UniversalGarbage_add_simple(garbage,transaction_sha);
 
-    char * now = dtw_convert_unix_time_to_string(time(NULL));
+    char * now = dtw_convert_unix_time_to_string(get_time());
     UniversalGarbage_add_simple(garbage,now);
 
     CTextStack * formated_path = newCTextStack_string_empty();
@@ -153,7 +153,7 @@ void commit_transaction(DtwResource *database){
 void reload_all_transactions(){
 
     CTextStack *back_up_path = newCTextStack_string(BACKUP_PATH);
-    char *now = dtw_convert_unix_time_to_string(time(NULL));
+    char *now = dtw_convert_unix_time_to_string(get_time());
     stack.format(back_up_path,"/%sc", now);
     dtw_move_any(DATABASE_PATH,back_up_path->rendered_text,DTW_NOT_MERGE);
     stack.free(back_up_path);
