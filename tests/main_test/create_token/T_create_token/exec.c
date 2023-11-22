@@ -1,8 +1,10 @@
+
 #include "../../../../src/imports.h"
 #include "../../../../src/declaration.h"
-#include "../../../../src/definition.h"
 #undef DATABASE_PATH
 #define DATABASE_PATH "tests/target"
+#include "../../../../src/definition.h"
+
 
 int main(){
     start_namespaces();
