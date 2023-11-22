@@ -131,8 +131,8 @@ void remove_last_updated_token(DtwResource *user,const char *token_tipe, int tot
     DtwStringArray * elements = resource.list_names(all_tokens);
 
     for(int v = 0; v < totals; v++){
-        DtwResource *last;
-        long last_time;
+        DtwResource *last =NULL;
+        long last_time = -1;
         for(int i = 0; i < elements->size; i++){
             //data/elements/{user}/infinite_token/{i}/
             DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
@@ -144,13 +144,16 @@ void remove_last_updated_token(DtwResource *user,const char *token_tipe, int tot
                 return;
             }
 
-            if(value < last_time || i == 0){
+            if(value < last_time || i ==0){
                 last_time = value;
-
                 last = current;
             }
+
         }
+
         resource.destroy(last);
+
+
     }
 
     dtw.string_array.free(elements);
