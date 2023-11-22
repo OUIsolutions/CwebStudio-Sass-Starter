@@ -22,7 +22,7 @@ int main(){
     printf("token:%s\n",token);
     ApiBridge_free(b);
     return 0;
-    
+
     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
             CwebServer server = newCwebSever(i, main_sever);

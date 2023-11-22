@@ -131,6 +131,12 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
 }
 
 
+void ApiBridge_represent(ApiBridge *self){
+    printf("status-code: %d\n",self->last_status_code);
+    printf("headers:\n");
+    CwebDict_represent(self->last_response->headers);
+    printf("content: %s\n",(char*)self->last_content);
+}
 
 void ApiBridge_free(ApiBridge *self){
     UniversalGarbage_free(self->garbage);
