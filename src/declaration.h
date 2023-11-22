@@ -10,3 +10,4 @@
 #include "start/start.h"
 #include "server/server.h"
 #include "api_bridge/api_bridge.h"
+#include "globals.h"
