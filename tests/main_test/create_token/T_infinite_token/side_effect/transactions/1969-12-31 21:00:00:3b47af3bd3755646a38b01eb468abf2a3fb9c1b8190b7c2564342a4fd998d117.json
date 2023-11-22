@@ -1,0 +1,33 @@
+[{
+		"action":	"write",
+		"source":	"tests/target/content/users/index/email/4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2",
+		"content":	"PKdhtXMmr18n2L9"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/email",
+		"content":	"root"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/index/username/4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2",
+		"content":	"PKdhtXMmr18n2L9"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/username",
+		"content":	"root"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/password",
+		"content":	"4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/verified",
+		"content":	"t"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/creation",
+		"content":	"0"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/PKdhtXMmr18n2L9/is_root",
+		"content":	"t"
+	}]

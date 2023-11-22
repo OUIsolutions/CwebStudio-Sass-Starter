@@ -12,7 +12,7 @@
 
 int main(){
     start_namespaces();
-    api_time = 0;
+    dtw_now = 0;
 
     create_root_user_if_not_exist();
     ApiBridge *bridge = newApiBridge();

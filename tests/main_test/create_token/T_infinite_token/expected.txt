@@ -4,6 +4,6 @@ headers:
 Content-Type : application/json
 content: {
 	"code":	0,
-	"token":	"iabc4289e0268c7buYuGAA9xBzhij41uYuGAA9xBzhij41",
+	"token":	"icb1064030c74863PKdhtXMmr18n2L9PKdhtXMmr18n2L9",
 	"expiration":	"never"
 }
