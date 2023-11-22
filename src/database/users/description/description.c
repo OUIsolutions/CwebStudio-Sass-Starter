@@ -292,6 +292,10 @@ CHash * describe_all_users_with_contains_case_sensitive(DtwResource *database, c
 
 
 CHash * describe_all_without_contains_start(DtwResource *database, bool include_tokens,bool include_root_props,const char *token, const char *host){
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     UniversalGarbage *garbage = newUniversalGarbage();
 
     DtwResource * all_users;
@@ -300,21 +304,38 @@ CHash * describe_all_without_contains_start(DtwResource *database, bool include_
 
     DtwStringArray * all_users_ids = resource.list_names(all_users);
     UniversalGarbage_add(garbage, DtwStringArray_free,all_users_ids);
+
+
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return NULL;
+    }
+
     CHashArray  *all_users_hash = array.newArrayEmpty();
+    UniversalGarbage_add_return(garbage, CHash_free,all_users_hash);
 
     for(long i = 0; i < all_users_ids->size; i++){
         char *current = all_users_ids->strings[i];
         DtwResource *current_user  = resource.sub_resource(all_users,"%s",current);
-        array.append_once(all_users_hash, describe_user(current_user,include_tokens,include_root_props,token,host));
+        CHashObject *description = describe_user(current_user,include_tokens,include_root_props,token,host);
+        DtwResource_catch(database){
+            UniversalGarbage_free_including_return(garbage);
+            return NULL;
+        }
+
+        array.append_any(all_users_hash,description);
 
     }
-
     UniversalGarbage_free(garbage);
     return all_users_hash;
 }
 
 
 CHash * describe_all_users(DtwResource *database,const char *contains,bool case_sensitive, bool include_tokens,bool include_root_props,const char *token, const char *host){
+    DtwResource_catch(database){
+        return NULL;
+    }
+
 
     if(!contains){
         return describe_all_without_contains_start(database, include_tokens,include_root_props,token,host);
