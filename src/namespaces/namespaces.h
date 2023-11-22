@@ -6,3 +6,5 @@ CHashObjectModule obj;
 CHashArrayModule array;
 CHashValidatorModule validator;
 CTextStackModule stack;
+
+void start_namespaces();

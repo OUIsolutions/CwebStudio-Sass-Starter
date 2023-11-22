@@ -1,5 +1,6 @@
 
 #include "database/definition.h"
+#include "namespaces/namespaces.c"
 #include "observability/observability.c"
 #include "autentication/definition.h"
 #include "extras/extras.c"
@@ -7,3 +8,4 @@
 #include "email/email.c"
 #include "routes/definition.h"
 #include "start/start.c"
+#include "server/server.c"
