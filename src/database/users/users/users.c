@@ -10,10 +10,12 @@ DtwResource *find_user_by_username_or_email(DtwResource  *database,const char *u
             username_or_email
             );
 
+    DtwResource_catch(database){
+        return NULL;
+    }
     if(possible_user){
         return  possible_user;
     }
-
 
     possible_user = find_element_by_index(
             users,
@@ -41,11 +43,14 @@ bool is_root(DtwResource *user){
 void database_remove_user(DtwResource *database, DtwResource *user){
 
     DtwResource * all_user = resource.sub_resource(database, USERS_PATH);
-
     char *email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
-    destroy_index(all_user,EMAIL_PATH,email);
-
     char *username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
+
+    DtwResource_catch(database){
+        return;
+    }
+
+    destroy_index(all_user,EMAIL_PATH,email);
     destroy_index(all_user,USERNAME_PATH,username);
     resource.destroy(user);
 }
@@ -93,6 +98,11 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 
     if(new_email){
         char *old_email = resource.get_string_from_sub_resource(user,EMAIL_PATH);
+
+        DtwResource_catch(database){
+            return;
+        }
+
         destroy_index(all_users, EMAIL_PATH, old_email);
         create_index(all_users, user->name, EMAIL_PATH, new_email);
         resource.set_bool_in_sub_resource(user,false,VERIFIED_PATH);
@@ -100,6 +110,11 @@ void database_modify_user( DtwResource  *database,DtwResource *user,const char *
 
     if(new_username){
         char *old_username = resource.get_string_from_sub_resource(user,USERNAME_PATH);
+
+        DtwResource_catch(database){
+            return;
+        }
+
         destroy_index(all_users, USERNAME_PATH, old_username);
         create_index(all_users, user->name, USERNAME_PATH, new_username);
     }
@@ -154,15 +169,24 @@ short get_user_index_status_if_new_value_provided(DtwResource *database, DtwReso
     }
 
     DtwResource *already_exist = find_user_by_username_or_email(database,new_value);
+
+    DtwResource_catch(database){
+        return -1;
+    }
+
     if(!already_exist){
         return USER_NOT_EXIST_INTERNAL;
     }
 
     char *old_value = resource.get_string_from_sub_resource(user,"%s",value_path);
+    DtwResource_catch(database){
+        return -1;
+    }
 
-    if(!strcmp(old_value,new_value)){
+    if(strings_equal(old_value,new_value)){
         return USER_HAVE_THE_SAME_NAME_INTERNAL;
     }
+
     return USER_ALREADY_EXIST_INTERNAl;
 
 }
