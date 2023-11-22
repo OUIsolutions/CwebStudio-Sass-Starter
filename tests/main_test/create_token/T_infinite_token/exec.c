@@ -3,6 +3,8 @@
 #include "../../../../src/declaration.h"
 #undef DATABASE_PATH
 #define DATABASE_PATH "tests/target"
+#define API_TIME -1;
+
 #include "../../../../src/definition.h"
 
 

@@ -127,7 +127,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
 
     if(infinite == false){
-        long now  = time(NULL);
+        long now  = get_time();
         long final_expiration = now + (expiration * 60);
         char *expiration_in_str = dtw_convert_unix_time_to_string(final_expiration);
         obj.set_string(response_hash,EXPIRATION_KEY,expiration_in_str);
