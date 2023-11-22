@@ -86,8 +86,12 @@ int  ApiBridge_call_server_full(
         self->last_hash = CHash_load_from_json_strimg((char*)response->content);
         UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
     }
-    return response->status_code;
+    if(self->last_status_code == 200 || self->last_status_code == 202){
+        return 0;
+    }
+    return -1;
 }
+
 
 
 int ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
@@ -95,6 +99,24 @@ int ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
 }
 
 
+int  ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration){
+    int response = ApiBridge_call_server(
+            self,
+            CREATE_TOKEN_ROUTE,
+            newCHashObject(
+                    USERNAME_ENTRE,hash.newString(username),
+                    PASSWORD_ENTRE,hash.newString(password),
+                    EXPIRATION_ENTRE,hash.newNumber((long)expiration)
+                    )
+            );
+
+    if(!response){
+        char *token = obj.getString(self->last_hash,TOKEN_KEY);
+        ApiBridge_set_token(self,token);
+    }
+    return  response;
+
+}
 
 
 

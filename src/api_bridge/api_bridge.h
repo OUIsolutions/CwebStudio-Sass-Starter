@@ -13,7 +13,6 @@ typedef struct {
     long last_content_size;
     unsigned char *last_content;
     int last_status_code;
-
     CHash *last_hash;
 
 }ApiBridge;
@@ -21,6 +20,7 @@ typedef struct {
 ApiBridge *newApiBridge();
 
 void ApiBridge_set_token(ApiBridge *self,const char *token);
+
 
 
 int ApiBridge_call_server_full(
@@ -35,6 +35,8 @@ int ApiBridge_call_server_full(
 
 
 int  ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries);
+
+int  ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration);
 
 
 
