@@ -116,7 +116,7 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
             newCHashObject(
                     LOGIN,hash.newString(username),
                     PASSWORD_ENTRE,hash.newString(password),
-                    EXPIRATION_ENTRE,hash.newNumber((long)expiration)
+                    EXPIRATION_ENTRE,hash.newNumber((double )expiration)
                     )
             );
 
