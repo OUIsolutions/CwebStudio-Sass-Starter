@@ -48,7 +48,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         return auth;
     }
 
-    resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
+    resource.set_long_in_sub_resource(user, dtw_get_time(),LAST_UPDATE_PATH);
 
     DtwResource *token_resource = get_token_resource(user,token_obj);
     DtwResource_catch(database){
@@ -88,7 +88,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
 
     if(token_obj->infinite){
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
-        resource.set_long(last_update, time(NULL));
+        resource.set_long(last_update, dtw_get_time());
     }
 
     if(token_obj->infinite == false){
@@ -101,7 +101,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
             UniversalGarbage_free(garbage);
             return auth;
         }
-        long now = time(NULL);
+        long now = dtw_get_time();
 
         if(now > (expiration_Value + last_update_value)){
             auth.error = true;
@@ -120,7 +120,7 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 resource.sub_resource(token_resource,ALLOW_RENEW_PATH)
         );
         if(allow_renew){
-            resource.set_long(last_update, time(NULL));
+            resource.set_long(last_update, dtw_get_time());
         }
 
 
@@ -242,7 +242,7 @@ Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *en
             return auth;
         }
 
-        long now = time(NULL);
+        long now = dtw_get_time();
         bool expired = now > (expiration_Value + last_update_value);
         if(expired){
             auth.error = true;
