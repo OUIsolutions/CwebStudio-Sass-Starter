@@ -88,8 +88,8 @@ void database_create_user( DtwResource  *database,const char *username,const cha
     DtwResource *verified_resource = resource.sub_resource(created_user,VERIFIED_PATH);
     resource.set_bool(verified_resource,verified);
 
-    resource.set_long_in_sub_resource(created_user, get_time(),CREATION_PATH);
-    resource.set_long_in_sub_resource(created_user, get_time(),LAST_UPDATE_PATH);
+    resource.set_long_in_sub_resource(created_user, dtw_get_time(),CREATION_PATH);
+    resource.set_long_in_sub_resource(created_user, dtw_get_time(),LAST_UPDATE_PATH);
 
 
     DtwResource  *is_root_resource = resource.sub_resource(created_user,IS_ROOT_PATH);

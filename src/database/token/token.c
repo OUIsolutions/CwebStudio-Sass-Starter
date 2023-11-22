@@ -62,7 +62,7 @@ Token * database_create_finite_token(DtwResource *user, const char *password, bo
 
     //data/elements/{user}/finite_tokens/{id}/last_update
     DtwResource *expiration_resource = resource.sub_resource(token_resource, LAST_UPDATE_PATH);
-    long now = get_time();
+    long now = dtw_get_time();
     resource.set_long(expiration_resource,now);
 
     //data/elements/{user}/finite_tokens/{id}/creation
@@ -83,7 +83,7 @@ Token * database_create_infinite_token(DtwResource *user, const char *password){
     //data/elements/{user}/infinite_tokens/{id}
     DtwResource  *token_resource = resource.sub_resource_random(all_tokens,NULL);
 
-    long now = get_time();
+    long now = dtw_get_time();
     //data/elements/{user}/infinite_tokens/{id}/creation
     DtwResource  *creation_resource =resource.sub_resource(token_resource,CREATION_PATH);
     resource.set_long(creation_resource,now);
@@ -185,7 +185,7 @@ void remove_expired_tokens(DtwResource *user){
 
     DtwResource  *all_tokens = resource.sub_resource(user, FINITE_TOKENS_PATH);
     DtwStringArray * elements = resource.list_names(all_tokens);
-    long now = get_time();
+    long now = dtw_get_time();
     for(int i = 0; i < elements->size; i++){
         DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
         DtwResource *expiration = resource.sub_resource(current,EXPIRATION_PATH);

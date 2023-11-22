@@ -74,11 +74,4 @@ CTextStack  * construct_verification_url(const char *user_id,const char *verific
     return url;
 }
 
-long get_time(){
-    if(api_time != -1){
-        return  api_time;
-    }
 
-    return time(NULL);
-
-}
