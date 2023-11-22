@@ -4545,6 +4545,32 @@ void DtwTransaction_free(struct DtwTransaction *self);
 
 
 
+#define DTW_RESOURCE_ELEMENT_IS_NULL -1;
+#define DTW_RESOURCE_OK 0
+#define DTW_RESOURCE_ELEMENT_NOT_EXIST 1
+#define DTW_RESOURCE_ELEMENT_NOT_BOOL 2
+#define DTW_RESOURCE_ELEMENT_NOT_LONG 3
+#define DTW_RESOURCE_ELEMENT_NOT_DOUBLE 4
+#define DTW_RESOURCE_ELEMENT_NOT_STRING 5
+
+
+
+typedef struct {
+    DtwTransaction  *transaction;
+    DtwRandonizer  *randonizer;
+    DtwLocker *locker;
+    int error_code;
+    char *error_path;
+    char *error_message;
+}privateDtwResourceRootProps;
+
+privateDtwResourceRootProps *private_newDtwResourceRootProps();
+
+
+void privateDtwResourceRootProps_free(privateDtwResourceRootProps *self);
+
+
+
 
 
 typedef struct DtwResource{
@@ -4552,13 +4578,7 @@ typedef struct DtwResource{
     bool allow_transaction;
     bool use_locker_on_unique_values;
     bool locked;
-
-    DtwTransaction  *transaction;
-    DtwRandonizer  *randonizer;
-
-    DtwLocker *locker;
-
-
+    privateDtwResourceRootProps *root_props;
     char *mothers_path;
     char *name;
     char *path;
@@ -4579,6 +4599,18 @@ typedef struct DtwResource{
 
 
 DtwResource *new_DtwResource(const char *path);
+
+bool DtwResource_error(DtwResource *self);
+
+#define DtwResource_protected(self)  if(!DtwResource_error(self))
+#define DtwResource_catch(self)  if(DtwResource_error(self))
+
+int DtwResource_get_error_code(DtwResource *self);
+
+char * DtwResource_get_error_message(DtwResource *self);
+
+void  private_DtwResource_raise_error(DtwResource *self, int error_code, const char *error_message);
+
 
 DtwResource * DtwResource_sub_resource(DtwResource *self,const  char *format, ...);
 
@@ -5082,6 +5114,10 @@ DtwResourceArrayModule newDtwResourceArrayModule();
 typedef struct DtwResourceModule{
 
     DtwResource *(*newResource)(const char *path);
+    int (*get_error_code)(DtwResource *self);
+    bool (*error)(DtwResource *self);
+
+    char * (*get_error_message)(DtwResource *self);
 
     struct DtwResource * (*sub_resource)(struct DtwResource *self,const  char *format,...);
     unsigned char *(*get_any_from_sub_resource)(DtwResource *self, long *size, bool *is_binary,const char *format,...);
@@ -8294,8 +8330,70 @@ void DtwLocker_free(struct DtwLocker *self){
 
 
 
+privateDtwResourceRootProps *private_newDtwResourceRootProps(){
+    privateDtwResourceRootProps *self  = (privateDtwResourceRootProps*) malloc(sizeof (privateDtwResourceRootProps));
+    *self = (privateDtwResourceRootProps){0};
+    self->transaction = newDtwTransaction();
+    self->randonizer = newDtwRandonizer();
+    self->locker = newDtwLocker();
+    self->error_code = DTW_RESOURCE_OK;
+
+    return self;
+}
 
 
+void privateDtwResourceRootProps_free(privateDtwResourceRootProps *self){
+    DtwTransaction_free(self->transaction);
+    DtwRandonizer_free(self->randonizer);
+    DtwLocker_free(self->locker);
+    if(self->error_path){
+        free(self->error_path);
+    }
+
+    if(self->error_message){
+        free(self->error_message);
+    }
+
+
+
+    free(self);
+}
+
+
+
+
+
+bool DtwResource_error(DtwResource *self){
+    if(!self){
+        return true;
+    }
+    if(DtwResource_get_error_code(self) == DTW_RESOURCE_OK){
+        return false;
+    }
+    return true;
+}
+
+int DtwResource_get_error_code(DtwResource *self){
+    if(!self){
+        return DTW_RESOURCE_ELEMENT_IS_NULL;
+    }
+    return self->root_props->error_code;
+}
+
+char * DtwResource_get_error_message(DtwResource *self){
+
+    if(!self){
+        return (char*)"element its null";
+    }
+
+    return self->root_props->error_message;
+}
+
+void  private_DtwResource_raise_error(DtwResource *self, int error_code, const char *error_message){
+    self->root_props->error_code = error_code;
+    self->root_props->error_message = dtw_replace_string(error_message,"#path#",self->path);
+
+}
 
 void DtwResource_rename(DtwResource *self,const char *new_name){
 
@@ -8304,7 +8402,7 @@ void DtwResource_rename(DtwResource *self,const char *new_name){
     self->path  = dtw_concat_path(self->mothers_path, new_name);
 
     if(self->allow_transaction){
-        DtwTransaction_move_any(self->transaction,old_path,self->path);
+        DtwTransaction_move_any(self->root_props->transaction,old_path,self->path);
     }
     else{
         dtw_move_any(old_path,self->path,DTW_NOT_MERGE);
@@ -8315,30 +8413,38 @@ void DtwResource_rename(DtwResource *self,const char *new_name){
 
 
 void DtwResource_lock(DtwResource *self){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->locked){
         return;
     }
     
-    DtwLocker_lock(self->locker,self->path);
+    DtwLocker_lock(self->root_props->locker,self->path);
     
     self->locked = true;
 }
 
 void DtwResource_unlock(DtwResource *self){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->locked == false){
         return;
     }
     
-    DtwLocker_unlock(self->locker,self->path);
+    DtwLocker_unlock(self->root_props->locker,self->path);
     
     self->locked = false;
 }
 
 
 void DtwResource_destroy(DtwResource *self){
-
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->allow_transaction){
-        DtwTransaction_delete_any(self->transaction,self->path);
+        DtwTransaction_delete_any(self->root_props->transaction,self->path);
     }
     else{
         dtw_remove_any(self->path);
@@ -8350,20 +8456,32 @@ void DtwResource_destroy(DtwResource *self){
 
 
 void DtwResource_commit(DtwResource *self){
-    DtwTransaction_commit(self->transaction,NULL);
+    if(DtwResource_error(self)){
+        return ;
+    }
+    DtwTransaction_commit(self->root_props->transaction,NULL);
 }
 
 long DtwResource_size(DtwResource *self){
+    if(DtwResource_error(self)){
+        return -1;
+    }
     return dtw_get_total_itens_of_dir(self->path);
 }
 
 
 
 DtwStringArray *DtwResource_list_names(DtwResource *self){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
     return dtw_list_all(self->path,DTW_NOT_CONCAT_PATH);
 }
 
 int DtwResource_type(DtwResource *self){
+    if(DtwResource_error(self)){
+        return -1;
+    }
     DtwResource_load_if_not_loaded(self);
 
     if(!self->value_any){
@@ -8404,10 +8522,19 @@ int DtwResource_type(DtwResource *self){
 }
 
 const char * DtwResource_type_in_str(DtwResource *self){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
      return dtw_convert_entity(DtwResource_type(self));
 }
 
 void DtwResource_represent(DtwResource *self){
+    if(DtwResource_error(self)){
+        printf("error code: %d\n", DtwResource_get_error_code(self));
+        printf("error message: %s\n", DtwResource_get_error_message(self));
+        return ;
+    }
+
     printf("path: %s\n", self->path);
     printf("name: %s\n",self->name);
     if(self->loaded){
@@ -8438,6 +8565,9 @@ void DtwResource_represent(DtwResource *self){
 
 
 void DtwResource_unload(DtwResource *self){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->loaded == false){
         return;
     }
@@ -8451,13 +8581,18 @@ void DtwResource_unload(DtwResource *self){
 }
 
 void DtwResource_load(DtwResource *self){
-
+    if(DtwResource_error(self)){
+        return ;
+    }
     DtwResource_unload(self);
     self->value_any = dtw_load_any_content(self->path,&self->value_size,&self->is_binary);
     self->loaded = true;
 
 }
 void DtwResource_load_if_not_loaded(DtwResource *self){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->loaded == false){
         DtwResource_load(self);
     }
@@ -8467,13 +8602,33 @@ void DtwResource_load_if_not_loaded(DtwResource *self){
 
 
 unsigned char *DtwResource_get_any(DtwResource *self, long *size, bool *is_binary){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
+
     DtwResource_load_if_not_loaded(self);
     *size = self->value_size;
     *is_binary = self->is_binary;
+
+    if(!self->value_any){
+        private_DtwResource_raise_error(
+                self,
+                DTW_RESOURCE_ELEMENT_NOT_EXIST,
+                "element at #path# not exist"
+                );
+        return NULL;
+    }
+
     return self->value_any;
+
+
 }
 
 unsigned char *DtwResource_get_any_from_sub_resource(DtwResource *self, long *size, bool *is_binary,const char *format,...){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
+
     char name[2000] ={0};
 
     va_list args;
@@ -8487,11 +8642,20 @@ unsigned char *DtwResource_get_any_from_sub_resource(DtwResource *self, long *si
 }
 
 unsigned char *DtwResource_get_binary(DtwResource *self, long *size){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
+
     bool is_binary;
+
     return DtwResource_get_any(self,size,&is_binary);
 }
 
 unsigned char *DtwResource_get_binary_from_sub_resource(DtwResource *self, long *size,const char *format,...){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
+
     char name[2000] ={0};
 
     va_list args;
@@ -8505,12 +8669,30 @@ unsigned char *DtwResource_get_binary_from_sub_resource(DtwResource *self, long 
 
 
 char *DtwResource_get_string(DtwResource *self){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
+
     long size;
     bool is_binary;
-    return (char *)DtwResource_get_any(self,&size,&is_binary);
+    char *result =  (char *)DtwResource_get_any(self,&size,&is_binary);
+
+    if(is_binary){
+        private_DtwResource_raise_error(
+                self,
+                DTW_RESOURCE_ELEMENT_NOT_STRING,
+                "element at #path# its an binary"
+        );
+        return NULL;
+    }
+    return result;
 }
 
+
 char *DtwResource_get_string_from_sub_resource(DtwResource *self,const char *format,...){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
 
     char name[2000] ={0};
 
@@ -8525,19 +8707,35 @@ char *DtwResource_get_string_from_sub_resource(DtwResource *self,const char *for
 
 
 long DtwResource_get_long(DtwResource *self){
-    char *element = DtwResource_get_string(self);
-    if(!element){
-        return DTW_NOT_FOUND;
+
+    if(DtwResource_error(self)){
+        return -1;
     }
+
+    char *element = DtwResource_get_string(self);
+
+    if(DtwResource_error(self)){
+        return -1;
+    }
+
     long value;
     int result = sscanf(element,"%ld",&value);
     if(result == 0){
-        return DTW_NOT_NUMERICAL;
+        private_DtwResource_raise_error(
+                self,
+                DTW_RESOURCE_ELEMENT_NOT_LONG,
+                "element at #path# its not long"
+        );
+        return -1;
     }
     return value;
 }
 
+
 long DtwResource_get_long_from_sub_resource(DtwResource *self,const char *format,...){
+    if(DtwResource_error(self)){
+        return -1;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8551,19 +8749,33 @@ long DtwResource_get_long_from_sub_resource(DtwResource *self,const char *format
 
 
 double DtwResource_get_double(DtwResource *self){
-    char *element = DtwResource_get_string(self);
-    if(!element){
-        return DTW_NOT_FOUND;
+    if(DtwResource_error(self)){
+        return -1;
     }
+
+    char *element = DtwResource_get_string(self);
+    if(DtwResource_error(self)){
+        return -1;
+    }
+
     double value;
     int result = sscanf(element,"%lf",&value);
     if(result == 0){
-        return DTW_NOT_NUMERICAL;
+        private_DtwResource_raise_error(
+                self,
+                DTW_RESOURCE_ELEMENT_NOT_DOUBLE,
+                "element at #path# its not long"
+        );
+        return-1;
     }
     return value;
 }
 
 double DtwResource_get_double_from_sub_resource(DtwResource *self,const char *format,...){
+
+    if(DtwResource_error(self)){
+        return -1;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8577,13 +8789,33 @@ double DtwResource_get_double_from_sub_resource(DtwResource *self,const char *fo
 
 
 bool DtwResource_get_bool(DtwResource *self){
+    if(DtwResource_error(self)){
+        return false;
+    }
     char *element = DtwResource_get_string(self);
+    if(DtwResource_error(self)){
+        return false;
+    }
+
     if(strcmp(element,"true") == 0 || strcmp(element,"t") == 0){
         return true;
     }
+    if(strcmp(element,"false") == 0 || strcmp(element,"f") == 0){
+        return false;
+    }
+
+    private_DtwResource_raise_error(
+            self,
+            DTW_RESOURCE_ELEMENT_NOT_BOOL,
+            "element at #path# its not bool"
+    );
     return false;
 }
+
 bool DtwResource_get_bool_from_sub_resource(DtwResource *self,const char *format,...){
+    if(DtwResource_error(self)){
+        return false;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8601,9 +8833,11 @@ bool DtwResource_get_bool_from_sub_resource(DtwResource *self,const char *format
 
 
 void DtwResource_set_binary(DtwResource *self, unsigned char *element, long size){
-
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->allow_transaction){
-        DtwTransaction_write_any(self->transaction,self->path,element,size,true);
+        DtwTransaction_write_any(self->root_props->transaction,self->path,element,size,true);
     }
     else{
         dtw_write_any_content(self->path,element,size);
@@ -8619,8 +8853,11 @@ void DtwResource_set_binary(DtwResource *self, unsigned char *element, long size
 
 
 void DtwResource_set_string(DtwResource *self,const  char *element){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->allow_transaction){
-        DtwTransaction_write_string(self->transaction,self->path,element);
+        DtwTransaction_write_string(self->root_props->transaction,self->path,element);
     }
     else{
         dtw_write_string_file_content(self->path,element);
@@ -8637,6 +8874,9 @@ void DtwResource_set_string(DtwResource *self,const  char *element){
 }
 
 void DtwResource_set_binary_in_sub_resource(DtwResource *self, unsigned char *element, long size,const char *format,...){
+    if(DtwResource_error(self)){
+        return ;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8649,6 +8889,9 @@ void DtwResource_set_binary_in_sub_resource(DtwResource *self, unsigned char *el
 }
 
 void DtwResource_set_string_in_sub_resource(DtwResource *self,const  char *element,const char *format,...){
+    if(DtwResource_error(self)){
+        return ;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8664,8 +8907,11 @@ void DtwResource_set_string_in_sub_resource(DtwResource *self,const  char *eleme
 
 
 void DtwResource_set_long(DtwResource *self,long element){
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->allow_transaction){
-        DtwTransaction_write_long(self->transaction,self->path,element);
+        DtwTransaction_write_long(self->root_props->transaction,self->path,element);
     }
     else{
         dtw_write_long_file_content(self->path,element);
@@ -8678,6 +8924,9 @@ void DtwResource_set_long(DtwResource *self,long element){
 
 }
 void DtwResource_set_long_in_sub_resource(DtwResource *self,long element,const char *format,...){
+    if(DtwResource_error(self)){
+        return ;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8690,9 +8939,11 @@ void DtwResource_set_long_in_sub_resource(DtwResource *self,long element,const c
 }
 
 void DtwResource_set_double(DtwResource *self,double element){
-
+    if(DtwResource_error(self)){
+        return ;
+    }
     if(self->allow_transaction){
-        DtwTransaction_write_double(self->transaction,self->path,element);
+        DtwTransaction_write_double(self->root_props->transaction,self->path,element);
     }
     else{
         dtw_write_double_file_content(self->path,element);
@@ -8706,6 +8957,9 @@ void DtwResource_set_double(DtwResource *self,double element){
 
 }
 void DtwResource_set_double_in_sub_resource(DtwResource *self,double element,const char *format,...){
+    if(DtwResource_error(self)){
+        return ;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8718,9 +8972,12 @@ void DtwResource_set_double_in_sub_resource(DtwResource *self,double element,con
 }
 
 void DtwResource_set_bool( DtwResource *self,bool element){
+    if(DtwResource_error(self)){
+        return ;
+    }
 
     if(self->allow_transaction){
-        DtwTransaction_write_bool(self->transaction,self->path,element);
+        DtwTransaction_write_bool(self->root_props->transaction,self->path,element);
     }
     else{
         dtw_write_bool_file_content(self->path,element);
@@ -8738,6 +8995,9 @@ void DtwResource_set_bool( DtwResource *self,bool element){
 
 }
 void DtwResource_set_bool_in_sub_resource( DtwResource *self,bool element,const char *format,...){
+    if(DtwResource_error(self)){
+        return ;
+    }
     char name[2000] ={0};
 
     va_list args;
@@ -8762,15 +9022,16 @@ DtwResource *new_DtwResource(const char *path){
     self->allow_transaction = true;
     self->use_locker_on_unique_values = true;
     self->cache_sub_resources = true;
-    self->transaction = newDtwTransaction();
-    self->randonizer = newDtwRandonizer();
-    self->locker = newDtwLocker();
+    self->root_props = private_newDtwResourceRootProps();
 
     DtwResource_load(self);
     return self;
 }   
 
 DtwResource * DtwResource_sub_resource(DtwResource *self,const  char *format, ...){
+    if(DtwResource_error(self)){
+        return NULL;
+    }
 
     char name[2000] ={0};
 
@@ -8789,16 +9050,15 @@ DtwResource * DtwResource_sub_resource(DtwResource *self,const  char *format, ..
     *new_element =(DtwResource){0};
     new_element->allow_transaction = self->allow_transaction;
     new_element->use_locker_on_unique_values = self->use_locker_on_unique_values;
-    new_element->transaction = self->transaction;
-    new_element->randonizer = self->randonizer;
+    new_element->root_props = self->root_props;
+    //copied elements
+
     new_element->child = true;
     new_element->mothers_path = strdup(self->path);
     new_element->path = dtw_concat_path(self->path, name);
     new_element->name = strdup(name);
-
     new_element->locked = self->locked;
 
-    new_element->locker = self->locker;
 
     new_element->cache_sub_resources = self->cache_sub_resources;
     new_element->sub_resources = newDtwResourceArray();
@@ -8855,17 +9115,10 @@ DtwResource * DtwResource_sub_resource_ensuring_not_exist(DtwResource *self,cons
 }
 
 void DtwResource_free(DtwResource *self){
+    bool is_root = !self->child;
+    if(is_root){
 
-    if(!self->child){
-        if(self->transaction){
-            DtwTransaction_free(self->transaction);
-        }
-        DtwRandonizer_free(self->randonizer);
-
-
-     DtwLocker_free(self->locker);
-    
-
+        privateDtwResourceRootProps_free(self->root_props);
     }
 
 
@@ -8922,7 +9175,7 @@ DtwResource * DtwResource_sub_resource_now(DtwResource *self, const char *end_pa
         char path[1000] ={0};
 
         if(empty_already_exist){
-            char *token = DtwRandonizer_generate_token(self->randonizer,10);
+            char *token = DtwRandonizer_generate_token(self->root_props->randonizer,10);
             sprintf(path,"%s--%s",time,token);
             free(token);
         }
@@ -8953,7 +9206,7 @@ DtwResource * DtwResource_sub_resource_now_in_unix(DtwResource *self, const char
         char path[1000] ={0};
 
         if(empty_already_exist){
-            char *token = DtwRandonizer_generate_token(self->randonizer,10);
+            char *token = DtwRandonizer_generate_token(self->root_props->randonizer,10);
             sprintf(path,"%ld--%s",now,token);
             free(token);
         }
@@ -8978,7 +9231,7 @@ DtwResource * DtwResource_sub_resource_random(DtwResource *self, const char *end
     while(true){
 
         char path[1000] ={0};
-        char *token = DtwRandonizer_generate_token(self->randonizer,15);
+        char *token = DtwRandonizer_generate_token(self->root_props->randonizer,15);
         sprintf(path,"%s",token);
         free(token);
 
@@ -10088,6 +10341,9 @@ DtwResourceArrayModule newDtwResourceArrayModule(){
 DtwResourceModule newDtwResourceModule(){
     DtwResourceModule self = {0};
     self.newResource = new_DtwResource;
+    self.get_error_code = DtwResource_get_error_code;
+    self.get_error_message = DtwResource_get_error_message;
+    self.error = DtwResource_error;
     self.load = DtwResource_load;
     self.unload = DtwResource_unload;
     self.sub_resource = DtwResource_sub_resource;
