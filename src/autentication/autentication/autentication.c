@@ -25,11 +25,16 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
                 NOT_VALID_TOKEN_MESSAGE,
                 token
         );
+
         UniversalGarbage_free(garbage);
         return auth;
     }
-    DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
 
+    DtwResource *user = find_user_by_id(database, token_obj->user_id->rendered_text);
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return auth;
+    }
     if(!user){
         auth.error = true;
         auth.response_error =send_error(
@@ -46,7 +51,10 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     resource.set_long_in_sub_resource(user, time(NULL),LAST_UPDATE_PATH);
 
     DtwResource *token_resource = get_token_resource(user,token_obj);
-
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return auth;
+    }
     if(!token_resource){
         auth.error = true;
         auth.response_error =send_error(
@@ -61,6 +69,10 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
     }
 
     char *sha = resource.get_string_from_sub_resource(token_resource,SHA_PATH);
+    DtwResource_catch(database){
+        UniversalGarbage_free(garbage);
+        return auth;
+    }
     if(!strings_equal(sha,token_obj->sha->rendered_text)){
         auth.error = true;
         auth.response_error =send_error(
@@ -84,6 +96,11 @@ Autentication autenticate(CwebHttpRequest *request, CHash *entries,DtwResource *
         long expiration_Value = resource.get_long(expiration);
         DtwResource *last_update = resource.sub_resource(token_resource,LAST_UPDATE_PATH);
         long last_update_value = resource.get_long(last_update);
+
+        DtwResource_catch(database){
+            UniversalGarbage_free(garbage);
+            return auth;
+        }
         long now = time(NULL);
 
         if(now > (expiration_Value + last_update_value)){
@@ -242,17 +259,21 @@ Autentication autenticate_sub_token_or_token(CwebHttpRequest *request, CHash *en
 
     }
 
-    Token_free(token_obj);
     auth.user = user;
+    UniversalGarbage_free(garbage);
     return auth;
 }
 
 
 Autentication autenticate_root(CwebHttpRequest *request, CHash *entries,DtwResource *database){
     Autentication auth = autenticate(request,entries,database);
+    DtwResource_catch(database){
+        return auth;
+    }
     if(auth.error){
         return auth;
     }
+
     if(!is_root(auth.user)){
         auth.error = true;
         auth.response_error =send_error(
