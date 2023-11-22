@@ -32,6 +32,10 @@ CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwR
     }
 
     CHash *description = describe_all_users(database,contains,case_sensitive,include_tokens,include_root_props,token, host);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     commit_transaction(database);
 
     return send_chash_cleaning_memory(description, HTTP_OK);

@@ -67,6 +67,9 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
 
 
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     if(!user){
         return send_error(
@@ -78,9 +81,11 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
         );
     }
 
-
-
     int status_username = get_user_index_status_if_new_value_provided(database, user, USERNAME_PATH, new_username);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     if(status_username == USER_ALREADY_EXIST_INTERNAl){
         return send_error(
                 request,
@@ -97,6 +102,10 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
 
 
     int status_email = get_user_index_status_if_new_value_provided(database, user, EMAIL_PATH, new_email);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     if(status_email ==USER_ALREADY_EXIST_INTERNAl ){
         return send_error(
                 request,
@@ -123,6 +132,9 @@ CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entrie
 
 
     database_modify_user(database,user,new_username,new_email,new_password,set_is_root,is_root);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),

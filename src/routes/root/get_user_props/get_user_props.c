@@ -17,6 +17,9 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
     }
 
     DtwResource *user_found = find_user_by_username_or_email(database,username_or_email);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
 
     if(!user_found){
@@ -30,6 +33,9 @@ CwebHttpResponse *get_user_props(CwebHttpRequest *request, CHashObject*entries, 
     }
 
     CHashObject  *description = describe_user(user_found,include_tokens,true,token,host);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     commit_transaction(database);
 

@@ -18,6 +18,9 @@ CwebHttpResponse *remove_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
 
     DtwResource *user_to_remove = find_user_by_username_or_email(database,username_or_email);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     if(!user_to_remove){
         return send_error(
@@ -30,6 +33,9 @@ CwebHttpResponse *remove_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
 
     database_remove_user(database,user_to_remove);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
 
     CHashObject *response = newCHashObject(

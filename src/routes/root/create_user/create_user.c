@@ -52,6 +52,9 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
 
     DtwResource *already_exist_email = find_user_by_username_or_email(database,email);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     if(already_exist_email){
         return send_error(
@@ -63,6 +66,9 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
         );
     }
     DtwResource *already_exist_username = find_user_by_username_or_email(database,username);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     if(already_exist_username){
         return send_error(
@@ -75,6 +81,9 @@ CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, Dtw
     }
 
     database_create_user(database,username,email, password,is_root,verified);
+    DtwResource_catch(database){
+        return NULL;
+    }
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
