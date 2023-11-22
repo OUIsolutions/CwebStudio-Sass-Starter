@@ -9,3 +9,4 @@
 #include "routes/definition.h"
 #include "start/start.c"
 #include "server/server.c"
+#include "api_bridge/api_bridge.c"
