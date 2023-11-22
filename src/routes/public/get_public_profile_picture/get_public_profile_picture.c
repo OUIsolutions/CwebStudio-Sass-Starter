@@ -9,6 +9,10 @@ CwebHttpResponse *get_public_profile_picture(CwebHttpRequest *request, CHashObje
     }
 
     DtwResource *user = find_user_by_id(database,user_id);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     if(!user){
         return send_error(
                 request,
@@ -20,19 +24,27 @@ CwebHttpResponse *get_public_profile_picture(CwebHttpRequest *request, CHashObje
     }
 
     DtwResource *profile_picture = resource.sub_resource(user,PROFILE_PICTURE_PATH);
+    DtwResource *extenson_resource = resource.sub_resource(profile_picture,EXTENSION_PATH);
 
-    char *extension = resource.get_string_from_sub_resource(profile_picture,EXTENSION_PATH);
-    if(!extension){
+    if(resource.type(extenson_resource) == DTW_NOT_FOUND){
         return send_error(
                 request,
                 NOT_FOUND,
                 PROFILE_PICTURE_NOT_EXIST,
                 PROFILE_PICTURE_NOT_EXIST_MESSAGE
         );
-
+    }
+    char *extension = resource.get_string(extenson_resource);
+    DtwResource_catch(database){
+        return NULL;
     }
 
+
     bool is_public = resource.get_bool_from_sub_resource(profile_picture,PUBLIC_PATH);
+    DtwResource_catch(database){
+        return NULL;
+    }
+
     if(!is_public){
         return send_error(
                 request,
