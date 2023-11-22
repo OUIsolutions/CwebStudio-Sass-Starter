@@ -55,7 +55,7 @@ CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, Dt
     }
     DtwResource *user = find_user_by_username_or_email(database,username_or_email);
 
-    DtwResource_catch(user){
+    DtwResource_catch(database){
         UniversalGarbage_free(garbage);
         return NULL;
     }
