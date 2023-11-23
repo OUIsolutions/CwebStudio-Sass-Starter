@@ -96,7 +96,7 @@ CwebHttpResponse *modify_self_props(CwebHttpRequest *request, CHashObject*entrie
                 request,
                 CONFLICT,
                 USER_ALREADY_EXIST,
-                USER_ALREADY_MESSAGE,
+                EMAIL_ALREADY_EXIST_MESSAGE,
                 new_email
         );
     }
