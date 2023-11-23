@@ -157,6 +157,21 @@ CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include
 
 }
 
+int ApiBridge_modify_self_props(ApiBridge *self,const char *new_username,const char *new_email,const char *new_password){
+    CHashObject * entries = newCHashObjectEmpty();
+    if(new_username){
+        CHashObject_set_string(entries,NEW_USERNAME_ENTRE,new_username);
+    }
+    if(new_email){
+        CHashObject_set_string(entries,NEW_EMAIL_ENTRE,new_email);
+    }
+    if(new_password){
+        CHashObject_set_string(entries,NEW_PASSWORD_ENTRE,new_password);
+    }
+    return ApiBridge_call_server(self,MODIFY_SELF_PROPS_ROUTE,entries);
+}
+
+
 void ApiBridge_represent(ApiBridge *self){
     printf("status-code: %d\n",self->last_status_code);
     printf("headers:\n");

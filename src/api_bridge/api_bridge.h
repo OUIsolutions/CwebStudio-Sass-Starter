@@ -46,6 +46,8 @@ int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email
 //user data
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props);
 
+int ApiBridge_modify_self_props(ApiBridge *self,const char *new_username,const char *new_email,const char *new_password);
+
 void ApiBridge_represent(ApiBridge *self);
 
 void ApiBridge_free(ApiBridge *self);
