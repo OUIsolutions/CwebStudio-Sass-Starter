@@ -77,9 +77,14 @@ int  ApiBridge_call_server_full(
         request->content = content;
     }
     CwebDict_set(request->headers,HOST_ENTRIE,self->host);
-    if(self->token){
-        CwebDict_set(request->headers,PASSWORD_ENTRE,self->password);
+
+    //set default token
+    if(self->token && !CwebDict_get(request->headers,TOKEN_ENTRE)){
         CwebDict_set(request->headers,TOKEN_ENTRE,self->token);
+    }
+
+    if(self->password && !CwebDict_get(request->headers,PASSWORD_ENTRE)){
+        CwebDict_set(request->headers,PASSWORD_ENTRE,self->password);
     }
 
     self->last_response  = main_sever(request);
