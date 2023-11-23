@@ -1,0 +1,33 @@
+[{
+		"action":	"write",
+		"source":	"tests/target/content/users/index/email/87924606b4131a8aceeeae8868531fbb9712aaa07a5d3a756b26ce0f5d6ca674",
+		"content":	"CFwB5ymljJwZvXL"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/email",
+		"content":	"test@gmail.com"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/index/username/1336717e912d0bb1ecebc5fe93c7db5223009da202d396392372a0c70ac69b65",
+		"content":	"CFwB5ymljJwZvXL"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/username",
+		"content":	"test00000"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/password",
+		"content":	"85777f270ad7cf2a790981bbae3c4e484a1dc55e24a77390d692fbf1cffa12fa"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/verified",
+		"content":	"f"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/creation",
+		"content":	"0"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/is_root",
+		"content":	"f"
+	}]

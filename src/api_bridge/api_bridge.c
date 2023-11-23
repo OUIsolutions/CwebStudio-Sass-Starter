@@ -3,15 +3,16 @@
 ApiBridge *newApiBridge(){
     ApiBridge *self = UniversalGarbage_create_empty_struct(self,ApiBridge);
     self->garbage = newUniversalGarbage();
+    UniversalGarbage_add(self->garbage, CwebHttpResponse_free,self->last_response);
+    UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
+    UniversalGarbage_add_simple(self->garbage,self->token);
     self->host = "localhost:3000";
     return  self;
 }
 
 void ApiBridge_set_token(ApiBridge *self,const char *token){
-    if(self->token){
-        free(self->token);
-    }
     self->token = strdup(token);
+    UniversalGarbage_resset(self->garbage,self->token);
 }
 
 void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target){
@@ -73,8 +74,9 @@ int  ApiBridge_call_server_full(
         CwebDict_set(request->headers,TOKEN_ENTRE,self->token);
     }
 
-    CwebHttpResponse*  response = main_sever(request);
-    if(!response){
+    self->last_response  = main_sever(request);
+    UniversalGarbage_resset(self->garbage,self->last_response );
+    if(!self->last_response){
         self->last_response = NULL;
         self->last_content = NULL;
         self->last_content_size = -1;
@@ -83,19 +85,14 @@ int  ApiBridge_call_server_full(
         UniversalGarbage_free(internal_garbage);
         return -1;
     }
+    self->last_content = self->last_response->content;
+    self->last_content_size =  self->last_response->content_length;
+    self->last_status_code =  self->last_response->status_code;
 
-    UniversalGarbage_add(self->garbage, CwebHttpResponse_free,response);
-    self->last_response =response;
-    self->last_content = response->content;
-    self->last_content_size = response->content_length;
-    self->last_status_code = response->status_code;
+    self->last_response->content[self->last_content_size] ='\0';
 
-    response->content[response->content_length] ='\0';
-
-    CHash *converted = CHash_load_from_json_strimg((char*)response->content);
-    UniversalGarbage_add(self->garbage, CHash_free,converted);
-    self->last_hash = converted;
-
+    self->last_hash = CHash_load_from_json_strimg((char*)self->last_content);
+    UniversalGarbage_resset(self->garbage,self->last_hash);
 
     UniversalGarbage_free(internal_garbage);
 
@@ -115,7 +112,7 @@ int ApiBridge_call_server(ApiBridge*self, const char *route, CHash *entries){
 int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email, const char *password,bool is_root,bool verified){
     return  ApiBridge_call_server(
             self,
-            CREATE_TOKEN_ROUTE,
+            CREATE_USER_ROUTE,
             newCHashObject(
                     USERNAME_ENTRE,hash.newString(username),
                     EMAIL_ENTRE,hash.newString(email),
@@ -138,8 +135,7 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
             );
 
 
-    if(!response){
-
+    if(response ==0){
         char *token = obj.getString(self->last_hash,TOKEN_KEY);
         ApiBridge_set_token(self,token);
         return token;
@@ -148,7 +144,7 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
 }
 
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props){
-    int response = ApiBridge_call_server(
+    int status = ApiBridge_call_server(
             self,
             GET_SELF_PROPS_ROUTE,
             newCHashObject(
@@ -156,6 +152,7 @@ CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include
                     INCLUDE_ROOT_PROPS_ENTRE,hash.newBool(include_root_props)
             )
     );
+
     return self->last_hash;
 
 }
@@ -169,8 +166,6 @@ void ApiBridge_represent(ApiBridge *self){
 
 void ApiBridge_free(ApiBridge *self){
     UniversalGarbage_free(self->garbage);
-    if(self->token){
-        free(self->token);
-    }
+
     free(self);
 }

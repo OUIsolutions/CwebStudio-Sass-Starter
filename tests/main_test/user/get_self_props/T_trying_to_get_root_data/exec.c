@@ -18,9 +18,10 @@ int main(){
     create_root_user_if_not_exist();
     ApiBridge *bridge = newApiBridge();
     ApiBridge_create_token(bridge,"root","root",-1);
-    ApiBridge_create_user(bridge,"test00000","test@gmail.com","test",false,false);
-    ApiBridge_create_token(bridge,"test00000","test",-1);
+    ApiBridge_create_user(bridge,"test00000","test@gmail.com","test123456",false,false);
+    ApiBridge_create_token(bridge,"test00000","test123456",-1);
     CHash *props = ApiBridge_get_self_props(bridge,true,true);
     ApiBridge_represent(bridge);
+
     ApiBridge_free(bridge);
 }
