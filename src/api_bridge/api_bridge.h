@@ -6,6 +6,7 @@ void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target);
 
 typedef struct {
     char *token;
+    char *password;
     const char *host;
     UniversalGarbage *garbage;
 
@@ -21,6 +22,7 @@ typedef struct {
 ApiBridge *newApiBridge();
 
 void ApiBridge_set_token(ApiBridge *self,const char *token);
+void ApiBridge_set_password(ApiBridge *self,const char *password);
 
 
 

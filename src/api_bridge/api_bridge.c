@@ -6,6 +6,8 @@ ApiBridge *newApiBridge(){
     UniversalGarbage_add(self->garbage, CwebHttpResponse_free,self->last_response);
     UniversalGarbage_add(self->garbage, CHash_free,self->last_hash);
     UniversalGarbage_add_simple(self->garbage,self->token);
+    UniversalGarbage_add_simple(self->garbage,self->password);
+
     self->host = "localhost:3000";
     return  self;
 }
@@ -14,6 +16,11 @@ void ApiBridge_set_token(ApiBridge *self,const char *token){
     self->token = strdup(token);
     UniversalGarbage_resset(self->garbage,self->token);
 }
+void ApiBridge_set_password(ApiBridge *self,const char *password){
+    self->password = strdup(password);
+    UniversalGarbage_resset(self->garbage,self->password);
+}
+
 
 void private_parse_chash_to_cweb_dict(CHash *value,CwebDict *target){
     if(!value){
@@ -71,6 +78,7 @@ int  ApiBridge_call_server_full(
     }
     CwebDict_set(request->headers,HOST_ENTRIE,self->host);
     if(self->token){
+        CwebDict_set(request->headers,PASSWORD_ENTRE,self->password);
         CwebDict_set(request->headers,TOKEN_ENTRE,self->token);
     }
 
@@ -137,6 +145,7 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
 
     if(response ==0){
         char *token = obj.getString(self->last_hash,TOKEN_KEY);
+        ApiBridge_set_password(self,password);
         ApiBridge_set_token(self,token);
         return token;
     }

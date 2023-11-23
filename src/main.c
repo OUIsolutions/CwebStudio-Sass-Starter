@@ -11,7 +11,19 @@
 int main(){
 
 
+    start_namespaces();
+    dtw_now = 0;
 
+    create_root_user_if_not_exist();
+    ApiBridge *bridge = newApiBridge();
+    ApiBridge_create_token(bridge,"root","root",-1);
+    ApiBridge_modify_self_props(bridge,"new root","new root email","new root password");
+    ApiBridge_represent(bridge);
+
+
+
+    ApiBridge_free(bridge);
+    return 0;
     start_namespaces();
     create_root_user_if_not_exist();
     //define these flag to reconstruct database, if integrity brokes
