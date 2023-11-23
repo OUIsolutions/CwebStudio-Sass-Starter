@@ -28,7 +28,6 @@
 #define EXPIRED_TOKEN_MESSAGE  "token: %s its expired"
 #define USER_NOT_ROOT_MESSAGE "you must be root to acess these route"
 #define USER_ALREADY_MESSAGE "user %s already exist"
-#define EMAIL_ALREADY_EXIST_MESSAGE "email %s already exist"
 #define NOTHING_TO_MODIFY_MESSAGE "There is nothing to modify at headers/params"
 #define NOT_VALID_IMAGE_TYPE_MESSAGE "param #image# its not an valid content type\n valids: #valids#"
 #define PROFILE_PICTURE_ITS_NOT_PUBLIC_MESSAGE "profile picture its not public"
