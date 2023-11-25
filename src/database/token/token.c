@@ -190,11 +190,14 @@ void remove_expired_tokens(DtwResource *user){
         DtwResource *current = resource.sub_resource(all_tokens,elements->strings[i]);
         DtwResource *expiration = resource.sub_resource(current,EXPIRATION_PATH);
         long expiration_time = resource.get_long(expiration);
+        DtwResource *last_update = resource.sub_resource(current,LAST_UPDATE_PATH);
+        long last_update_time = resource.get_long(last_update);
+
         DtwResource_catch(user){
             dtw.string_array.free(elements);
             return;
         }
-        if(now > expiration_time){
+        if(now > expiration_time + last_update_time){
             resource.destroy(current);
         }
     }
