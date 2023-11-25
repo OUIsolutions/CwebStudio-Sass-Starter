@@ -4,7 +4,7 @@ void remove_max_ifinite_tokens(DtwResource *user){
 #ifdef MAX_INFINITE_TOKENS
     long total_tokens = count_infinite_token(user);
     if(total_tokens >= MAX_INFINITE_TOKENS){
-        int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS) + 1;
+        int total_to_remove = (total_tokens - MAX_INFINITE_TOKENS);
         remove_last_updated_infinite_token(user, total_to_remove);
     }
 
@@ -15,7 +15,7 @@ void remove_max_finite_tokens(DtwResource *user){
 #ifdef MAX_FINITE_TOKENS
     long total_tokens = count_finite_token(user);
     if(total_tokens > MAX_FINITE_TOKENS){
-        int total_to_remove = (total_tokens - MAX_FINITE_TOKENS) +1;
+        int total_to_remove = (total_tokens - MAX_FINITE_TOKENS);
         remove_last_updated_finite_token(user,total_to_remove);
     }
 #endif

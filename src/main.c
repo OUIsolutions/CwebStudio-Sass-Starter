@@ -2,13 +2,27 @@
 
 //never use these flag in production
 #define DEBUG
-
+#define SAVE_TOKEN_TRANSACTIONS
 #include "imports.h"
 #include "declaration.h"
 #include "definition.h"
 
 
 int main(){
+
+    start_namespaces();
+
+
+    create_root_user_if_not_exist();
+    ApiBridge *bridge = newApiBridge();
+    ApiBridge_create_token(bridge,"root","root",30);
+
+
+
+    //ApiBridge_represent(bridge);
+    ApiBridge_free(bridge);
+    return 0;
+
 
 
     start_namespaces();
@@ -17,6 +31,7 @@ int main(){
     #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();
     #endif
+
 
 
     #ifdef DEBUG
