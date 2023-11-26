@@ -20,6 +20,7 @@ void Route_set_description(Route *self, const char *description){
     self->description = strdup(description);
 }
 
+
 void private_Route_free(Route *self){
     if(self->description){
         free(self->description);

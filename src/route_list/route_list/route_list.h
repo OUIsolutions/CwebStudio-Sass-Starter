@@ -1,6 +1,6 @@
 
 typedef struct{
-    Route  *routes;
+    Route  **routes;
     long size;
 
 }RouteList;
