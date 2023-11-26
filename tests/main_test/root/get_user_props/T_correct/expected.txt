@@ -1,0 +1,13 @@
+ 
+status-code: 200
+headers:
+Content-Type : application/json
+content: {
+	"username":	"Mateus Moutinho",
+	"creation":	"1969-12-31 21:00:00",
+	"last_update":	"1969-12-31 21:00:00",
+	"email":	"mateusmoutinho01@gmail.com",
+	"verified":	false,
+	"verification_url":	null,
+	"root":	false
+}
