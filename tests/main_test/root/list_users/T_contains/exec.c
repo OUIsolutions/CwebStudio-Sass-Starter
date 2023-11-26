@@ -21,8 +21,8 @@ int main(){
     ApiBridge *bridge = newApiBridge();
     ApiBridge_create_token(bridge,"root","root",-1);
     ApiBridge_create_user(bridge,"Mateus Moutinho","mateusmoutinho01@gmail.com","aaaaaaaaaaaaaaaaaaaaaa",false,false);
-    ApiBridge_create_user(bridge,"Mateus Moutinho","mateusmoutinho01@gmail.com","aaaaaaaaaaaaaaaaaaaaaa",false,false);
-    ApiBridge_create_user(bridge,"Rodrigo Moutinho","mateusmoutinho01@gmail.com","aaaaaaaaaaaaaaaaaaaaaa",false,false);
+    ApiBridge_create_user(bridge,"Mateus Moutinho2","mateusmoutinho01@gmail.com2","aaaaaaaaaaaaaaaaaaaaaa",false,false);
+    ApiBridge_create_user(bridge,"Rodrigo Moutinh","mateusmoutinho01@gmail.com","aaaaaaaaaaaaaaaaaaaaaa",false,false);
     ApiBridge_list_users(bridge,"Mateus",true,true);
 
     ApiBridge_represent(bridge);
