@@ -47,6 +47,10 @@ int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email
 
 CHash* ApiBridge_get_user_props(ApiBridge *self,const char *login);
 
+
+CHash* ApiBridge_list_users(ApiBridge *self,const char *contains,bool include_root_props,bool include_tokens);
+
+
 //user data
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props);
 

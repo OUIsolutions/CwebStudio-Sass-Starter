@@ -58,7 +58,7 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
         response = create_user(request,entries,database);
     }
 
-    if(strings_equal(request->route,LIST_USERS)){
+    if(strings_equal(request->route, LIST_USERS_ROUTE)){
         response = list_users(request,entries,database);
     }
 

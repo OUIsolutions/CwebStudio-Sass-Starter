@@ -136,7 +136,23 @@ int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email
     );
 
 }
+CHash* ApiBridge_list_users(ApiBridge *self,const char *contains,bool include_root_props,bool include_tokens){
+    CHash  *entries = newCHashObject(
+            INCLUDE_TOKEN_ENTRE,hash.newBool(include_tokens),
+            INCLUDE_ROOT_PROPS_ENTRE,hash.newBool(include_root_props)
+   );
+    if(contains){
+        obj.set_string(entries,CONTAINS_ENTRE,contains);
+    }
 
+    int status = ApiBridge_call_server(
+            self,
+            LIST_USERS_ROUTE,
+            entries
+    );
+
+    return self->last_hash;
+}
 CHash* ApiBridge_get_user_props(ApiBridge *self,const char *login){
     int status = ApiBridge_call_server(
             self,

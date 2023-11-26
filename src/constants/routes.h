@@ -26,7 +26,7 @@
 
 //root
 #define CREATE_USER_ROUTE "/root/create_user"
-#define LIST_USERS "/root/list_users"
+#define LIST_USERS_ROUTE "/root/list_users"
 #define REMOVE_USER_ROUTE "/root/remove_user"
 #define MODIFY_USER_PROPS_ROUTE "/root/modify_user_props"
 #define GET_USER_PROPS_ROUTE "/root/get_user_props"
