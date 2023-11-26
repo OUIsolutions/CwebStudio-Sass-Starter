@@ -10,7 +10,7 @@ RouteList * create_route_list(){
     //root
     RouteList_add_route(list,describe_create_user());
     RouteList_add_route(list,describe_download_database());
-
+    RouteList_add_route(list, describe_get_user_props());
     return list;
 }
 
