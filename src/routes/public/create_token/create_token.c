@@ -21,6 +21,12 @@ void remove_max_finite_tokens(DtwResource *user){
 #endif
 }
 
+Route * describe_create_token(){
+    Route  * route = newRoute(CREATE_TOKEN_ROUTE,NULL,create_token);
+    return route;
+}
+
+
 CwebHttpResponse *create_token(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
     UniversalGarbage *garbage = newUniversalGarbage();

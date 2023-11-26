@@ -1,10 +1,9 @@
 
 
-Route * create_route(
+Route * newRoute(
         const char *route,
         Autentication (*autentication)(CwebHttpRequest *request, CHash *entries,DtwResource *database),
         CwebHttpResponse *(*callback)(CwebHttpRequest *request, CHashObject*entries, DtwResource *database),
-        char *description
 ){
     Route  *self = UniversalGarbage_create_empty_struct(self,Route);
     self->route = strdup(route);
