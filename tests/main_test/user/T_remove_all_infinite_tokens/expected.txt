@@ -1,0 +1,8 @@
+ 
+status-code: 202
+headers:
+Content-Type : application/json
+content: {
+	"code":	0,
+	"message":	"All tokens removed"
+}
