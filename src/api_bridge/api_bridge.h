@@ -51,6 +51,7 @@ CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include
 
 int ApiBridge_modify_self_props(ApiBridge *self,const char *new_username,const char *new_email,const char *new_password);
 
+
 int ApiBridge_remove_all_tokens(ApiBridge *self);
 
 int ApiBridge_remove_all_infinite_tokens(ApiBridge *self);
