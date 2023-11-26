@@ -11,10 +11,10 @@ typedef struct {
         bool defualt_bool;
     };
 
-}RouteEntre;
+}privateRouteEntre;
 
-RouteEntre *private_newRouteEntre(const char *name,bool required,int expected_type);
+privateRouteEntre *private_newRouteEntre(const char *name, bool required, int expected_type);
 
-void private_RouteEntre_free(RouteEntre  *self);
+void private_RouteEntre_free(privateRouteEntre  *self);
 
 
