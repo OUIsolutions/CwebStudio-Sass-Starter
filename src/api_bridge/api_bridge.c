@@ -136,6 +136,18 @@ int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email
     );
 
 }
+
+CHash* ApiBridge_get_user_props(ApiBridge *self,const char *login){
+    int status = ApiBridge_call_server(
+            self,
+            GET_USER_PROPS_ROUTE,
+            newCHashObject(
+                    LOGIN,hash.newString(login)
+            )
+    );
+
+    return self->last_hash;
+}
 char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *password,long  expiration){
     int response = ApiBridge_call_server(
             self,

@@ -45,6 +45,7 @@ char * ApiBridge_create_token(ApiBridge*self,const char *username,const char *pa
 //root routes
 int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email, const char *password,bool is_root,bool verified);
 
+CHash* ApiBridge_get_user_props(ApiBridge *self,const char *login);
 
 //user data
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props);
