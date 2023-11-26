@@ -1,4 +1,11 @@
-
+Route  *describe_send_recovery_password(){
+    Route  * route = newRoute(
+            SEND_RECOVERY_PASSWORD_ROUTE,
+            NULL,
+            send_recovery_password_route
+    );
+    return route;
+}
 
 CwebHttpResponse *send_recovery_password_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
