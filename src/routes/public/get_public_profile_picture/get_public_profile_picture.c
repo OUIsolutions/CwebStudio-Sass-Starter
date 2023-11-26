@@ -1,4 +1,13 @@
+Route *describe_get_public_profile_picture(){
+    Route  * route = newRoute(
+            GET_PUBLIC_PROFILE_PICTURE_ROUTE,
+            NULL,
+            get_public_profile_picture
+     );
+    return route;
 
+
+}
 
 CwebHttpResponse *get_public_profile_picture(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 

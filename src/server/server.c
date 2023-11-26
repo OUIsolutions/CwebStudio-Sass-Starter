@@ -2,6 +2,8 @@
 RouteList * create_route_list(){
     RouteList  *list = newRouteList();
     RouteList_add_route(list,describe_create_token());
+    RouteList_add_route(list,describe_get_public_profile_picture());
+
     return list;
 }
 
