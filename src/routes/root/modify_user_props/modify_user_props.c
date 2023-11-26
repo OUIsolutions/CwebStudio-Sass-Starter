@@ -1,14 +1,14 @@
-
+Route  *describe_modify_user_props(){
+    Route  * route = newRoute(
+            MODIFY_USER_PROPS_ROUTE,
+            autenticate_root,
+            modify_user_props
+    );
+    return route;
+}
 
 CwebHttpResponse *modify_user_props(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    Autentication  auth = autenticate_root(request,entries,database);
-    DtwResource_catch(database){
-        return NULL;
-    }
-    if(auth.error){
-        return  auth.response_error;
-    }
 
     char *username_or_email = obj.getString(entries, LOGIN);
 

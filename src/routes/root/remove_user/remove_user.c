@@ -1,7 +1,14 @@
 
 
 
-
+Route  *describe_remove_user(){
+    Route  * route = newRoute(
+            REMOVE_USER_ROUTE,
+            autenticate_root,
+            remove_user
+    );
+    return route;
+}
 
 
 CwebHttpResponse *remove_user(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){

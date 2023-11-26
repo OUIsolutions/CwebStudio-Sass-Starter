@@ -11,6 +11,12 @@ RouteList * create_route_list(){
     RouteList_add_route(list,describe_create_user());
     RouteList_add_route(list,describe_download_database());
     RouteList_add_route(list, describe_get_user_props());
+    RouteList_add_route(list,describe_list_users());
+    RouteList_add_route(list,describe_modify_user_props());
+    RouteList_add_route(list,describe_remove_user());
+
+    //user
+    
     return list;
 }
 

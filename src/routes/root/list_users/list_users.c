@@ -2,18 +2,17 @@
 
 
 
-
+Route  *describe_list_users(){
+    Route  * route = newRoute(
+            LIST_USERS_ROUTE,
+            autenticate_root,
+            list_users
+    );
+    return route;
+}
 
 CwebHttpResponse *list_users(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    Autentication  auth = autenticate_root(request,entries,database);
-    DtwResource_catch(database){
-        return NULL;
-    }
-
-    if(auth.error){
-        return  auth.response_error;
-    }
     char *contains  = NULL;
 
     if(obj.exist(entries, CONTAINS_ENTRE)){
