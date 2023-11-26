@@ -1,19 +1,17 @@
 
 
 
-
+Route * describe_create_user(){
+    Route  * route = newRoute(
+            CREATE_USER_ROUTE,
+            autenticate_root,
+            create_user
+    );
+    return route;
+}
 
 
 CwebHttpResponse *create_user(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
-
-    Autentication  auth = autenticate_root(request,entries,database);
-    DtwResource_catch(database){
-        return NULL;
-    }
-    if(auth.error){
-        return  auth.response_error;
-    }
-
 
     char *username = obj.getString(entries, USERNAME_ENTRE);
 

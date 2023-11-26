@@ -6,6 +6,10 @@ RouteList * create_route_list(){
     RouteList_add_route(list,describe_get_public_profile_picture());
     RouteList_add_route(list,describe_send_recovery_password());
     RouteList_add_route(list,describe_verify_email());
+
+    //root
+    RouteList_add_route(list,describe_create_user());
+
     return list;
 }
 
