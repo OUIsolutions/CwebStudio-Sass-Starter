@@ -16,8 +16,9 @@ int main(){
 
     create_root_user_if_not_exist();
     ApiBridge *bridge = newApiBridge();
-    
-    ApiBridge_create_token(bridge,"root","root",30);
+    for(int i =0; i <100 ;i++){
+         ApiBridge_create_token(bridge,"root","root",30);
+    }
     
     ApiBridge_represent(bridge);
     ApiBridge_free(bridge);
