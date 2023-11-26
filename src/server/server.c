@@ -1,9 +1,11 @@
 
 RouteList * create_route_list(){
     RouteList  *list = newRouteList();
+    //public routes
     RouteList_add_route(list,describe_create_token());
     RouteList_add_route(list,describe_get_public_profile_picture());
-
+    RouteList_add_route(list,describe_send_recovery_password());
+    RouteList_add_route(list,describe_verify_email());
     return list;
 }
 

@@ -1,5 +1,15 @@
 
 
+Route  *describe_verify_email(){
+    Route  * route = newRoute(
+            VERIFY_EMAIL_ROUTE,
+            NULL,
+            public_verify_email_route
+    );
+    return route;
+}
+
+
 CwebHttpResponse *public_verify_email_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
     char *user_id = obj.getString(entries,USER_ID_ENTRE);
