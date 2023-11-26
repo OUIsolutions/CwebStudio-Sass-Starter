@@ -1,0 +1,39 @@
+ 
+status-code: 200
+headers:
+Content-Type : application/json
+content: [{
+		"username":	"root",
+		"creation":	"1969-12-31 21:00:00",
+		"last_update":	"1969-12-31 21:00:00",
+		"email":	"root",
+		"verified":	true,
+		"verification_url":	null,
+		"root":	true,
+		"finite_tokens":	[],
+		"infinite_tokens":	[{
+				"token_id":	"PKdhtXMmr18n2L9",
+				"creation":	"1969-12-31 21:00:00",
+				"last_update":	"1969-12-31 21:00:00"
+			}]
+	}, {
+		"username":	"Mateus Moutinho",
+		"creation":	"1969-12-31 21:00:00",
+		"last_update":	"1969-12-31 21:00:00",
+		"email":	"mateusmoutinho01@gmail.com",
+		"verified":	false,
+		"verification_url":	null,
+		"root":	false,
+		"finite_tokens":	[],
+		"infinite_tokens":	[]
+	}, {
+		"username":	"Mateus Moutinho2",
+		"creation":	"1969-12-31 21:00:00",
+		"last_update":	"1969-12-31 21:00:00",
+		"email":	"mateusmoutinho01@gmail.com2",
+		"verified":	false,
+		"verification_url":	null,
+		"root":	false,
+		"finite_tokens":	[],
+		"infinite_tokens":	[]
+	}]

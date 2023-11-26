@@ -1,0 +1,33 @@
+[{
+		"action":	"write",
+		"source":	"tests/target/content/users/index/email/f8088a2f77134e64036c6117ac03164957ea30e00ee7008fdfda974ae2562024",
+		"content":	"CFwB5ymljJwZvXL"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/email",
+		"content":	"mateusmoutinho01@gmail.com"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/index/username/ff27ddde9bb2085138f3fe46bb722e51277883a0c3fbda12c9409e82a81ed28c",
+		"content":	"CFwB5ymljJwZvXL"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/username",
+		"content":	"Mateus Moutinho"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/password",
+		"content":	"ec7c494df6d2a7ea36668d656e6b8979e33641bfea378c15038af3964db057a3"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/verified",
+		"content":	"f"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/creation",
+		"content":	"0"
+	}, {
+		"action":	"write",
+		"source":	"tests/target/content/users/elements/CFwB5ymljJwZvXL/is_root",
+		"content":	"f"
+	}]
