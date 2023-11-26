@@ -8,5 +8,6 @@
 #include "email/email.c"
 #include "routes/definition.h"
 #include "start/start.c"
+#include "route_list/definition.h"
 #include "server/server.c"
 #include "api_bridge/api_bridge.c"

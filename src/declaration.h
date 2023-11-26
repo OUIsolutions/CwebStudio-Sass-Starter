@@ -8,6 +8,7 @@
 #include "email/email.h"
 #include "routes/declaration.h"
 #include "start/start.h"
+#include "route_list/declaration.h"
 #include "server/server.h"
 #include "api_bridge/api_bridge.h"
 #include "globals.h"

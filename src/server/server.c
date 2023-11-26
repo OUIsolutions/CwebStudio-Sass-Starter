@@ -25,6 +25,8 @@ CwebHttpResponse *main_sever(CwebHttpRequest *request ){
 
     CwebHttpResponse *response = NULL;
 
+
+
     if(strings_equal(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
