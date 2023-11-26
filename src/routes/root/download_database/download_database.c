@@ -1,21 +1,14 @@
 
-
+Route * describe_download_database(){
+    Route  * route = newRoute(
+            DOWNLOAD_DATABASE_ROUTE,
+            autenticate_root,
+            root_download_database_route
+    );
+    return route;
+}
 CwebHttpResponse *root_download_database_route(CwebHttpRequest *request, CHashObject*entries, DtwResource *database){
 
-    Autentication  auth = autenticate_root(request,entries,database);
-    DtwResource_catch(database){
-        return NULL;
-    }
-    if(auth.error){
-        return  auth.response_error;
-    }
-
-    DtwResource *user = auth.user;
-
-
-    CHash_catch(entries){
-        return send_entrie_error(request, entries);
-    }
     UniversalGarbage *garbage = newUniversalGarbage();
     CTextStack *backup = stack.newStack_string_empty();
     UniversalGarbage_add(garbage,stack.free,backup);
