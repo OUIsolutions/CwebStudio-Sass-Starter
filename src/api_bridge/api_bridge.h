@@ -22,6 +22,7 @@ typedef struct {
 ApiBridge *newApiBridge();
 
 void ApiBridge_set_token(ApiBridge *self,const char *token);
+
 void ApiBridge_set_password(ApiBridge *self,const char *password);
 
 
@@ -49,6 +50,9 @@ int ApiBridge_create_user(ApiBridge *self,const char *username,const char *email
 CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include_root_props);
 
 int ApiBridge_modify_self_props(ApiBridge *self,const char *new_username,const char *new_email,const char *new_password);
+
+int ApiBridge_remove_all_finite_tokens(ApiBridge *self);
+
 
 void ApiBridge_represent(ApiBridge *self);
 

@@ -170,6 +170,10 @@ CHash *ApiBridge_get_self_props(ApiBridge *self,bool include_tokens,bool include
     return self->last_hash;
 
 }
+int ApiBridge_remove_all_finite_tokens(ApiBridge *self){
+    return ApiBridge_call_server(self,REMOVE_ALL_FINITE_TOKENS_ROUTE,NULL);
+}
+
 
 int ApiBridge_modify_self_props(ApiBridge *self,const char *new_username,const char *new_email,const char *new_password){
     CHashObject * entries = newCHashObjectEmpty();
