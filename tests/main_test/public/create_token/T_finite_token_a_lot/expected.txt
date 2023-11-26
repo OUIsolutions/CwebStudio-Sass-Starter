@@ -1,0 +1,9 @@
+ 
+status-code: 202
+headers:
+Content-Type : application/json
+content: {
+	"code":	0,
+	"token":	"fcb1064030c74863PKdhtXMmr18n2L9YiGUHvBDjKOx7Eg",
+	"expiration":	"1969-12-31 21:30:00"
+}

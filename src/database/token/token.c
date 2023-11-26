@@ -44,7 +44,6 @@ Token * database_create_finite_token(DtwResource *user, const char *password, bo
     //data/elements/{user}/finite_tokens/{id}/
     DtwResource  *token_resource = resource.sub_resource_random(all_tokens,NULL);
 
-
     //data/elements/{user}/finite_tokens/{id}/sha
     DtwResource *sha_resurce = resource.sub_resource(token_resource, SHA_PATH);
     Token *token = newToken(user->name,token_resource->name,password,false);

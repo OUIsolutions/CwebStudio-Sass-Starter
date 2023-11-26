@@ -2,13 +2,13 @@
 
 //never use these flag in production
 #define DEBUG
-#define SAVE_TOKEN_TRANSACTIONS
 #include "imports.h"
 #include "declaration.h"
 #include "definition.h"
 
 
 int main(){
+   
 
 
 
