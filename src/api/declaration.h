@@ -6,5 +6,5 @@
 #include "email/email.h"
 #include "routes/declaration.h"
 #include "api_bridge/api_bridge.h"
-
 #include "start/start.h"
+#include "api_handler/api_handler.h"
