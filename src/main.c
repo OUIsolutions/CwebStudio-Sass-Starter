@@ -8,9 +8,6 @@
 
 
 int main(){
-   
-
-
 
     start_namespaces();
     create_root_user_if_not_exist();
