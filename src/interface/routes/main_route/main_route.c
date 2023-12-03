@@ -11,6 +11,9 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
             CTextScope(s,CTEXT_TITLE){
                 stack.segment_text(s,MAIN_TITLE);
             }
+            reference_static_path(s,ELEMENT404);
+            reference_static_path(s,SASS);
+
         }
         CTextScope(s,CTEXT_BODY){
             stack.segment_text(s,"inicio da interface");

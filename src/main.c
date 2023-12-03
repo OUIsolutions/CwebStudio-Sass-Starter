@@ -16,14 +16,16 @@ int main(){
     #ifdef RECONSTRUCT_DATABASE_FROM_START
         reload_all_transactions();
     #endif
-
-
+    const char *static_folder = "static";
+    if(dtw.entity_type(cweb_static_folder) == DTW_NOT_FOUND){
+        static_folder = "src/static";
+    }
 
     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){
             CwebServer server = newCwebSever(i, main_sever);
             server.single_process = true;
-
+            server.static_folder = static_folder;
             cweb.server.start(&server);
             if(cweb_end_server){
                 break;
