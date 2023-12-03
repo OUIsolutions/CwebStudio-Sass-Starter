@@ -6,10 +6,12 @@ CwebHttpResponse *api_handler(CwebHttpRequest *request ){
 #ifdef DEBUG
     create_root_user_if_not_exist();
     //WARNING: THESE WILL KILL THE ENTIRE APPLICATION IF YOU ACCESS /end
-    if(!strcmp(request->route,END_ROUTE)){
+    if(strings_equal(request->route,END_ROUTE)){
         cweb_end_server = true;
         return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);
     }
+
+
 #endif
 
     UniversalGarbage  *garbage = newUniversalGarbage();
@@ -27,7 +29,11 @@ CwebHttpResponse *api_handler(CwebHttpRequest *request ){
     if(strings_equal(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
-
+#ifdef DEBUG
+    if(strings_equal(request->route,STATIC_CHANGED)){
+        return chaged_static_route(request,entries);
+    }
+#endif
     if(strings_equal(request->route,REMOVE_TOKEN_ROUTE)){
         response = remove_token(request,entries,database);
     }

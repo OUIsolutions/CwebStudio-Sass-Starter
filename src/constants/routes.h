@@ -15,6 +15,7 @@
 
 //debug
 #define END_ROUTE "/api/end"
+#define STATIC_CHANGED "/api/changed"
 
 //user
 #define REMOVE_TOKEN_ROUTE "/api/user/remove_token"
