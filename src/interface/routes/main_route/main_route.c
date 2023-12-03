@@ -13,6 +13,8 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
             }
             reference_static_path(s,ELEMENT404);
             reference_static_path(s,SASS);
+            reference_static_path(s,EXTRA_STATIC);
+
 
         }
         CTextScope(s,CTEXT_BODY){
