@@ -18,7 +18,7 @@ CwebHttpResponse *chaged_static_route(CwebHttpRequest *request){
         obj.set_bool(response,CHAGEND_KEY,false);
     }
 
-    
+
     UniversalGarbage_free(garbage);
     return send_chash_cleaning_memory(response,CWEB_OK);
 }
