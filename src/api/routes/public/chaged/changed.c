@@ -11,12 +11,15 @@ CwebHttpResponse *chaged_static_route(CwebHttpRequest *request){
 
     CHashObject *response = newCHashObject(
             CODE_KEY,hash.newNumber(INTERNAL_OK),
-            CHAGEND_KEY,hash.newBool(true)
+            CHAGEND_KEY,hash.newBool(false)
     );
-
-    if(strings_equal(saved_hash,hasher->hash)){
-        obj.set_bool(response,CHAGEND_KEY,false);
+    bool changed = !strings_equal(saved_hash,hasher->hash);
+    if(changed){
+        obj.set_bool(response,CHAGEND_KEY,true);
+        dtw.write_string_file_content(STATIC_AASSIGNATURE,hasher->hash);
     }
+
+
 
 
     UniversalGarbage_free(garbage);
