@@ -12,11 +12,16 @@ void reference_static_path(CTextStack *head,const char *path){
         current_element = stack.newStack_string( listage->strings[i]);
         UniversalGarbage_resset(garbage,current_element);
         if(stack.ends_with(current_element,".css")){
-            stack.only$open(head,CTEXT_LINK,"'stylesheet' href='%t'",current_element);
+            stack.only$open(head,CTEXT_LINK,"'stylesheet' href='%sc'",
+                            cweb_smart_static_ref(current_element->rendered_text)
+                            );
         }
         if(stack.ends_with(current_element,"js")){
-            CText$Scope(head,CTEXT_SCRIPT,"src='%t'",current_element);
+            CText$Scope(head,CTEXT_SCRIPT,"src='%sc'",
+                        cweb_smart_static_ref(current_element->rendered_text)
+            );
         }
     }
+    UniversalGarbage_free(garbage);
 }
 

@@ -17,7 +17,7 @@ int main(){
         reload_all_transactions();
     #endif
     const char *static_folder = "static";
-    if(dtw.entity_type(cweb_static_folder) == DTW_NOT_FOUND){
+    if(dtw.entity_type(static_folder) == DTW_NOT_FOUND){
         static_folder = "src/static";
     }
 
