@@ -26,3 +26,5 @@
 #define CREATION_PATH "creation"
 #define SHA_PATH "sha"
 #define LAST_UPDATE_PATH "last_update"
+
+#define  STATIC_AASSIGNATURE "static_assignature.txt"

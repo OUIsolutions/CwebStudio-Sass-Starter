@@ -28,3 +28,4 @@
 #define NEVER_EXPIRATION "never"
 #define TOKEN_REMOVED "Token Removed"
 #define ALL_TOKENS_REMOVED "All tokens removed"
+#define CHAGEND_KEY "changed"
