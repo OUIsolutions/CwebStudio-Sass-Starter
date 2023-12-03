@@ -51,3 +51,4 @@ void create_root_user_if_not_exist(){
     commit_transaction(database);
     resource.free(database);
 }
+
