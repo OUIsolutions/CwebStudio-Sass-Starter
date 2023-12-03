@@ -9,3 +9,4 @@
 #include "observability.h"
 #include "internal.h"
 #include "interface.h"
+#include "static_names.h"
