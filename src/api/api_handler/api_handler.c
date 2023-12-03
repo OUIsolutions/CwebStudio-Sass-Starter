@@ -10,7 +10,9 @@ CwebHttpResponse *api_handler(CwebHttpRequest *request ){
         cweb_end_server = true;
         return cweb.response.send_text(TERMINATED_APLICATION,HTTP_OK);
     }
-
+    if(strings_equal(request->route,STATIC_CHANGED)){
+        return chaged_static_route(request);
+    }
 
 #endif
 
@@ -29,11 +31,7 @@ CwebHttpResponse *api_handler(CwebHttpRequest *request ){
     if(strings_equal(request->route, CREATE_TOKEN_ROUTE)){
         response = create_token(request,entries,database);
     }
-#ifdef DEBUG
-    if(strings_equal(request->route,STATIC_CHANGED)){
-        return chaged_static_route(request,entries);
-    }
-#endif
+
     if(strings_equal(request->route,REMOVE_TOKEN_ROUTE)){
         response = remove_token(request,entries,database);
     }

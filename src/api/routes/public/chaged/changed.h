@@ -1,3 +1,3 @@
 
 
-CwebHttpResponse *chaged_static_route(CwebHttpRequest *request, CHashObject*entries);
+CwebHttpResponse *chaged_static_route(CwebHttpRequest *request);
