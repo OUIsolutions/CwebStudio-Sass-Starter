@@ -1,4 +1,10 @@
 
+
+
+
+
+//===========================API============================================================
+#define  API_START "/api"
 //public
 #define CREATE_TOKEN_ROUTE "/api/public/create_token"
 #define GET_PUBLIC_PROFILE_PICTURE_ROUTE "/api/public/get_public_profile_picture"
@@ -8,7 +14,7 @@
 //public_point
 
 //debug
-#define END_ROUTE "/end"
+#define END_ROUTE "/api/end"
 
 //user
 #define REMOVE_TOKEN_ROUTE "/api/user/remove_token"
