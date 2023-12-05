@@ -18,7 +18,8 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
 
         }
         CTextScope(s,CTEXT_BODY){
-            stack.segment_text(s,"inicio da interface");
+            CText$Scope(s,CTEXT_DIV,"id='root'"){}
+                stack.segment_text(s,"inicio da interface");
 
         }
     }

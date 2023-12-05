@@ -17,7 +17,7 @@ void reference_static_path(CTextStack *head,const char *path){
                             );
         }
         if(stack.ends_with(current_element,"js")){
-            CText$Scope(head,CTEXT_SCRIPT,"type='module' src='%sc'",
+            CText$Scope(head,CTEXT_SCRIPT," src='%sc'",
                         cweb_smart_static_ref(current_element->rendered_text)
             );
         }

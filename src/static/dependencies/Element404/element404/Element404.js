@@ -1,5 +1,5 @@
 
-export function Element404(){
+ function Element404(){
         this.root = undefined      
         this.started = false  
         this.state = {}

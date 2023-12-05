@@ -1,6 +1,5 @@
 
 
-import {Element404} from './Element404.js';
 
 
 Element404.prototype.create_object_style = function(domElement,style_value){

@@ -1,7 +1,5 @@
 
 
-import {Element404} from './Element404.js';
-
 Element404.prototype.create=function(tag,props,content){
 
 
