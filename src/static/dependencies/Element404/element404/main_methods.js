@@ -34,7 +34,7 @@ Element404.prototype.render= function(target=null){
     if(target){
         this.target = target
     }
-
+    
     this.target.innerHTML = ''
     this.generator()
     this.target.appendChild(this.root)
