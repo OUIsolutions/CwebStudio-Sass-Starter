@@ -17,6 +17,7 @@ PrimitiveState.prototype.increment = function (value){
 }
 
 
+
 PrimitiveState.prototype.decrement = function (value){
     let old = this.getValue();
     this.setValue(old-value)

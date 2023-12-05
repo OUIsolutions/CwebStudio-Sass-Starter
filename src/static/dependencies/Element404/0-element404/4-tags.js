@@ -69,7 +69,7 @@ Element404.prototype.h5=function(props,content){
 
 
 Element404.prototype.text=function(message){
-    this.create(null,null,message)
+    this.create('text',null,message)
 }
 
 
@@ -78,5 +78,5 @@ Element404.prototype.button=function(props,content){
 }
 
 Element404.prototype.br=function(){
-    this.create('br')
+    this.create('br',null,null);
 }
