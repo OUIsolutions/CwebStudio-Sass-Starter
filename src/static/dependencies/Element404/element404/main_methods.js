@@ -34,9 +34,11 @@ Element404.prototype.render= function(target=null){
     if(target){
         this.target = target
     }
-    if(!this.started){
-        this.create('div',null,null);
+
+    if(!this.target){
+        return;
     }
+
 
     this.target.innerHTML = ''
     this.generator()
