@@ -11,6 +11,7 @@ function main(){
         render_login_page(root_element)
     }
 
+
     root_element.render(document.getElementById("root"));
 }
 

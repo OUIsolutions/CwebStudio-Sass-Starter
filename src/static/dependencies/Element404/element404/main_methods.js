@@ -28,7 +28,7 @@ Element404.prototype.create=function(tag,props,content){
 
 /**
  * Returns the sum of all numbers passed to the function.
-* @param {HTMLElement } target The target to render
+* @param {HTMLElement=} target The target to render
 */
 Element404.prototype.render= function(target){
     if(target){

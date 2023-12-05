@@ -1,35 +1,26 @@
 
 
 class SimpleState {
-    
-    constructor(element404,name,defaultValue,father){
+
+    constructor(father,name,defaultValue){
         this.name = name
-        this.element404 = element404
         this.father = father
         if(!this.getValue()&& defaultValue !== undefined){
             this.setValue(defaultValue)
         }
-
-
     }
+
     getValue(){
-        return  this.element404.state[this.name]
-    }
-
-    subState(name,defaultValue){
-        return new SimpleState(this.element404,name,defaultValue,this)
+        return  this.father.state[this.name]
     }
 
     setValue(value){
-
-        if(this.father){
-            this.father.setValue(this.name)
+        let converted_value = value
+        if(this.getValue()){
+            value = value.value
         }
-
-        this.element404.state[this.name] =private_Element404_convert_values(value)
+        this.father.private_setState(this.name)
     }
-
-
 
 
 }
