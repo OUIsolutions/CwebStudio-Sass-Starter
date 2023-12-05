@@ -1,6 +1,6 @@
 
 
-class SimpleState {
+class ObjectState {
     
     constructor(element404,name,defaultValue,father){
         this.name = name
@@ -23,7 +23,7 @@ class SimpleState {
     setValue(value){
 
         if(this.father){
-            this.father.setValue(this.name)
+            this.father.setValue(this.name,)
         }
 
         this.element404.state[this.name] =private_Element404_convert_values(value)
