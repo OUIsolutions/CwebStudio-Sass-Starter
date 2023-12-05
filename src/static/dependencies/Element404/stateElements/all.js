@@ -14,6 +14,7 @@ function  private_StateElements_setValue(value){
 
     this.father.private_setState(this.name,converted_value)
 }
+
 ObjectState.prototype.setValue = private_StateElements_setValue
 PrimitiveState.prototype.setValue = private_StateElements_setValue
 
