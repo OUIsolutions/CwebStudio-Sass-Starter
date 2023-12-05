@@ -3,7 +3,12 @@
 function ObjectState (father,name){
         this.name = name
         this.father = father
+        if (!this.getValue() ) {
+                this.setValue({})
+        }
+
 }
+
 
 
 ObjectState.prototype.private_setState = function (name,state){

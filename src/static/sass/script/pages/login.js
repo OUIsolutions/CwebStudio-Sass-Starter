@@ -4,7 +4,7 @@
  */
 function  render_login_page(element){
 
-
+    let page_props = element.getObjectState(PAGE_PROPS)
     element.div(null,()=>{
 
 
