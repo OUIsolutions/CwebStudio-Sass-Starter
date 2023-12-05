@@ -23,7 +23,6 @@ Element404.prototype.set_prop = function(domElement,key,value){
 
         let callback = ()=>{
             value(domElement)            
-            this.render()
         }
 
         domElement.addEventListener(key,callback)
