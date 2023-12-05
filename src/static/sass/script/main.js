@@ -33,7 +33,6 @@ function main(){
             },
         },"lock")
 
-
         this.button({render_click:()=>numState.increment(1)},"add")
         this.button({render_click:()=>numState.decrement(1)},"remove")
 

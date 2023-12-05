@@ -2,9 +2,8 @@
 Element404.prototype.lock=function( ){
     this.locked = true
     this.root.innerHTML = ''
-    this.root.onkeydown = function (e) {
-        return false;
-    }
+
+
 
     this.render()
 
