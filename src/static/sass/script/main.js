@@ -16,13 +16,24 @@ function main(){
             render_focusout:(v)=> {
                 this.getPrimitiveState('input').setValue(v);
             }
-     
         })
 
         if(input.getValue('input') === 'mateus'){
             this.p(null,'aaaaaaaaaaaaaaaaaaaaa');
         }
-        
+
+        this.button({
+            click:()=> {
+                alert('bloqueou')
+                this.lock()
+                setTimeout(()=>{
+                    this.unlock();
+                    alert('desbloqueou')
+                }, 10000)
+            },
+        },"lock")
+
+
         this.button({render_click:()=>numState.increment(1)},"add")
         this.button({render_click:()=>numState.decrement(1)},"remove")
 

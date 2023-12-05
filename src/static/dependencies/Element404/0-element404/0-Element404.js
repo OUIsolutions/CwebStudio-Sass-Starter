@@ -9,7 +9,7 @@
         this.root = document.createDocumentFragment();
         this.generator = generator
         this.state = {}
-
+        this.locked = false
  }
 
 
