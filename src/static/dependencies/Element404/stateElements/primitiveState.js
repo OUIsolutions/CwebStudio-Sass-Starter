@@ -9,6 +9,8 @@ function PrimitiveState (father, name, defaultValue) {
         this.setValue(defaultValue)
     }
 }
+
+
 PrimitiveState.prototype.increment = function (value){
     let old = this.getValue();
     this.setValue(old+value)
