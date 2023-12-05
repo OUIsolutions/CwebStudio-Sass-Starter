@@ -2,19 +2,14 @@
 
 function main(){
 
-    let root_element = new Element404(()=>{
-        root_element.div(null,'aaaaaaaa');
 
-        let page_state = root_element.getSimpleState(CURRENT_PAGE,LOGIN_PAGE);
+    createElement404(function (){
+        this.div(null,'aaaaaaaa');
 
-        let page_value = page_state.getValue()
+        this.p(null,"the value of state is: "+this.getSimpleState("num",0).getValue());
 
-        if(page_value === LOGIN_PAGE){
-            render_login_page(root_element)
-        }
 
-    });
-    root_element.render(document.getElementById("root"));
+    }).render(document.getElementById("root"));
 
 }
 

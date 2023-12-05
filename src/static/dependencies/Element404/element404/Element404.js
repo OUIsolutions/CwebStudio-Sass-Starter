@@ -13,5 +13,7 @@
         this.state = {}
 }
 
-
+function  createElement404(generator){
+     return new Element404(generator)
+}
 

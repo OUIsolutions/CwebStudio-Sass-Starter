@@ -8,6 +8,7 @@
 Element404.prototype.create=function(tag,props,content){
 
 
+
     if (this.started === false){
 
         this.generator = () => {         
