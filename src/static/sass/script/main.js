@@ -10,7 +10,7 @@ function main(){
 
 
         this.button({click:()=>{
-                this.increment(1);
+                this.getPrimitiveState("num",0).increment(1);
                 this.render();
             }},"add")
 
