@@ -2,8 +2,8 @@ from platform import system as osname
 import Build.CToolKit as ct
 from shutil import rmtree
 from os import makedirs
-STARTER = 'doTheWorld/doTheWorldMain.h'
 
+STARTER = 'doTheWorld/doTheWorldMain.h'
 
 use_valgrind = True 
 
@@ -18,6 +18,7 @@ test = ct.FolderTestPreset(
     side_effect_folder='tests/target',
     use_valgrind=use_valgrind
     )
+
 test.generate_ouptut(reconstruct=False)
 test.start_test()
 
