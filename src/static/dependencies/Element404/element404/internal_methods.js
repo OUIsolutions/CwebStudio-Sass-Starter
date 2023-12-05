@@ -11,16 +11,6 @@ Element404.prototype.create_object_style = function(domElement,style_value){
 }
 
 
-Element404.prototype.getSimpleState = function(name,defaultValue){
-    return new SimpleState(this,name,defaultValue)
-}
-
-Element404.prototype.private_setState = function (name,state){
-    this.state[name] = state;
-    this.render()
-}
-
-
 
 
 
