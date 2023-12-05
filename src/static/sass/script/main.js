@@ -20,20 +20,17 @@ function main(){
         })
         if(input.getValue('input') === 'mateus'){
             this.p(null,'aaaaaaaaaaaaaaaaaaaaa');
-
         }
 
 
-
-        this.button({click:()=>{
+        this.button({render_click:()=>{
                 this.getPrimitiveState("num",0).increment(1);
-                this.render();
             }},"add")
 
-        this.button({click:()=>{
+        this.button({render_click:()=>{
                 this.getPrimitiveState("num",0).decrement(1);
-                this.render();
             }},"remove")
+
 
     }).render(document.getElementById("root"));
 

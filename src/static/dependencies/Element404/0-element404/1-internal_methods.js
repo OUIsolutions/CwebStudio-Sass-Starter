@@ -22,10 +22,12 @@ Element404.prototype.set_prop = function(domElement,key,value){
     if(typeof(value) === 'function'){
 
         let callback = ()=>{
-            value(domElement)            
+            value(domElement)
+            if(key.startsWith('render_')){
+                this.render()
+            }
         }
-
-        domElement.addEventListener(key,callback)
+        domElement.addEventListener(key.replace('render_',''),callback)
         return
     }
 
