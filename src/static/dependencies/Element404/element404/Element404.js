@@ -6,10 +6,12 @@
  * @property {started} bool - if its started or nt
  * @property {object} state - the state of the element
  */
- function Element404(){
-        this.root = undefined      
-        this.started = false  
+ function Element404(generator){
+        this.root = document.createDocumentFragment();
+        this.started = false
+        this.generator = generator
         this.state = {}
 }
+
 
 

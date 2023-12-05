@@ -39,7 +39,6 @@ Element404.prototype.render= function(target=null){
         return;
     }
 
-
     this.target.innerHTML = ''
     this.generator()
     this.target.appendChild(this.root)

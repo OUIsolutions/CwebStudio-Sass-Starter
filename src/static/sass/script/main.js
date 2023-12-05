@@ -2,9 +2,9 @@
 
 function main(){
 
-    let root_element = new Element404();
+    let root_element = new Element404(()=>{
+        root_element.div(null,'aaaaaaaa');
 
-    root_element.div(null,()=>{
         let page_state = root_element.getSimpleState(CURRENT_PAGE,LOGIN_PAGE);
 
         let page_value = page_state.getValue()
@@ -12,9 +12,8 @@ function main(){
         if(page_value === LOGIN_PAGE){
             render_login_page(root_element)
         }
+
     });
-
-
     root_element.render(document.getElementById("root"));
 
 }
