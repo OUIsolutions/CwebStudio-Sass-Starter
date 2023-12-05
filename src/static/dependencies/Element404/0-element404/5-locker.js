@@ -1,8 +1,8 @@
 
 Element404.prototype.lock=function( ){
     this.locked = true
-   
-    document.onkeydown = function (e) {
+    this.root.innerHTML = ''
+    this.root.onkeydown = function (e) {
         return false;
     }
 
@@ -14,4 +14,6 @@ Element404.prototype.lock=function( ){
 Element404.prototype.unlock=function( ){
 
     this.locked = false
+    this.render()
+
 }
