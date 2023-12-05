@@ -1,8 +1,8 @@
 
 
 
-Element404.prototype.getSimpleState = function(name,defaultValue){
-    return new SimpleState(this,name,defaultValue)
+Element404.prototype.getPrimitiveState = function(name,defaultValue){
+    return new PrimitiveState(this,name,defaultValue)
 
 }
 

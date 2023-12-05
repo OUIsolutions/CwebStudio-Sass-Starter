@@ -4,7 +4,7 @@ function  private_StateElements_getValue(){
 }
 
 ObjectState.prototype.getValue = private_StateElements_getValue
-SimpleState.prototype.getValue = private_StateElements_getValue
+PrimitiveState.prototype.getValue = private_StateElements_getValue
 
 function  private_StateElements_setValue(value){
     let converted_value = value
@@ -15,6 +15,6 @@ function  private_StateElements_setValue(value){
     this.father.private_setState(this.name,converted_value)
 }
 ObjectState.prototype.setValue = private_StateElements_setValue
-SimpleState.prototype.setValue = private_StateElements_setValue
+PrimitiveState.prototype.setValue = private_StateElements_setValue
 
 

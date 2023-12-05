@@ -17,8 +17,8 @@ ObjectState.prototype.private_setState = function (name,state){
 }
 
 
-ObjectState.prototype.getSimpleState = function(name,defaultValue){
-        return new SimpleState(this,name,defaultValue)
+ObjectState.prototype.getPrimitiveState = function(name,defaultValue){
+        return new PrimitiveState(this,name,defaultValue)
 }
 
 ObjectState.prototype.getObjectState = function(name){
