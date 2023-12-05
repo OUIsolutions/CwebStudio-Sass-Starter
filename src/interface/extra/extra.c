@@ -6,6 +6,8 @@ void reference_static_path(CTextStack *head,const char *path){
     UniversalGarbage_add_simple(garbage,formated_path);
     DtwStringArray *listage = dtw.list_files_recursively(formated_path,DTW_CONCAT_PATH);
     UniversalGarbage_add(garbage,dtw.string_array.free,listage);
+
+    dtw.string_array.sort(listage);
     CTextStack *current_element = NULL;
     UniversalGarbage_add(garbage,stack.free,current_element);
     for(int i=0; i < listage->size;i++){
