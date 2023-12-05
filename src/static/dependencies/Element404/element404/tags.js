@@ -8,30 +8,52 @@ Element404.prototype.input=function(props){
 }
 
 
-
+/**
+ * Creates an Div
+ * @param {object} props The object props
+ * @param {fuction | string} content the internal content
+ */
 Element404.prototype.div=function(props,content){
     this.create('div',props,content)
 }
 
 
-
+/**
+ * Creates an paragraph
+ * @param {fuction | string} content the internal content
+ */
 Element404.prototype.p=function(props,content){
     this.create('p',props,content)
 }
 
 
+/**
+ * Creates an h1
+ * @param {object} props The object props
+ * @param {fuction | string} content the internal content
+ */
 Element404.prototype.h1=function(props,content){
     this.create('h1',props,content)
 }
 
 
 
+/**
+ * Creates an g2
+ * @param {object} props The object props
+ * @param {fuction | string} content the internal content
+ */
 Element404.prototype.h2=function(props,content){
     this.create('h2',props,content)
 }
 
 
 
+/**
+ * Creates an H3
+ * @param {object} props The object props
+ * @param {fuction | string} content the internal content
+ */
 Element404.prototype.h3=function(props,content){
     this.create('h3',props,content)
 }
