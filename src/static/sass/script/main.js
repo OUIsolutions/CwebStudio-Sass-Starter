@@ -3,7 +3,7 @@
 function main(){
 
     
-    interface = main_interface();
+    interface =new Element404(main_interface);
     
     let token = sessionStorage.getItem(TOKEN);
 
@@ -12,7 +12,7 @@ function main(){
         interface.render(document.getElementById("root"))
         return;
     }
-
+    
     
 }
 

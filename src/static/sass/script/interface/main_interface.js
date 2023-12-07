@@ -1,7 +1,7 @@
 
 function main_interface(){
    
-   let connected = interface.getState(CONNECTED).getValue()
+   let connected = this.getState(CONNECTED).getValue()
    if(!connected){
         render_login_page()
    }
