@@ -120,8 +120,10 @@ CwebHttpResponse *api_handler(CwebHttpRequest *request ){
     if(strings_equal(request->route,DOWNLOAD_DATABASE_ROUTE)){
         response = root_download_database_route(request,entries,database);
     }
-    //route_insertion
 
+    if(strings_equal(request->route,UPDATE_TOKEN_ROUTE)){
+        response = update_token(request,entries,database);
+    }
 
     DtwResource_catch(database){
 

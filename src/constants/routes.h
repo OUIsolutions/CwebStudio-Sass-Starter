@@ -18,6 +18,7 @@
 #define STATIC_CHANGED "/api/changed"
 
 //user
+#define UPDATE_TOKEN_ROUTE  "/api/user/update_token"
 #define REMOVE_TOKEN_ROUTE "/api/user/remove_token"
 #define REMOVE_ALL_FINITE_TOKENS_ROUTE "/api/user/remove_all_finite_tokens"
 #define REMOVE_ALL_INFINITE_TOKENS_ROUTE "/api/user/remove_all_infinite_tokens"
