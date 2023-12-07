@@ -2,15 +2,17 @@
 
 function main(){
 
-
-    createElement404(function (){
+    
+    interface = createElement404(function (){
         this.h3(null,"aaaaaaaaaaaaa")
         this.input()
+    })
+    
+    bridge = BackendBridge()
 
-
-    }).render(document.getElementById("root"));
-
-
+    let token = sessionStorage.getItem(TOKEN);
+    
+    
     
 }
 
