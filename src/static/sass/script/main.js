@@ -3,15 +3,13 @@
 function main(){
 
     
-    interface = createElement404(function (){
-        this.h3(null,"aaaaaaaaaaaaa")
-        this.input()
-    })
+    interface = main_interface();
     
-    bridge = BackendBridge()
-
     let token = sessionStorage.getItem(TOKEN);
-    
+
+    if(!token){
+        
+    }
     
     
 }
