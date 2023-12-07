@@ -1,13 +1,8 @@
 
-/**
- * @param {Element404} element The root element
- */
-function  render_login_page(element){
 
-    let page_props = element.getObjectState(PAGE_PROPS)
-    element.div(null,()=>{
-        element.text("test")
-    })
+function  render_login_page(){
 
+    interface.input({placeholder:"username"})
+    interface.input({placeholder:"password"})
 
 }
