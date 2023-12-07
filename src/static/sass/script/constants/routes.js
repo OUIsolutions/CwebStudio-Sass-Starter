@@ -1,0 +1,1 @@
+const UPDATE_SESSION = "/api/users/update_session"
