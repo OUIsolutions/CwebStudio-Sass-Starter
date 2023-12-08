@@ -22,19 +22,10 @@ function main_interface_generator(main_interface){
        interface_style[' background-position'] = 'center center'
    }
 
-    main_interface.div({},()=>{
-
-        /*
+    main_interface.div({style:interface_style},()=>{
        if(!connected){
-           render_login_page()
+           render_login_page(main_interface)
        }
-       */
-
-        main_interface.div(null,()=>{
-            main_interface.text("aaaaaaaa")
-            main_interface.text("aaaaa")
-        })
-
    })
 
 
