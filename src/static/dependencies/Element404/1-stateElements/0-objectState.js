@@ -1,29 +1,27 @@
 
 
-function ObjectState (father,name){
-        this.name = name
-        this.father = father
-        if (!this.getValue() ) {
-                this.state = {}
-                father[name] = this.state
-                this.setValue({})
+class ObjectState{
+
+        constructor(father,name){
+                this.name = name
+                this.father = father
+                this.state = this.father[this.name]
+
+                if (!this.state) {
+                        this.state = {}
+                        father[name] = this.state
+                }
         }
 
-}
+
+        getPrimitiveState(name,defaultValue){
+                return new PrimitiveState(this,name,defaultValue)
+        }
 
 
+        getObjectState(name){
+                return new ObjectState(this,name)
+        }
 
-ObjectState.prototype.private_setState = function (name,state){
-        this.state[name] = state;
-        this.father.private_setState(name,state)
-}
-
-
-ObjectState.prototype.getPrimitiveState = function(name,defaultValue){
-        return new PrimitiveState(this,name,defaultValue)
-}
-
-ObjectState.prototype.getObjectState = function(name){
-        return new ObjectState(this,name)
 }
 
