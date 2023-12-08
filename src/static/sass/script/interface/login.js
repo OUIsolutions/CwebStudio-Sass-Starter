@@ -6,24 +6,53 @@
 function  render_login_page(main_interface){
 
     const  LEFT_DIV_STYLE = {
-        position:'fixed',
-        width:'30%',
+        position:'absolute',
+        width:'30vw',
         height:'100%',
         right:'0%',
-        opacity:'50%',
-        'background-color':'rgb(14, 15, 18)',
+        'background-color':'rgb(7, 15, 28)',
+    }
+
+    const MAIN_FORM_STYLE = {
+        opacity:'100%',
+        position:'absolute',
+        'text-alling':'center',
+        height:'30%',
+        left:'5%',
+        'top': '30vh'
+    }
+
+    const INPUT_STYLE = {
+        'background-color':'white',
+        'border-radius':'5%',
+        width:'20vw',
+        height:'5vh',
+        'border':'0'
+    }
+    const TITLE_STYLE ={
+        'color':'white'
     }
 
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
+        main_interface.div({style:MAIN_FORM_STYLE},()=>{
 
-        main_interface.input({
-            placeholder:"username"
+            main_interface.h3({style:TITLE_STYLE},"Enter in the Plataform")
+            main_interface.br()
+
+            main_interface.input({
+                style:INPUT_STYLE,
+                placeholder:"username"
+            })
+            main_interface.br()
+
+            main_interface.input({
+                style:INPUT_STYLE,
+                placeholder:"password"
+            })
+
         })
 
-        main_interface.input({
-            placeholder:"password"
-        })
-        main_interface.button(null,"submit")
+
     })
 
 }
