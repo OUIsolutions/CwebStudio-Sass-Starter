@@ -8,7 +8,6 @@ function main_interface(){
 
    let interface_style = {
         position:'absolute',
-        padding:'0',
         width:'100vw',
         height: '100vh'
    }
