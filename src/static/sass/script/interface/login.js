@@ -16,7 +16,7 @@ function  render_login_page(main_interface){
     const MAIN_FORM_STYLE = {
         opacity:'100%',
         position:'absolute',
-        'text-alling':'center',
+        'text-align':'center',
         height:'30%',
         left:'5%',
         'top': '30vh'
