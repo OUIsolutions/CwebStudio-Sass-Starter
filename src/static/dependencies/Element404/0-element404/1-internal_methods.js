@@ -35,6 +35,9 @@ Element404.prototype.set_prop = function(domElement,key,value){
         domElement.addEventListener(key.replace('render_',''),callback)
         return
     }
+    if(value instanceof (PrimitiveState)){
+        value = value.getValue();
+    }
 
     if(key === 'style' && typeof(value) == 'object'){
 
@@ -96,5 +99,5 @@ Element404.prototype.sub_component=function( tag,props,content){
     this.root = domElement
     this.generate_component_reference(domElement,props,content)
     this.root = old_root
-    
+
 }
