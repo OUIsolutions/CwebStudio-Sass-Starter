@@ -12,12 +12,13 @@ class PrimitiveState {
         }
     }
     getValue(){
-        return this.father[this.name];
+        return this.father.state[this.name];
     }
 
     setValue(value){
-        this.father[this.name] = value;
+        this.father.state[this.name] = value;
     }
+
     increment (value){
         let old = this.getValue();
         this.setValue(old+value)

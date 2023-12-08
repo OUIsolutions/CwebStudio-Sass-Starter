@@ -3,13 +3,13 @@
 class ObjectState{
 
         constructor(father,name){
-                this.name = name
                 this.father = father
+                this.name = name
                 this.state = this.father[this.name]
 
                 if (!this.state) {
                         this.state = {}
-                        this.father[name] = this.state
+                        this.father.state[this.name] = this.state
                 }
         }
 
