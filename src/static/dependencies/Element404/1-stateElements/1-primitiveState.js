@@ -16,7 +16,11 @@ class PrimitiveState {
     }
 
     setValue(value){
-        this.father.state[this.name] = value;
+        let converted_value = value;
+        if(value.value){
+            converted_value = value.value
+        }
+        this.father.state[this.name] = converted_value;
     }
 
     increment (value){
