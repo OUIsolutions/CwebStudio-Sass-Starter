@@ -41,7 +41,6 @@ function  render_login_page(main_interface){
             main_interface.br()
 
             let login = page_props.getPrimitiveState(LOGIN,"");
-            //console.log(login.getValue())
 
             main_interface.input({
                 style:INPUT_STYLE,
@@ -50,7 +49,6 @@ function  render_login_page(main_interface){
                 placeholder:"username or email"
             })
 
-            login.setValue("aaaaaaaaaaaaaa")
             main_interface.br()
 
             main_interface.input({
