@@ -4,9 +4,8 @@ class PrimitiveState {
 
 
     constructor(father, name, defaultValue) {
-        this.name = name
         this.father = father
-
+        this.name = name
         if (!this.getValue() && defaultValue !== undefined) {
             this.setValue(defaultValue)
         }
@@ -20,6 +19,7 @@ class PrimitiveState {
         if(value.value){
             converted_value = value.value
         }
+
         this.father.state[this.name] = converted_value;
     }
 
