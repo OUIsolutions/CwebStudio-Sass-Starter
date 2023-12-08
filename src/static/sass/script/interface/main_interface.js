@@ -18,14 +18,9 @@ function main_interface(){
        interface_style[' background-position'] = 'center center'
    }
 
-
-   interface.div({style:interface_style},()=>{
-
-       if(!connected){
-           render_login_page()
-       }
-
-   })
+        interface.text(null,"aaaaaaaa")
+        interface.text(null,"aaaaa")
+   
 
 
 }
