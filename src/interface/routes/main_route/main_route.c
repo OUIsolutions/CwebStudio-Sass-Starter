@@ -14,12 +14,16 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
             reference_static_path(s,ELEMENT404);
             reference_static_path(s,SASS);
             reference_static_path(s,EXTRA_STATIC);
+            CTextScope(s,CTEXT_SCRIPT){
+                stack.format(s,
+                             "const BACKGROUND_IMAGE = '%sc'",
+                             cweb_smart_static_ref("background.jpg")
+                );
+            }
 
 
         }
         CTextScope(s,CTEXT_BODY){
-            CText$Scope(s,CTEXT_DIV,"id='root'"){}
-                stack.segment_text(s,"inicio da interface");
 
         }
     }

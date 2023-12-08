@@ -9,11 +9,10 @@ function main(){
 
     if(!token){
         interface.getPrimitiveState(CONNECTED).setValue(false);
-        interface.render(document.getElementById("root"))
+        interface.render(document.body)
         return;
     }
-    
-    
+
 }
 
 
