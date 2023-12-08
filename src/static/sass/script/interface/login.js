@@ -2,7 +2,7 @@
 
 function  render_login_page(){
 
-    this.input({placeholder:"username"})
-    this.input({placeholder:"password"})
+    interface.input({placeholder:"username"})
+    interface.input({placeholder:"password"})
 
 }
