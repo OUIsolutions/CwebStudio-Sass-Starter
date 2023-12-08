@@ -90,9 +90,11 @@ Element404.prototype.sub_component=function( tag,props,content){
         this.root.appendChild(node)
         return
     }
-
     let domElement = document.createElement(tag)
     this.root.appendChild(domElement)
+    let old_root =this.root
+    this.root = domElement
     this.generate_component_reference(domElement,props,content)
+    this.root = old_root
     
 }
