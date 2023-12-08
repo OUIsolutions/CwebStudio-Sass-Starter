@@ -4,6 +4,8 @@ function ObjectState (father,name){
         this.name = name
         this.father = father
         if (!this.getValue() ) {
+                this.state = {}
+                father[name] = this.state
                 this.setValue({})
         }
 
