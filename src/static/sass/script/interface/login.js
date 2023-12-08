@@ -32,6 +32,8 @@ function  render_login_page(main_interface){
     const TITLE_STYLE ={
         'color':'white'
     }
+    let page_props = main_interface.getObjectState(PAGE_PROPS);
+
 
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
@@ -39,8 +41,10 @@ function  render_login_page(main_interface){
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
+            let login = main_interface.getPrimitiveState(page_props,LOGIN);
             main_interface.input({
                 style:INPUT_STYLE,
+                value:login,
                 placeholder:"username or email"
             })
 
