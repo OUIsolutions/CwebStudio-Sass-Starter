@@ -40,9 +40,10 @@ function  render_login_page(main_interface){
 
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
-            console.log(main_interface)
 
             let login = page_props.getPrimitiveState(LOGIN);
+            console.log(main_interface)
+
             main_interface.input({
                 style:INPUT_STYLE,
                 //value:login,

@@ -9,7 +9,7 @@ class ObjectState{
 
                 if (!this.state) {
                         this.state = {}
-                        father[name] = this.state
+                        this.father[name] = this.state
                 }
         }
 
