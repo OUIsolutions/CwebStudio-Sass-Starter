@@ -47,6 +47,7 @@ function  render_login_page(main_interface){
 
             main_interface.input({
                 style:INPUT_STYLE,
+                type:'password',
                 placeholder:"password"
             })
 
