@@ -14,7 +14,7 @@ void reference_static_path(CTextStack *head,const char *path){
         current_element = stack.newStack_string( listage->strings[i]);
         UniversalGarbage_resset(garbage,current_element);
         if(stack.ends_with(current_element,".css")){
-            stack.only$open(head,CTEXT_LINK,"'stylesheet' href='%sc'",
+            stack.only$open(head,CTEXT_LINK," rel='stylesheet' href='%sc'",
                             cweb_smart_static_ref(current_element->rendered_text)
                             );
         }
