@@ -16,13 +16,13 @@ function main_interface_generator(main_interface){
         height: '100vh',
        'border-style':'none'
    }
-   
-   if(!connected){
-       interface_style['background'] = `url('${BACKGROUND_IMAGE}')`;
-       interface_style['background-size'] = 'cover'
-       interface_style[' background-position'] = 'center center'
 
-   }
+    if(!connected){
+        interface_style['background'] = `url('${BACKGROUND_IMAGE}')`;
+        interface_style['background-size'] = 'cover'
+        interface_style[' background-position'] = 'center center'
+    }
+
 
     main_interface.div({style:interface_style},()=>{
        if(!connected){
