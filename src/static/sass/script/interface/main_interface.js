@@ -1,10 +1,14 @@
 
 
 
-function main_interface(){
+/**
+ * Creates an H3
+ * @param {Element404} main_interface The object props
+ */
+function main_interface_generator(main_interface){
 
 
-   let connected = interface.getPrimitiveState(CONNECTED).getValue()
+   let connected = main_interface.getPrimitiveState(CONNECTED).getValue()
 
    let interface_style = {
         position:'absolute',
@@ -18,9 +22,16 @@ function main_interface(){
        interface_style[' background-position'] = 'center center'
    }
 
-        interface.text(null,"aaaaaaaa")
-        interface.text(null,"aaaaa")
-   
+    main_interface.div({},()=>{
+
+        /*
+       if(!connected){
+           render_login_page()
+       }
+       */
+        main_interface.text("aaaaaaaa")
+        main_interface.text("aaaaa")
+   })
 
 
 }
