@@ -5,15 +5,25 @@
  */
 function  render_login_page(main_interface){
 
-    main_interface.div({"class":"row"},()=>{
+    const  LEFT_DIV_STYLE = {
+        position:'fixed',
+        width:'30%',
+        height:'100%',
+        right:'0%',
+        opacity:'50%',
+        'background-color':'rgb(14, 15, 18)',
+    }
+
+    main_interface.div({style:LEFT_DIV_STYLE},()=>{
 
         main_interface.input({
-           'class':'u-full-width',
             placeholder:"username"
         })
 
-        main_interface.input({placeholder:"password"})
-
+        main_interface.input({
+            placeholder:"password"
+        })
+        main_interface.button(null,"submit")
     })
 
 }

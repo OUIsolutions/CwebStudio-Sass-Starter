@@ -4,7 +4,7 @@ CwebHttpResponse *chaged_static_route(CwebHttpRequest *request){
     UniversalGarbage *garbage = newUniversalGarbage();
     DtwHash * hasher = newDtwHash();
     UniversalGarbage_add(garbage,DtwHash_free,hasher);
-    dtw.hash.digest_folder_by_last_modification(hasher,cweb_static_folder);
+    dtw.hash.digest_folder_by_content(hasher,cweb_static_folder);
 
     char * saved_hash = dtw_load_string_file_content(STATIC_AASSIGNATURE);
     UniversalGarbage_add_simple(garbage,saved_hash);
