@@ -41,8 +41,9 @@ function  render_login_page(main_interface){
 
             main_interface.input({
                 style:INPUT_STYLE,
-                placeholder:"username"
+                placeholder:"username or email"
             })
+
             main_interface.br()
 
             main_interface.input({
