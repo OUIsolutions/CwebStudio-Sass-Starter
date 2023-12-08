@@ -29,8 +29,12 @@ function main_interface_generator(main_interface){
            render_login_page()
        }
        */
-        main_interface.text("aaaaaaaa")
-        main_interface.text("aaaaa")
+
+        main_interface.div(null,()=>{
+            main_interface.text("aaaaaaaa")
+            main_interface.text("aaaaa")
+        })
+
    })
 
 
