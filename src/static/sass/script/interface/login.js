@@ -36,7 +36,7 @@ function  render_login_page(main_interface){
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
 
-            main_interface.h3({style:TITLE_STYLE},"Enter in the Plataform")
+            main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
             main_interface.input({
@@ -50,6 +50,7 @@ function  render_login_page(main_interface){
                 type:'password',
                 placeholder:"password"
             })
+            main_interface.button(null,"Subscribe")
 
         })
 
