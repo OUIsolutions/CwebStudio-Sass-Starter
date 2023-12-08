@@ -9,7 +9,7 @@ class ObjectState{
                 if (this.state === undefined) {
 
                         this.state = {}
-                        this.father.state[this.name] = {}
+                        this.father.state[this.name] = this.state
                 }
         }
 
