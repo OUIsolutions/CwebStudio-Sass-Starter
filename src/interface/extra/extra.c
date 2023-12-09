@@ -14,7 +14,7 @@ void reference_static_images(CTextStack *head){
         DtwTreePart *part = listage->tree_parts[i];
         DtwPath *path = part->path;
         char *name = dtw.path.get_name(path);
-        
+
     }
 
 
