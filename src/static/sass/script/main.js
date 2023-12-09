@@ -10,10 +10,13 @@ function main(){
     let token = sessionStorage.getItem(TOKEN);
 
     if(!token){
-        main_interface.getPrimitiveState(CONNECTED).setValue(false);
+        let connected = main_interface.getPrimitiveState(CONNECTED);
+        connected.setValue(false);
+        
         main_interface.render(document.body)
         return;
     }
+
 
 }
 
