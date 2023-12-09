@@ -8,7 +8,7 @@
  */
 function main_interface_generator(main_interface,main_state){
 
-   let connected = main_interface.getPrimitiveState(CONNECTED).getValue()
+    let page = main_state.page
 
    let interface_style = {
         position:'fixed',
@@ -16,17 +16,19 @@ function main_interface_generator(main_interface,main_state){
         height: '100vh'
    }
 
-    if(!connected){
+    if(page instanceof(StartPage)){
         interface_style['background'] = `url('${BACKGROUND_IMAGE}')`;
         interface_style['background-size'] = 'cover';
         interface_style[' background-position'] = 'center center';
     }
 
+
     main_interface.div({style:interface_style},()=>{
-       if(!connected){
+       if(page instanceof(StartPage)){
            render_login_page(main_interface)
        }
    })
+
 
 
 }

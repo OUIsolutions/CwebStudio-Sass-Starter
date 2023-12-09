@@ -1,37 +1,11 @@
+
+
 /**
  * Creates an H3
  * @param {Element404} main_interface The object props
- * @returns {boolean}
+ * @param {StartPage} start_page
  */
-function  verify_if_create_token(main_interface){
-    let login = page_props.getPrimitiveState(LOGIN);
-    let login_value = login.getValue();
-    if(!login_value){
-        return false;
-    }
-    let password = page_props.getPrimitiveState(PASSWORD);
-    let password_value = password.getValue();
-    if(!password_value){
-        return  false;
-    }
-    let username_error =page_props.getObjectState(USERNAME_ERROR);
-    let login_that_generated_error = username_error.getPrimitiveState(LOGIN);
-
-    if(login_that_generated_error === login_value){
-        return false;
-    }
-
-
-
-    return  true;
-
-
-}
-/**
- * Creates an H3
- * @param {Element404} main_interface The object props
- */
-function  render_login_page(main_interface){
+function  render_login_page(main_interface,start_page){
 
     const  LEFT_DIV_STYLE = {
         position:'absolute',
@@ -67,42 +41,32 @@ function  render_login_page(main_interface){
         'color':'white'
     }
 
-    let page_props = main_interface.getObjectState(PAGE_PROPS);
-
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
 
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
-            let login = page_props.getPrimitiveState(LOGIN);
-            let login_value = login.getValue();
-
-            login.stateInput({
+            main_interface.stateInput(
+                start_page.login_props,
+                "username_or_email",
+                {
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
 
-            let username_error =page_props.getObjectState(USERNAME_ERROR);
-            if(username_error){
-               let message = username_error.getPrimitiveState(MESSAGE)
-                main_interface.p({style:ERROR_STYLE},message.getValue());
-            }
-
             main_interface.br()
 
-            let password = page_props.getPrimitiveState(PASSWORD);
-            let password_value = password.getValue();
+            main_interface.stateInput(
+                start_page.login_props,
+                "password",
+                {
+                    style:INPUT_STYLE,
+                    type:"password",
+                    placeholder:"password"
+                }
+            )
 
-            password.stateInput({
-                style:INPUT_STYLE,
-                type:"password",
-                placeholder:"password"
-            })
-
-            if(login_value && password_value){
-                create_token(main_interface,login_value,password_value);
-            }
 
 
         })
