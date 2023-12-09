@@ -35,7 +35,8 @@ function  render_login_page(main_interface){
         'font-size':'4vh',
     }
     const ERROR_STYLE = {
-        'font-size':'2vh'
+        'font-size':'1vh',
+        'color':'white'
     }
 
     let page_props = main_interface.getObjectState(PAGE_PROPS);
