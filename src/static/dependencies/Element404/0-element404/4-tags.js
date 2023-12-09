@@ -9,9 +9,9 @@ Element404.prototype.input=function(props){
 
 
 /**
- * Creates an Div
+ * Creates a Div
  * @param {object} props The object props
- * @param {fuction | string} content the internal content
+ * @param {function | string} content the internal content
  */
 Element404.prototype.div=function(props,content){
     this.create('div',props,content)
@@ -20,7 +20,8 @@ Element404.prototype.div=function(props,content){
 
 /**
  * Creates an paragraph
- * @param {fuction | string} content the internal content
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
  */
 Element404.prototype.p=function(props,content){
     this.create('p',props,content)
@@ -28,9 +29,9 @@ Element404.prototype.p=function(props,content){
 
 
 /**
- * Creates an h1
+ * Creates a h1
  * @param {object} props The object props
- * @param {fuction | string} content the internal content
+ * @param {function | string} content the internal content
  */
 Element404.prototype.h1=function(props,content){
     this.create('h1',props,content)
@@ -39,9 +40,9 @@ Element404.prototype.h1=function(props,content){
 
 
 /**
- * Creates an g2
+ * Creates a g2
  * @param {object} props The object props
- * @param {fuction | string} content the internal content
+ * @param {function | string} content the internal content
  */
 Element404.prototype.h2=function(props,content){
     this.create('h2',props,content)
@@ -50,33 +51,50 @@ Element404.prototype.h2=function(props,content){
 
 
 /**
- * Creates an H3
+ * Creates a H3
  * @param {object} props The object props
- * @param {fuction | string} content the internal content
+ * @param {function | string} content the internal content
  */
 Element404.prototype.h3=function(props,content){
     this.create('h3',props,content)
 }
-
+/**
+ * Creates an H4
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
 Element404.prototype.h4=function(props,content){
     this.create('h4',props,content)
 }
-
+/**
+ * Creates an H5
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
 Element404.prototype.h5=function(props,content){
     this.create('h5',props,content)
 }
 
 
-
+/**
+ * Creates an H3
+ * @param {string} message The object props
+ */
 Element404.prototype.text=function(message){
     this.create('text',null,message)
 }
 
-
+/**
+ * Creates a button
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
 Element404.prototype.button=function(props,content){
     this.create('button',props,content)
 }
-
+/**
+ * Creates a br
+ */
 Element404.prototype.br=function(){
     this.create('br',null,null);
 }
