@@ -11,5 +11,7 @@ class UsernameOrEmailError{
      * @param {string} message
      * */
     constructor(username,message) {
+        this.username = username
+        this.message = message
     }
 }

@@ -37,7 +37,7 @@ function  render_login_page(main_interface,main_state){
         'font-size':'4vh',
     }
     const ERROR_STYLE = {
-        'font-size':'1vh',
+        'font-size':'2vh',
         'color':'white'
     }
     let start_page = main_state.page
@@ -62,8 +62,10 @@ function  render_login_page(main_interface,main_state){
                     username_or_email_error.message
                 );
             }
-
-            main_interface.br()
+            if(!username_or_email_error){
+                main_interface.br()
+            }
+            
             main_interface.stateInput(
                 login_props,
                 "password",
@@ -74,6 +76,9 @@ function  render_login_page(main_interface,main_state){
                 }
             )
 
+            if(login_props.able_to_create_token()){
+                create_token(main_interface,main_state);
+            }
 
 
         })

@@ -21,9 +21,10 @@ function create_token(main_interface, main_state){
     .then(data =>{
 
         if(data.code === USER_NOT_FOUND){
+            console.log(data)
            login_props.username_or_email_error = new UsernameOrEmailError(
                login_props.username_or_email,
-               data.message
+               data.mensage
            );
         }
 
