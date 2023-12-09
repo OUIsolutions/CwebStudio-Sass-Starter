@@ -34,6 +34,9 @@ function  render_login_page(main_interface){
         'color':'white',
         'font-size':'4vh',
     }
+    const ERROR_STYLE = {
+        'font-size':'2vh'
+    }
 
     let page_props = main_interface.getObjectState(PAGE_PROPS);
 
@@ -49,7 +52,13 @@ function  render_login_page(main_interface){
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
+            let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
+            let username_error_value = username_error.getValue();
 
+            if(username_error_value){
+                main_interface.p(ERROR_STYLE,username_error_value)
+            }
+            
             main_interface.br()
 
             let password = page_props.getPrimitiveState(PASSWORD);

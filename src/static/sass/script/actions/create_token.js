@@ -16,6 +16,17 @@ function create_token(main_interface, login,password){
     fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
-        console.log(data)
+        let page_props =main_interface.getObjectState(PAGE_PROPS);
+
+        if(data.code == USER_NOT_FOUND){
+            let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
+            username_error.setValue(data.messsage);
+        }
+
+
+
+        main_interface.render()
     })
+
+
 }
