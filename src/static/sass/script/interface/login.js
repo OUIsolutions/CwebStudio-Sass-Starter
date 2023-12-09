@@ -41,13 +41,12 @@ function  render_login_page(main_interface){
             main_interface.br()
 
             let login = page_props.getPrimitiveState(LOGIN,"");
-
-            main_interface.input({
+            login.stateInput({
                 style:INPUT_STYLE,
                 value:login,
-                render_focusout:(value)=>login.setValue(value),
                 placeholder:"username or email"
             })
+
 
             main_interface.br()
 

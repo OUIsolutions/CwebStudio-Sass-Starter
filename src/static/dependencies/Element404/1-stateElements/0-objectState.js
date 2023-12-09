@@ -1,7 +1,11 @@
 
 
 class ObjectState{
-
+        /**
+         * @param {Element404} element404
+         * @param {Element404 | ObjectState} father
+         * @param {string} name
+         */
         constructor(element404,father,name){
                 this.element404 = element404;
                 this.father = father;
@@ -14,11 +18,14 @@ class ObjectState{
                 }
         }
 
-
+        /**
+         * @param {string} name
+         * @param {any} defaultValue
+         * @returns {PrimitiveState}
+         * */
         getPrimitiveState(name,defaultValue){
                 return new PrimitiveState(this.element404,this,name,defaultValue)
         }
-
 
         getObjectState(name){
                 return new ObjectState(this.element404,this,name)
