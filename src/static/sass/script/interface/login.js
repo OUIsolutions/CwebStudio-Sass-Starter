@@ -41,24 +41,31 @@ function  render_login_page(main_interface,main_state){
         'color':'white'
     }
     let start_page = main_state.page
+    let login_props =start_page.login_props
+
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
 
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
-            let username_or_email = main_interface.stateInput(
-                start_page.login_props,
+            main_interface.stateInput(
+                login_props,
                 "username_or_email",
                 {
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
-            main_interface.br()
+            let username_or_email_error = login_props.username_or_email_error;
+            if(username_or_email_error){
+                main_interface.p({style:ERROR_STYLE},
+                    username_or_email_error.message
+                );
+            }
             
-
-            let password = main_interface.stateInput(
-                start_page.login_props,
+            main_interface.br()
+            main_interface.stateInput(
+                login_props,
                 "password",
                 {
                     style:INPUT_STYLE,
