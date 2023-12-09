@@ -19,9 +19,12 @@ function create_token(main_interface, login,password){
 
         let page_props =main_interface.getObjectState(PAGE_PROPS);
 
-        if(data.code == USER_NOT_FOUND){
-            let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
-            username_error.setValue(data.mensage);
+        if(data.code === USER_NOT_FOUND){
+            let username_error =page_props.getObjectState(USERNAME_ERROR)
+            let username = username_error.getPrimitiveState(LOGIN);
+            username.setValue(login);
+            let message = username_error.getPrimitiveState(MESSAGE);
+            message.setValue(data.mensage);
         }
 
 

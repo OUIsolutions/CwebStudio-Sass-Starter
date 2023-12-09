@@ -1,4 +1,32 @@
+/**
+ * Creates an H3
+ * @param {Element404} main_interface The object props
+ * @returns {boolean}
+ */
+function  verify_if_create_token(main_interface){
+    let login = page_props.getPrimitiveState(LOGIN);
+    let login_value = login.getValue();
+    if(!login_value){
+        return false;
+    }
+    let password = page_props.getPrimitiveState(PASSWORD);
+    let password_value = password.getValue();
+    if(!password_value){
+        return  false;
+    }
+    let username_error =page_props.getObjectState(USERNAME_ERROR);
+    let login_that_generated_error = username_error.getPrimitiveState(LOGIN);
 
+    if(login_that_generated_error === login_value){
+        return false;
+    }
+
+
+
+    return  true;
+
+
+}
 /**
  * Creates an H3
  * @param {Element404} main_interface The object props
@@ -55,11 +83,10 @@ function  render_login_page(main_interface){
                 placeholder:"username or email"
             })
 
-            let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
-            let username_error_value = username_error.getValue();
-
-            if(username_error_value){
-                main_interface.p(ERROR_STYLE,username_error_value)
+            let username_error =page_props.getObjectState(USERNAME_ERROR);
+            if(username_error){
+               let message = username_error.getPrimitiveState(MESSAGE)
+                main_interface.p({style:ERROR_STYLE},message.getValue());
             }
 
             main_interface.br()
@@ -77,7 +104,6 @@ function  render_login_page(main_interface){
                 create_token(main_interface,login_value,password_value);
             }
 
-            main_interface.button(null,"Subscribe")
 
         })
 
