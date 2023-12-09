@@ -2,21 +2,18 @@
 
 function main(){
 
-
-    main_interface = new Element404(
-        ()=>{main_interface_generator(main_interface)
-        });
-
+    let main_state = new MainState();
     let token = sessionStorage.getItem(TOKEN);
 
     if(!token){
-        let connected = main_interface.getPrimitiveState(CONNECTED);
-        connected.setValue(false);
-
-        main_interface.render(document.body)
-        return;
+        main_state.page = new StartPage();
     }
 
+    createElement404(
+        (main_interface) => {
+            main_interface_generator(main_interface, main_state)
+        }
+    ).render(document.body)
 
 }
 

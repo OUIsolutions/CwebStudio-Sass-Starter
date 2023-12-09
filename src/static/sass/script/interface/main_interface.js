@@ -4,8 +4,9 @@
 /**
  * Creates an H3
  * @param {Element404} main_interface The object props
+ * @param {MainState} main_state
  */
-function main_interface_generator(main_interface){
+function main_interface_generator(main_interface,main_state){
 
    let connected = main_interface.getPrimitiveState(CONNECTED).getValue()
 
