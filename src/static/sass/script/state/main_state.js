@@ -2,8 +2,8 @@
 
 class MainState{
 
-    connected = false;
-    /** @type {LoginState} */
-    page_props = undefined;
+    /** @type {StartPage} */
+    page = undefined;
+
 
 }
