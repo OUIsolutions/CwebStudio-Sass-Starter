@@ -1,0 +1,1 @@
+const USER_NOT_FOUND = 3

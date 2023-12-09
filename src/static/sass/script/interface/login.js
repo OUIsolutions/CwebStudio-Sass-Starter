@@ -22,18 +22,18 @@ function  render_login_page(main_interface){
     }
 
     const INPUT_STYLE = {
-        'background-color':'white',
-        'border-radius':'1vh',
-        width:'20vw',
-        'font-size':'2vh',
-        height:'5vh',
-        'border':'0'
+         'background-color':'white',
+         'border-radius':'1vh',
+         width:'20vw',
+         'font-size':'2vh',
+         height:'5vh',
+         'border':'0'
     }
+
     const TITLE_STYLE ={
         'color':'white',
         'font-size':'4vh',
     }
-
 
     let page_props = main_interface.getObjectState(PAGE_PROPS);
 
@@ -44,6 +44,7 @@ function  render_login_page(main_interface){
             main_interface.br()
 
             let login = page_props.getPrimitiveState(LOGIN);
+            let login_value = login.getValue();
             login.stateInput({
                 style:INPUT_STYLE,
                 placeholder:"username or email"
@@ -52,14 +53,18 @@ function  render_login_page(main_interface){
             main_interface.br()
 
             let password = page_props.getPrimitiveState(PASSWORD);
+            let password_value = password.getValue();
             password.stateInput({
                 style:INPUT_STYLE,
                 type:"password",
                 placeholder:"password"
             })
 
+            if(login_value && password_value){
+                create_token(main_interface,login_value,password_value);
+            }
 
-            //main_interface.button(null,"Subscribe")
+            main_interface.button(null,"Subscribe")
 
         })
 

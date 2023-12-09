@@ -12,7 +12,7 @@ function main(){
     if(!token){
         let connected = main_interface.getPrimitiveState(CONNECTED);
         connected.setValue(false);
-        
+
         main_interface.render(document.body)
         return;
     }
