@@ -25,7 +25,7 @@ function main_interface_generator(main_interface,main_state){
 
     main_interface.div({style:interface_style},()=>{
        if(page instanceof(StartPage)){
-           render_login_page(main_interface,main_state.page)
+           render_login_page(main_interface,main_state)
        }
    })
 

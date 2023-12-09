@@ -3,9 +3,9 @@
 /**
  * Creates an H3
  * @param {Element404} main_interface The object props
- * @param {StartPage} start_page
+ * @param {MainState} main_state
  */
-function  render_login_page(main_interface,start_page){
+function  render_login_page(main_interface,main_state){
 
     const  LEFT_DIV_STYLE = {
         position:'absolute',
@@ -40,24 +40,24 @@ function  render_login_page(main_interface,start_page){
         'font-size':'1vh',
         'color':'white'
     }
-
+    let start_page = main_state.page
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
 
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
-            main_interface.stateInput(
+            let username_or_email = main_interface.stateInput(
                 start_page.login_props,
                 "username_or_email",
                 {
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
-
             main_interface.br()
+            
 
-            main_interface.stateInput(
+            let password = main_interface.stateInput(
                 start_page.login_props,
                 "password",
                 {
