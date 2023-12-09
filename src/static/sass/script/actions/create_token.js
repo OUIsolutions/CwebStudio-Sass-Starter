@@ -22,10 +22,12 @@ function create_token(main_interface, main_state){
 
         if(data.code === USER_NOT_FOUND){
             console.log(data)
-           login_props.username_or_email_error = new UsernameOrEmailError(
-               login_props.username_or_email,
-               data.mensage
-           );
+            let username_or_email_error = login_props.username_or_email_error;
+            username_or_email_error.exist = true;
+            username_or_email_error.username =login_props.username_or_email;
+            username_or_email_error.message = data.mensage
+            main_interface.render()
+            return;
         }
 
         main_interface.render()
