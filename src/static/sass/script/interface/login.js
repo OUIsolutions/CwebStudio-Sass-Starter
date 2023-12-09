@@ -32,8 +32,9 @@ function  render_login_page(main_interface){
     const TITLE_STYLE ={
         'color':'white',
         'font-size':'4vh',
-
     }
+
+
     let page_props = main_interface.getObjectState(PAGE_PROPS);
 
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
@@ -47,7 +48,6 @@ function  render_login_page(main_interface){
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
-
 
             main_interface.br()
 

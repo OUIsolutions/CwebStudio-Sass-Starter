@@ -1,7 +1,7 @@
 
  function Element404(generator){
         this.root = document.createDocumentFragment();
-        this.generator = generator
+        this.generator = ()=>{generator(this)}
         this.state = {}
         this.locked = false
  }
