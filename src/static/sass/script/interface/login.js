@@ -49,10 +49,12 @@ function  render_login_page(main_interface){
 
             let login = page_props.getPrimitiveState(LOGIN);
             let login_value = login.getValue();
+
             login.stateInput({
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
+
             let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
             let username_error_value = username_error.getValue();
 
@@ -64,6 +66,7 @@ function  render_login_page(main_interface){
 
             let password = page_props.getPrimitiveState(PASSWORD);
             let password_value = password.getValue();
+
             password.stateInput({
                 style:INPUT_STYLE,
                 type:"password",

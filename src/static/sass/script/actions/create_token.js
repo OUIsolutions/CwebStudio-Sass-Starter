@@ -16,7 +16,7 @@ function create_token(main_interface, login,password){
     fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
-        
+
         let page_props =main_interface.getObjectState(PAGE_PROPS);
 
         if(data.code == USER_NOT_FOUND){

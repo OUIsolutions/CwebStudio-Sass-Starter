@@ -28,11 +28,13 @@ class PrimitiveState {
      * @param {any} value
      */
     setValue(value){
+        if(!value){
+            return
+        }
+
         let converted_value = value;
-        if(value){
-            if(value.value){
-                converted_value = value.value
-            }
+        if(value.value){
+            converted_value = value.value
         }
 
 
