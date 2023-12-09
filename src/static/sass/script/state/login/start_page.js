@@ -3,8 +3,6 @@
 class StartPage{
 
     /** @type {LoginProps} */
-    login_props;
-
-
+    login_props=new LoginProps();
 
 }

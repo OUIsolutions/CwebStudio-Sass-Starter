@@ -35,9 +35,7 @@ Element404.prototype.set_prop = function(domElement,key,value){
         domElement.addEventListener(key.replace('render_',''),callback)
         return
     }
-    if(value instanceof (PrimitiveState)){
-        value = value.getValue();
-    }
+
 
     if(key === 'style' && typeof(value) == 'object'){
 
