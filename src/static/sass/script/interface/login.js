@@ -62,7 +62,7 @@ function  render_login_page(main_interface,main_state){
                     username_or_email_error.message
                 );
             }
-            
+
             main_interface.br()
             main_interface.stateInput(
                 login_props,
