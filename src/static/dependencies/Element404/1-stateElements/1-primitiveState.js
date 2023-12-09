@@ -56,11 +56,14 @@ class PrimitiveState {
      */
     stateInput(props){
         let formated_props = {
-            value:this.getValue(),
             render_focusout:(value)=>{
                 this.setValue(value)
 
             }
+        }
+        let value = this.getValue();
+        if(value){
+            formated_props['value'] = value
         }
 
         if(props){

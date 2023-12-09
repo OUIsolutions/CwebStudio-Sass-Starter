@@ -14,11 +14,10 @@ function  render_login_page(main_interface){
     }
 
     const MAIN_FORM_STYLE = {
-        opacity:'100%',
         position:'absolute',
         'text-align':'center',
-        height:'30%',
-        left:'5%',
+        height:'30vh',
+        left:'5vw',
         'top': '30vh'
     }
 
@@ -26,11 +25,14 @@ function  render_login_page(main_interface){
         'background-color':'white',
         'border-radius':'1vh',
         width:'20vw',
+        'font-size':'2vh',
         height:'5vh',
         'border':'0'
     }
     const TITLE_STYLE ={
-        'color':'white'
+        'color':'white',
+        'font-size':'4vh',
+
     }
     let page_props = main_interface.getObjectState(PAGE_PROPS);
 
@@ -40,7 +42,7 @@ function  render_login_page(main_interface){
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
 
-            let login = page_props.getPrimitiveState(LOGIN,"");
+            let login = page_props.getPrimitiveState(LOGIN);
             login.stateInput({
                 style:INPUT_STYLE,
                 placeholder:"username or email"
@@ -49,7 +51,7 @@ function  render_login_page(main_interface){
 
             main_interface.br()
 
-            let password = page_props.getPrimitiveState(PASSWORD,"");
+            let password = page_props.getPrimitiveState(PASSWORD);
             password.stateInput({
                 style:INPUT_STYLE,
                 type:"password",
@@ -57,7 +59,7 @@ function  render_login_page(main_interface){
             })
 
 
-            main_interface.button(null,"Subscribe")
+            //main_interface.button(null,"Subscribe")
 
         })
 
