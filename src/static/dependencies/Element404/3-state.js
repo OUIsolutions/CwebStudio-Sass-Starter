@@ -5,7 +5,7 @@
  * @param {string} name
  * @param {object} props
  */
-Element404.prototype.StateInput= function(state,name,props) {
+Element404.prototype.stateInput= function(state,name,props) {
 
 
     let old_value = state[name];
@@ -16,7 +16,7 @@ Element404.prototype.StateInput= function(state,name,props) {
         }
     }
 
-    if(old_props){
+    if(old_value){
         formated_props.value = old_value
     }
     for(let key in props){
