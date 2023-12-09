@@ -24,7 +24,7 @@ function  render_login_page(main_interface){
 
     const INPUT_STYLE = {
         'background-color':'white',
-        'border-radius':'5%',
+        'border-radius':'1vh',
         width:'20vw',
         height:'5vh',
         'border':'0'
@@ -43,18 +43,20 @@ function  render_login_page(main_interface){
             let login = page_props.getPrimitiveState(LOGIN,"");
             login.stateInput({
                 style:INPUT_STYLE,
-                value:login,
                 placeholder:"username or email"
             })
 
 
             main_interface.br()
 
-            main_interface.input({
+            let password = page_props.getPrimitiveState(PASSWORD,"");
+            password.stateInput({
                 style:INPUT_STYLE,
-                type:'password',
+                type:"password",
                 placeholder:"password"
             })
+
+
             main_interface.button(null,"Subscribe")
 
         })

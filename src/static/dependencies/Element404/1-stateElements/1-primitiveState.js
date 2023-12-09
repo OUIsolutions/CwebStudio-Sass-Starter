@@ -11,7 +11,6 @@ class PrimitiveState {
     constructor(element404,father, name, defaultValue) {
         this.element404 = element404;
         this.father = father;
-        console.log("father",father)
 
         this.name = name;
         if (!this.getValue() && defaultValue !== undefined) {
@@ -57,6 +56,7 @@ class PrimitiveState {
      */
     stateInput(props){
         let formated_props = {
+            value:this.getValue(),
             render_focusout:(value)=>{
                 this.setValue(value)
 
