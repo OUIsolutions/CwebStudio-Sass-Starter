@@ -7,7 +7,7 @@ Element404.prototype.getPrimitiveState = function(name,defaultValue){
 }
 
 Element404.prototype.getObjectState = function(name){
-    return new ObjectState(this,name)
+    return new ObjectState(this,this,name)
 
 }
 

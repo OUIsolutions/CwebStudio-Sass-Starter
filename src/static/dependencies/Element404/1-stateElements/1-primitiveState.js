@@ -3,9 +3,10 @@
 class PrimitiveState {
 
 
-    constructor(father, name, defaultValue) {
-        this.father = father
-        this.name = name
+    constructor(element404,father, name, defaultValue) {
+        this.element404 = element404;
+        this.father = father;
+        this.name = name;
         if (!this.getValue() && defaultValue !== undefined) {
             this.setValue(defaultValue)
         }
@@ -23,6 +24,7 @@ class PrimitiveState {
         this.father.state[this.name] = converted_value;
     }
 
+
     increment (value){
         let old = this.getValue();
         this.setValue(old+value)
@@ -31,5 +33,8 @@ class PrimitiveState {
     decrement (value){
         let old = this.getValue();
         this.setValue(old-value)
+    }
+    stateInput(props){
+
     }
 }
