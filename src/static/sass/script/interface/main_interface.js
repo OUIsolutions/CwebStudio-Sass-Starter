@@ -8,7 +8,7 @@
  */
 function main_interface_generator(main_interface,main_state){
 
-    let page = main_state.page
+
 
    let interface_style = {
         position:'fixed',

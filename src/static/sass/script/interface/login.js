@@ -40,7 +40,8 @@ function  render_login_page(main_interface,main_state){
         'font-size':'2vh',
         'color':'white'
     }
-    let start_page = main_state.page
+
+    let start_page = main_state.start_page
     let login_props =start_page.login_props
 
     main_interface.div({style:LEFT_DIV_STYLE},()=>{

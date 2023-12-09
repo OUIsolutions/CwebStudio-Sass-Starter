@@ -1,6 +1,8 @@
 
 
 class UsernameOrEmailError{
+    /** @type {boolean} */
+    exist
     /** @type {string} */
     username;
     /** @type {string} */
@@ -10,8 +12,8 @@ class UsernameOrEmailError{
     /** @param {string} username
      * @param {string} message
      * */
-    constructor(username,message) {
-        this.username = username
-        this.message = message
+    constructor() {
+        this.exist = false;
     }
+
 }

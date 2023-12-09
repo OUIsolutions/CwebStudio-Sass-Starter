@@ -1,9 +1,25 @@
 
 
 class MainState{
+
+    /** @type {boolean} */
     connected = false;
 
     /** @type {StartPage} */
-    page = undefined;
+    start_page = undefined;
+
+
+    constructor() {
+        this.start_page = new StartPage();
+    }
+    turn_of_all_pages(){
+        this.start_page.current = false;
+    }
+
+    tur_on_start_page(){
+        this.turn_of_all_pages();
+        this.start_page.current =true;
+    }
+
 
 }

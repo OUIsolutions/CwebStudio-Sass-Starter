@@ -9,7 +9,7 @@
  */
 function create_token(main_interface, main_state){
 
-    let login_props = main_state.page.login_props;
+    let login_props = main_state.start_page.login_props;
 
     let headers = {
         login: login_props.username_or_email,

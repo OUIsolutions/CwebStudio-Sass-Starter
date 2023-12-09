@@ -3,11 +3,14 @@
 function main(){
 
     let main_state = new MainState();
+    console.log(main_state);
+    return ;
     let token = sessionStorage.getItem(TOKEN);
 
     if(!token){
-        main_state.page = new StartPage();
+        main_state.tur_on_start_page();
     }
+
 
     createElement404(
         (main_interface) => {

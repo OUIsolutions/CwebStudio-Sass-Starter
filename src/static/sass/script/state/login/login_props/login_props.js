@@ -26,6 +26,9 @@ class LoginProps{
         }
         return  true;
     }
+    constructor() {
+        this.username_or_email_error = new UsernameOrEmailError();
+    }
 
 
 
