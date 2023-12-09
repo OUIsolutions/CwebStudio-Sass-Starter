@@ -20,7 +20,7 @@ function create_token(main_interface, login,password){
 
         if(data.code == USER_NOT_FOUND){
             let username_error =page_props.getPrimitiveState(USERNAME_ERROR)
-            username_error.setValue(data.messsage);
+            username_error.setValue(data.message);
         }
 
 

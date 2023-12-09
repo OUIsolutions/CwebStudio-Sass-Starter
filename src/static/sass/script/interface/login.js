@@ -58,7 +58,7 @@ function  render_login_page(main_interface){
             if(username_error_value){
                 main_interface.p(ERROR_STYLE,username_error_value)
             }
-            
+
             main_interface.br()
 
             let password = page_props.getPrimitiveState(PASSWORD);
