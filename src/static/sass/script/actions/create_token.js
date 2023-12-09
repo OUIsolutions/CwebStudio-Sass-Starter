@@ -5,29 +5,27 @@
 /**
  * Creates a token
  * @param {Element404} main_interface
- * @param {string} login
- * @param {string} password
+ *@param {MainState} main_state
  */
-function create_token(main_interface, login,password){
+function create_token(main_interface, main_state){
+
+    let login_props = main_state.page.login_props;
+
     let headers = {
-        login: login,
-        password:password
+        login: login_props.username_or_email,
+        password:login_props.password
     }
+
     fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
 
-        let page_props =main_interface.getObjectState(PAGE_PROPS);
-
         if(data.code === USER_NOT_FOUND){
-            let username_error =page_props.getObjectState(USERNAME_ERROR)
-            let username = username_error.getPrimitiveState(LOGIN);
-            username.setValue(login);
-            let message = username_error.getPrimitiveState(MESSAGE);
-            message.setValue(data.mensage);
+           login_props.username_or_email_error = new UsernameOrEmailError(
+               login_props.username_or_email,
+               data.message
+           );
         }
-
-
 
         main_interface.render()
     })

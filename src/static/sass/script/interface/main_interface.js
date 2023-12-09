@@ -16,7 +16,7 @@ function main_interface_generator(main_interface,main_state){
         height: '100vh'
    }
 
-    if(page instanceof(StartPage)){
+    if(!main_state.connected){
         interface_style['background'] = `url('${BACKGROUND_IMAGE}')`;
         interface_style['background-size'] = 'cover';
         interface_style[' background-position'] = 'center center';
@@ -24,7 +24,7 @@ function main_interface_generator(main_interface,main_state){
 
 
     main_interface.div({style:interface_style},()=>{
-       if(page instanceof(StartPage)){
+       if(!main_state.connected){
            render_login_page(main_interface,main_state)
        }
    })

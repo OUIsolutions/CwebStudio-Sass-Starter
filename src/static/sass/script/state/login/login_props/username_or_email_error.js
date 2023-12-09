@@ -5,4 +5,11 @@ class UsernameOrEmailError{
     username;
     /** @type {string} */
     message;
+
+
+    /** @param {string} username
+     * @param {string} message
+     * */
+    constructor(username,message) {
+    }
 }
