@@ -35,6 +35,14 @@ class PrimitiveState {
         this.setValue(old-value)
     }
     stateInput(props){
-
+        let formated_props = {}
+        if(props){
+            formated_props = structuredClone(props)
+        }
+        
+        formated_props['render_focusout'] = (value)=>{
+            this.setValue(value)
+        }
+        this.element404.input(formated_props)
     }
 }
