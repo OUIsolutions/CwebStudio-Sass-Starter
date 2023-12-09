@@ -16,7 +16,7 @@ function create_token(main_interface, main_state){
         password:login_props.password
     }
 
-    fetch(CREATE_TOKEN,{headers:headers})
+     fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
 
