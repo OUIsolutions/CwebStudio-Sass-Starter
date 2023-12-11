@@ -10,6 +10,7 @@
         this.locked = false
  }
 
+ 
 /**
  * @param {function} generator
  */

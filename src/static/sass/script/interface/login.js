@@ -7,6 +7,9 @@
  */
 function  render_login_page(main_interface,main_state){
 
+    let start_page = main_state.start_page
+    let login_props =start_page.login_props
+
     const  LEFT_DIV_STYLE = {
         position:'absolute',
         width:'30vw',
@@ -14,41 +17,38 @@ function  render_login_page(main_interface,main_state){
         right:'0%',
         'background-color':'rgb(7, 15, 28)',
     }
-
-    const MAIN_FORM_STYLE = {
-        position:'absolute',
-        'text-align':'center',
-        height:'30vh',
-        left:'5vw',
-        'top': '30vh'
-    }
-
-    const INPUT_STYLE = {
-         'background-color':'white',
-         'border-radius':'1vh',
-         width:'20vw',
-         'font-size':'2vh',
-         height:'5vh',
-         'border':'0'
-    }
-
-    const TITLE_STYLE ={
-        'color':'white',
-        'font-size':'4vh',
-    }
-    const ERROR_STYLE = {
-        'font-size':'2vh',
-        'color':'white'
-    }
-
-    let start_page = main_state.start_page
-    let login_props =start_page.login_props
-
     main_interface.div({style:LEFT_DIV_STYLE},()=>{
+
+        const MAIN_FORM_STYLE = {
+            position:'absolute',
+            'text-align':'center',
+            height:'30vh',
+            left:'5vw',
+            'top': '30vh'
+        }
         main_interface.div({style:MAIN_FORM_STYLE},()=>{
+
+            const TITLE_STYLE ={
+                'color':'white',
+                'font-size':'4vh',
+            }
 
             main_interface.h4({style:TITLE_STYLE},"Enter in the Plataform")
             main_interface.br()
+
+            const INPUT_STYLE = {
+                'background-color':'white',
+                'border-radius':'1vh',
+                width:'20vw',
+                'font-size':'2vh',
+                height:'5vh',
+                'border':'0'
+            }
+
+            const ERROR_STYLE = {
+                'font-size':'2vh',
+                'color':'white'
+            }
 
             main_interface.stateInput(
                 login_props,
@@ -57,6 +57,7 @@ function  render_login_page(main_interface,main_state){
                 style:INPUT_STYLE,
                 placeholder:"username or email"
             })
+
             let username_or_email_error = login_props.username_or_email_error;
             if(username_or_email_error){
                 main_interface.p({style:ERROR_STYLE},
