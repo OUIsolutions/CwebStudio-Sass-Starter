@@ -2,7 +2,10 @@
 
 
 
-
+/**
+ * Creates a form
+ * @param {object} props The object props
+ * */
 Element404.prototype.input=function(props){
     this.create('input',props,null)
 }

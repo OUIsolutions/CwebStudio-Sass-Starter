@@ -1,7 +1,8 @@
 
-
-
-
+/**
+ * @param {HTMLElement} domElement 
+ * @param {object} style_value
+ */
 Element404.prototype.create_object_style = function(domElement,style_value){
     let style_string = ""
     for (const key in style_value){
@@ -16,6 +17,11 @@ Element404.prototype.create_object_style = function(domElement,style_value){
 
 
 
+
+/** @param {HTMLElement} domElement 
+ * @param {string} key
+ * @param {string|function} value
+*/
 
 Element404.prototype.set_prop = function(domElement,key,value){
         
@@ -47,6 +53,10 @@ Element404.prototype.set_prop = function(domElement,key,value){
 
 
 
+/**
+ * @param {HTMLElement} domElement
+ * @param {object} props
+ *  */
 
 Element404.prototype.set_props = function(domElement,props){
     if(props === null || props === undefined){
@@ -62,6 +72,12 @@ Element404.prototype.set_props = function(domElement,props){
     }
 
 }
+
+/**
+ * @param {HTMLElement} domElement
+ * @param {object} props
+ * @param {string|function} content
+ * */
 
 Element404.prototype.generate_component_reference=function(domElement,props,content){
     this.set_props(domElement,props)
@@ -83,7 +99,11 @@ Element404.prototype.generate_component_reference=function(domElement,props,cont
     }
 }
 
-
+/**
+ * @param {string} tag
+ * @param {object} props
+ * @param {string|function} content
+ * */
 Element404.prototype.sub_component=function( tag,props,content){
 
     if(tag === null){
