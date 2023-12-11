@@ -10,14 +10,32 @@ void reference_static_images(CTextStack *head){
             .hadware_data=DTW_HIDE,
             .path_atributes=DTW_INCLUDE
     });
-    for(int i=0; i < listage->size;i++){
-        DtwTreePart *part = listage->tree_parts[i];
-        DtwPath *path = part->path;
-        char *name = dtw.path.get_name(path);
 
+    CTextScope(head,CTEXT_SCRIPT){
+        stack.text(head,"let = assets = {};\n");
+        for(int i=0; i < listage->size;i++){
+            DtwTreePart *part = listage->tree_parts[i];
+            DtwPath *path = part->path;
+            char *name = dtw.path.get_name(path);
+            char *extension = dtw.path.get_extension(path);
+            bool implement = false;
+            if(strings_equal(extension,"jpg")){
+                implement = true;
+            }
+
+            if(strings_equal(extension,"png")){
+                implement = true;
+            }
+            if(!implement){
+                continue;
+            }
+            stack.format(head,"assets['%s'] = '%sc';\n",
+                         name,
+                         cweb_smart_static_ref(dtw.path.get_path(path))
+           );
+        }
     }
-
-
+    UniversalGarbage_free(garbage);
 
 }
 void reference_static_path(CTextStack *head,const char *path){

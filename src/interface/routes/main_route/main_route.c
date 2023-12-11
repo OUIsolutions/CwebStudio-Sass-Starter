@@ -16,13 +16,7 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
 
             reference_static_path(s,SASS);
             reference_static_path(s,EXTRA_STATIC);
-            CTextScope(s,CTEXT_SCRIPT){
-                stack.format(s,
-                             "const BACKGROUND_IMAGE = '%sc'",
-                             cweb_smart_static_ref("background.jpg")
-                );
-            }
-
+            reference_static_images(s);
 
         }
         CTextScope(s,CTEXT_BODY){

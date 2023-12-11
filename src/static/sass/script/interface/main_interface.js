@@ -17,7 +17,7 @@ function main_interface_generator(main_interface,main_state){
    }
 
     if(!main_state.connected){
-        interface_style['background'] = `url('${BACKGROUND_IMAGE}')`;
+        interface_style['background'] = `url('${assets['background']}')`;
         interface_style['background-size'] = 'cover';
         interface_style[' background-position'] = 'center center';
     }
