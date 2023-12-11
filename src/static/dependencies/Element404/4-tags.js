@@ -69,6 +69,8 @@ Element404.prototype.h3=function(props,content){
 Element404.prototype.h4=function(props,content){
     this.create('h4',props,content)
 }
+
+
 /**
  * Creates an H5
  * @param {object} props The object props
