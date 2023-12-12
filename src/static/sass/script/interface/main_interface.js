@@ -26,6 +26,7 @@ function main_interface_generator(main_interface,main_state){
     main_interface.div({style:interface_style},()=>{
        if(!main_state.connected){
            render_login_page(main_interface,main_state)
+           
        }
    })
 

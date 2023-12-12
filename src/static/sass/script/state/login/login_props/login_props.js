@@ -2,9 +2,9 @@
 class LoginProps{
 
     /** @type {string} */
-    username_or_email;
+    username_or_email= undefined;
     /** @type {UsernameOrEmailError} */
-    username_or_email_error;
+    username_or_email_error =new UsernameOrEmailError();
 
     /** @type {string} */
     password;
@@ -26,10 +26,5 @@ class LoginProps{
         }
         return  true;
     }
-    constructor() {
-        this.username_or_email_error = new UsernameOrEmailError();
-    }
-
-
 
 }

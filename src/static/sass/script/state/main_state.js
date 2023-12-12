@@ -6,12 +6,8 @@ class MainState{
     connected = false;
 
     /** @type {StartPage} */
-    start_page = undefined;
+    start_page = new StartPage();
 
-
-    constructor() {
-        this.start_page = new StartPage();
-    }
     turn_of_all_pages(){
         this.start_page.current = false;
     }

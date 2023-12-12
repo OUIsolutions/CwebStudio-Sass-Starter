@@ -2,18 +2,10 @@
 
 class UsernameOrEmailError{
     /** @type {boolean} */
-    exist
+    exist = false
     /** @type {string} */
-    username;
+    username = undefined;
     /** @type {string} */
-    message;
-
-
-    /** @param {string} username
-     * @param {string} message
-     * */
-    constructor() {
-        this.exist = false;
-    }
-
+    message = undefined;
+    
 }
