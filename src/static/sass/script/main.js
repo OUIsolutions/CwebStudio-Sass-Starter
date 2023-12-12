@@ -3,8 +3,6 @@
 function main(){
 
     let main_state = new MainState();
-    console.log(main_state);
-    return ;
     let token = sessionStorage.getItem(TOKEN);
 
     if(!token){

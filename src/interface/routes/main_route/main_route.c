@@ -13,7 +13,6 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
             }
             reference_static_path(s,ELEMENT404);
             reference_static_path(s,SKELETON);
-
             reference_static_path(s,SASS);
             reference_static_path(s,EXTRA_STATIC);
             reference_static_images(s);
