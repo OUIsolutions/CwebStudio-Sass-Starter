@@ -4,7 +4,7 @@ class LoginElementError {
     /** @type {boolean} */
     exist = false
     /** @type {string} */
-    username = undefined;
+    element = undefined;
     /** @type {string} */
     message = undefined;
     
