@@ -10,14 +10,14 @@ function  render_login_page(main_interface,main_state){
     let start_page = main_state.start_page
     let login_props =start_page.login_props
 
-    const  LEFT_DIV_STYLE = {
+    const  RIGTH_DIV_STYLE = {
         position:'absolute',
         width:'30vw',
         height:'100%',
-        right:'0%',
+        left:'70vw',
         'background-color':'rgb(7, 15, 28)',
     }
-    main_interface.div({style:LEFT_DIV_STYLE},()=>{
+    main_interface.div({style:RIGTH_DIV_STYLE},()=>{
 
         const MAIN_FORM_STYLE = {
             position:'absolute',
