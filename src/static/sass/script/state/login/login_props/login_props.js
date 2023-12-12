@@ -3,13 +3,13 @@ class LoginProps{
 
     /** @type {string} */
     username_or_email= undefined;
-    /** @type {LoginElementError} */
-    username_or_email_error =new LoginElementError();
+    /** @type {UsernameOrEmailError} */
+    username_or_email_error =new UsernameOrEmailError();
 
     /** @type {string} */
     password;
-    /** @type {LoginElementError} */
-    password_error =new LoginElementError();
+    /** @type {PasswordError} */
+    password_error =new PasswordError();
 
 
     /** @returns {boolean} */
@@ -27,6 +27,7 @@ class LoginProps{
                 return false;
             }
         }
+
         if(this.password_error){
             if(this.password_error.password === this.password){
                 return false;

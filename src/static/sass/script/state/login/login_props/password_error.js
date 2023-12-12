@@ -1,10 +1,10 @@
 
 
-class UsernameOrEmailError {
+class PasswordError {
     /** @type {boolean} */
     exist = false
     /** @type {string} */
-    username = undefined;
+    password = undefined;
     /** @type {string} */
     message = undefined;
     
