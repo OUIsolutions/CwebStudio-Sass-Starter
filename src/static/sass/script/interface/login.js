@@ -17,6 +17,7 @@ function  render_login_page(main_interface,main_state){
         left:'70vw',
         'background-color':'rgb(7, 15, 28)',
     }
+
     main_interface.div({style:RIGTH_DIV_STYLE},()=>{
 
         const MAIN_FORM_STYLE = {
@@ -64,6 +65,7 @@ function  render_login_page(main_interface,main_state){
                     username_or_email_error.message
                 );
             }
+
             if(!username_or_email_error){
                 main_interface.br()
             }

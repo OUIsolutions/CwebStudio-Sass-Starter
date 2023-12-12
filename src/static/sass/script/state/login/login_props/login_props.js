@@ -3,11 +3,14 @@ class LoginProps{
 
     /** @type {string} */
     username_or_email= undefined;
-    /** @type {UsernameOrEmailError} */
-    username_or_email_error =new UsernameOrEmailError();
+    /** @type {LoginElementError} */
+    username_or_email_error =new LoginElementError();
 
     /** @type {string} */
     password;
+    /** @type {LoginElementError} */
+    password_error =new LoginElementError();
+
 
     /** @returns {boolean} */
     able_to_create_token(){
@@ -24,6 +27,12 @@ class LoginProps{
                 return false;
             }
         }
+        if(this.password_error){
+            if(this.password_error.password === this.password){
+                return false;
+            }
+        }
+        
         return  true;
     }
 
