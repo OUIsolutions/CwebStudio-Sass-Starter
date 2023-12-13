@@ -2,8 +2,6 @@
 
 class MainState{
 
-    /** @type {boolean} */
-    connected = false;
 
     /** @type {StartPage} */
     start_page = new StartPage();

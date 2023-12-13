@@ -16,7 +16,7 @@ function main_interface_generator(main_interface,main_state){
         height: '100vh'
    }
 
-    if(!main_state.connected){
+    if(main_state.start_page.current){
         interface_style['background'] = `url('${assets['background']}')`;
         interface_style['background-size'] = 'cover';
         interface_style[' background-position'] = 'center center';
