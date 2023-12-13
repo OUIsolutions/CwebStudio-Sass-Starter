@@ -19,10 +19,14 @@ function create_token(main_interface, main_state){
      fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
+        let username_or_email_error = login_props.username_or_email_error;
+        username_or_email_error.exist = false;
 
+        let password_error = login_props.password_error;
+        password_error.exist = false;
+        
+   
         if(data.code === USER_NOT_FOUND){
-            console.log(data)
-            let username_or_email_error = login_props.username_or_email_error;
             username_or_email_error.exist = true;
             username_or_email_error.username =login_props.username_or_email;
             username_or_email_error.message = data.mensage
@@ -30,7 +34,16 @@ function create_token(main_interface, main_state){
             return;
         }
 
-        main_interface.render()
+
+        if(data.code == WRONG_PASSWORD){
+            password_error.exist = true;
+            password_error.password =login_props.password;
+            password_error.message = data.mensage
+            main_interface.render()
+            return;   
+        }
+
+
     })
 
 

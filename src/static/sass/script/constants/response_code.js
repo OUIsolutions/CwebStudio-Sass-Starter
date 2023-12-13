@@ -1,1 +1,2 @@
-const USER_NOT_FOUND = 3
+const USER_NOT_FOUND = 3;
+const WRONG_PASSWORD = 4;
