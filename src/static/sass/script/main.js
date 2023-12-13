@@ -9,9 +9,10 @@ function main(){
     let main_interface =createElement404(
         (main_interface) => {
             main_interface_generator(main_interface, main_state)
-        }
+        },
+        document.body
     )
-    
+
 
     if(!token){
         main_state.tur_on_start_page();
@@ -20,7 +21,6 @@ function main(){
     if(token){
         efetuate_login(main_interface, main_state, token)
     }
-
 
 
 }
