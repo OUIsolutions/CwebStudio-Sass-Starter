@@ -3,9 +3,13 @@
 class MainState{
 
 
+    /** @type {Profile} */
+    profile = new Profile();
+
+
     /** @type {StartPage} */
     start_page = new StartPage();
-    
+
     turn_of_all_pages(){
         this.start_page.current = false;
     }
