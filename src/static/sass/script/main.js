@@ -9,7 +9,6 @@ function main(){
         main_state.tur_on_start_page();
     }
 
-
     createElement404(
         (main_interface) => {
             main_interface_generator(main_interface, main_state)
