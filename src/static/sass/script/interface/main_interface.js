@@ -24,10 +24,10 @@ function main_interface_generator(main_interface,main_state){
 
 
     main_interface.div({style:interface_style},()=>{
-       if(!main_state.connected){
+       if(!main_state.start_page.current){
            render_login_page(main_interface,main_state)
-           
        }
+       
    })
 
 
