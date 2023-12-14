@@ -7,7 +7,7 @@ class StartPageStyle{
         width:'30vw',
         height:'100%',
         left:'70vw',
-        'background-color':'rgb(7, 15, 28)',
+        'background-color':BLUE_BACKGROUND,
     }}
 
     /** @returns {object} */
