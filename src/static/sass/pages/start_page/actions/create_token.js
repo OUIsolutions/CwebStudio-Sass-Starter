@@ -10,28 +10,22 @@
 function create_token(main_interface, main_state){
 
     let login_props = main_state.start_page.login_props;
-    let password_error = login_props.password_error;
-    password_error.resset();
-
-    let username_or_email_error = login_props.username_or_email_error
-    username_or_email_error.resset();
-
+    login_props.username_or_email_error = undefined;
+    login_props.password_error = undefined;
 
     if(!login_props.username_or_email){
-        username_or_email_error.exist = true;
-        username_or_email_error.message = "user not provided"
+        login_props.username_or_email_error  = "user not provided"
         main_interface.render()
         return;
     }
 
     if(!login_props.password){
-        password_error.exist = true;
-        password_error.message = "password not provided"
+        login_props.password_error = "password not provided"
         main_interface.render()
         return;
     }
 
-        let headers = {
+    let headers = {
         login: login_props.username_or_email,
         password:login_props.password
     }
@@ -40,16 +34,14 @@ function create_token(main_interface, main_state){
     .then(data => data.json())
     .then(data =>{
         if(data.code === USER_NOT_FOUND){
-            username_or_email_error.exist = true;
-            username_or_email_error.message = data.mensage
+            login_props.username_or_email_error = data.mensage;
             main_interface.render()
             return;
         }
 
 
         if(data.code === WRONG_PASSWORD){
-            password_error.exist = true;
-            password_error.message = data.mensage
+            login_props.password_error = data.mensage;
             main_interface.render()
             return;   
         }
