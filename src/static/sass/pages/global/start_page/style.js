@@ -31,7 +31,7 @@ class StartPageStyle{
         'background-color':'white',
         'font-size':'4vh',
         left:'5vh',
-        width:'15vw'
+        width:'20vw'
     }}
 
 
