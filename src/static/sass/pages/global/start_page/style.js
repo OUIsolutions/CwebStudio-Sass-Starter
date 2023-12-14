@@ -22,6 +22,8 @@ class StartPageStyle{
 
     title_style(){return {
         color:'white',
+        'margin-right':'5vw',
+
         'font-size':'4vh',
     }}
 
@@ -30,12 +32,18 @@ class StartPageStyle{
         'background-color':'white',
         'border-radius':'1vh',
         width:'20vw',
-        'font-size':'2vh',
+        'margin-right':'5vw',
+        'font-size':'3vh',
         height:'5vh',
         border:'0'
     }}
+    login_button() {return {
+        'margin-right':'5vw',
+        height:'5vh',
 
+        width:'10vw',
 
+    }}
 
     /** @returns {object} */
     error_style(){return{

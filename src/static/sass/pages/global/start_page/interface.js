@@ -31,11 +31,7 @@ function  render_start_page(main_interface, main_state){
             if(username_or_email_error){
                 main_interface.p({style:style.error_style()},username_or_email_error);
             }
-            
 
-            if(!username_or_email_error){
-                main_interface.br()
-            }
 
             main_interface.stateInput(
                 login_props,
@@ -49,9 +45,11 @@ function  render_start_page(main_interface, main_state){
             let password_error = login_props.password_error;
             if(password_error){
                 main_interface.p({style:style.error_style()},password_error);
+
             }
-            
+
             main_interface.button({
+                style:style.login_button(),
                 click:()=>create_token(main_interface,main_state)
             },"Login"
 
