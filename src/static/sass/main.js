@@ -14,16 +14,16 @@ function main_interface_generator(main_interface,main_state){
          width:'100vw',
          height: '100vh'
     }
-    let page = main_state.page;
-     if(page instanceof(StartPage)){
+
+     if(main_state.page_start.current){
          interface_style['background'] = `url('${assets['background']}')`;
          interface_style['background-size'] = 'cover';
          interface_style[' background-position'] = 'center center';
      }
  
      main_interface.div({style:interface_style},()=>{
-        if(page instanceof(StartPage)){
-            render_login_page(main_interface,main_state)
+        if(main_state.page_start.current){
+            render_start_page(main_interface,main_state)
         }
         
     })
@@ -47,7 +47,7 @@ function main(){
 
 
     if(!token){
-        main_state.page = new StartPage();
+        main_state.turnOnPage(StartPage);
         main_interface.render();
     }
     
@@ -59,4 +59,4 @@ function main(){
 }
 
 
-window.onload = (undefined)=> main()
+window.onload = ()=> main()

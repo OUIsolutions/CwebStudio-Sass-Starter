@@ -5,9 +5,9 @@
  * @param {Element404} main_interface The object props
  * @param {MainState} main_state
  */
-function  render_login_page(main_interface,main_state){
+function  render_start_page(main_interface, main_state){
 
-    let start_page = main_state.page
+    let start_page = main_state.page_start
     let login_props =start_page.login_props
 
     const  RIGTH_DIV_STYLE = {
