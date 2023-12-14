@@ -86,9 +86,11 @@ function  render_login_page(main_interface,main_state){
                 );
             }
 
-            if(login_props.able_to_create_token()){
-                create_token(main_interface,main_state);
-            }
+            
+            main_interface.button({
+                click:()=>create_token(main_interface,main_state)
+            },"Login");
+           
 
 
         })
