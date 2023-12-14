@@ -1,2 +1,3 @@
 const USER_NOT_FOUND = 3;
 const WRONG_PASSWORD = 4;
+const TOKEN_ITS_EXPIRED = 6;
