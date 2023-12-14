@@ -11,7 +11,7 @@ Element404.prototype.stateInput= function(state,name,props) {
     let old_value = state[name];
 
     let formated_props = {
-        render_focusout:(input)=>{
+        render_keyup:(input)=>{
             state[name] = input.value
         }
     }

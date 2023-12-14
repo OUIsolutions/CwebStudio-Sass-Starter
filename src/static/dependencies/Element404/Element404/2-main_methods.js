@@ -17,12 +17,10 @@ Element404.prototype.create=function(tag,props,content){
 * @param {HTMLElement=} target The target to render
 */
 Element404.prototype.render= function(){
-    this.waitLock();
-    this.lock();
+
     this.target.innerHTML = ''
     this.generator()
     this.target.appendChild(this.root)
-    this.unlock();
 }
 
 
