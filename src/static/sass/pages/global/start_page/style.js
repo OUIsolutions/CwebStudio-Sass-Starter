@@ -27,9 +27,14 @@ class StartPageStyle{
 
     /** @returns {object} */
     input_style(){return {
-        'color':'white',
+        'position':'absolute',
+        'background-color':'white',
         'font-size':'4vh',
+        left:'5vh',
+        width:'15vw'
     }}
+
+
 
     /** @returns {object} */
     error_style(){return{

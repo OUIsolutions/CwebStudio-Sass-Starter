@@ -36,6 +36,7 @@ function  render_start_page(main_interface, main_state){
             if(!username_or_email_error){
                 main_interface.br()
             }
+            main_interface.br()
 
             main_interface.stateInput(
                 login_props,
