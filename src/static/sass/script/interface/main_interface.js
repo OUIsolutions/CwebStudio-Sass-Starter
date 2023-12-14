@@ -8,8 +8,6 @@
  */
 function main_interface_generator(main_interface,main_state){
 
-
-
    let interface_style = {
         position:'fixed',
         width:'100vw',
@@ -22,9 +20,8 @@ function main_interface_generator(main_interface,main_state){
         interface_style[' background-position'] = 'center center';
     }
 
-
     main_interface.div({style:interface_style},()=>{
-       if(!main_state.start_page.current){
+       if(main_state.start_page.current){
            render_login_page(main_interface,main_state)
        }
        

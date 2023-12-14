@@ -10,6 +10,7 @@ function main(){
         (main_interface) => {
             main_interface_generator(main_interface, main_state)
         },
+        
         document.body
     )
 
