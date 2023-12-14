@@ -7,7 +7,6 @@
  * @param {MainState} main_state
  */
 function main_interface_generator(main_interface,main_state){
-   console.log("chamou a render");
    let interface_style = {
         position:'fixed',
         width:'100vw',
