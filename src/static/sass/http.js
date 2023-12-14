@@ -29,6 +29,13 @@ function  make_autenticated_requisition(
         return;
     }
     //fetch and cach any error 
+    if(!params){
+        params = {};
+    }
+    params.headers = {
+        token:token
+    }
+    
     fetch(route,params)
     .then(response => {
         let invalid_responses = [401,403,500]
@@ -45,7 +52,7 @@ function  make_autenticated_requisition(
             go_to_main_page_removing_token(main_interface,main_state);
             return;
         }
-        
+
         callback(response);
         main_interface.render();
         
