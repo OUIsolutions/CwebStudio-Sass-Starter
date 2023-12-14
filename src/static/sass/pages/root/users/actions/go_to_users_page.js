@@ -6,6 +6,7 @@
  *@param {MainState} main_state
  */
 function  go_to_users_page(main_interface, main_state){
-    render_users_page(main_interface,main_state);
+
+    main_state.turnOnPage(UsersPageState);
     main_interface.render();
 }

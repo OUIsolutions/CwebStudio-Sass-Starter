@@ -9,7 +9,7 @@ class MainState{
 
     /** @type {StartPage} */
     page_start= new StartPage();
-
+    page_root_users = new UsersPageState();
 
     turnOnPage(page_class){
         for(let key in this){

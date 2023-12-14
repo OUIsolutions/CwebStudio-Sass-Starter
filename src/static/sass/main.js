@@ -25,7 +25,13 @@ function main_interface_generator(main_interface,main_state){
         if(main_state.page_start.current){
             render_start_page(main_interface,main_state)
         }
-        
+
+        //root pages
+        if(main_state.page_root_users.current){
+            render_users_page(main_interface,main_state);
+        }
+
+
     })
  
  
