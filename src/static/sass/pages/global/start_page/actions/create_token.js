@@ -47,7 +47,7 @@ function create_token(main_interface, main_state){
         }
 
         sessionStorage.setItem(TOKEN,data.token);
-        efetuate_login(main_interface,main_state,data.token);
+        efetuate_login(main_interface,main_state);
 
     })
 
