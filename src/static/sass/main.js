@@ -45,7 +45,6 @@ function main(){
         document.body
     )
 
-
     if(!token){
         main_state.turnOnPage(StartPage);
         main_interface.render();

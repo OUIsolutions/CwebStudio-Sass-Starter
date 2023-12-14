@@ -11,7 +11,6 @@ class MainState{
     page_start= new StartPage();
 
 
-
     turnOnPage(page_class){
         for(let key in this){
             if(!key.startsWith("page")){
