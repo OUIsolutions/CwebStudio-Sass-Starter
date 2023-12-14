@@ -6,7 +6,8 @@
  * @param {MainState} main_state
  */
 function  render_login_page(main_interface,main_state){
-    let start_page = main_state.start_page
+
+    let start_page = main_state.page
     let login_props =start_page.login_props
 
     const  RIGTH_DIV_STYLE = {
