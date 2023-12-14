@@ -6,7 +6,6 @@
  * @param {MainState} main_state
  */
 function  render_login_page(main_interface,main_state){
-
     let start_page = main_state.start_page
     let login_props =start_page.login_props
 
@@ -89,7 +88,9 @@ function  render_login_page(main_interface,main_state){
             
             main_interface.button({
                 click:()=>create_token(main_interface,main_state)
-            },"Login");
+            },"Login"
+
+            );
            
 
 
