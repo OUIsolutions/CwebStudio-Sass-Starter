@@ -1,4 +1,13 @@
 
+function go_to_main_page(main_interface,main_state){
+    main_state.turnOnPage(MainPage);
+    main_interface.render();
+}
+function go_to_main_page_removing_token(main_interface,main_state){
+    sessionStorage.removeItem(TOKEN);
+    go_to_main_page(main_interface,main_state);
+}
+
 /**
  * Creates a token
  *
@@ -16,17 +25,16 @@ function  make_autenticated_requisition(
     callback){
     let token =  sessionStorage.getItem(TOKEN);
     if(!token){
-        main_state.turnOnPage(StartPage);
-        main_interface.render();
+        go_to_main_page(main_interface,main_state);
+        return;
     }
     //fetch and cach any error 
     fetch(route,params)
     .then(response => {
         let invalid_responses = [401,403,500]
         if(invalid_responses.includes(response.code)){
-            sessionStorage.removeItem(TOKEN);
-            main_state.turnOnPage(StartPage);
-            main_interface.render();
+            go_to_main_page_removing_token(main_interface,main_state);
+            return;
         }
         return response;
     })
@@ -34,11 +42,10 @@ function  make_autenticated_requisition(
     .then(response => {
 
         if(response.code === INVALID_TOKEN){
-            sessionStorage.removeItem(TOKEN);
-            main_state.turnOnPage(StartPage);
-            main_interface.render();
+            go_to_main_page_removing_token(main_interface,main_state);
             return;
         }
+        
         callback(response);
         main_interface.render();
         
