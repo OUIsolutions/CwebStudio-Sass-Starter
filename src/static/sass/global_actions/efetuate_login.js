@@ -12,8 +12,10 @@
         profile.username = response.username;
         profile.email = response.email;
         profile.verified =response.verified;
-        
+        profile.is_root = response.is_root;
+        go_to_users_page(main_interface,main_state);
     })
+    
 
 
 

@@ -4,5 +4,5 @@
  * @param {MainState} main_state
  */
 function  render_users_page(main_interface, main_state){
-
+    console.log("chamou a users render");
 }

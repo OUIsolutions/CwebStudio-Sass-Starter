@@ -54,8 +54,7 @@ function  make_autenticated_requisition(
         }
 
         callback(response);
-        main_interface.render();
-        
+
     })
     
 }
