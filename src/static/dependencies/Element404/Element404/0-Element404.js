@@ -16,8 +16,9 @@
  
 /**
  * @param {function} generator
+ * @param {HTMLElement} target
  */
-function  createElement404(generator){
-     return new Element404(generator)
+function  createElement404(generator,target){
+     return new Element404(generator,target)
 }
 
