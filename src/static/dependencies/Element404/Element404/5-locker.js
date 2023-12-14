@@ -2,9 +2,6 @@
 Element404.prototype.lock=function( ){
     this.locked = true
     this.root.innerHTML = ''
-
-
-
     this.render()
 
 
