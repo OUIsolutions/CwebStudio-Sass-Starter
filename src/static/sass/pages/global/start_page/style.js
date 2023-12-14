@@ -21,17 +21,18 @@ class StartPageStyle{
     /** @returns {object} */
 
     title_style(){return {
-        'color':'white',
+        color:'white',
         'font-size':'4vh',
     }}
 
     /** @returns {object} */
     input_style(){return {
-        'position':'absolute',
         'background-color':'white',
-        'font-size':'4vh',
-        left:'5vh',
-        width:'20vw'
+        'border-radius':'1vh',
+        width:'20vw',
+        'font-size':'2vh',
+        height:'5vh',
+        border:'0'
     }}
 
 
