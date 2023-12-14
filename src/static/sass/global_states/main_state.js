@@ -11,16 +11,14 @@ class MainState{
     page_start= new StartPage();
 
 
-    /*
-    * @param {class} page
-    * */
-    turnOnPage(page){
+
+    turnOnPage(page_class){
         for(let key in this){
             if(!key.startsWith("page")){
                 continue;
             }
             let value = this[key];
-            if(value instanceof (page)){
+            if(value instanceof (page_class)){
                 value.current = true;
                 continue
             }
