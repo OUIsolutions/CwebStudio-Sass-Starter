@@ -37,7 +37,6 @@ function main(){
     let main_state = new MainState();
     let token = sessionStorage.getItem(TOKEN);
 
-
     let main_interface =createElement404(
         (main_interface) => {
             main_interface_generator(main_interface, main_state)
@@ -48,7 +47,7 @@ function main(){
 
 
     if(!token){
-        main_state.tur_on_start_page();
+        main_state.page = new StartPage();
         main_interface.render();
     }
     
