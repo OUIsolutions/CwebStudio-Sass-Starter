@@ -30,7 +30,7 @@ function create_token(main_interface, main_state){
         main_interface.render()
         return;
     }
-    
+
         let headers = {
         login: login_props.username_or_email,
         password:login_props.password
