@@ -60,11 +60,10 @@ function  render_login_page(main_interface,main_state){
             })
 
             let username_or_email_error = login_props.username_or_email_error;
-            if(username_or_email_error.exist){
-                main_interface.p({style:ERROR_STYLE},
-                    username_or_email_error.message
-                );
+            if(username_or_email_error){
+                main_interface.p({style:ERROR_STYLE},username_or_email_error);
             }
+            
 
             if(!username_or_email_error){
                 main_interface.br()
@@ -80,10 +79,8 @@ function  render_login_page(main_interface,main_state){
                 }
             )
             let password_error = login_props.password_error;
-            if(password_error.exist){
-                main_interface.p({style:ERROR_STYLE},
-                    password_error.message
-                );
+            if(password_error){
+                main_interface.p({style:ERROR_STYLE},password_error);
             }
 
             
