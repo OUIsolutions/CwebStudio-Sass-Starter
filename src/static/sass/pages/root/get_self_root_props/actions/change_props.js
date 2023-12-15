@@ -39,7 +39,11 @@ function  change_self_props(main_interface, main_state) {
 
 
     make_autenticated_requisition(main_interface,main_state,MODIFY_SELF_PROPS_ROUTE, {headers:headers},(response)=>{
-        console.log(response)
+        if(response.code === 0){
+            main_state.profile.username = page_props.new_username;
+            main_state.profile.email = page_props.new_email;
+            main_interface.render();
+        }
     })
 
 
