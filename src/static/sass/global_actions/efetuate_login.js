@@ -13,7 +13,11 @@
         profile.email = response.email;
         profile.verified =response.verified;
         profile.is_root = response.is_root;
-        go_to_users_page(main_interface,main_state);
+        if(profile.is_root){
+            go_to_users_page(main_interface,main_state);
+            return;
+        }
+        go_to_user_page(main_interface,main_state);
     })
     
 
