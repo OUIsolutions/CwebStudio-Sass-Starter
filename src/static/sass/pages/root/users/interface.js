@@ -15,8 +15,9 @@ function  render_users_page(main_interface, main_state) {
             'margin-left':'10%',
             'margin-right':'10%',
         }
+
         main_interface.table({style:table_style},()=>{
-            
+
             main_interface.tr(null,()=>{
                 main_interface.th(null,'Username')
                 main_interface.th(null,'Creation')
@@ -37,7 +38,7 @@ function  render_users_page(main_interface, main_state) {
                     main_interface.td(null,user.root)
                     main_interface.td(null,user.verified)
                     main_interface.td(null,()=>{
-                        
+                            main_interface.button(null,"Edit")
                     })
 
                 })
