@@ -6,6 +6,7 @@
 function  render_users_page(main_interface, main_state) {
     main_interface.div({style: left_bar_style()}, () => {
         render_profile_apresentation(main_interface,main_state);
+        
     })
 
 
