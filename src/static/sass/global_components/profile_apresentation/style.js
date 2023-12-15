@@ -2,6 +2,13 @@
 
 class ProfileApresentationStyle {
 
+    aprsentation_div(){
+        return {
+            'position':'absolute',
+            width:'100%',
+            height:'20vh'
+        }
+    }
     profile_picture_div(){
         return {
             'position':'absolute',
