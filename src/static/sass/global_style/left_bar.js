@@ -22,7 +22,6 @@ function rest_of_left_bar(){
         position:'absolute',
         width:'80vw',
         height:'100vh',
-        left:'20vw',
-        'background-color':GRAY_BACKGROUND
+        left:'20vw'
     }
 }

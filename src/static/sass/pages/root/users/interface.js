@@ -10,8 +10,12 @@ function  render_users_page(main_interface, main_state) {
         })
     })
     main_interface.div({style:rest_of_left_bar()},()=>{
-
-        main_interface.table(null,()=>{
+        const table_style = {
+            width:'80%',
+            'margin-left':'10%',
+            'margin-right':'10%',
+        }
+        main_interface.table({style:table_style},()=>{
             
             main_interface.tr(null,()=>{
                 main_interface.th(null,'Username')
@@ -20,6 +24,8 @@ function  render_users_page(main_interface, main_state) {
                 main_interface.th(null,"Last update")
                 main_interface.th(null,"Is Root")
                 main_interface.th(null,"Is Verified")
+                main_interface.th(null,null)
+
             })
 
             main_state.page_root_users.users.forEach(user => {
@@ -30,6 +36,10 @@ function  render_users_page(main_interface, main_state) {
                     main_interface.td(null,user.last_update)
                     main_interface.td(null,user.root)
                     main_interface.td(null,user.verified)
+                    main_interface.td(null,()=>{
+                        
+                    })
+
                 })
             })
         })
