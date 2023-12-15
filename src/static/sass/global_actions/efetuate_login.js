@@ -17,7 +17,7 @@
             go_to_users_page(main_interface,main_state);
             return;
         }
-        go_to_users_page(main_interface,main_state);
+        go_to_user_page(main_interface,main_state);
         return;
     })
     
