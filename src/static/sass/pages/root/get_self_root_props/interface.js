@@ -28,6 +28,8 @@ function  render_root_profile_page(main_interface, main_state) {
     })
     let page_props = main_state.page_root_profile;
     main_interface.div({style:rest_of_left_bar()},()=>{
+
+
         let div_style = {
             position:"absolute",
             top:'5%',
@@ -74,7 +76,11 @@ function  render_root_profile_page(main_interface, main_state) {
 
             main_interface.br()
             main_interface.br()
-
+            main_interface.br()
+            main_interface.br()
+            main_interface.br()
+            main_interface.br()
+ 
             main_interface.button({click:()=>change_self_props(main_interface,main_state)},"Change Props")
         })
 
