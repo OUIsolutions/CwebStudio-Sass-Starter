@@ -14,6 +14,13 @@ function  render_users_page(main_interface, main_state) {
                 ()=>{go_to_users_page(main_interface,main_state)}
             )
 
+            create_left_bar_element(
+                main_interface,
+                main_state.page_root_profile,
+                "Profile",
+                ()=>{go_to_root_page(main_interface,main_state)}
+            )
+
             render_logout_button(main_interface,main_state);
         })
     })
