@@ -1,7 +1,6 @@
 
 
 //never use these flag in production
-#define DEBUG
 #include "imports.h"
 #include "declaration.h"
 #include "definition.h"
@@ -32,7 +31,7 @@ int main(){
             }
         }
     #else
-        CwebServer server = newCwebSever(DEFAULT_PRODUCTION_PORT, main_sever);
+        CwebServer server = newCwebSever(3000, main_sever);
         cweb.server.start(&server);
     #endif
 

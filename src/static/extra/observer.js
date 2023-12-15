@@ -1,5 +1,5 @@
 
-
+/*
 setInterval(()=>{
     fetch("/api/changed")
    .then(response => response.json())
@@ -10,3 +10,4 @@ setInterval(()=>{
    })
 },100)
 
+*/

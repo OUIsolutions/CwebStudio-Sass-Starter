@@ -33,15 +33,16 @@ function create_token(main_interface, main_state){
      fetch(CREATE_TOKEN,{headers:headers})
     .then(data => data.json())
     .then(data =>{
+        console.log(data);
         if(data.code === USER_NOT_FOUND){
-            login_props.username_or_email_error = data.mensage;
+            login_props.username_or_email_error = data.message;
             main_interface.render()
             return;
         }
 
 
         if(data.code === WRONG_PASSWORD){
-            login_props.password_error = data.mensage;
+            login_props.password_error = data.message;
             main_interface.render()
             return;   
         }
