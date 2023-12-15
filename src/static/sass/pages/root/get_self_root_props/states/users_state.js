@@ -27,7 +27,8 @@ class RootProfileState {
 
     /** @type {string} */
     old_password;
-
+    /** @type {string} */
+    old_password_error;
     /** @type {string} */
     password;
     /** @type {string} */

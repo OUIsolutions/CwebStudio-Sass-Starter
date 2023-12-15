@@ -16,7 +16,12 @@ function  change_self_props(main_interface, main_state) {
             main_interface.render();
             return;
         }
-
+        if(!page_props.old_password){
+            page_props.old_password_error = 'old password its required';
+            main_interface.render();
+            return;
+        }
+        headers['password'] = page_props.old_password;
         headers['new_password'] = page_props.new_password;
         modified = true;
     }
@@ -43,9 +48,11 @@ function  change_self_props(main_interface, main_state) {
         console.log(response)
 
         if(response.code === 0){
+            alert(response.message);
             main_state.profile.username = page_props.new_username;
             main_state.profile.email = page_props.new_email;
             main_interface.render();
+
         }
     })
 

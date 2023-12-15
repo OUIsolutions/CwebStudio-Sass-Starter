@@ -77,7 +77,7 @@ function  render_root_profile_page(main_interface, main_state) {
 
             main_interface.button({click:()=>change_self_props(main_interface,main_state)},"Change Props")
         })
-        
+
         main_interface.div({style:{
                 position: 'absolute',
                 top:'5%',
@@ -89,7 +89,9 @@ function  render_root_profile_page(main_interface, main_state) {
                 type:"password"
             });
             main_interface.br()
-
+            if(page_props.old_password_error){
+                main_interface.p({style:style_error},page_props.old_password_error);
+            }
 
             main_interface.p({style:p_style},"new password");
             main_interface.stateInput(page_props,"password",{
