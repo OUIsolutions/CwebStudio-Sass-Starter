@@ -19,7 +19,7 @@ function  go_to_root_page(main_interface, main_state){
         root_profile_state.new_username = response.username;
 
         root_profile_state.email = response.email;
-        root_profile_state.new_email = response.new_email;
+        root_profile_state.new_email = response.email;
 
 
         root_profile_state.is_root =response.is_root;

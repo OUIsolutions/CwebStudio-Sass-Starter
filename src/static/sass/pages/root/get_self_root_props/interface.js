@@ -58,15 +58,17 @@ function  render_root_profile_page(main_interface, main_state) {
             main_interface.p({style:p_style},"username");
             main_interface.stateInput(page_props,"new_username",{style:input_style});
 
+
             if(page_props.username_error){
                 main_interface.p({style:style_error},page_props.username_error);
             }
 
             main_interface.p({style:p_style},"email");
-            main_interface.stateInput(page_props,"email",{style:input_style});
+            main_interface.stateInput(page_props,"new_email",{style:input_style});
             if(page_props.email_error){
                 main_interface.p({style:style_error},page_props.email_error);
             }
+
             main_interface.p({style:p_style},"new password");
             main_interface.stateInput(page_props,"password",{
                 type:"password",
