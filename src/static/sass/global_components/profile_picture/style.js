@@ -4,6 +4,7 @@ class  ProfilePictureStyle{
 
     profile_picture_div(){
         return {
+            'display':'inline-block',
             'margin-top':'5vw',
             'margin-left':'2vw',
             width:'5vw',
