@@ -77,7 +77,7 @@ function  change_self_props(main_interface, main_state) {
             return
         }
 
-       alert(response.mensage);
+       alert(response.message);
     })
 
 

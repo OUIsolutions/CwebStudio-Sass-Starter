@@ -53,14 +53,21 @@ function  render_users_page(main_interface, main_state) {
 
             })
 
-            main_state.page_root_users.users.forEach(user => {
+            function  convert_boolean(value){
+                if(value){
+                    return "yes"
+                }
+                return "no"
+            }
+            main_state.page_root_users.users.forEach(current_user => {
                 main_interface.tr(null,()=>{
-                    main_interface.td(null,user.username)
-                    main_interface.td(null,user.creation)
-                    main_interface.td(null,user.email)
-                    main_interface.td(null,user.last_update)
-                    main_interface.td(null,user.root)
-                    main_interface.td(null,user.verified)
+                    console.log(current_user)
+                    main_interface.td(null,String(current_user.username))
+                    main_interface.td(null,String(current_user.creation))
+                    main_interface.td(null,String(current_user.email))
+                    main_interface.td(null,String(current_user.last_update))
+                    main_interface.td(null,convert_boolean(current_user.root))
+                    main_interface.td(null,convert_boolean(current_user.verified))
                     main_interface.td(null,()=>{
                             main_interface.button(null,"Edit")
                     })

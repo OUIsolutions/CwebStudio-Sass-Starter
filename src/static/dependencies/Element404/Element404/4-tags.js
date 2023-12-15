@@ -92,7 +92,7 @@ Element404.prototype.table=function(props,content){
 /**
  * Creates an td
  * @param {object} props The object props
- * @param {function | string} content the internal content
+ * @param {boolean} content the internal content
  */
 Element404.prototype.td=function(props,content){
     this.create('td',props,content)
