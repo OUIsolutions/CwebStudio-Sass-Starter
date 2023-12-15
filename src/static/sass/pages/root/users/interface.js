@@ -11,9 +11,11 @@ function  render_users_page(main_interface, main_state) {
     })
     main_interface.div({style:rest_of_left_bar()},()=>{
 
-
-        main_state.page_root_users.users.forEach(user => {
+        main_state.table(null,()=>{
             
+            main_state.page_root_users.users.forEach(user => {
+            
+            })
         })
 
 })

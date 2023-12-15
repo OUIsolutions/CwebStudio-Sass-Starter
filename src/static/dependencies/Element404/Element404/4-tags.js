@@ -80,6 +80,14 @@ Element404.prototype.h5=function(props,content){
     this.create('h5',props,content)
 }
 
+/**
+ * Creates an H5
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
+Element404.prototype.table=function(props,content){
+    this.create('table',props,content)
+}
 
 /**
  * Creates an H3
