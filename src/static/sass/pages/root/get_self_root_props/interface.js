@@ -51,6 +51,9 @@ function  render_root_profile_page(main_interface, main_state) {
             color: 'grey',
             'text-align':'center'
         }
+        let style_error={
+            color:'red'
+        }
         main_interface.div({style:div_style},()=>{
             main_interface.p({style:p_style},"username");
             main_interface.stateInput(page_props,"new_username",{style:input_style});
@@ -64,16 +67,23 @@ function  render_root_profile_page(main_interface, main_state) {
                 style:input_style}
 
             );
-
+            if(page_props.password_error){
+                main_interface.p({style:style_error},page_props.password_error);
+            }
             main_interface.p({style:p_style},"new password",);
             main_interface.stateInput(page_props,"new_password",{
                 type:"password",
                 style:input_style}
             );
+
+            if(page_props.password_error){
+                main_interface.p({style:style_error},page_props.password_error);
+            }
+
             main_interface.br()
             main_interface.br()
 
-            main_interface.button(null,"Change Props")
+            main_interface.button({click:()=>change_self_props(main_interface,main_state)},"Change Props")
         })
 
     })
