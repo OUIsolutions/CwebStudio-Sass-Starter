@@ -17,3 +17,12 @@ function letf_bar_pages_style(){
         'top':'20vh',
     }
 }
+function rest_of_left_bar(){
+    return {
+        position:'absolute',
+        width:'80vw',
+        height:'100vh',
+        left:'20vw',
+        'background-color':GRAY_BACKGROUND
+    }
+}

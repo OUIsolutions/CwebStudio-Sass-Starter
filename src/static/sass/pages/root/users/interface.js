@@ -9,6 +9,9 @@ function  render_users_page(main_interface, main_state) {
             render_logout_button(main_interface,main_state);
         })
     })
+    main_interface.div({style:rest_of_left_bar()},()=>{
+
+    })
 
 
 
