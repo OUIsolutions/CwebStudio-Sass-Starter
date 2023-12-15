@@ -30,7 +30,10 @@ function main_interface_generator(main_interface,main_state){
         if(main_state.page_root_users.current){
             render_users_page(main_interface,main_state);
         }
-
+        
+        if(main_state.page_root_profile.current){
+            render_root_profile_page(main_interface,main_state);
+        }
 
     })
  

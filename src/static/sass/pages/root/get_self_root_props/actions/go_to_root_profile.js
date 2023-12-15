@@ -33,8 +33,9 @@ function  go_to_root_page(main_interface, main_state){
             new_token.last_update = token.last_update;
             new_token.token_id = token.token_id;
         })
-        
 
+        main_state.turnOnPage(RootProfileState);
+        main_interface.render();
 
     }
     make_autenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
