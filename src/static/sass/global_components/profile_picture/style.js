@@ -5,9 +5,11 @@ class  ProfilePictureStyle{
     profile_picture_div(){
         return {
             'margin-top':'5vw',
-            'margin-left':'5vw',
-            width:'10vw',
-            height:'10vw'
+            'margin-left':'2vw',
+            width:'5vw',
+            height:'5vw',
+           'border-radius': '50%',
+            'overflow': 'hidden',
         }
     }
     profile_picture_img(){
