@@ -1,11 +1,11 @@
 
-function go_to_main_page(main_interface,main_state){
-    main_state.turnOnPage(MainPage);
+function go_to_start_page(main_interface,main_state){
+    main_state.turnOnPage(StartPage);
     main_interface.render();
 }
 function go_to_main_page_removing_token(main_interface,main_state){
     sessionStorage.removeItem(TOKEN);
-    go_to_main_page(main_interface,main_state);
+    go_to_start_page(main_interface,main_state);
 }
 
 /**
@@ -25,20 +25,24 @@ function  make_autenticated_requisition(
     callback){
     let token =  sessionStorage.getItem(TOKEN);
     if(!token){
-        go_to_main_page(main_interface,main_state);
+        go_to_start_page(main_interface,main_state);
         return;
     }
     //fetch and cach any error 
     if(!params){
-        params = {};
+        params = {
+        };
     }
-    params.headers = {
-        token:token
+    if(!params.headers){
+        params.headers = {};
     }
+
+    params.headers.token =token
+
     
     fetch(route,params)
     .then(response => {
-        let invalid_responses = [401,403,500]
+        let invalid_responses = [500,404]
         if(invalid_responses.includes(response.code)){
             go_to_main_page_removing_token(main_interface,main_state);
             return;
@@ -47,11 +51,11 @@ function  make_autenticated_requisition(
     })
     .then(response => response.json())
     .then(response => {
-
         if(response.code === INVALID_TOKEN){
             go_to_main_page_removing_token(main_interface,main_state);
             return;
         }
+
 
         callback(response);
 
