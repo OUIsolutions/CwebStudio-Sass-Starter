@@ -81,12 +81,42 @@ Element404.prototype.h5=function(props,content){
 }
 
 /**
- * Creates an H5
+ * Creates an table
  * @param {object} props The object props
  * @param {function | string} content the internal content
  */
 Element404.prototype.table=function(props,content){
     this.create('table',props,content)
+}
+
+/**
+ * Creates an td
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
+Element404.prototype.td=function(props,content){
+    this.create('td',props,content)
+}
+
+/**
+ * Creates an tr
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
+
+Element404.prototype.tr=function(props,content){
+    this.create('tr',props,content)
+}
+
+
+/**
+ * Creates an th
+ * @param {object} props The object props
+ * @param {function | string} content the internal content
+ */
+
+Element404.prototype.th=function(props,content){
+    this.create('th',props,content)
 }
 
 /**

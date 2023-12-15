@@ -11,10 +11,26 @@ function  render_users_page(main_interface, main_state) {
     })
     main_interface.div({style:rest_of_left_bar()},()=>{
 
-        main_state.table(null,()=>{
+        main_interface.table(null,()=>{
             
+            main_interface.tr(null,()=>{
+                main_interface.th(null,'Username')
+                main_interface.th(null,'Creation')
+                main_interface.th(null,"Email")
+                main_interface.th(null,"Last update")
+                main_interface.th(null,"Is Root")
+                main_interface.th(null,"Is Verified")
+            })
+
             main_state.page_root_users.users.forEach(user => {
-            
+                main_interface.tr(null,()=>{
+                    main_interface.td(null,user.username)
+                    main_interface.td(null,user.creation)
+                    main_interface.td(null,user.email)
+                    main_interface.td(null,user.last_update)
+                    main_interface.td(null,user.root)
+                    main_interface.td(null,user.verified)
+                })
             })
         })
 
