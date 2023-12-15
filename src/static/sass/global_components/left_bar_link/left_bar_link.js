@@ -13,11 +13,18 @@ function create_left_bar_element(main_interface,page_props,text,callback){
         div_style['background-color'] = 'rgb(36,58,93)';
     }
 
-
-    main_interface.div({
+    let div_props = {
         style:div_style,
-        click:callback
-    },text)
+        click:callback,
+    }
+    if(page_props.selected){
+        div_props['render_mouseleave'] =()=>{page_props.selected = false}
+    }
+    if(!page_props.selected){
+        div_props['render_mouseenter'] =()=>{page_props.selected = true}
+    }
+
+    main_interface.div(div_props,text)
 
 
 }
