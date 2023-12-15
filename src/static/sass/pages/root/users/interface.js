@@ -10,11 +10,19 @@ function  render_users_page(main_interface, main_state) {
         })
     })
     main_interface.div({style:rest_of_left_bar()},()=>{
+
+        main_interface.br()
+        const button_style = {
+            'margin-left':'10%'
+        }
+        main_interface.button({style:button_style},"Create New User")
+
         const table_style = {
             width:'80%',
             'margin-left':'10%',
             'margin-right':'10%',
         }
+
 
         main_interface.table({style:table_style},()=>{
 
