@@ -31,7 +31,7 @@ int main(){
             }
         }
     #else
-        CwebServer server = newCwebSever(3000, main_sever);
+        CwebServer server = newCwebSever(80, main_sever);
         cweb.server.start(&server);
     #endif
 
