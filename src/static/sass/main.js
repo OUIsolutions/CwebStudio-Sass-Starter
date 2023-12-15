@@ -35,6 +35,11 @@ function main_interface_generator(main_interface,main_state){
             render_root_profile_page(main_interface,main_state);
         }
 
+        if(main_state.page_add_user.current){
+            render_add_user_page(main_interface,main_state);
+        }
+
+
     })
  
  

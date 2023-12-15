@@ -31,7 +31,7 @@ function  render_users_page(main_interface, main_state) {
         const button_style = {
             'margin-left':'10%'
         }
-        main_interface.button({style:button_style},"Create New User")
+        main_interface.button({style:button_style,click:()=>go_to_add_user(main_interface,main_state)},"Create New User")
 
         const table_style = {
             width:'80%',

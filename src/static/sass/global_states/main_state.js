@@ -11,6 +11,8 @@ class MainState{
     page_start= new StartPage();
     page_root_users = new UsersPageState();
     page_root_profile = new RootProfileState();
+    page_add_user = new NewUserState();
+
     turnOnPage(page_class){
         for(let key in this){
             if(!key.startsWith("page")){
