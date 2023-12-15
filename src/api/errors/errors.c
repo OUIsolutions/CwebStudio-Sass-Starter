@@ -13,7 +13,7 @@ CwebHttpResponse *send_error( CwebHttpRequest *request,int status, int internalc
 
 
     CHashObject * response = newCHashObject(
-            "mensage",hash.newString(buffer),
+            "message",hash.newString(buffer),
             "code",hash.newNumber(internalcode)
             );
 

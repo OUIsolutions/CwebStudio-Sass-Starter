@@ -75,7 +75,7 @@ function  render_user_profile_page(main_interface, main_state) {
             main_interface.br()
             main_interface.br()
 
-            main_interface.button({click:()=>change_self_props(main_interface,main_state)},"Change Props")
+            main_interface.button({click:()=>change_user_self_props(main_interface,main_state)},"Change Props")
         })
 
         main_interface.div({style:{

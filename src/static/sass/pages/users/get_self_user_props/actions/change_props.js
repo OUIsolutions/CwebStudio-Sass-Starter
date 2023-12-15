@@ -6,8 +6,8 @@
  * @param {Element404} main_interface
  *@param {MainState} main_state
  */
-function  change_self_props(main_interface, main_state) {
-    let page_props = main_state.page_root_profile;
+function  change_user_self_props(main_interface, main_state) {
+    let page_props = main_state.page_user_profile;
     let headers = {}
     let modified = false;
     let requires_password = false;
@@ -68,6 +68,7 @@ function  change_self_props(main_interface, main_state) {
 
 
     make_autenticated_requisition(main_interface,main_state,MODIFY_SELF_PROPS_ROUTE, {headers:headers},(response)=>{
+
         if(response.code === 0){
             alert(response.message);
             main_state.profile.username = page_props.new_username;
