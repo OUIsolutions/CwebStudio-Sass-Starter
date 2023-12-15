@@ -14,6 +14,8 @@ function render_profile_apresentation(main_interface, main_state){
                 null
             )
     })
-    main_interface.p({style:profile_picture_style.profile_name_style()},profile.username);
+    main_interface.div({style:profile_picture_style.profile_name_style()},()=>{
+        main_interface.p(null,profile.username);
+    })
 
 }

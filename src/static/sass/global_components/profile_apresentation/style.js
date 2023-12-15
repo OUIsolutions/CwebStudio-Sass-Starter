@@ -4,12 +4,11 @@ class ProfileApresentationStyle {
 
     profile_picture_div(){
         return {
-            'text-align':'center',
-
-            'margin-top':'3vw',
-            'margin-left':'6.5vw',
-            width:'7vw',
-            height:'7vw',
+            'position':'absolute',
+            'top':'3vw',
+            'left':'2vw',
+            width:'5vw',
+            height:'5vw',
            'border-radius': '50%',
             'overflow': 'hidden',
         }
@@ -29,8 +28,12 @@ class ProfileApresentationStyle {
     }
      profile_name_style(){
         return {
-            'margin-top':'2vw',
-            'text-align':'center',
+            'position':'absolute',
+            'top':'5vw',
+            'left':'10vw',
+            border:'0vw',
+            width:'5vw',
+            height:'5vw',
             color:'white',
             'font-size':'3vh'
         }
