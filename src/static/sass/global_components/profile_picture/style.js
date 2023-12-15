@@ -4,11 +4,11 @@ class  ProfilePictureStyle{
 
     profile_picture_div(){
         return {
-            'display':'inline-block',
-            'margin-top':'5vw',
-            'margin-left':'2vw',
-            width:'5vw',
-            height:'5vw',
+
+            'margin-top':'3vw',
+            'margin-left':'6vw',
+            width:'7vw',
+            height:'7vw',
            'border-radius': '50%',
             'overflow': 'hidden',
         }
