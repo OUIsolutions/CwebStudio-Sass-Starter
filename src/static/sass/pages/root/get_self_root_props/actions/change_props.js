@@ -16,9 +16,11 @@ function  change_self_props(main_interface, main_state) {
             main_interface.render();
             return;
         }
+
         headers['new_password'] = page_props.new_password;
         modified = true;
     }
+
     if(page_props.email !== page_props.new_email){
         headers['new_email'] = page_props.new_email;
         modified = true;
@@ -35,10 +37,11 @@ function  change_self_props(main_interface, main_state) {
         return;
     }
 
-    console.log(headers)
 
 
     make_autenticated_requisition(main_interface,main_state,MODIFY_SELF_PROPS_ROUTE, {headers:headers},(response)=>{
+        console.log(response)
+
         if(response.code === 0){
             main_state.profile.username = page_props.new_username;
             main_state.profile.email = page_props.new_email;

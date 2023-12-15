@@ -43,7 +43,8 @@ function  render_root_profile_page(main_interface, main_state) {
                 width:'15vw',
                 'font-size':'2vh',
                 height:'3vh',
-                border:0
+
+                border:'none'
 
         }
         let p_style ={
@@ -69,6 +70,15 @@ function  render_root_profile_page(main_interface, main_state) {
                 main_interface.p({style:style_error},page_props.email_error);
             }
 
+
+            main_interface.p({style:p_style},"Old Passowrd");
+            main_interface.stateInput(page_props,"old_password",{
+                style:input_style,
+                type:"password"
+            });
+            main_interface.br()
+
+
             main_interface.p({style:p_style},"new password");
             main_interface.stateInput(page_props,"password",{
                 type:"password",
@@ -78,7 +88,7 @@ function  render_root_profile_page(main_interface, main_state) {
             if(page_props.password_error){
                 main_interface.p({style:style_error},page_props.password_error);
             }
-            main_interface.p({style:p_style},"new password",);
+            main_interface.p({style:p_style},"confirm new password",);
             main_interface.stateInput(page_props,"new_password",{
                 type:"password",
                 style:input_style}

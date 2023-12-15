@@ -25,7 +25,8 @@ class RootProfileState {
     /** @type {string} */
     email_error;
 
-
+    /** @type {string} */
+    old_password;
 
     /** @type {string} */
     password;
