@@ -7,6 +7,8 @@
  */
 function  go_to_users_page(main_interface, main_state){
     function list_users(response){
+       main_state.page_root_users = new UsersPageState();
+
        response.forEach((user)=>{
             let created_user = new UserState();
            created_user.username =user.username;
@@ -16,6 +18,7 @@ function  go_to_users_page(main_interface, main_state){
            created_user.verified = user.verified;
            main_state.page_root_users.users.unshift(created_user);
        })
+
         main_state.turnOnPage(UsersPageState);
         main_interface.render();
     }
