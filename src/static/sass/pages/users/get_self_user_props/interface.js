@@ -19,7 +19,8 @@ function  render_user_profile_page(main_interface, main_state) {
             render_logout_button(main_interface,main_state);
         })
     })
-    let page_props = main_state.page_root_profile;
+
+    let page_props = main_state.page_user_profile;
     main_interface.div({style:rest_of_left_bar()},()=>{
 
 

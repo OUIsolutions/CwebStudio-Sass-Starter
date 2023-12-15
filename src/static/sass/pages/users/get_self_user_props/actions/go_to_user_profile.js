@@ -12,6 +12,7 @@ function  go_to_user_page(main_interface, main_state){
     }
 
     function response_callback(response){
+
         main_state.page_user_profile = new UserProfileState();
         let root_profile_state = main_state.page_user_profile;
 
@@ -34,10 +35,11 @@ function  go_to_user_page(main_interface, main_state){
             new_token.token_id = token.token_id;
         })
 
-        main_state.turnOnPage(RootProfileState);
+        main_state.turnOnPage(UserProfileState);
         main_interface.render();
 
     }
+
     make_autenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
         {headers:headers},
                 response_callback,
