@@ -17,17 +17,5 @@ const VERIFIED_KEY = "verified"
 const RECOVERY_KEY = "recovery_key"
 const VERIFICATION_KEY_ENTRE = "verification_key"
 const VERIFICATION_URL_ENTRE = "verification_url"
-const TERMINATED_APLICATION = "Application
-const USER_CREATED = "User
-const USER_MODIFIED = "User
-const USER_VERIFIED = "User
-const USER_REMOVED = "User
-const EMAIL_SENDED = "Email
-const TOKEN_UPDATED = "Token
-const RECOVERY_KEY_SENDED = "Recovery
-const PICTURE_UPLOADED = "picture
 const NEVER_EXPIRATION = "never"
-const TOKEN_REMOVED = "Token
-const ALL_TOKENS_REMOVED = "All
 const CHAGEND_KEY = "changed"
-

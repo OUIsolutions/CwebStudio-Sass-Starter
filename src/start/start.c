@@ -72,13 +72,16 @@ void generate_script_constant_file(const char *static_folder,const char *path){
     for(int i =0; i < line_divided->size; i++){
         CTextStack *current = line_divided->stacks[i];
         if(!stack.starts_with(current,"#define")){
-            stack.format(result,"%t\n",current);
             continue;
         }
+
         stack.self_replace(current,"  "," ");
         space_divided = CTextArray_split(current->rendered_text," ");
         UniversalGarbage_resset(garbage, space_divided);
-
+        if(space_divided->size != 3){
+            continue;
+        }
+        
         stack.format(result,"const %t = %t\n",space_divided->stacks[1],space_divided->stacks[2]);
 
     }
