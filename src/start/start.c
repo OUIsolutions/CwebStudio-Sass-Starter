@@ -52,9 +52,13 @@ void create_root_user_if_not_exist(){
     resource.free(database);
 }
 
-void generate_script_constant_file(const char *path){
+void generate_script_constant_file(const char *static_folder,const char *path){
     UniversalGarbage *garbage = newUniversalGarbage();
     char *content = dtw.load_string_file_content(path);
+    if(!content){
+        printf("content of %s not found\n", path);
+        exit(1);
+    }
     UniversalGarbage_add_simple(garbage,content);
     CTextStack *result = newCTextStack_string(content);
     UniversalGarbage_add(garbage,stack.free,result);
@@ -64,7 +68,7 @@ void generate_script_constant_file(const char *path){
     UniversalGarbage_add(garbage,dtw.path.free,output);
     dtw.path.set_extension(output,"js");
 
-    char * formated_dir = dtw_concat_path(cweb_static_folder,FRONT_END_CONSTANTS_PATH);
+    char * formated_dir = dtw_concat_path(static_folder,FRONT_END_CONSTANTS_PATH);
     UniversalGarbage_add_simple(garbage,formated_dir);
 
     dtw.path.set_dir(output,formated_dir);
@@ -73,9 +77,9 @@ void generate_script_constant_file(const char *path){
     UniversalGarbage_free(garbage);
 
 
-
+z
 }
-void create_script_constants(){
-    generate_script_constant_file("src/routes.h");
+void create_script_constants(const char *static_folder){
+    generate_script_constant_file(static_folder,"constants/routes.h");
 
 }

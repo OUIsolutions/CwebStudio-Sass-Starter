@@ -23,7 +23,7 @@ int main(){
         static_folder = "src/static";
     }
 
-    create_script_constants();
+    create_script_constants(static_folder);
     return 0;
 
 
