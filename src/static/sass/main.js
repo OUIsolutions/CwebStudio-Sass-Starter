@@ -3,25 +3,18 @@
 
 
 
+
+
+
 /**
  * Creates an H3
  * @param {Element404} main_interface The object props
  * @param {MainState} main_state
  */
 function main_interface_generator(main_interface,main_state){
-    let interface_style = {
-         position:'fixed',
-         width:'100vw',
-         height: '100vh'
-    }
+    let interface_style = create_main_interface_style(main_state);
 
-     if(main_state.page_start.current){
-         interface_style['background'] = `url('${assets['background']}')`;
-         interface_style['background-size'] = 'cover';
-         interface_style[' background-position'] = 'center center';
-     }
- 
-     main_interface.div({style:interface_style},()=>{
+     main_interface.div(()=>{
         if(main_state.page_start.current){
             render_start_page(main_interface,main_state)
         }
@@ -42,11 +35,10 @@ function main_interface_generator(main_interface,main_state){
             render_user_profile_page(main_interface,main_state);
         }
 
-    })
+    },{style:interface_style})
+
  
- 
- 
- }
+}
 
 function main(){
 
