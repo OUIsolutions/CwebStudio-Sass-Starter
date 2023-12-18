@@ -4,7 +4,7 @@
 
 
 //===========================API============================================================
-const  API_START "/api"
+const API_START "/api"
 //public
 const CREATE_TOKEN_ROUTE "/api/public/create_token"
 const GET_PUBLIC_PROFILE_PICTURE_ROUTE "/api/public/get_public_profile_picture"
@@ -18,13 +18,13 @@ const END_ROUTE "/api/end"
 const STATIC_CHANGED "/api/changed"
 
 //user
-const UPDATE_TOKEN_ROUTE  "/api/user/update_token"
+const UPDATE_TOKEN_ROUTE "/api/user/update_token"
 const REMOVE_TOKEN_ROUTE "/api/user/remove_token"
 const REMOVE_ALL_FINITE_TOKENS_ROUTE "/api/user/remove_all_finite_tokens"
 const REMOVE_ALL_INFINITE_TOKENS_ROUTE "/api/user/remove_all_infinite_tokens"
 const REMOVE_ALL_TOKENS_ROUTE "/api/user/remove_all_tokens"
 const REMOVE_TOKEN_BY_ID "/api/user/remove_token_by_id"
-const GET_SELF_PROPS_ROUTE  "/api/user/get_self_props"
+const GET_SELF_PROPS_ROUTE "/api/user/get_self_props"
 const MODIFY_SELF_PROPS_ROUTE "/api/user/modify_self_props"
 const SELF_REMOVE_ROUTE "/api/user/self_remove"
 const UPLOAD_PROFILE_PICTURE_ROUTE "/api/user/upload_profile_picture"

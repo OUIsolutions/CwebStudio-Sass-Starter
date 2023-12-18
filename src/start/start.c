@@ -60,24 +60,41 @@ void generate_script_constant_file(const char *static_folder,const char *path){
         exit(1);
     }
     UniversalGarbage_add_simple(garbage,content);
-    CTextStack *result = newCTextStack_string(content);
-    UniversalGarbage_add(garbage,stack.free,result);
-    stack.self_replace(result,"#define","const");
 
-    DtwPath * output = dtw.path.newPath(path);
-    UniversalGarbage_add(garbage,dtw.path.free,output);
-    dtw.path.set_extension(output,"js");
+    CTextArray *line_divided = CTextArray_split(content, "\n");
+    UniversalGarbage_add(garbage, CTextArray_free, line_divided);
+    CTextStack *result = newCTextStack_string_empty();
+    UniversalGarbage_add(garbage,stack.free,result);
+
+    for(int i =0; i < line_divided->size; i++){
+        CTextStack *current = line_divided->stacks[i];
+        if(!stack.starts_with(current,"#define")){
+            stack.format(result,"%t\n",current);
+            continue;
+        }
+        stack.self_replace(current,"  "," ");
+        CTextArray *space_divided = CTextArray_split(current->rendered_text," ");
+        UniversalGarbage_add(garbage, CTextArray_free,space_divided);
+
+        stack.format(result,"const %t = %t\n",space_divided->stacks[1],space_divided->stacks[2]);
+
+    }
+
+
+    DtwPath * output_path = dtw.path.newPath(path);
+    UniversalGarbage_add(garbage,dtw.path.free,output_path);
+    dtw.path.set_extension(output_path,"js");
 
     char * formated_dir = dtw_concat_path(static_folder,FRONT_END_CONSTANTS_PATH);
     UniversalGarbage_add_simple(garbage,formated_dir);
 
-    dtw.path.set_dir(output,formated_dir);
+    dtw.path.set_dir(output_path,formated_dir);
 
-    dtw.write_string_file_content(dtw.path.get_path(output),result->rendered_text);
+    dtw.write_string_file_content(dtw.path.get_path(output_path),result->rendered_text);
     UniversalGarbage_free(garbage);
 
 
-z
+
 }
 void create_script_constants(const char *static_folder){
     generate_script_constant_file(static_folder,"constants/routes.h");
