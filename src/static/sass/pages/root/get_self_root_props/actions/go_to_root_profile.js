@@ -38,7 +38,7 @@ function  go_to_root_page(main_interface, main_state){
         main_interface.render();
 
     }
-    make_autenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
+    make_authenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
         {headers:headers},
                 response_callback,
         )

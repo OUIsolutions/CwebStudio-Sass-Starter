@@ -58,7 +58,7 @@ function  add_user(main_interface, main_state) {
     }
 
 
-    make_autenticated_requisition(main_interface,main_state,'/api/root/create_user', {headers:headers},(response)=>{
+    make_authenticated_requisition(main_interface,main_state,'/api/root/create_user', {headers:headers},(response)=>{
        alert(response.message);
        if(response.code === 0){
            go_to_users_page(main_interface,main_state);

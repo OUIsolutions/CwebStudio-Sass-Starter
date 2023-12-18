@@ -19,7 +19,9 @@ function create_main_interface_style(main_state){
         interface_style['background-size'] = 'cover';
         interface_style[' background-position'] = 'center center';
     }
+
     return interface_style;
+
 }
 
 
@@ -49,6 +51,7 @@ function main_interface_generator(main_interface,main_state){
         if(main_state.page_add_user.current){
             render_add_user_page(main_interface,main_state);
         }
+
         if(main_state.page_user_profile.current){
             render_user_profile_page(main_interface,main_state);
         }
@@ -57,6 +60,7 @@ function main_interface_generator(main_interface,main_state){
 
  
 }
+
 
 function main(){
 

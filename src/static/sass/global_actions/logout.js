@@ -13,6 +13,6 @@ function  efetuate_logout(main_interface, main_state){
         headers:{'token-to-remove': token}
     }
 
-    make_autenticated_requisition(main_interface,main_state,REMOVE_TOKEN,paramns, go_to_main)
+    make_authenticated_requisition(main_interface,main_state,REMOVE_TOKEN,paramns, go_to_main)
 
 }

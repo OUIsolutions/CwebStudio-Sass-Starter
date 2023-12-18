@@ -4,7 +4,7 @@ function go_to_start_page(main_interface,main_state){
     main_interface.render();
 }
 function go_to_main_page_removing_token(main_interface,main_state){
-    sessionStorage.removeItem(TOKEN);
+    sessionStorage.removeItem(TOKEN_KEY);
     go_to_start_page(main_interface,main_state);
 }
 
@@ -17,13 +17,13 @@ function go_to_main_page_removing_token(main_interface,main_state){
  *@param {object} params
  * @param {function} callback
  */
-function  make_autenticated_requisition(
+function  make_authenticated_requisition(
     main_interface,
     main_state,
     route,
     params,
     callback){
-    let token =  sessionStorage.getItem(TOKEN);
+    let token =  sessionStorage.getItem(TOKEN_KEY);
     if(!token){
         go_to_start_page(main_interface,main_state);
         return;
@@ -55,8 +55,6 @@ function  make_autenticated_requisition(
             go_to_main_page_removing_token(main_interface,main_state);
             return;
         }
-
-
         callback(response);
 
     })

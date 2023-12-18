@@ -7,7 +7,7 @@
  function efetuate_login(main_interface, main_state){
 
 
-    make_autenticated_requisition(main_interface,main_state,GET_SELF_PROPS_ROUTE,null,(response) => {
+    make_authenticated_requisition(main_interface,main_state,GET_SELF_PROPS_ROUTE,null,(response) => {
         let profile = main_state.profile;
         profile.username = response.username;
         profile.email = response.email;

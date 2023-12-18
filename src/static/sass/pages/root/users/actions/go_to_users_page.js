@@ -23,7 +23,7 @@ function  go_to_users_page(main_interface, main_state){
         main_interface.render();
     }
 
-    make_autenticated_requisition(main_interface,main_state,LIST_USERS,null,list_users)
+    make_authenticated_requisition(main_interface,main_state,LIST_USERS,null,list_users)
 
 
 }

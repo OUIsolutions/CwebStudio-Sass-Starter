@@ -40,7 +40,7 @@ function  go_to_user_page(main_interface, main_state){
 
     }
 
-    make_autenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
+    make_authenticated_requisition(main_interface,main_state,GET_SELF_PROPS,
         {headers:headers},
                 response_callback,
         )

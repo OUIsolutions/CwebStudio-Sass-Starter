@@ -67,7 +67,7 @@ function  change_self_props(main_interface, main_state) {
 
 
 
-    make_autenticated_requisition(main_interface,main_state,MODIFY_SELF_PROPS_ROUTE, {headers:headers},(response)=>{
+    make_authenticated_requisition(main_interface,main_state,MODIFY_SELF_PROPS_ROUTE, {headers:headers},(response)=>{
         if(response.code === 0){
             alert(response.message);
             main_state.profile.username = page_props.new_username;
