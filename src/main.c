@@ -1,6 +1,7 @@
 
 
 //never use these flag in production
+#define DEBUG
 #include "imports.h"
 #include "declaration.h"
 #include "definition.h"
