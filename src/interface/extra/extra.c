@@ -1,43 +1,5 @@
 
-void reference_static_images(CTextStack *head){
 
-    UniversalGarbage *garbage = newUniversalGarbage();
-
-    DtwTree *listage = newDtwTree();
-    UniversalGarbage_add(garbage, DtwTree_free,listage);
-    dtw.tree.add_tree_from_hardware(listage,cweb_static_folder,&(DtwTreeProps){
-            .content = DTW_HIDE,
-            .hadware_data=DTW_HIDE,
-            .path_atributes=DTW_INCLUDE
-    });
-
-    CTextScope(head,CTEXT_SCRIPT){
-        stack.text(head,"let = assets = {};\n");
-        for(int i=0; i < listage->size;i++){
-            DtwTreePart *part = listage->tree_parts[i];
-            DtwPath *path = part->path;
-            char *name = dtw.path.get_name(path);
-            char *extension = dtw.path.get_extension(path);
-            bool implement = false;
-            if(strings_equal(extension,"jpg")){
-                implement = true;
-            }
-
-            if(strings_equal(extension,"png")){
-                implement = true;
-            }
-            if(!implement){
-                continue;
-            }
-            stack.format(head,"assets['%s'] = '%sc';\n",
-                         name,
-                         cweb_smart_static_ref(dtw.path.get_path(path))
-           );
-        }
-    }
-    UniversalGarbage_free(garbage);
-
-}
 void reference_static_path(CTextStack *head,const char *path){
     UniversalGarbage *garbage = newUniversalGarbage();
     char *formated_path = dtw.concat_path(cweb_static_folder,path);

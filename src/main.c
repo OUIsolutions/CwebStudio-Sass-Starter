@@ -23,9 +23,8 @@ int main(){
         static_folder = "src/static";
     }
 
-    create_script_constants(static_folder);
-    return 0;
-
+    cweb_static_folder = static_folder;
+    create_script_constants();
 
     #ifdef DEBUG
         for(int i = 3000; i < 4000; i++){

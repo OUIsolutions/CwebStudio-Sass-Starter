@@ -52,7 +52,7 @@ void create_root_user_if_not_exist(){
     resource.free(database);
 }
 
-void generate_script_constant_file(const char *static_folder,const char *path){
+void generate_script_constant_file(const char *path){
     UniversalGarbage *garbage = newUniversalGarbage();
     char *content = dtw.load_string_file_content(path);
     if(!content){
@@ -81,7 +81,7 @@ void generate_script_constant_file(const char *static_folder,const char *path){
         if(space_divided->size != 3){
             continue;
         }
-        
+
         stack.format(result,"const %t = %t\n",space_divided->stacks[1],space_divided->stacks[2]);
 
     }
@@ -91,7 +91,7 @@ void generate_script_constant_file(const char *static_folder,const char *path){
     UniversalGarbage_add(garbage,dtw.path.free,output_path);
     dtw.path.set_extension(output_path,"js");
 
-    char * formated_dir = dtw_concat_path(static_folder,FRONT_END_CONSTANTS_PATH);
+    char * formated_dir = dtw_concat_path(cweb_static_folder,FRONT_END_CONSTANTS_PATH);
     UniversalGarbage_add_simple(garbage,formated_dir);
 
     dtw.path.set_dir(output_path,formated_dir);
@@ -102,10 +102,58 @@ void generate_script_constant_file(const char *static_folder,const char *path){
 
 
 }
-void create_script_constants(const char *static_folder){
-    generate_script_constant_file(static_folder,"constants/routes.h");
-    generate_script_constant_file(static_folder,"constants/responses.h");
-    generate_script_constant_file(static_folder,"constants/entries.h");
-    generate_script_constant_file(static_folder,"constants/errors.h");
 
+void create_assets(){
+
+    UniversalGarbage *garbage = newUniversalGarbage();
+    CTextStack *generated_script = newCTextStack_string("let assets = {};\n");
+    UniversalGarbage_add(garbage,stack.free,generated_script);
+
+
+    DtwTree *listage = newDtwTree();
+    UniversalGarbage_add(garbage, DtwTree_free,listage);
+    dtw.tree.add_tree_from_hardware(listage,cweb_static_folder,&(DtwTreeProps){
+            .content = DTW_HIDE,
+            .hadware_data=DTW_HIDE,
+            .path_atributes=DTW_INCLUDE
+    });
+
+    for(int i=0; i < listage->size;i++){
+        DtwTreePart *part = listage->tree_parts[i];
+        DtwPath *path = part->path;
+        char *name = dtw.path.get_name(path);
+        char *extension = dtw.path.get_extension(path);
+        bool implement = false;
+        if(strings_equal(extension,"jpg")){
+            implement = true;
+        }
+
+        if(strings_equal(extension,"png")){
+            implement = true;
+        }
+        if(!implement){
+            continue;
+        }
+        stack.format(generated_script,"assets['%s'] = '%sc';\n",
+                     name,
+                     cweb_smart_static_ref(dtw.path.get_path(path))
+        );
+    }
+
+    char *output_dir= dtw_concat_path(cweb_static_folder,FRONT_END_CONSTANTS_PATH);
+    UniversalGarbage_add_simple(garbage,output_dir);
+    char *output_path = dtw_concat_path(output_dir,"assets.js");
+    UniversalGarbage_add_simple(garbage,output_path);
+    dtw_write_string_file_content(output_path,generated_script->rendered_text);
+    UniversalGarbage_free(garbage);
+
+
+}
+
+void create_script_constants(){
+    generate_script_constant_file("constants/routes.h");
+    generate_script_constant_file("constants/responses.h");
+    generate_script_constant_file("constants/entries.h");
+    generate_script_constant_file("constants/errors.h");
+    create_assets();
 }
