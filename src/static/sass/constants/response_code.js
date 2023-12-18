@@ -1,3 +1,0 @@
-const USER_NOT_FOUND = 3;
-const WRONG_PASSWORD = 4;
-const INVALID_TOKEN = 6;
