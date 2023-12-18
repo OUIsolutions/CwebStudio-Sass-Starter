@@ -15,4 +15,3 @@
 #define START_ROOT_PASSWORD "root"
 #define ID_SIZE 15
 #define SHA_SIZE 15
-#define FRONT_END_CONSTANTS_PATH  "sass/constants"

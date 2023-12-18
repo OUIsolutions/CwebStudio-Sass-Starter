@@ -1,13 +1,15 @@
 
-class StartPageStyle{
+class  StartPageStyle {
 
     /** @returns {object} */
     right_div_style(){return{
+
         position:'absolute',
         width:'30vw',
         height:'100%',
         left:'70vw',
-        'background-color':BLUE_BACKGROUND,
+        'background-color':BLUE_BACKGROUND
+
     }}
 
     /** @returns {object} */
@@ -18,14 +20,14 @@ class StartPageStyle{
         left:'5vw',
         'top': '30vh'
     }}
-    /** @returns {object} */
 
+    /** @returns {object} */
     title_style(){return {
         color:'white',
         'margin-right':'5vw',
-
-        'font-size':'4vh',
+        'font-size':'4vh'
     }}
+
 
     /** @returns {object} */
     input_style(){return {
@@ -37,12 +39,12 @@ class StartPageStyle{
         height:'5vh',
         border:'0'
     }}
+
+    /** @returns {object} */
     login_button() {return {
         'margin-right':'5vw',
         height:'5vh',
-
-        width:'10vw',
-
+        width:'10vw'
     }}
 
     /** @returns {object} */

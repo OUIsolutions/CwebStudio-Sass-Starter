@@ -61,7 +61,7 @@ function main_interface_generator(main_interface,main_state){
 function main(){
 
     let main_state = new MainState();
-    let token = sessionStorage.getItem(TOKEN);
+    let token = sessionStorage.getItem(TOKEN_KEY);
 
     let main_interface =createElement404(
         (main_interface) => {

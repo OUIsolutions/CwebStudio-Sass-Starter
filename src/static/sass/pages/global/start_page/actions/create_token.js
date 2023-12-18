@@ -30,11 +30,11 @@ function create_token(main_interface, main_state){
         password:login_props.password
     }
 
-     fetch(CREATE_TOKEN,{headers:headers})
+     fetch(CREATE_TOKEN_ROUTE,{headers:headers})
     .then(data => data.json())
     .then(data =>{
         console.log(data);
-        if(data.code === USER_NOT_FOUND){
+        if(data.code === USER_NOT_EXIST){
             login_props.username_or_email_error = data.message;
             main_interface.render()
             return;
@@ -47,7 +47,7 @@ function create_token(main_interface, main_state){
             return;   
         }
 
-        sessionStorage.setItem(TOKEN,data.token);
+        sessionStorage.setItem(TOKEN_KEY,data.token);
         efetuate_login(main_interface,main_state);
 
     })
