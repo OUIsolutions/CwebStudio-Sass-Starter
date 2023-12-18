@@ -63,8 +63,11 @@ void generate_script_constant_file(const char *static_folder,const char *path){
 
     CTextArray *line_divided = CTextArray_split(content, "\n");
     UniversalGarbage_add(garbage, CTextArray_free, line_divided);
+
     CTextStack *result = newCTextStack_string_empty();
     UniversalGarbage_add(garbage,stack.free,result);
+    CTextArray *space_divided = NULL;
+    UniversalGarbage_add(garbage, CTextArray_free,space_divided);
 
     for(int i =0; i < line_divided->size; i++){
         CTextStack *current = line_divided->stacks[i];
@@ -73,8 +76,8 @@ void generate_script_constant_file(const char *static_folder,const char *path){
             continue;
         }
         stack.self_replace(current,"  "," ");
-        CTextArray *space_divided = CTextArray_split(current->rendered_text," ");
-        UniversalGarbage_add(garbage, CTextArray_free,space_divided);
+        space_divided = CTextArray_split(current->rendered_text," ");
+        UniversalGarbage_resset(garbage, space_divided);
 
         stack.format(result,"const %t = %t\n",space_divided->stacks[1],space_divided->stacks[2]);
 
@@ -98,5 +101,8 @@ void generate_script_constant_file(const char *static_folder,const char *path){
 }
 void create_script_constants(const char *static_folder){
     generate_script_constant_file(static_folder,"constants/routes.h");
+    generate_script_constant_file(static_folder,"constants/responses.h");
+    generate_script_constant_file(static_folder,"constants/entries.h");
+    generate_script_constant_file(static_folder,"constants/errors.h");
 
 }
