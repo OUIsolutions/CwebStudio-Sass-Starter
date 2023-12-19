@@ -1,5 +1,5 @@
 
-function start_application(state){
-    state.page_state = 'start'
-    
+function start_application(main_state){
+    main_state.page = 'start'
+
 }

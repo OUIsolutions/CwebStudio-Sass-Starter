@@ -18,7 +18,10 @@ function generate_main_component_style(main_state) {
 }
 
 function generate_main_component(main_interface, main_state){
-    let style =generate_main_component_style();
+    
+    let style =generate_main_component_style(main_state);
+
+
     main_interface.div(()=>{
 
         if(main_state.page === 'start'){

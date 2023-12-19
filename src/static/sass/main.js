@@ -1,7 +1,8 @@
 let main_state;
-function  main_loop(action,args=null){
+function  main_loop(props=null){
 
-    action(main_state,args);
+
+    props.action(main_state,props.args);
 
     createElement404(
         (main_interface) => {
@@ -17,7 +18,9 @@ function main(){
     let token = sessionStorage.getItem(TOKEN_KEY);
 
     if(!token){
-        main_loop(start_application);
+        main_loop({
+            action:start_application
+        });
     }
 
 }
