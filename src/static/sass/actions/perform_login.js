@@ -1,16 +1,19 @@
 
+/**
+ *
+ * @param {MainState} state
+ * */
+ async  function perform_login(state){
 
- async  function perform_login(main_state){
+   let response = await make_authenticated_requisition(state,GET_SELF_PROPS_ROUTE);
 
-   let response = await make_authenticated_requisition(main_state,GET_SELF_PROPS_ROUTE);
-
-     let profile = main_state.profile;
+     let profile = state.profile;
      profile.username = response.username;
      profile.email = response.email;
      profile.verified =response.verified;
      profile.is_root = response.root;
      if(profile.is_root){
-         await list_users(main_state);
+         await list_users(state);
          return;
      }
 

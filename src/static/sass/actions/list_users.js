@@ -1,10 +1,13 @@
 
 
+/**
+ *
+ * @param {MainState} state
+ * */
+async function  list_users(state){
 
-async function  list_users(main_state){
-
-    let data = await make_authenticated_requisition(main_state,LIST_USERS_ROUTE);
-    main_state.users =[]
+    let data = await make_authenticated_requisition(state,LIST_USERS_ROUTE);
+    state.users =[]
 
     data.forEach((user)=>{
         let created_user = {}
@@ -15,7 +18,7 @@ async function  list_users(main_state){
         created_user.verified = user.verified;
         main_state.users.unshift(created_user);
     })
-    main_state.page = 'users';
+    state.page = 'users';
 
 
 }

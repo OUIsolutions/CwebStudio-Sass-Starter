@@ -1,6 +1,9 @@
 
-
- async function create_token(state){
+/**
+ *
+ * @param {MainState} state
+ * */
+async function create_token(state){
 
     let login_props = state.login_props;
     login_props.username_or_email_error = undefined;
