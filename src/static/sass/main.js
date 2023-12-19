@@ -1,11 +1,18 @@
 let main_state;
- function  main_loop(props=null){
 
+function  handle_props(props){
     let action = props['action'];
     let action_args = props['args'];
     if(action){
-         action(main_state,action_args)
+        action(main_state,action_args)
     }
+}
+ function  main_loop(props=null){
+
+    if(props){
+        handle_props(props)
+    }
+
 
     console.log("terminou a açao");
 
