@@ -1,12 +1,14 @@
 
 
 
-function  go_to_list_users_page(main_state){
+function  list_users(main_state){
     function list_users(response){
-       main_state.page_root_users = new UsersPageState();
+       main_state.page_root_users = {
+           users:[]
+       };
 
        response.forEach((user)=>{
-            let created_user = new UserState();
+            let created_user = {}
            created_user.username =user.username;
            created_user.email = user.email;
            created_user.last_update = user.last_update;
@@ -16,10 +18,9 @@ function  go_to_list_users_page(main_state){
        })
 
         main_state.page = 'users';
-        main_loop();
     }
 
-    make_authenticated_requisition(main_interface,main_state,LIST_USERS,null,list_users)
+    make_authenticated_requisition(main_state,LIST_USERS_ROUTE,null,list_users)
 
 
 }

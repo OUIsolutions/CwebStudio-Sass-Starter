@@ -39,7 +39,7 @@
         }
 
         sessionStorage.setItem(TOKEN_KEY,response.token);
-        efetuate_login(main_state);
+        perform_login(main_state);
     })
 
 
