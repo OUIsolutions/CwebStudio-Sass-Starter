@@ -5,18 +5,18 @@
 function  render_user_profile_page(main_interface, main_state) {
 
     main_interface.div({style: left_bar_style()}, () => {
-        render_profile_apresentation(main_interface,main_state);
+        profile_apresentation(main_interface,main_state);
 
         main_interface.div({style:letf_bar_pages_style()},()=>{
 
-            create_left_bar_element(
+            left_bar_component(
                 main_interface,
                 main_state.page_root_profile,
                 "Profile",
                 ()=>{go_to_root_page(main_interface,main_state)}
             )
 
-            render_logout_button(main_interface,main_state);
+            logout_button(main_interface,main_state);
         })
     })
 

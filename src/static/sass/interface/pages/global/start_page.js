@@ -1,5 +1,50 @@
 
 
+
+function generate_start_page_style(){return {
+    right_div_style:{
+
+        position:'absolute',
+        width:'30vw',
+        height:'100%',
+        left:'70vw',
+        'background-color':BLUE_BACKGROUND
+
+    },
+    main_form_style:{
+        position:'absolute',
+        'text-align':'center',
+        height:'30vh',
+        left:'5vw',
+        'top': '30vh'
+    },
+    title_style:{
+        color:'white',
+        'margin-right':'5vw',
+        'font-size':'4vh'
+    },
+    input_style:{
+        'background-color':'white',
+        'border-radius':'1vh',
+        width:'20vw',
+        'margin-right':'5vw',
+        'font-size':'3vh',
+        height:'5vh',
+        border:'0'
+    },
+    login_button:{
+        'margin-right':'5vw',
+        height:'5vh',
+        width:'10vw'
+    },
+    error_style:{
+        'font-size':'2vh',
+        'color':'white'
+    }
+
+};
+
+}
 function  generate_start_page(main_interface, main_state){
 
     let page_style = generate_start_page_style();

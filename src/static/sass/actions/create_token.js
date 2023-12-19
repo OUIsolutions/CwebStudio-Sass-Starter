@@ -1,12 +1,5 @@
 
 
-
-
-/**
- * Creates a token
- * @param {Element404} main_interface
- *@param {MainState} main_state
- */
 function create_token(main_interface, main_state){
 
     let login_props = main_state.page_start.login_props;

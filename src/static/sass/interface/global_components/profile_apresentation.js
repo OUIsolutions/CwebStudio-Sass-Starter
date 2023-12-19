@@ -48,7 +48,7 @@ class ProfileApresentationStyle {
 
 
 }
-function render_profile_apresentation(main_interface, main_state){
+function profile_apresentation(main_interface, main_state){
     let profile = main_state.profile;
     let profile_picture_style = new ProfileApresentationStyle()
 
