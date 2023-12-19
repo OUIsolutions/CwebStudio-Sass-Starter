@@ -18,7 +18,7 @@ async function  list_users(state){
         created_user.verified = user.verified;
         main_state.users.unshift(created_user);
     })
-    state.page = 'users';
+    state.page = ROOT_LIST_USERS_PAGE;
 
 
 }

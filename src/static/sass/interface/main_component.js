@@ -9,7 +9,7 @@ function generate_main_component_style(main_state) {
     }
 
 
-    if(main_state.page === 'start'){
+    if(main_state.page === START_PAGE){
         style['background'] = `url('${assets['background']}')`;
         style['background-size'] = 'cover';
         style[' background-position'] = 'center center';
@@ -24,11 +24,11 @@ function generate_main_component(main_interface, main_state){
 
     main_interface.div(()=>{
 
-        if(main_state.page === 'start'){
+        if(main_state.page === START_PAGE){
             generate_start_page(main_interface,main_state)
         }
 
-        if(main_state.page ==='users'){
+        if(main_state.page ===ROOT_LIST_USERS_PAGE){
 
             render_users_page(main_interface,main_state);
         }

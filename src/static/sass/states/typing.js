@@ -11,12 +11,26 @@
 
 /**
  * @typedef {Object} Profile
- * @property {}
- *
+ * @property {string || undefined} username;
+ * @property {string || undefined} email;
+ * @property {boolean || undefined} verified;
+ * @property {boolean || undefined} is_root
+ * */
+
+/**
+ * @typedef {Object} User
+ * @property {string || undefined} username;
+ * @property {string || undefined} email;
+ * @property {boolean || undefined} verified;
+ * @property {boolean || undefined} last_update;
+ * @property {boolean || undefined} is_root
  * */
 
 
 /**
- *   @typedef {Object} MainState
- *   @property {LoginProps} login_props
+ * @typedef {Object} MainState
+ * @property {LoginProps} login_props
+ * @property {Profile} profile
+ * @property {string || undefined} page
+ * @property {Array<User>} users
  * */

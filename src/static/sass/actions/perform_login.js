@@ -17,4 +17,5 @@
          return;
      }
 
+     let a  = 20;
  }
