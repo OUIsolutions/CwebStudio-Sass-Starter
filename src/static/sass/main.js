@@ -1,9 +1,13 @@
 let main_state;
 function  main_loop(props=null){
 
+    let action = props['action'];
+    let action_args = props['args'];
+    if(action){
+        action(main_state,action_args)
+    }
 
-    props.action(main_state,props.args);
-
+    
     createElement404(
         (main_interface) => {
             generate_main_component(main_interface, main_state)
