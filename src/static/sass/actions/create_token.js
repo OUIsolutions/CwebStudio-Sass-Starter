@@ -1,10 +1,11 @@
 
 
-function create_token(main_interface, main_state){
+function create_token(main_interface, state){
 
-    let login_props = main_state.page_start.login_props;
+    let login_props = state.login_props;
     login_props.username_or_email_error = undefined;
     login_props.password_error = undefined;
+
 
     if(!login_props.username_or_email){
         login_props.username_or_email_error  = "user not provided"

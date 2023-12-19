@@ -1,24 +1,14 @@
 
-
-
-
-
-
-
-
-let state = {};
 function  main_loop(action,args=null){
-
 
     action(state,args);
 
     createElement404(
         (main_interface) => {
-            component(main_interface, state)
+            generate_main_component(main_interface, state)
         },
         document.body
     ).render();
-
 
 }
 

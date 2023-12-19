@@ -1,8 +1,10 @@
 
 
 
-function generate_start_page_style(){return {
-    right_div_style:{
+function generate_start_page_style(){
+    let style = {};
+
+    style.right_div_style ={
 
         position:'absolute',
         width:'30vw',
@@ -10,20 +12,21 @@ function generate_start_page_style(){return {
         left:'70vw',
         'background-color':BLUE_BACKGROUND
 
-    },
-    main_form_style:{
+    }
+    style.main_form_style ={
         position:'absolute',
         'text-align':'center',
         height:'30vh',
         left:'5vw',
         'top': '30vh'
-    },
-    title_style:{
+    }
+
+    style.title_style ={
         color:'white',
         'margin-right':'5vw',
         'font-size':'4vh'
-    },
-    input_style:{
+    }
+    style.input_style ={
         'background-color':'white',
         'border-radius':'1vh',
         width:'20vw',
@@ -31,23 +34,28 @@ function generate_start_page_style(){return {
         'font-size':'3vh',
         height:'5vh',
         border:'0'
-    },
-    login_button:{
+    }
+    style.login_button ={
         'margin-right':'5vw',
         height:'5vh',
         width:'10vw'
-    },
-    error_style:{
+    }
+    style.error_style ={
         'font-size':'2vh',
         'color':'white'
     }
-
-};
-
+    return style;
 }
+
+
+/**
+ * @param {Element404} main_interface
+ * @param {MainState} main_state
+ * */
 function  generate_start_page(main_interface, main_state){
 
     let page_style = generate_start_page_style();
+    let login_props = state.login_props;
 
     main_interface.div(()=>{
 
@@ -88,10 +96,9 @@ function  generate_start_page(main_interface, main_state){
 
             main_interface.button("Login",{
                 style:page_style.login_button,
-                click:()=>create_token(main_interface,main_state)
+                click:()=>create_token(main_interface,state)
 
             });
-           
 
 
         },{style:page_style.main_form_style})
