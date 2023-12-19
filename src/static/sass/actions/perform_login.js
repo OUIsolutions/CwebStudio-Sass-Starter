@@ -13,8 +13,5 @@
          await list_users(main_state);
          return;
      }
-
-
-     go_to_user_profile_page(main_state);
-
+     
  }
