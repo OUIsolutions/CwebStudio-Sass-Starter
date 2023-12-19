@@ -1,9 +1,6 @@
-/**
- * @param {Element404} main_interface The object props
- * @param {MainState} main_state
- */
+
 function  render_users_page(main_interface, main_state) {
-    main_interface.div({style: left_bar_style()}, () => {
+        main_interface.div({style: left_bar_style()}, () => {
         profile_apresentation(main_interface,main_state);
 
         main_interface.div({style:letf_bar_pages_style()},()=>{
@@ -19,7 +16,7 @@ function  render_users_page(main_interface, main_state) {
                 main_interface,
                 main_state.page_root_users,
                 "List Users",
-                ()=>{go_to_users_page(main_interface,main_state)}
+                ()=>{go_to_list_users_page(main_interface,main_state)}
             )
 
             logout_button(main_interface,main_state);

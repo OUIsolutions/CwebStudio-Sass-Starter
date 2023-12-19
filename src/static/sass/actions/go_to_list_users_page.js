@@ -1,11 +1,7 @@
 
 
-/**
- * Creates a token
- * @param {Element404} main_interface
- *@param {MainState} main_state
- */
-function  go_to_users_page(main_interface, main_state){
+
+function  go_to_list_users_page(main_state){
     function list_users(response){
        main_state.page_root_users = new UsersPageState();
 
@@ -19,8 +15,8 @@ function  go_to_users_page(main_interface, main_state){
            main_state.page_root_users.users.unshift(created_user);
        })
 
-        main_state.turnOnPage(UsersPageState);
-        main_interface.render();
+        main_state.page = 'users';
+        main_loop();
     }
 
     make_authenticated_requisition(main_interface,main_state,LIST_USERS,null,list_users)

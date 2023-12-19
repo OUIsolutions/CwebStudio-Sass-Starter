@@ -20,7 +20,7 @@ function  render_add_user_page(main_interface, main_state) {
                 main_interface,
                 main_state.page_root_users,
                 "List Users",
-                ()=>{go_to_users_page(main_interface,main_state)}
+                ()=>{go_to_list_users_page(main_interface,main_state)}
             )
 
             logout_button(main_interface,main_state);

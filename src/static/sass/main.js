@@ -13,10 +13,6 @@ function  handle_props(props){
         handle_props(props)
     }
 
-
-    console.log("terminou a açao");
-
-
     createElement404(
         (main_interface) => {
             generate_main_component(main_interface, main_state)

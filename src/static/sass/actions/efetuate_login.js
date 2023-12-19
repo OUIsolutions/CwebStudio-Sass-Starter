@@ -9,10 +9,10 @@
         profile.verified =response.verified;
         profile.is_root = response.root;
         if(profile.is_root){
-            go_to_users_page(main_state);
+            go_to_list_users_page(main_state);
             return;
         }
-        go_to_user_page(main_state);
+        go_to_user_profile_page(main_state);
     })
 
 
