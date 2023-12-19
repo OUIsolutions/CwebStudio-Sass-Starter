@@ -25,5 +25,6 @@
  * @property {LoginProps} login_props
  * @property {Profile || undefined} profile
  * @property {string || undefined} page
+ * @property {string || undefined} selected_page
  * @property {Array<User>} users
  * */

@@ -1,6 +1,18 @@
 
-
-function left_bar_component(main_interface, page_props, text, callback){
+/**
+ *
+ * @param {Element404} main_interface
+ * @param {MainState} main_state
+ * @param {string} page_name
+ * @param {string} text
+ * @param {function} callback
+ * */
+function left_bar_component(
+    main_interface,
+    main_state,
+    page_name,
+    text,
+    callback){
 
     let  div_style ={
         'margin-top':'2vh',
@@ -10,7 +22,9 @@ function left_bar_component(main_interface, page_props, text, callback){
 
     }
 
-    if(page_props.selected || page_props.current){
+    let is_selected = main_state.selected_page === page_name;
+    let is_current_page = main_state.page === page_name;
+    if(is_selected || is_current_page){
         div_style['background-color'] = 'rgb(36,58,93)';
     }
 
@@ -18,14 +32,20 @@ function left_bar_component(main_interface, page_props, text, callback){
         style:div_style,
         click:callback,
     }
-    if(page_props.selected){
-        div_props['render_mouseleave'] =()=>{page_props.selected = false}
+    if(is_selected){
+        div_props['render_mouseleave'] =()=>{
+            if(main_state.selected_page === page_name){
+                main_state.selected_page = undefined;
+            }
+        }
     }
-    if(!page_props.selected){
-        div_props['render_mouseenter'] =()=>{page_props.selected = true}
+    if(!is_selected){
+        div_props['render_mouseenter'] =()=>{
+            main_state.selected_page = page_name;
+        }
     }
 
-    main_interface.div(div_props,text)
+    main_interface.div(text,div_props)
 
 
 }
