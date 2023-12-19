@@ -1,5 +1,5 @@
 
-function  render_users_page(main_interface, main_state) {
+function  root_list_users_page(main_interface, main_state) {
 
         main_interface.div( () => {
         profile_apresentation(main_interface,main_state);
