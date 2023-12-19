@@ -48,14 +48,16 @@ function generate_start_page_style(){
 }
 
 
+
+
 /**
  * @param {Element404} main_interface
- * @param {MainState} main_state
+ * @param {object} main_state
  * */
 function  generate_start_page(main_interface, main_state){
 
     let page_style = generate_start_page_style();
-    let login_props = state.login_props;
+    let login_props = main_state.login_props;
 
     main_interface.div(()=>{
 

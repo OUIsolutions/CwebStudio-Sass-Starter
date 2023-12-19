@@ -1,11 +1,11 @@
-
+let main_state;
 function  main_loop(action,args=null){
 
-    action(state,args);
+    action(main_state,args);
 
     createElement404(
         (main_interface) => {
-            generate_main_component(main_interface, state)
+            generate_main_component(main_interface, main_state)
         },
         document.body
     ).render();
@@ -13,7 +13,7 @@ function  main_loop(action,args=null){
 }
 
 function main(){
-
+    main_state = create_main_state();
     let token = sessionStorage.getItem(TOKEN_KEY);
 
     if(!token){
