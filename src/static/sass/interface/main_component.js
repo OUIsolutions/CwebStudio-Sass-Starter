@@ -29,6 +29,7 @@ function generate_main_component(main_interface, main_state){
         }
 
         if(main_state.page ==='users'){
+
             render_users_page(main_interface,main_state);
         }
 
