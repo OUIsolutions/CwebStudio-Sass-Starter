@@ -21,22 +21,29 @@
         login: login_props.username_or_email,
         password:login_props.password
     }
-    let response = make_requisition(CREATE_TOKEN_ROUTE,{headers:headers});
+    fetch(CREATE_TOKEN_ROUTE,{headers:headers})
+    .then(response =>response.json())
+    .then(response =>{
+        console.log(response);
+        if(response.code === USER_NOT_EXIST){
+            login_props.username_or_email_error = response.message;
+            main_loop();
+            return;
+        }
 
-    console.log(response);
-    if(response.code === USER_NOT_EXIST){
-        login_props.username_or_email_error = response.message;
-        return;
-    }
+
+        if(response.code === WRONG_PASSWORD){
+            login_props.password_error = response.message;
+            main_loop();
+            return;
+        }
+
+        sessionStorage.setItem(TOKEN_KEY,response.token);
+        efetuate_login(main_state);
+    })
 
 
-    if(response.code === WRONG_PASSWORD){
-        login_props.password_error = response.message;
-        return;
-    }
 
-    //sessionStorage.setItem(TOKEN_KEY,data.token);
-    //efetuate_login(main_interface,main_state);
 
 
 
