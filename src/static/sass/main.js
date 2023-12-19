@@ -4,10 +4,13 @@ async function  handle_props(props){
     let action = props['action'];
     let action_args = props['args'];
     if(action){
-       await action(main_state,action_args)
+       try{
+           await action(main_state,action_args)
+       } catch (error){}
     }
 }
  async function  main_loop(props=null){
+
 
     if(props){
         await handle_props(props)

@@ -1,7 +1,7 @@
 
 function go_to_start_page(main_state){
     main_state.page = 'start';
-    main_loop();
+    throw "login error";
 }
 
 function go_to_main_page_removing_token(main_interface,main_state){
@@ -10,15 +10,14 @@ function go_to_main_page_removing_token(main_interface,main_state){
 }
 
 
-function  make_authenticated_requisition(
+async function  make_authenticated_requisition(
     main_state,
     route,
-    params,
-    callback){
+    params){
+
     let token =  sessionStorage.getItem(TOKEN_KEY);
     if(!token){
         go_to_start_page(main_state);
-        return;
     }
 
     //fetch and cach any error 
@@ -33,24 +32,17 @@ function  make_authenticated_requisition(
     params.headers.token =token
 
     
-    fetch(route,params)
-    .then(response => {
-        let invalid_responses = [500,404]
-        if(invalid_responses.includes(response.code)){
-            go_to_main_page_removing_token(main_state);
-            return;
-        }
-        return response;
-    })
-    .then(response => response.json())
-    .then(response => {
-        if(response.code === INVALID_TOKEN){
-            go_to_main_page_removing_token(main_state);
-            return;
-        }
-        callback(response);
-        main_loop();
+    let response = await fetch(route,params);
 
-    })
-    
+    let invalid_responses = [500,404]
+    if(invalid_responses.includes(response.code)){
+        go_to_main_page_removing_token(main_state);
+    }
+    let data = await  response.json();
+
+    if(data.code === INVALID_TOKEN){
+        go_to_main_page_removing_token(main_state);
+    }
+
+    return data;
 }
