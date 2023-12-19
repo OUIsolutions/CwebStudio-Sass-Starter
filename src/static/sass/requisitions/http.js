@@ -1,19 +1,30 @@
-
+/**
+ * @param {MainState} main_state
+ * */
 function go_to_start_page(main_state){
     main_state.page = 'start';
     throw "login error";
 }
-
-function go_to_main_page_removing_token(main_interface,main_state){
+/**
+ * @param {MainState} main_state
+ * */
+function go_to_main_page_removing_token(main_state){
     sessionStorage.removeItem(TOKEN_KEY);
-    go_to_start_page(main_interface,main_state);
+    go_to_start_page(main_state);
 }
 
 
+/**
+ *
+ * @param {MainState} main_state
+ * @param {string} route
+ * @param {object} params
+ * @returns  {object}
+ * */
 async function  make_authenticated_requisition(
     main_state,
     route,
-    params){
+    params=null){
 
     let token =  sessionStorage.getItem(TOKEN_KEY);
     if(!token){

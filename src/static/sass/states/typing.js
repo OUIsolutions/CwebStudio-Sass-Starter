@@ -9,13 +9,6 @@
  *   @property {string || undefined} password_error
  * */
 
-/**
- * @typedef {Object} Profile
- * @property {string || undefined} username;
- * @property {string || undefined} email;
- * @property {boolean || undefined} verified;
- * @property {boolean || undefined} is_root
- * */
 
 /**
  * @typedef {Object} User
@@ -30,7 +23,7 @@
 /**
  * @typedef {Object} MainState
  * @property {LoginProps} login_props
- * @property {Profile} profile
+ * @property {Profile || undefined} profile
  * @property {string || undefined} page
  * @property {Array<User>} users
  * */
