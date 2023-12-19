@@ -20,14 +20,8 @@ async function create_token(state){
         return;
     }
 
-    let headers = {
-        login: login_props.username_or_email,
-        password:login_props.password
-    }
-    let response = await  fetch(CREATE_TOKEN_ROUTE,{headers:headers});
-    let data = await response.json();
+    let data = await http_create_token(login_props.username_or_email,login_props.password);
 
-    console.log(data);
     if(data.code === USER_NOT_EXIST){
         login_props.username_or_email_error = data.message;
         return;
