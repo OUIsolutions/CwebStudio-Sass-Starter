@@ -1,8 +1,5 @@
 
-/**
- * Creates a token
- *@param {MainState} main_state
- */
+
  function efetuate_login( main_state){
 
     make_authenticated_requisition(main_state,GET_SELF_PROPS_ROUTE,null,(response) => {
@@ -17,6 +14,6 @@
         }
         go_to_user_page(main_state);
     })
-    
+
 
  }

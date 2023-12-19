@@ -98,7 +98,7 @@ function  generate_start_page(main_interface, main_state){
 
             main_interface.button("Login",{
                 style:page_style.login_button,
-                click:()=>create_token(main_interface,state)
+                click:()=>main_loop(create_token)
 
             });
 

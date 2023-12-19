@@ -20,8 +20,6 @@ function main(){
         main_loop(start_application);
     }
 
-
-
 }
 
 

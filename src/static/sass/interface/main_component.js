@@ -1,7 +1,7 @@
 
 
 
-function generate_main_component_style() {
+function generate_main_component_style(main_state) {
     let style ={
         position:'fixed',
         width:'100vw',
@@ -9,7 +9,7 @@ function generate_main_component_style() {
     }
 
 
-    if(state.page === 'start'){
+    if(main_state.page === 'start'){
         style['background'] = `url('${assets['background']}')`;
         style['background-size'] = 'cover';
         style[' background-position'] = 'center center';
@@ -17,12 +17,12 @@ function generate_main_component_style() {
     return style;
 }
 
-function generate_main_component(main_interface, state){
+function generate_main_component(main_interface, main_state){
     let style =generate_main_component_style();
     main_interface.div(()=>{
 
-        if(state.page === 'start'){
-            generate_start_page(main_interface,state)
+        if(main_state.page === 'start'){
+            generate_start_page(main_interface,main_state)
         }
 
     },{style:style})
