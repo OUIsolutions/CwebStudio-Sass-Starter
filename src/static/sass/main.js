@@ -1,16 +1,16 @@
 let main_state;
 
-function  handle_props(props){
+async function  handle_props(props){
     let action = props['action'];
     let action_args = props['args'];
     if(action){
-        action(main_state,action_args)
+       await action(main_state,action_args)
     }
 }
- function  main_loop(props=null){
+ async function  main_loop(props=null){
 
     if(props){
-        handle_props(props)
+        await handle_props(props)
     }
 
     createElement404(
@@ -29,7 +29,7 @@ function main(){
     if(!token){
         main_loop({
             action: start_application
-        })
+        }).then( )
     }
 
 }
