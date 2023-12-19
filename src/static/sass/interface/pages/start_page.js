@@ -92,16 +92,14 @@ function  generate_start_page(main_interface, main_state){
             )
             let password_error = login_props.password_error;
             if(password_error){
-                main_interface.p(password_error,{style:page_style.error_style},);
+                main_interface.p(password_error,{style:page_style.error_style});
 
             }
 
             main_interface.button("Login",{
                 style:page_style.login_button,
-                click:()=>main_loop(create_token)
-
+                click:()=>main_loop({action:create_token})
             });
-
 
         },{style:page_style.main_form_style})
 

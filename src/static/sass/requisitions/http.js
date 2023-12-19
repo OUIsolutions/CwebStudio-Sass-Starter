@@ -8,15 +8,7 @@ function go_to_main_page_removing_token(main_interface,main_state){
     go_to_start_page(main_interface,main_state);
 }
 
-/**
- * Creates a token
- *
- * @param {Element404} main_interface
- * @param {MainState} main_state
- * @param {string} route
- *@param {object} params
- * @param {function} callback
- */
+
 function  make_authenticated_requisition(
     main_interface,
     main_state,
