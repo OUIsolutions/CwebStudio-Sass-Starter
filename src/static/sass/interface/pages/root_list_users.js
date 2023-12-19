@@ -19,7 +19,7 @@ function  render_users_page(main_interface, main_state) {
                     ()=>{list_users(main_interface,main_state)}
                 )
             */
-                //logout_button(main_interface,main_state);
+            logout_button(main_interface,main_state);
         },{style:letf_bar_pages_style()})
     },{style: left_bar_style()});
 

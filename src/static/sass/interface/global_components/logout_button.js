@@ -8,11 +8,11 @@ function logout_button(main_interface, main_state){
     }
 
     main_interface.button(
+        'logout',
         {
-            click:()=>{efetuate_logout(main_interface,main_state)},
+            click:()=>{main_loop({action:perform_logout})},
             style:logout_button_style
 
-        },
-        'logout'
-    )
+        }
+   )
 }
