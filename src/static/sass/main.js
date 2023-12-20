@@ -7,7 +7,7 @@ async function  handle_props(props){
        try{
            await action(main_state,action_args)
        } catch (error){
-           console.log(error);
+
        }
     }
 }

@@ -5,8 +5,7 @@
  * */
  async  function perform_login(state){
 
-   state.profile = get_self_props(state);
-
+   state.profile = await get_self_props(state);
      if(state.profile.root){
          await list_users(state);
          return;
