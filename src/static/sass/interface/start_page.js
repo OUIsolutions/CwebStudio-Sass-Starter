@@ -96,7 +96,11 @@ function  render_start_page(username,username_error,password,password_error){
                     }
 
                     main_interface.button("Login",{
-                        style:page_style.login_button
+                        style:page_style.login_button,
+                        click:()=> render(
+                            login_callback,
+                            main_interface.stored_state
+                        )
                     });
 
                 },{style:page_style.main_form_style})
