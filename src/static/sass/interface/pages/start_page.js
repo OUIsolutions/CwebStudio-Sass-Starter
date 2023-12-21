@@ -101,6 +101,8 @@ function  generate_start_page(main_interface, main_state){
                 click:()=>main_loop({action:create_token})
             });
 
+
+
         },{style:page_style.main_form_style})
 
 
