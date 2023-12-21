@@ -102,7 +102,7 @@ function  render_start_page(username,username_error,password,password_error){
                         style:page_style.login_button,
                         click:()=> render(
                             login_callback,
-                            main_interface.stored_state
+                            main_interface.getFullState()
                         )
                     });
 

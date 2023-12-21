@@ -15,7 +15,6 @@ async function  login_callback(session_data,interface_state){
     try{
         let token = await create_token(login,password);
     }
-
     /**@type {HttpError}*/
     catch (error){
         if(error.code === USER_NOT_EXIST){
