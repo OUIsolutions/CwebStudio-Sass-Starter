@@ -5,7 +5,6 @@ async function  login_callback(session_data,interface_state){
     let login   = interface_state.username_or_email;
     let password = interface_state.password;
 
-
     if(!login){
         return  render_start_page(login,"username not provided",password);
     }
@@ -14,7 +13,7 @@ async function  login_callback(session_data,interface_state){
         return render_start_page(login,null,password,"password not provided");
     }
     try{
-        let token = create_token(login,password);
+        let token = await create_token(login,password);
     }
 
     /**@type {HttpError}*/

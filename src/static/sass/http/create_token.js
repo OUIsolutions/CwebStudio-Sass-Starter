@@ -23,4 +23,5 @@ async function create_token(username_or_email,password){
       }
       /**@type {string}*/
       return parsed_in_json[TOKEN_KEY];
+
 }
