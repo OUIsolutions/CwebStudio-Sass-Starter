@@ -1,10 +1,76 @@
 
+class LastInput{
+
+    /** @type {HTMLInputElement} */
+    input  =  undefined;
+
+    constructor(state,state_name,position) {
+
+        /** @type {object} */
+        this.state = state;
+        /** @type {string} */
+        this.name = state_name;
+
+        /** @type {number} */
+        this.position = position;
+
+
+    }
+}
+
+
+
+
+
+
+class Element404Args{
+    used =[]
+
+    constructor(element,default_value) {
+
+        this.element = element;
+        if(element === undefined || element === null){
+            this.element = default_value
+        }
+    }
+
+    get(key_or_index,default_value){
+        this.used.unshift(key_or_index);
+
+        let value = this.element[key_or_index];
+        if(value === undefined || value === null){
+            return default_value;
+        }
+        return value
+    }
+    get_all_except(not_include){
+
+        let formated = {};
+        for(let key in this.element){
+                if(not_include.includes(key)){
+                    continue;
+                }
+                formated[key] = this.element[key]
+        }
+        return formated
+    }
+    get_no_listed(){
+        return this.get_all_except(this.used);
+    }
+}
+
  function Element404(){
 
         
         /** @type {boolean} */
         this.child = false;
 
+
+        /** @type {LastInput} */
+        this.last_input = undefined;
+
+        /** @type {object} */
+        this.stored_state = {};
 
         /** @type {boolean} */
         this.locked = false;
@@ -33,6 +99,7 @@ Element404.prototype.rootConstructor = function(generator,target){
  /**
   * @param {Element404} father
   * @param {DocumentFragment || HTMLElement ||  Text} root
+
   * @returns {Element404}
   */
 Element404.prototype.sub_element = function(father,root){
@@ -40,7 +107,9 @@ Element404.prototype.sub_element = function(father,root){
     this.father = father;
     /** @type {DocumentFragment || HTMLElement ||  Text} */
     this.root = root;
-     this.child = true;
+    this.child = true;
+    this.last_input = this.father.last_input;
+    this.stored_state = this.father.stored_state;
      return this;
 } 
 
@@ -58,6 +127,408 @@ function  createElement404(generator,target){
 
 
 
+Element404.prototype.lock=function(){
+
+    this.locked = true;
+    
+}
+
+Element404.prototype.unlock=function(){
+        this.locked = false;        
+}
+
+
+
+
+
+
+
+
+Element404.prototype.render= function(){
+
+    if(this.child){
+        this.father.render();
+        return;
+    }
+
+    this.target.innerHTML = ''
+    this.generator()
+    this.target.appendChild(this.root)
+
+    if(this.last_input){
+        this.last_input.input.focus();
+        let size = this.last_input.position;
+        this.last_input.input.setSelectionRange(size,size)
+    }
+
+
+}
+
+
+
+
+
+
+
+/**
+ * @param {object} key_or_index
+ * @returns {Element404}
+ * */
+Element404.prototype.subStateObject = function(key_or_index) {
+
+    let created =  this.stored_state[key_or_index];
+    if(!created){
+        created = {}
+        this.stored_state[key_or_index] =created
+    }
+    let sub_element = new Element404();
+    sub_element.sub_element(this,this.root);
+    sub_element.stored_state = created
+    return sub_element
+}
+
+
+Element404.prototype.getFullState = function() {
+    return this.stored_state;
+}
+
+
+Element404.prototype.setStateValue = function(key_or_index,value) {
+    this.stored_state[key_or_index] = value;
+}
+
+
+Element404.prototype.getStateValue = function(key_or_index,default_value) {
+  let existent = this.stored_state[key_or_index];
+  if(existent === undefined){
+      this.setStateValue(key_or_index,default_value);
+      return default_value;
+  }
+  return existent;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ @typedef {Object} InputStateProps
+ @property {boolean=true} render_keyup
+ @property {boolean=false} render_focusout
+ @property {boolean=true} prevent_locker
+ @property {string=} default_value
+ */
+
+
+
+/**
+ * @param {string} name
+ * @param {InputStateProps=} state_props
+ * @returns {string}
+ */
+Element404.prototype.stateInput= function(name,state_props) {
+
+
+    let formatted_args = new Element404Args(state_props,{});
+    let prevent_locker =formatted_args.get('prevent_locker',true);
+    let render_keyup = formatted_args.get('render_keyup',true);
+    let render_focusout = formatted_args.get('render_focusout',false);
+    let default_value = formatted_args.get('default_value',"");
+    let props =formatted_args.get_no_listed();
+    let old_value = this.getStateValue(name,default_value);
+
+    let formatted_props = {
+
+        "notLock_keyup":(input)=>{
+            if(this.locked &&prevent_locker ) {
+                this.render();
+                return;
+            }
+
+            this.setStateValue(name, input.value);
+            if(render_keyup){
+                let created_last_input =  new LastInput(this.stored_state,name,input.selectionStart);
+                if(this.child){
+                    this.father.last_input =created_last_input
+                }
+                if(!this.child){
+                    this.last_input  = created_last_input;
+                }
+                this.render();
+            }
+
+
+        },
+
+        'focusout':()=>{
+            if(render_focusout){
+                this.render();
+            }
+        }
+
+
+
+    }
+
+    if(old_value){
+        formatted_props.value = old_value
+    }
+
+    for(let key in props){
+        formatted_props[key] = formatted_args.element[key];
+    }
+
+    let created =this.input(formatted_props);
+
+    let last_input = this.last_input;
+
+    if(this.child){
+        last_input = this.father.last_input;
+    }
+
+    if(last_input && render_keyup){
+        if(this.stored_state === last_input.state && name === last_input.name){
+            last_input.input = created.root;
+        }
+    }
+    return old_value;
+
+}
+
+
+
+
+
+/**
+ @typedef {object} NumbericalStateProps
+ @property {boolean=} render_change
+ @property {number=null} default_value
+ @property {string=}tag
+ */
+
+
+
+/**
+ * @param {string} name
+ * @param {number} value
+ * @param {string} content
+ * @param {NumbericalStateProps=} state_props
+ * @returns {number}
+ */
+Element404.prototype.stateIncrease = function(
+    name,
+    value,
+    content,
+    state_props
+    ){
+
+    let formatted_args = new Element404Args(state_props,{});
+    let render_change =  formatted_args.get("render_change",true);
+    let default_value = formatted_args.get('default_value',0);
+    let tag = formatted_args.get("tag","button");
+    let props = formatted_args.get_no_listed();
+    let old_value = this.getStateValue(name,default_value);
+
+    let formatted_props = {
+        click:()=>{
+
+            let old_value = Number(this.getStateValue(name,default_value));
+            this.setStateValue(name,old_value+value);
+            if(render_change){
+                this.render();
+
+            }
+        }
+    }
+    for(let key in props){
+        formatted_props[key] = props[key];
+    }
+    this.create(tag,content,formatted_props);
+    return old_value;
+
+}
+
+
+/**
+ * @param {string} name
+ * @param {number} value
+ * @param {string} content
+ * @param {NumbericalStateProps=} state_props
+ * @returns {number}
+ */
+Element404.prototype.stateDecrease = function(
+    name,
+    value,
+    content,
+    state_props
+){
+
+    let formatted_args = new Element404Args(state_props,{});
+    let render_change =  formatted_args.get("render_change",true);
+    let default_value = formatted_args.get('default_value',0);
+    let tag = formatted_args.get("tag","button");
+    let props = formatted_args.get_no_listed();
+
+    let old_value = this.getStateValue(name,default_value);
+
+    let formatted_props = {
+        click:()=>{
+
+            let old_value = Number(this.getStateValue(name,default_value));
+            this.setStateValue(name,old_value-value);
+            if(render_change){
+                this.render();
+
+            }
+        }
+    }
+    for(let key in props){
+        formatted_props[key] = props[key];
+    }
+    this.create(tag,content,formatted_props);
+    return old_value;
+
+}
+
+/**
+ @typedef {object} SelectStateProps
+ @property {boolean=true} prevent_locker
+ @property {boolean} render_change
+ @property {string=null} default_value
+
+ */
+
+
+
+/**
+ * @param {string} name
+ * @param {Array<string> | Object} options
+ * @param {SelectStateProps=} state_props
+ * @returns {string}
+ */
+Element404.prototype.stateSelect = function(
+    name,
+    options,
+    state_props
+){
+
+
+    let formatted_args = new Element404Args(state_props,{});
+    let prevent_locker =formatted_args.get('prevent_locker',true);
+    let render_change =  formatted_args.get("render_change",true);
+    let default_value = formatted_args.get('default_value');
+    let props = formatted_args.get_no_listed();
+
+    let formatted_props = {
+        "notLock_change":(select)=>{
+            if(this.locked  && prevent_locker){
+                this.render();
+                return;
+            }
+            this.setStateValue(name,select.value);
+            if(render_change){
+                this.render();
+            }
+        }
+
+
+    }
+
+    for(let key in props){
+        formatted_props[key] = props[key];
+    }
+    this.select(()=> {
+            let old_value =  this.getStateValue(name,default_value);
+
+            if (options.constructor.name === 'Object') {
+
+                for (let key in options) {
+                    if (key === old_value) {
+                        this.option(options[key], {"value": key, "selected": true});
+                        continue;
+                    }
+                    this.option(options[key], {"value": key});
+                }
+            }
+
+            if (options.constructor.name === 'Array') {
+                options.forEach((option) => {
+                    if (option === old_value) {
+                        this.option(option, {"value": option, "selected": true});
+                        return;
+                    }
+                    this.option(option, {"value": option});
+                }, formatted_props);
+
+            }
+        }
+
+        ,formatted_props);
+
+    return this.getStateValue(name,default_value);
+
+}
+
+
+
+/**
+ * @typedef {Object} SetterState
+ * @property {string=}tag
+ * @property {object=}props
+ * @property {function || string} content
+ * */
+
+
+/**
+ * @param {string} name
+ * @param {any} value
+ * @param {SetterState} selected_value
+ * @param {SetterState} unselected_value
+ * @param {boolean} render
+ * */
+Element404.prototype.stateSetter = function(
+    name,
+    value,
+    selected_value,
+    unselected_value,
+    render=true
+){
+
+
+    let old_value = this.getStateValue(name);
+
+    let formatted_props = {
+        click:()=>{
+
+            this.setStateValue(name,value)
+            if(render){
+                this.render();
+            }
+        }
+    }
+    let is_selected = old_value === value;
+    let corresponded_value= is_selected ? selected_value: unselected_value;
+    let props = corresponded_value.props;
+
+    let tag = corresponded_value.tag ? corresponded_value.tag: "button";
+    let content = corresponded_value.content;
+
+    for(let key in props){
+        formatted_props[key] = props[key];
+    }
+
+    this.create(tag,content,formatted_props);
+    return old_value
+
+}
+
+
 /**
  * @param {HTMLElement} domElement 
  * @param {object} style_value
@@ -69,7 +540,6 @@ Element404.prototype.create_object_style = function(domElement,style_value){
     }
     domElement.setAttribute('style',style_string)
 }
-
 
 
 
@@ -103,6 +573,9 @@ Element404.prototype.set_prop = function(domElement,key,value){
         for (let tag of tags){
             formatted_key = formatted_key.replace(tag,'')
         }
+
+
+
         domElement.addEventListener(formatted_key,callback)
         return
     }
@@ -147,7 +620,7 @@ Element404.prototype.generate_component_reference=function(domElement,content,pr
     
     if(is_a_function){
         let generated_content = content()
-        if(generated_content){
+        if(typeof (generated_content) === 'string'){
             let node = document.createTextNode(generated_content)
             domElement.appendChild(node)
         }
@@ -204,38 +677,6 @@ Element404.prototype.create=function(tag =null,content =null,props=null){
 
 
 
-Element404.prototype.render= function(){
-
-    if(this.child){
-        this.father.render();
-        return;
-    }
-
-    this.target.innerHTML = ''
-    this.generator()
-    this.target.appendChild(this.root)
-}
-
-
-
-
-Element404.prototype.lock=function(){
-
-    this.locked = true;
-    
-}
-
-Element404.prototype.unlock=function(){
-        this.locked = false;        
-}
-
-
-
-
-
-
-
-
 
 /**
  * Creates a form
@@ -257,6 +698,25 @@ Element404.prototype.div=function(content=null,props=null){
     return this.create('div',content,props)
 }
 
+/**
+ * Creates a code block
+ * @param {function || string } content the internal content
+ * @param {object} props The object props
+ * @returns {Element404}
+ */
+Element404.prototype.code = function(content, props = null) {
+    return this.create('code', content, props);
+}
+
+/**
+ * Creates a preformatted text block
+ * @param {function || string } content the internal content
+ * @param {object} props The object props
+ * @returns {Element404}
+ */
+Element404.prototype.pre = function(content, props = null) {
+    return this.create('pre', content, props);
+}
 
 /**
  * Creates an paragraph
@@ -409,190 +869,5 @@ Element404.prototype.button=function(content,props=null){
  */
 Element404.prototype.br=function(){
   return this.create('br');
-}
-
-
-
-/**
- * @param {object} state
- * @param {string} name
- * @param {object} props
- */
-Element404.prototype.stateInput= function(state,name,props=null) {
-
-    let old_value = state[name];
-
-    let formatted_props = {
-
-        "notLock_keyup":(input)=>{
-            if(this.locked){
-                this.render();
-                return;
-            }
-
-            state[name] = input.value
-        },
-
-        "focusout":()=>{
-            this.render();
-        }
-
-        
-        
-    }
-
-    if(old_value){
-        formatted_props.value = old_value
-    }
-    for(let key in props){
-            formatted_props[key] = props[key];
-    }
-
-    this.input(formatted_props);
-
-}
-
-
-/**
- * @param {object} state
- * @param {string} name
- * @param {number} value
- * @param {string} content
- * @param {string} tag
- * @param {object} props
- */
-Element404.prototype.stateIncrease = function(state, name, value, content, tag='button',props=null){
-
-    let formatted_props = {
-        render_click:()=>{
-            let old_value = Number(state[name]);
-            if(!old_value){
-                old_value = 0;
-            }
-            state[name] = old_value+value;
-            this.render();
-        }
-    }
-    for(let key in props){
-        formatted_props[key] = props[key];
-    }
-    this.create(tag,content,formatted_props);
-
-}
-
-/**
- * @param {object} state
- * @param {string} name
- * @param {number} value
- * @param {string} content
- * @param {string} tag
- * @param {object} props
- */
-Element404.prototype.stateDecrease = function(state, name, value, content,  tag='button',props=null){
-
-    let formatted_props = {
-        render_click:()=>{
-            let old_value = Number(state[name]);
-            if(!old_value){
-                old_value = 0;
-            }
-            state[name] = old_value-value;
-            this.render();
-        }
-    }
-    for(let key in props){
-        formatted_props[key] = props[key];
-    }
-    this.create(tag,content,formatted_props);
-
-
-}
-
-/**
-* @param {object} state
-* @param {string} name
-* @param {Array<string> | Object} options
-* @param {object} props
-*/
-Element404.prototype.stateSelect = function(state,name,options,props=null){
-
-    let formatted_props = {
-        "notLock_render_change":(select)=>{
-            if(this.locked){
-                return;
-            }
-
-            state[name] = select.value;
-           
-        }
-
-    }
-    
-    for(let key in props){
-        formatted_props[key] = props[key];
-    }
-
-    this.select(()=> {
-            if (options.constructor.name === 'Object') {
-
-                for (let key in options) {
-                    if (key === state[name]) {
-                        this.option(options[key], {"value": key, "selected": true});
-                        continue;
-                    }
-                    this.option(options[key], {"value": key});
-                }
-            }
-
-            if (options.constructor.name === 'Array') {
-                options.forEach((option) => {
-                    if (option === state[name]) {
-                        this.option(option, {"value": option, "selected": true});
-                        return;
-                    }
-                    this.option(option, {"value": option});
-                }, formatted_props);
-
-            }
-        }
-
-    ,formatted_props);
-}
-
-
-Element404.prototype.stateSetter = function(
-    state,
-    name,
-    value,
-    selected_value,
-    unselected_value
-    ){
-
-
-    let old_value = state[name];
-
-    let formatted_props = {
-        render_click:()=>{
-            
-            state[name] = value;
-            this.render();
-        }
-    }
-    let is_selected = old_value === value;
-    /**@type {object}*/
-    let corresponded_value= is_selected ? selected_value: unselected_value;
-    let props = corresponded_value.props;
-
-    /**@type {string}*/
-    let tag = corresponded_value.tag ? corresponded_value.tag: "button";
-    let content = corresponded_value.content;
-
-    for(let key in props){
-        formatted_props[key] = props[key];
-    }
-
-    this.create(tag,content,formatted_props);
-
-
 }
 
