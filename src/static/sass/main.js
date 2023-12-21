@@ -7,7 +7,7 @@
     let created_interface;
 
     if(!callback){
-        created_interface = await start_callback();
+        created_interface = render_start_page();
     }
 
     created_interface.target = document.body;
