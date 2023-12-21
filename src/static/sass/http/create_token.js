@@ -9,8 +9,8 @@
 async function create_token(username_or_email,password){
     let request = await fetch(CREATE_TOKEN_ROUTE,{
           headers:{
-              LOGIN:username_or_email,
-              PASSWORD_ENTRE:password
+              [LOGIN]:username_or_email,
+              [PASSWORD_ENTRE]:password
           }
       });
 
