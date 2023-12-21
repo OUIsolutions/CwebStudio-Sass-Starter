@@ -26,5 +26,5 @@ async function  login_callback(session_data,interface_state){
             return render_start_page(username_or_email,null,password,error.message);
         }
     }
-    
+
 }

@@ -12,7 +12,7 @@ let session_data = {}
         callback = start_callback;
     }
 
-    created_interface = callback(session_data,state);
+    created_interface = await callback(session_data,state);
     created_interface.target = document.body;
     created_interface.render();
 

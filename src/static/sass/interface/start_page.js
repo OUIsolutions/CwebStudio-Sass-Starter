@@ -72,7 +72,9 @@ function  render_start_page(username,username_error,password,password_error){
                         {
                             style:page_style.input_style,
                             placeholder:"username or email",
-                            default_value:username
+                            default_value:username,
+                            render_keyup:false
+
                         }
                     )
 
@@ -86,7 +88,8 @@ function  render_start_page(username,username_error,password,password_error){
                             style:page_style.input_style,
                             type:"password",
                             default_value:password,
-                            placeholder:"password"
+                            placeholder:"password",
+                            render_keyup:false
                         }
                     )
 
