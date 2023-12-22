@@ -19,7 +19,8 @@ async  function make_autenticated_requisition(route,props){
     let parsed_in_json = await  request.json();
 
 
-    if(parsed_in_json[CODE_KEY] !== INTERNAL_OK){
+
+    if(parsed_in_json[CODE_KEY] !== INTERNAL_OK  && parsed_in_json[CODE_KEY]){
         /**@type {HttpError}*/
         throw  parsed_in_json
     }
