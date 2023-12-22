@@ -62,13 +62,14 @@ function render_start_page_style(){
  * * */
 
 /**
- * @param {StartPageProps} start_state
+ * @param {StartPageProps} page_props
  * @returns {Element404}
  * */
-function  render_start_page(start_state){
+function  render_start_page(page_props){
 
     return createElement404((main_interface)=>{
-        main_interface.stored_state = start_state;
+        main_interface.stored_state = page_props;
+
         let page_style = render_start_page_style();
         main_interface.div(()=>{
 
@@ -87,8 +88,8 @@ function  render_start_page(start_state){
                         }
                     )
 
-                    if(start_state.login_error){
-                        main_interface.p(start_state.login_error,{style:page_style.error_style});
+                    if(page_props.login_error){
+                        main_interface.p(page_props.login_error,{style:page_style.error_style});
                     }
 
 
@@ -102,8 +103,8 @@ function  render_start_page(start_state){
                         }
                     )
 
-                    if(start_state.password_error){
-                        main_interface.p(start_state.password_error,{style:page_style.error_style});
+                    if(page_props.password_error){
+                        main_interface.p(page_props.password_error,{style:page_style.error_style});
 
                     }
 
