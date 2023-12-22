@@ -1,40 +1,41 @@
 
 /**
- * @param {object} session_data
  * @param {StartPageProps} interface_state
  * */
-async function  login_callback(session_data,interface_state){
+async function  login_callback(interface_state){
 
     let login   = interface_state.login;
     let password = interface_state.password;
 
-    let start_page_props = {
+
+    let new_interface_state = {
         login:login,
         password:password
     }
 
     if(!login){
-        start_page_props.login_error ="username not provided";
-        return  render_start_page(start_page_props);
+        new_interface_state.login_error ="username not provided";
+        return  render_start_page(new_interface_state);
     }
 
 
     if(!password){
-        start_page_props.password_error ="password not provided";
-        return render_start_page(start_page_props);
+        new_interface_state.password_error ="password not provided";
+        return render_start_page(new_interface_state);
     }
     try{
-        let token = await create_token(login,password);
+        new_interface_state.token = await create_token(login, password);
+        return home_callback(new_interface_state);
     }
     /**@type {HttpError}*/
     catch (error){
         if(error.code === USER_NOT_EXIST){
-            start_page_props.login_error =error.message
-            return  render_start_page(start_page_props);
+            new_interface_state.login_error =error.message
+            return  render_start_page(new_interface_state);
         }
         if(error.code === WRONG_PASSWORD){
-            start_page_props.password_error =error.message
-            return  render_start_page(start_page_props);
+            new_interface_state.password_error =error.message
+            return  render_start_page(new_interface_state);
         }
     }
 

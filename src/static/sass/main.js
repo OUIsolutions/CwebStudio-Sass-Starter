@@ -1,18 +1,25 @@
 
-let session_data = {}
 
- async function  render(callback,state){
+ async function  render(callback,interface_state){
 
 
     let token = sessionStorage.getItem(TOKEN_KEY);
     /**@type {Element404}*/
-    let created_interface;
 
-    if(!callback){
+    if(!token){
         callback = start_callback;
     }
 
-    created_interface = await callback(session_data,state);
+    if(!callback && token){
+        callback = home_callback
+    }
+   if(!interface_state ){
+      interface_state = {
+         token:token
+      }
+   }
+
+    let created_interface = await callback(interface_state);
     created_interface.target = document.body;
     created_interface.render();
 
