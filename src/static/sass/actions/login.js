@@ -25,7 +25,7 @@ async function  login_callback(interface_state){
     }
     try{
         new_interface_state.token = await create_token(login, password);
-        return home_callback(new_interface_state);
+        //return home_callback(new_interface_state);
     }
     /**@type {HttpError}*/
     catch (error){
