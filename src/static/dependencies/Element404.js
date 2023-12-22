@@ -1,27 +1,4 @@
 
-class LastInput{
-
-    /** @type {HTMLInputElement} */
-    input  =  undefined;
-
-    constructor(state,state_name,position) {
-
-        /** @type {object} */
-        this.state = state;
-        /** @type {string} */
-        this.name = state_name;
-
-        /** @type {number} */
-        this.position = position;
-
-
-    }
-}
-
-
-
-
-
 
 class Element404Args{
     used =[]
@@ -65,9 +42,9 @@ class Element404Args{
         /** @type {boolean} */
         this.child = false;
 
-
-        /** @type {LastInput} */
-        this.last_input = undefined;
+        this.state_render = false;
+        /** @type {number} */
+        this.total_render_times = 0;
 
         /** @type {object} */
         this.stored_state = {};
@@ -108,6 +85,7 @@ Element404.prototype.sub_element = function(father,root){
     /** @type {DocumentFragment || HTMLElement ||  Text} */
     this.root = root;
     this.child = true;
+    this.state_render = this.father.state_render;
     this.last_input = this.father.last_input;
     this.stored_state = this.father.stored_state;
      return this;
@@ -116,10 +94,10 @@ Element404.prototype.sub_element = function(father,root){
 
 /**
  * @param {function} generator
- * @param {HTMLElement} target
+ * @param {HTMLElement=} target
  * @returns {Element404}
  */
-function  createElement404(generator,target){
+function  createElement404(generator,target=undefined){
      let created =  new Element404();
      created.rootConstructor(generator,target);
      return created;
@@ -150,22 +128,23 @@ Element404.prototype.render= function(){
         this.father.render();
         return;
     }
-
+    this.total_render_times+=1;
     this.target.innerHTML = ''
     this.generator()
     this.target.appendChild(this.root)
 
-    if(this.last_input){
-        this.last_input.input.focus();
-        let size = this.last_input.position;
-        this.last_input.input.setSelectionRange(size,size)
-    }
 
 
 }
-
-
-
+/**
+ * @returns {number}
+ * */
+Element404.prototype.get_total_render = function (){
+    if(this.child){
+        return this.father.get_total_render();
+    }
+    return this.total_render_times;
+}
 
 
 
@@ -191,7 +170,6 @@ Element404.prototype.subStateObject = function(key_or_index) {
 Element404.prototype.getFullState = function() {
     return this.stored_state;
 }
-
 
 Element404.prototype.setStateValue = function(key_or_index,value) {
     this.stored_state[key_or_index] = value;
@@ -219,10 +197,9 @@ Element404.prototype.getStateValue = function(key_or_index,default_value) {
 
 /**
  @typedef {Object} InputStateProps
- @property {boolean=true} render_keyup
- @property {boolean=false} render_focusout
- @property {boolean=true} prevent_locker
  @property {string=} default_value
+ @property {boolean=}prevent_locker
+ @property {boolean=}render_change
  */
 
 
@@ -234,44 +211,60 @@ Element404.prototype.getStateValue = function(key_or_index,default_value) {
  */
 Element404.prototype.stateInput= function(name,state_props) {
 
-
     let formatted_args = new Element404Args(state_props,{});
+    /**@type {boolean}*/
     let prevent_locker =formatted_args.get('prevent_locker',true);
-    let render_keyup = formatted_args.get('render_keyup',true);
-    let render_focusout = formatted_args.get('render_focusout',false);
+    /**@type {string}*/
     let default_value = formatted_args.get('default_value',"");
+    let render_change = formatted_args.get('render_change',this.state_render);
+
+
     let props =formatted_args.get_no_listed();
     let old_value = this.getStateValue(name,default_value);
 
     let formatted_props = {
 
-        "notLock_keyup":(input)=>{
+        "notLock_change":(input,event)=>{
             if(this.locked &&prevent_locker ) {
                 this.render();
                 return;
             }
 
             this.setStateValue(name, input.value);
-            if(render_keyup){
-                let created_last_input =  new LastInput(this.stored_state,name,input.selectionStart);
-                if(this.child){
-                    this.father.last_input =created_last_input
-                }
-                if(!this.child){
-                    this.last_input  = created_last_input;
-                }
-                this.render();
+            if(!render_change){
+                return;
             }
+            //wait 0.05 seconds to render
+            //these required to avoid race conditions with click event
+            let render_num = this.get_total_render();
+            let first = true;
+            const WAIT_TIME = 100;
+            let interval =setInterval(()=>{
+                let actual_render = this.get_total_render();
+                if(first){
+                    first = false;
+                    return;
+                }
+
+                if(actual_render > render_num){
+                    clearInterval(interval);
+                    return;
+                }
+
+                let active = document.activeElement
+                //if active its an input or text area it continue
+                if(active.tagName === "INPUT" || active.tagName === "TEXTAREA"){
+                    return;
+                }
 
 
+                this.render();
+                clearInterval(interval);
+            },WAIT_TIME);
+            
         },
 
-        'focusout':()=>{
-            if(render_focusout){
-                this.render();
-            }
-        }
-
+    
 
 
     }
@@ -284,19 +277,8 @@ Element404.prototype.stateInput= function(name,state_props) {
         formatted_props[key] = formatted_args.element[key];
     }
 
-    let created =this.input(formatted_props);
+   this.input(formatted_props);
 
-    let last_input = this.last_input;
-
-    if(this.child){
-        last_input = this.father.last_input;
-    }
-
-    if(last_input && render_keyup){
-        if(this.stored_state === last_input.state && name === last_input.name){
-            last_input.input = created.root;
-        }
-    }
     return old_value;
 
 }
@@ -329,7 +311,7 @@ Element404.prototype.stateIncrease = function(
     ){
 
     let formatted_args = new Element404Args(state_props,{});
-    let render_change =  formatted_args.get("render_change",true);
+    let render_change =  formatted_args.get("render_change",this.state_render);
     let default_value = formatted_args.get('default_value',0);
     let tag = formatted_args.get("tag","button");
     let props = formatted_args.get_no_listed();
@@ -370,7 +352,7 @@ Element404.prototype.stateDecrease = function(
 ){
 
     let formatted_args = new Element404Args(state_props,{});
-    let render_change =  formatted_args.get("render_change",true);
+    let render_change =  formatted_args.get("render_change",this.state_render);
     let default_value = formatted_args.get('default_value',0);
     let tag = formatted_args.get("tag","button");
     let props = formatted_args.get_no_listed();
@@ -421,7 +403,7 @@ Element404.prototype.stateSelect = function(
 
     let formatted_args = new Element404Args(state_props,{});
     let prevent_locker =formatted_args.get('prevent_locker',true);
-    let render_change =  formatted_args.get("render_change",true);
+    let render_change =  formatted_args.get("render_change",this.state_render);
     let default_value = formatted_args.get('default_value');
     let props = formatted_args.get_no_listed();
 
@@ -497,11 +479,15 @@ Element404.prototype.stateSetter = function(
     value,
     selected_value,
     unselected_value,
-    render=true
+    render=undefined
 ){
 
 
     let old_value = this.getStateValue(name);
+
+    if(render === undefined){
+        render = this.state_render;
+    }
 
     let formatted_props = {
         click:()=>{
@@ -555,13 +541,13 @@ Element404.prototype.set_prop = function(domElement,key,value){
         
     if(typeof(value) === 'function'){
 
-        let callback = ()=>{
+        let callback = (event)=>{
 
             if(this.locked && key.includes('notLock_') === false){
                 return;
             }
             
-            value(domElement)
+            value(domElement,event)
             if(key.includes('render_')){
                 this.render()
             }
