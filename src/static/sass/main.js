@@ -1,6 +1,6 @@
 
 
- async function  render(){
+ async function  main(){
 
     let token = sessionStorage.getItem(TOKEN_KEY);
 
@@ -16,8 +16,4 @@
         }, document.body).render();
 
 }
-
-
-
-
-window.onload = ()=> render()
+window.onload = ()=> main()

@@ -11,11 +11,6 @@ async function  login_callback(main_interface,login_error,password_error){
     clear_error(login_error);
     clear_error(password_error);
 
-    let new_interface_state = {
-        login:login,
-        password:password
-    }
-
     if(!login){
         start_page_create_error(login_error,"login not provided")
         return;
