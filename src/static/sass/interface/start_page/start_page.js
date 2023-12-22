@@ -46,10 +46,7 @@ function render_start_page_style(){
         height:'5vh',
         width:'10vw'
     }
-    style.error_style ={
-        'font-size':'2vh',
-        'color':'white'
-    }
+ 
     return style;
 }
 
@@ -101,10 +98,7 @@ function  render_start_page(main_interface){
 
                     main_interface.button("Login",{
                         style:page_style.login_button,
-                        click:()=> render(
-                            login_callback,
-                            main_interface.getFullState()
-                        )
+                        click:()=> login_callback(main_interface,login_error_fragment,password_fragment)
                     });
 
                 },{style:page_style.main_form_style})
