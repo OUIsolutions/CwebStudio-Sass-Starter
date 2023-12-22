@@ -53,10 +53,22 @@ function render_start_page_style(){
     return style;
 }
 
-function  render_start_page(username,username_error,password,password_error){
+/**
+ * @typedef {object} StartPageProps
+ * @property {string || undefined} login
+ * @property {string || undefined} login_error
+ * @property {string || undefined} password
+ * @property {string || undefined} password_error
+ * * */
+
+/**
+ * @param {StartPageProps} start_state
+ * @returns {Element404}
+ * */
+function  render_start_page(start_state){
 
     return createElement404((main_interface)=>{
-
+        main_interface.stored_state = start_state;
         let page_style = render_start_page_style();
         main_interface.div(()=>{
 
@@ -68,33 +80,30 @@ function  render_start_page(username,username_error,password,password_error){
                     main_interface.br()
 
                     main_interface.stateInput(
-                        "username_or_email",
+                        "login",
                         {
                             style:page_style.input_style,
-                            placeholder:"username or email",
-                            default_value:username,
-                            render_keyup:false
-
+                            placeholder:"username or email"
                         }
                     )
 
-                    if(username_error){
-                        main_interface.p(username_error,{style:page_style.error_style});
+                    if(start_state.login_error){
+                        main_interface.p(start_state.login_error,{style:page_style.error_style});
                     }
+
 
                     main_interface.stateInput(
                         "password",
                         {
                             style:page_style.input_style,
                             type:"password",
-                            default_value:password,
                             placeholder:"password",
                             render_keyup:false
                         }
                     )
 
-                    if(password_error){
-                        main_interface.p(password_error,{style:page_style.error_style});
+                    if(start_state.password_error){
+                        main_interface.p(start_state.password_error,{style:page_style.error_style});
 
                     }
 
@@ -113,5 +122,5 @@ function  render_start_page(username,username_error,password,password_error){
 
         },{style:page_style.global});
 
-    },undefined)
+    })
 }

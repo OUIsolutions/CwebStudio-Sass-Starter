@@ -1,16 +1,22 @@
 
-
+/**
+ * @param {object} session_data
+ * @param {StartPageProps} interface_state
+ * */
 async function  login_callback(session_data,interface_state){
 
-    let login   = interface_state.username_or_email;
+    let login   = interface_state.login;
     let password = interface_state.password;
 
     if(!login){
-        return  render_start_page(login,"username not provided",password);
+        interface_state.login_error ="username not provided";
+        return  render_start_page(interface_state);
     }
 
+
     if(!password){
-        return render_start_page(login,null,password,"password not provided");
+        interface_state.password_error ="password not provided";
+        return render_start_page(interface_state);
     }
     try{
         let token = await create_token(login,password);
@@ -18,10 +24,12 @@ async function  login_callback(session_data,interface_state){
     /**@type {HttpError}*/
     catch (error){
         if(error.code === USER_NOT_EXIST){
-            return  render_start_page(login,error.message,password);
+            interface_state.login_error =error.message
+            return  render_start_page(interface_state);
         }
         if(error.code === WRONG_PASSWORD){
-            return render_start_page(login,null,password,error.message);
+            interface_state.password_error =error.message
+            return  render_start_page(interface_state);
         }
     }
 
