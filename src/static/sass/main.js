@@ -1,22 +1,19 @@
 
 
- async function  render(callback=null,interface_state={}){
+ async function  render(){
 
     let token = sessionStorage.getItem(TOKEN_KEY);
 
+    createElement404((main_interface)=>{
 
-    if(!callback && !token){
-        callback = start_callback;
-    }
-    if(!callback && token){
-        callback =home_callback;
-    }
+            if(!token){
+                start_callback(main_interface);
+                return;
+            }
 
+            home_callback(main_interface)
 
-    let created_interface = await callback(interface_state);
-    created_interface.target = document.body;
-    created_interface.render();
-
+        }, document.body).render();
 
 }
 

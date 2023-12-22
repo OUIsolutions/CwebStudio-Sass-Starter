@@ -62,13 +62,9 @@ function render_start_page_style(){
  * * */
 
 /**
- * @param {StartPageProps} page_props
  * @returns {Element404}
  * */
-function  render_start_page(page_props){
-
-    return createElement404((main_interface)=>{
-        main_interface.stored_state = page_props;
+function  render_start_page(main_interface){
 
         let page_style = render_start_page_style();
         main_interface.div(()=>{
@@ -87,10 +83,8 @@ function  render_start_page(page_props){
                             placeholder:"username or email"
                         }
                     )
+                    let login_error_fragment = main_interface.div();
 
-                    if(page_props.login_error){
-                        main_interface.p(page_props.login_error,{style:page_style.error_style});
-                    }
 
 
                     main_interface.stateInput(
@@ -103,10 +97,7 @@ function  render_start_page(page_props){
                         }
                     )
 
-                    if(page_props.password_error){
-                        main_interface.p(page_props.password_error,{style:page_style.error_style});
-
-                    }
+                    let password_fragment = main_interface.div();
 
                     main_interface.button("Login",{
                         style:page_style.login_button,
@@ -123,5 +114,5 @@ function  render_start_page(page_props){
 
         },{style:page_style.global});
 
-    })
+    
 }

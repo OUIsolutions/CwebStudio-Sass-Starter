@@ -1,4 +1,7 @@
 
-function  start_callback(){
-    return render_start_page({});
+
+
+
+function  start_callback(main_interface){
+    render_start_page(main_interface);
 }
