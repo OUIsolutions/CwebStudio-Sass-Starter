@@ -11,8 +11,7 @@
     if(!callback && token){
         callback =home_callback;
     }
-    interface_state.token = token;
-    
+
 
     let created_interface = await callback(interface_state);
     created_interface.target = document.body;

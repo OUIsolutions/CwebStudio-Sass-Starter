@@ -24,7 +24,9 @@ async function  login_callback(interface_state){
         return render_start_page(new_interface_state);
     }
     try{
-        new_interface_state.token = await create_token(login, password);
+        let token = await create_token(login, password);
+        sessionStorage.setItem(TOKEN_KEY,token);
+
         //return home_callback(new_interface_state);
     }
     /**@type {HttpError}*/
