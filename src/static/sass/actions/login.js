@@ -1,17 +1,18 @@
 
 /**
  * @param {Element404} main_interface
+ * @param {Element404} login_input
+ * @param {Element404} password_input
  * @param {Element404} login_error
  * @param {Element404} password_error
  * */
-async function  login_callback(main_interface,login_error,password_error){
+async function  login_callback(main_interface,login_input,password_input,login_error,password_error){
 
     login_error.clear();
     password_error.clear();
 
-    let login   = main_interface.getStateValue("login");
-    let password = main_interface.getStateValue("password");
-
+    let login   = login_input.domElement.value;
+    let password = password_input.domElement.value;
 
 
     if(!login){

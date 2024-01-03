@@ -2,8 +2,6 @@
 function  render_main_form(main_interface){
     main_interface.div((sub_element)=>{
 
-
-
         sub_element.inline_style({
             'text-align':'center'
         });
@@ -26,32 +24,32 @@ function  render_main_form(main_interface){
             height:'5vh',
             border:'0'
         }
-        main_interface.stateInput(
-            "login",
-            {
+
+        let login = main_interface.input({
                 inline_style:state_input_style,
                 placeholder:"username or email"
-            }
-        )
+        })
+
         let login_error_fragment = main_interface.div();
 
-
-
-        main_interface.stateInput(
-            "password",
-            {
+        let password = main_interface.input({
                 inline_style:state_input_style,
                 type:"password",
                 placeholder:"password",
                 render_keyup:false
-            }
-        )
+        })
 
 
         let password_fragment = main_interface.div();
 
         main_interface.button("Login",{
-            click:()=> login_callback(main_interface,login_error_fragment,password_fragment)
+            click:()=> login_callback(
+                main_interface,
+                login,
+                password,
+                login_error_fragment,
+                password_fragment
+            )
         });
 
     })
