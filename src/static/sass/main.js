@@ -9,7 +9,7 @@ let states = {};
     states = {
         token:token
     }
-    
+
     main_interface = createElement404(main_interface_loop, document.body);
     
     main_interface.stored_state = states;
@@ -17,4 +17,4 @@ let states = {};
 
 
 }
-window.onload = ()=> main()
+window.addEventListener("load",main);
