@@ -5,5 +5,5 @@ function  start_page_create_error(error,message){
         'color':'white'
     }
 
-    error.p(message,{style:error_style});
+    error.p(message,{inline_style:error_style});
 }
