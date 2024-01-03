@@ -64,19 +64,28 @@ function render_start_page_style(){
 function  render_start_page(main_interface){
 
         let page_style = render_start_page_style();
-        main_interface.div(()=>{
+        main_interface.div((sub_element)=>{
 
-            main_interface.div(()=>{
+            sub_element.inline_style(page_style.global);
 
-                main_interface.div(()=>{
 
-                    main_interface.h4("Enter in the Platform",{style:page_style.title_style})
+            main_interface.div((sub_element)=>{
+
+                sub_element.inline_style(page_style.right_div_style);
+
+                
+                main_interface.div((sub_element)=>{
+
+                    sub_element.inline_style(page_style.main_form_style);
+
+
+                    main_interface.h4("Enter in the Platform",{inline_style:page_style.title_style})
                     main_interface.br()
 
                     main_interface.stateInput(
                         "login",
                         {
-                            style:page_style.input_style,
+                            inline_style:page_style.input_style,
                             placeholder:"username or email"
                         }
                     )
@@ -87,7 +96,7 @@ function  render_start_page(main_interface){
                     main_interface.stateInput(
                         "password",
                         {
-                            style:page_style.input_style,
+                            inline_style:page_style.input_style,
                             type:"password",
                             placeholder:"password",
                             render_keyup:false
@@ -101,12 +110,10 @@ function  render_start_page(main_interface){
                         click:()=> login_callback(main_interface,login_error_fragment,password_fragment)
                     });
 
-                },{style:page_style.main_form_style})
+                })
+            })
 
-
-            },{style:page_style.right_div_style})
-
-        },{style:page_style.global});
+        });
 
     
 }

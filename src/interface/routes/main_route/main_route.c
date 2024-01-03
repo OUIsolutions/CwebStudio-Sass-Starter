@@ -11,8 +11,7 @@ CwebHttpResponse *main_route(CwebHttpRequest *request ){
             CTextScope(s,CTEXT_TITLE){
                 stack.segment_text(s,MAIN_TITLE);
             }
-            reference_static_path(s,ELEMENT404);
-            reference_static_path(s,SKELETON);
+            reference_static_path(s,FRONT_END_DEPENDENCIES_PATH);
             reference_static_path(s,SASS);
             reference_static_path(s,EXTRA_STATIC);
         }
