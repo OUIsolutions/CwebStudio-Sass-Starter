@@ -6,7 +6,8 @@ function  render_main_form(main_interface){
             'text-align':'center'
         });
 
-        sub_element.set_prop("APosition","$16:9(15%,30%,70%,30%)" +
+        sub_element.set_prop("APosition",
+            "$16:9(15%,30%,70%,30%)" +
             "$1:1(5%,15%,90%,30%)");
 
         let title = main_interface.h4("Enter in the Platform");
@@ -16,7 +17,7 @@ function  render_main_form(main_interface){
 
         main_interface.br();
 
-        const  state_input_style = {
+        const  input_style = {
             'background-color':'white',
             'border-radius':'1vh',
             width:'100%',
@@ -26,14 +27,14 @@ function  render_main_form(main_interface){
         }
 
         let login = main_interface.input({
-                inline_style:state_input_style,
+                inline_style:input_style,
                 placeholder:"username or email"
         })
 
         let login_error_fragment = main_interface.div();
 
         let password = main_interface.input({
-                inline_style:state_input_style,
+                inline_style:input_style,
                 type:"password",
                 placeholder:"password",
                 render_keyup:false
