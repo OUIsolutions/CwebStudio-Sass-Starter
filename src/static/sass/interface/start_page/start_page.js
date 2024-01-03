@@ -11,7 +11,7 @@ function render_start_page_style(){
         'background-position': 'center center'
     }
 
-    style.right_div_style ={
+    style.main_form_container ={
         'background-color':BLUE_BACKGROUND
     }
 
@@ -56,13 +56,15 @@ function  render_start_page(main_interface){
 
             main_interface.div((sub_element)=>{
 
-                sub_element.inline_style(page_style.right_div_style);
-                sub_element.set_prop("APosition",`$(70%,0vh,30%,100%)`);
+                sub_element.inline_style(page_style.main_form_container);
+                sub_element.set_prop("APosition","$16:9(70%,0%,30%,100%)" +
+                    "$1:1(0%,30%,100%,50%)" );
 
                 main_interface.div((sub_element)=>{
 
                     sub_element.inline_style(page_style.main_form_style);
-                    sub_element.set_prop("APosition",`$(15%,30%,70%,30%)`);
+                    sub_element.set_prop("APosition","$16:9(15%,30%,70%,30%)" +
+                        "$1:1(5%,15%,90%,30%)");
 
                     main_interface.h4("Enter in the Platform",{inline_style:page_style.title_style})
                     main_interface.br()
