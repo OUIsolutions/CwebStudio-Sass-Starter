@@ -10,42 +10,27 @@ function render_start_page_style(){
         'background-size':'cover',
         'background-position': 'center center'
     }
+
     style.right_div_style ={
-
-        position:'absolute',
-        width:'30vw',
-        height:'100%',
-        left:'70vw',
         'background-color':BLUE_BACKGROUND
-
     }
+
     style.main_form_style ={
-        position:'absolute',
-        'text-align':'center',
-        height:'30vh',
-        left:'5vw',
-        'top': '30vh'
+        'text-align':'center'
     }
 
     style.title_style ={
-        color:'white',
-        'margin-right':'5vw',
-        'font-size':'4vh'
+        color:'white'
     }
     style.input_style ={
         'background-color':'white',
         'border-radius':'1vh',
-        width:'20vw',
-        'margin-right':'5vw',
+        width:'100%',
         'font-size':'3vh',
         height:'5vh',
         border:'0'
     }
-    style.login_button ={
-        'margin-right':'5vw',
-        height:'5vh',
-        width:'10vw'
-    }
+
  
     return style;
 }
@@ -72,12 +57,12 @@ function  render_start_page(main_interface){
             main_interface.div((sub_element)=>{
 
                 sub_element.inline_style(page_style.right_div_style);
+                sub_element.set_prop("APosition",`$(70%,0vh,30%,100%)`);
 
-                
                 main_interface.div((sub_element)=>{
 
                     sub_element.inline_style(page_style.main_form_style);
-
+                    sub_element.set_prop("APosition",`$(15%,30%,70%,30%)`);
 
                     main_interface.h4("Enter in the Platform",{inline_style:page_style.title_style})
                     main_interface.br()
@@ -106,7 +91,6 @@ function  render_start_page(main_interface){
                     let password_fragment = main_interface.div();
 
                     main_interface.button("Login",{
-                        style:page_style.login_button,
                         click:()=> login_callback(main_interface,login_error_fragment,password_fragment)
                     });
 
