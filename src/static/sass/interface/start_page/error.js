@@ -7,6 +7,3 @@ function  start_page_create_error(error,message){
 
     error.p(message,{style:error_style});
 }
-function  clear_error(error){
-    error.root.innerHTML= '';
-}
