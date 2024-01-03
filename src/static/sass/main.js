@@ -1,19 +1,20 @@
 
+let main_interface;
+let states = {};
 
  async function  main(){
 
     let token = sessionStorage.getItem(TOKEN_KEY);
 
-    createElement404((main_interface)=>{
+    states = {
+        token:token
+    }
+    
+    main_interface = createElement404(main_interface_loop, document.body);
+    
+    main_interface.stored_state = states;
+    main_interface.render();
 
-            if(!token){
-                start_callback(main_interface);
-                return;
-            }
-
-            home_callback(main_interface)
-
-        }, document.body).render();
 
 }
 window.onload = ()=> main()
