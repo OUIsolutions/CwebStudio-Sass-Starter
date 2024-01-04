@@ -6,9 +6,12 @@ function  render_main_form(main_interface){
             'text-align':'center'
         });
 
+
         sub_element.set_prop("APosition",
             "$16:9(15%,30%,70%,30%)" +
             "$1:1(5%,15%,90%,30%)");
+
+
 
         let title = main_interface.h4("Enter in the Platform");
         title.inline_style({
