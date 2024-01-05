@@ -7,14 +7,14 @@
 function  create_common_internal_interface(token,root_div, user_props){
 
     root_div.clear();
-    root_div.outline_style({
+    root_div.inline_style({
         position:'absolute',
         width:"100%",
         height:"100%",
         left:"0%",
         top:"0%"
     });
-    
+
 
     let vertical_bar = root_div.div(()=>{
 
