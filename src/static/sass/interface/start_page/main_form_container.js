@@ -1,7 +1,7 @@
 
 
-function  render_main_form_container(main_interface){
-    main_interface.div((sub_element)=>{
+function  render_main_form_container(root_div){
+    root_div.div((sub_element)=>{
 
         sub_element.inline_style({
             'background-color':BLUE_BACKGROUND
@@ -11,7 +11,7 @@ function  render_main_form_container(main_interface){
             "$1:1(0%,30%,100%,50%)"
         );
 
-        render_main_form(main_interface);
+        render_main_form(root_div);
 
     })
 }

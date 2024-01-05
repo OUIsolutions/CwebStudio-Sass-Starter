@@ -1,19 +1,17 @@
 
 
-function  render_start_page(main_interface){
+function  render_start_page(root_div){
 
-        main_interface.div((sub_element)=>{
 
-            sub_element.inline_style({
+    root_div.inline_style({
                 'background': `url('${assets['background']}')`,
                 'background-size':'cover',
-                'background-position': 'center center'
-            });
-            sub_element.set_prop("APosition","$(0%,0%,100%,100%)")
+                'background-position': 'center center',
 
-            render_main_form_container(main_interface);
+    });
 
-        });
+    render_main_form_container(root_div);
+
 
     
 }

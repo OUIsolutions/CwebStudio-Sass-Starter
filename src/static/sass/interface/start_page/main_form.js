@@ -1,6 +1,6 @@
 
-function  render_main_form(main_interface){
-    main_interface.div((sub_element)=>{
+function  render_main_form(root_div){
+    root_div.div((sub_element)=>{
 
         sub_element.inline_style({
             'text-align':'center'
@@ -9,16 +9,16 @@ function  render_main_form(main_interface){
 
         sub_element.set_prop("APosition",
             "$16:9(15%,30%,70%,30%)" +
-            "$1:1(5%,15%,90%,30%)");
+            "$1:1(5%,15%,90%,30%)"
+        );
 
 
-
-        let title = main_interface.h4("Enter in the Platform");
+        let title = root_div.h4("Enter in the Platform");
         title.inline_style({
             color:'white'
         });
 
-        main_interface.br();
+        root_div.br();
 
         const  input_style = {
             'background-color':'white',
@@ -29,14 +29,14 @@ function  render_main_form(main_interface){
             border:'0'
         }
 
-        let login = main_interface.input({
+        let login = root_div.input({
                 inline_style:input_style,
                 placeholder:"username or email"
         })
 
-        let login_error_fragment = main_interface.div();
+        let login_error_fragment = root_div.div();
 
-        let password = main_interface.input({
+        let password = root_div.input({
                 inline_style:input_style,
                 type:"password",
                 placeholder:"password",
@@ -44,11 +44,11 @@ function  render_main_form(main_interface){
         })
 
 
-        let password_fragment = main_interface.div();
+        let password_fragment = root_div.div();
 
-        main_interface.button("Login",{
+        root_div.button("Login",{
             click:()=> login_callback(
-                main_interface,
+                root_div,
                 login,
                 password,
                 login_error_fragment,

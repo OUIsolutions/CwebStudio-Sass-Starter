@@ -3,10 +3,11 @@
 
 
 /**
- * @param {object} interface_state
+ * @param {string} token
+ * @param {Element404} main_interface
  * */
-async function  home_callback(interface_state){
-    interface_state.user_props = await get_self_props();
-    return render_list_users(interface_state);
+async function  home_callback(token,main_interface){
 
+     let user_props = await get_self_props(token);
+     console.log(user_props);
 }

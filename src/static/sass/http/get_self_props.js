@@ -6,8 +6,14 @@
  * @property {string} last_update
  * @property
  * */
-async  function get_self_props(){
 
-    return await  make_autenticated_requisition(GET_SELF_PROPS_ROUTE);
+
+/**
+ * @param {string} token
+ * @return {SelfProps}
+ * */
+async  function get_self_props(token){
+
+    return await  make_authenticated_requisition(token,GET_SELF_PROPS_ROUTE);
 
 }

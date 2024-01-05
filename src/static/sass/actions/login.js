@@ -41,5 +41,7 @@ async function  login_callback(main_interface,login_input,password_input,login_e
             start_page_create_error(password_error,error.message)
         }
     }
+    await  home_callback(token,main_interface);
+
 
 }

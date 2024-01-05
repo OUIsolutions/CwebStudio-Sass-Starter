@@ -1,19 +1,25 @@
 
 
+/**
+ * @param {string} token
+ * @param {string} route
+ * @param {object} props
+ * @return {object}
+ * */
 
-async  function make_autenticated_requisition(route,props){
-    let formated_props ={};
+async  function make_authenticated_requisition(token,route, props=undefined){
+    let formatted_props ={};
 
     for( let key in props){
-        formated_props[key] =props[key];
+        formatted_props[key] =props[key];
     }
-    if(!formated_props.headers){
-        formated_props.headers = {};
+    if(!formatted_props.headers){
+        formatted_props.headers = {};
     }
-    formated_props.headers[TOKEN_KEY] = sessionStorage.getItem(TOKEN_KEY);
+    formatted_props.headers[TOKEN_KEY] = token;
 
 
-    let request = await  fetch(route,formated_props)
+    let request = await  fetch(route,formatted_props)
 
     /**@type {object}*/
     let parsed_in_json = await  request.json();

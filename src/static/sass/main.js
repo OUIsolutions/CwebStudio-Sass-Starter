@@ -6,12 +6,23 @@
 
      createElement404((main_interface)=>{
 
+
+            let root = main_interface.div();
+
+            root.outline_style({
+                position:'absolute',
+                width:"100%",
+                height:"100%",
+                left:"0%",
+                top:"0%"
+            });
+
+
             if(!token){
-                start_callback(main_interface);
+                render_start_page(root);
                 return;
             }
-
-            home_callback(main_interface)
+            home_callback(token,root)
 
         }, document.body).render();
 
