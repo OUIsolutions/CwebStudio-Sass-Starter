@@ -26,25 +26,24 @@ async function  login_callback(main_interface,login_input,password_input,login_e
         return;
     }
 
-    let token = undefined;
-    try{
-         token = await create_token(login, password);
-        sessionStorage.setItem(TOKEN_KEY,token);
+    let token_or_error  = await create_token(login, password);
 
-        //return home_callback(new_interface_state);
-    }
-    /**@type {HttpError}*/
-    catch (error){
+
+    if(token_or_error.error_happen){
+        let error = token_or_error.error;
         if(error.code === USER_NOT_EXIST){
-            start_page_create_error(login_error,error.message)
+            start_page_create_error(login_error,error.message);
 
         }
         if(error.code === WRONG_PASSWORD){
-            start_page_create_error(password_error,error.message)
+            start_page_create_error(password_error,error.message);
         }
+        return;
     }
 
-    await  home_callback(token,main_interface);
+
+    sessionStorage.setItem(TOKEN_ENTRE,token_or_error.token);
+    await  home_callback(token_or_error.token,main_interface);
 
 
 }

@@ -1,9 +1,21 @@
 
 /**
+ * @param {string} token
  * @param {Element404} root_div
  * @param {SelfProps} user_props
  * */
-function  create_common_internal_interface(root_div, user_props){
+function  create_common_internal_interface(token,root_div, user_props){
+
+    root_div.clear();
+    root_div.outline_style({
+        position:'absolute',
+        width:"100%",
+        height:"100%",
+        left:"0%",
+        top:"0%"
+    });
+    
+
     let vertical_bar = root_div.div(()=>{
 
 
@@ -33,9 +45,11 @@ function  create_common_internal_interface(root_div, user_props){
         let links_part = root_div.div();
         links_part.set_prop('APosition','$(0%,+10%,100%,50%)');
 
-        let logout_button = root_div.button('Logout',()=>{
+        let logout_button = root_div.button('Logout')
 
-        })
+        logout_button.set_prop('click',async ()=>{
+            await logout_callback(token,root_div);
+        });
 
         logout_button.set_prop('APosition','$(30%,+50%,40%,10%)');
 

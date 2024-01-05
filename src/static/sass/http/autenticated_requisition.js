@@ -21,15 +21,5 @@ async  function make_authenticated_requisition(token,route, props=undefined){
 
     let request = await  fetch(route,formatted_props)
 
-    /**@type {object}*/
-    let parsed_in_json = await  request.json();
-
-
-
-    if(parsed_in_json[CODE_KEY] !== INTERNAL_OK  && parsed_in_json[CODE_KEY]){
-        /**@type {HttpError}*/
-        throw  parsed_in_json
-    }
-
-    return parsed_in_json;
+    return await request.json();
 }
