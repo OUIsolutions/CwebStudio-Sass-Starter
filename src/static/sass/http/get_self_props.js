@@ -4,6 +4,7 @@
  * @property {string} username
  * @property {string} creation
  * @property {string} last_update
+ * @property {string || undefined} profile_picture
  * @property
  * */
 
