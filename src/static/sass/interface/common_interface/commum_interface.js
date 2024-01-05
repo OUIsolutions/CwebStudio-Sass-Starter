@@ -7,7 +7,7 @@ function  create_common_internal_interface(root_div, user_props){
     let vertical_bar = root_div.div(()=>{
 
         let username = root_div.p(user_props.username);
-        Element404
+
         username.inline_style({
             'font-size':'4vh'
         })
@@ -15,7 +15,7 @@ function  create_common_internal_interface(root_div, user_props){
         username.set_prop('APosition','$(0%,10%,100%,10%)')
 
         let image =  root_div.create('img');
-        image.set_prop('APosition','$(33.3%,+10%,33.3%,33.3%)')
+        image.set_prop('APosition','$(5vh,+10%,15vw,15vw)')
 
         let profile_picture_not_provided = !username.profile_picture;
         if(profile_picture_not_provided){
@@ -26,5 +26,5 @@ function  create_common_internal_interface(root_div, user_props){
         'text-align':'center',
         'color':'white'
     })
-    vertical_bar.set_prop('APosition','$16:9(0%,0%,20%,100%)');
+    vertical_bar.set_prop('APosition','$16:9(0%,0%,20vw,100%)');
 }
