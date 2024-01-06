@@ -1,56 +1,44 @@
 
 const TOMATO_DEFAULT_SEED = 'hello my cold friend';
-
-let  tomato_min_rgb = 50;
-let  tomato_max_rgb = 230;
-let  tomato_minimum_difference = 60;
+let tomato_last_generation = undefined;
+let  tomato_min_rgb = 60;
+let  tomato_max_rgb = 220;
+let  tomato_minimum_difference = 50;
 let tomato_total_generations = 0;
 
-/**
- * @param {number} seed
- * @param {number}total_generation
- * */
-function  tomato_get_rgb_pure(seed,total_generation){
-
-    let multiplication =
-        (seed + total_generation + tomato_max_rgb)*
-        (total_generation + tomato_max_rgb);
-
-
-    let result =  multiplication % tomato_max_rgb;
-    if(result < tomato_min_rgb){
-        result = tomato_min_rgb;
-    }
-
-    return result;
-}
 
 /**
  * @param {number} seed
+ * @param {number} current_color
  * @return {number}
  */
-function tomato_get_rgb_number(seed){
+function tomato_get_rgb_number(seed,current_color){
 
-    let last_rgb =  tomato_get_rgb_pure(seed,tomato_total_generations-1);
-    const LIMIT_TRYS = 100;
+    let multiplication =  seed * (current_color +1) * tomato_total_generations;
+    let pseudo_random_rgb = (multiplication % (tomato_max_rgb - tomato_min_rgb)) + tomato_min_rgb;
 
-    let max_try = LIMIT_TRYS + tomato_total_generations;
+    if(!tomato_last_generation){
+        return pseudo_random_rgb;
+    }
+    let last_rgb = tomato_last_generation[current_color];
 
-    let rgb = 0;
-    tomato_total_generations+=1;
+    let MAX_TRYS = 100;
+    for(let i =1; i < MAX_TRYS;i++){
 
-    for(;tomato_total_generations < max_try; tomato_total_generations++){
+        let difference = Math.abs(pseudo_random_rgb - last_rgb);
 
-        rgb = tomato_get_rgb_pure(seed,tomato_total_generations);
-        let difference = rgb - last_rgb;
-        let positive_difference = difference *1;
-        if(positive_difference > tomato_minimum_difference){
+        if(difference > tomato_minimum_difference){
             break;
         }
+        multiplication =  seed * (current_color +1 + i) * tomato_total_generations;
+        pseudo_random_rgb = (multiplication % (tomato_max_rgb - tomato_min_rgb)) + tomato_min_rgb;
+
+
+
     }
 
-    return rgb
 
+    return pseudo_random_rgb;
 
 }
 
@@ -89,12 +77,13 @@ function tomato_create_tomato_num_seed(seed){
  * @return  {TomatoPseudoRamdomColors}*/
 function tomato_generate_pseudo_random_colors(seed){
     //determine Math seed
+    
+    tomato_total_generations+=1;
+    let red =  tomato_get_rgb_number(seed,0);
+    let green = tomato_get_rgb_number(seed,1);
+    let blue =  tomato_get_rgb_number(seed,2);
 
-
-    let red =  tomato_get_rgb_number(seed);
-    let green = tomato_get_rgb_number(seed);
-    let blue =  tomato_get_rgb_number(seed);
-
+    tomato_last_generation = [red,green,blue];
 
     let color = 'black';
     if(red + green + blue < 300){
@@ -105,14 +94,14 @@ function tomato_generate_pseudo_random_colors(seed){
         rgb: `rgb(${red},${green},${blue})`,
         color: color
     };
-
+  
 }
 
 /**@param {number}seed */
 function tomato_process_elements(seed){
 
     let all_elements = document.body.querySelectorAll('*');
-
+    
 
     all_elements.forEach(element => {
         //set the tomato attribute
@@ -152,3 +141,4 @@ function tomato_start(seed){
     });
 
 }
+
