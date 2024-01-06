@@ -1,5 +1,5 @@
-//let my_seed = 'hello my cold friend'
-//tomato_start(my_seed);
+let my_seed = 'hello my cold friend'
+tomato_start(my_seed);
 
  async function  main(){
 
